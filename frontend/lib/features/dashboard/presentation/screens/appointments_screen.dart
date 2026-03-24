@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/feature/info_detail_screen.dart';
+import '../../../appointments/presentation/screens/onsite_consultation_screen.dart';
+import '../../../appointments/presentation/screens/teleconsultation_screen.dart';
 import '../../domain/dashboard_models.dart';
 import 'feature_hub_screen.dart';
 
@@ -32,30 +33,24 @@ class AppointmentsScreen extends StatelessWidget {
       actions: actions,
       helpTitle: 'Appointments Help',
       helpMessages: const <String>[
-        'These choices are visual placeholders for now.',
-        'The structure is ready for scheduling logic later.',
-        'Both booking paths keep the original navigation feel.',
+        'Open either booking path to follow the same three-step appointment flow.',
+        'The screens keep everything local and do not create backend records yet.',
+        'Onsite and teleconsultation each keep their own details step.',
       ],
       onActionTap: (action) {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => InfoDetailScreen(
-              title: action.title,
-              subtitle: action.description,
-              body:
-                  'This route intentionally stops at the UI layer while the '
-                  'booking logic remains out of scope for now.',
-              icon: action.icon,
-              highlights: const <String>[
-                'Two clear booking paths',
-                'Future form and calendar hooks can plug in later',
-                'No backend calls required',
-              ],
-              primaryButtonText: 'Back to Appointments',
-              onPrimaryPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-        );
+        final Widget screen = switch (action.title) {
+          'Onsite Consultation' => const OnsiteConsultationScreen(),
+          'Teleconsultation' => const TeleconsultationScreen(),
+          _ => const SizedBox.shrink(),
+        };
+
+        if (screen is SizedBox) {
+          return;
+        }
+
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => screen));
       },
     );
   }

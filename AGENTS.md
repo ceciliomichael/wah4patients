@@ -133,6 +133,7 @@ Before considering a task complete, verify all of the following:
 ### Spacing and Padding
 - Use a base spacing unit of 8.0 for all margins, padding, and gaps between UI elements.
 - Apply multiples of this base unit, such as 4.0, 8.0, 16.0, and 24.0, to maintain a consistent visual rhythm.
+- For screens using the shared back/help header, keep the header top inset at 24.0 and align content gutters to 16.0 on mobile and 32.0 on tablet unless an existing screen intentionally differs.
 
 ### Responsiveness and Adaptivity
 - Ensure all elements scale appropriately for small phones, medium devices, and large tablets.

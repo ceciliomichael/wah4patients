@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/feature/info_detail_screen.dart';
 import '../../domain/dashboard_models.dart';
+import '../../../health_records/presentation/screens/immunization_records_screen.dart';
+import '../../../health_records/presentation/screens/laboratory_results_screen.dart';
+import '../../../health_records/presentation/screens/medical_consultations_screen.dart';
+import '../../../health_records/presentation/screens/medical_history_screen.dart';
 import 'feature_hub_screen.dart';
 
 class HealthRecordsScreen extends StatelessWidget {
@@ -49,26 +52,21 @@ class HealthRecordsScreen extends StatelessWidget {
         'This screen is ready for real data integration later.',
       ],
       onActionTap: (action) {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => InfoDetailScreen(
-              title: action.title,
-              subtitle: action.description,
-              body:
-                  'This section is intentionally frontend-only for now. '
-                  'It preserves the original visual hierarchy while leaving '
-                  'the data layer free for future integration.',
-              icon: action.icon,
-              highlights: const <String>[
-                'Consistent card spacing and hierarchy',
-                'Reusable layout ready for real data later',
-                'No backend dependency in this build',
-              ],
-              primaryButtonText: 'Back to Health Records',
-              onPrimaryPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-        );
+        final Widget screen = switch (action.title) {
+          'Medical History' => const MedicalHistoryScreen(),
+          'Immunization Records' => const ImmunizationRecordsScreen(),
+          'Medical Consultations' => const MedicalConsultationsScreen(),
+          'Laboratory Results' => const LaboratoryResultsScreen(),
+          _ => const SizedBox.shrink(),
+        };
+
+        if (screen is SizedBox) {
+          return;
+        }
+
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => screen));
       },
     );
   }
