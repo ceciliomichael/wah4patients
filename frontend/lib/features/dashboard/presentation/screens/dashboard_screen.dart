@@ -153,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisCount: 2,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
-            childAspectRatio: isTablet ? 1.08 : 0.88,
+            childAspectRatio: 1.0,
             children: _services
                 .map(
                   (service) => DashboardServiceCard(

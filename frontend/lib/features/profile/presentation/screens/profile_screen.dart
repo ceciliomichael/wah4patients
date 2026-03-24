@@ -111,11 +111,10 @@ class ProfileScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(height: 28),
-                      PrimaryButtonWidget(
-                        text: 'Sign Out',
-                        backgroundColor: AppColors.danger,
-                        onPressed: () => _showLogoutConfirmationModal(context),
-                        icon: Icons.logout,
+                      _SectionHeader(title: 'Account'),
+                      const SizedBox(height: 12),
+                      _SignOutCard(
+                        onTap: () => _showLogoutConfirmationModal(context),
                       ),
                     ],
                   ),
@@ -423,6 +422,83 @@ class _MenuCard extends StatelessWidget {
           vertical: 12,
         ),
         shape: RoundedRectangleBorder(borderRadius: AppRadii.small),
+      ),
+    );
+  }
+}
+
+class _SignOutCard extends StatelessWidget {
+  const _SignOutCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: AppRadii.large,
+          border: Border.all(color: AppColors.border),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.04),
+              blurRadius: 12,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.large,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.logout,
+                    color: AppColors.danger,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Sign Out',
+                        style: AppTextStyles.titleLarge.copyWith(
+                          color: AppColors.danger,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Sign out of your WAH4P account',
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Icon(
+                  Icons.chevron_right,
+                  color: AppColors.textSecondary,
+                  size: 30,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

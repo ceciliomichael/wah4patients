@@ -92,7 +92,7 @@ class WAH4PApp extends StatelessWidget {
       ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: AppColors.surface,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.topExtraLarge),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.topRounded),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

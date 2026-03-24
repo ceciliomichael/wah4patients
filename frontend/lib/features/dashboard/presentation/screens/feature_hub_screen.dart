@@ -211,6 +211,7 @@ class FeatureHubScreen extends StatelessWidget {
                   ).pushReplacementNamed(AppRoutes.dashboard);
                 },
                 icon: Icons.home_outlined,
+                iconPosition: IconPosition.leading,
               ),
             ],
           ),

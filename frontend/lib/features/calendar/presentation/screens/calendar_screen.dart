@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../domain/calendar_event.dart';
-import '../widgets/calendar_event_card_widget.dart';
+import '../widgets/calendar_event_detail_sheet_widget.dart';
 import '../widgets/calendar_header_widget.dart';
 import '../widgets/event_type_filter_widget.dart';
 import '../widgets/views/day_view_widget.dart';
@@ -137,17 +137,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void _showEventDetails(CalendarEvent event) {
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topExtraLarge),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topRounded),
+      clipBehavior: Clip.antiAlias,
       builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: CalendarEventCardWidget(
-              event: event,
-              onTap: () => Navigator.of(context).pop(),
-            ),
-          ),
+        return CalendarEventDetailSheetWidget(
+          event: event,
+          onClose: () => Navigator.of(context).pop(),
         );
       },
     );

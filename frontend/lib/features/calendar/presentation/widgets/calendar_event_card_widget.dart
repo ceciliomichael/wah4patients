@@ -99,49 +99,22 @@ class CalendarEventCardWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (event.location != null) ...[
+                    if (event.location != null || event.doctorName != null) ...[
                       const SizedBox(height: 4.0),
-                      Row(
+                      Wrap(
+                        spacing: 12.0,
+                        runSpacing: 4.0,
                         children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            size: 14.0,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(width: 4.0),
-                          Expanded(
-                            child: Text(
-                              event.location!,
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          if (event.location != null)
+                            _MetaRow(
+                              icon: Icons.location_on_outlined,
+                              text: event.location!,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                    if (event.doctorName != null) ...[
-                      const SizedBox(height: 4.0),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            size: 14.0,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(width: 4.0),
-                          Expanded(
-                            child: Text(
-                              event.doctorName!,
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          if (event.doctorName != null)
+                            _MetaRow(
+                              icon: Icons.person_outline,
+                              text: event.doctorName!,
                             ),
-                          ),
                         ],
                       ),
                     ],
@@ -158,6 +131,35 @@ class CalendarEventCardWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _MetaRow extends StatelessWidget {
+  const _MetaRow({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 14.0, color: AppColors.textSecondary),
+        const SizedBox(width: 4.0),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 180),
+          child: Text(
+            text,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }
