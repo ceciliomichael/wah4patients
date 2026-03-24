@@ -11,6 +11,7 @@ import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_surface_card.dart';
+import '../widgets/otp_code_field.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key, required this.email});
@@ -24,7 +25,8 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _otpController = TextEditingController();
+  final GlobalKey<FormFieldState<String>> _otpFieldKey =
+      GlobalKey<FormFieldState<String>>();
   Timer? _resendTimer;
   int _resendCooldown = 45;
   bool _resending = false;
@@ -38,7 +40,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   void dispose() {
     _resendTimer?.cancel();
-    _otpController.dispose();
     super.dispose();
   }
 
@@ -80,7 +81,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       ),
     );
 
-    _otpController.clear();
+    _otpFieldKey.currentState?.reset();
     _startCooldown();
 
     setState(() {
@@ -174,20 +175,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              TextFormField(
-                                controller: _otpController,
-                                keyboardType: TextInputType.number,
-                                maxLength: 6,
+                              OtpCodeField(
+                                key: _otpFieldKey,
                                 validator: validateOtp,
-                                style: AppTextStyles.bodyLarge,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter the 6-digit code',
-                                  counterText: '',
-                                  prefixIcon: const Icon(
-                                    Icons.pin_outlined,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
                               ),
                               const SizedBox(height: 12),
                               Text(
