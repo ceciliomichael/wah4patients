@@ -116,6 +116,26 @@ class _OtpCodeFieldState extends FormFieldState<String> {
     _otpField.onChanged?.call(value);
   }
 
+  int? _nextEmptyIndexFrom(int startIndex) {
+    for (var index = startIndex; index < _controllers.length; index++) {
+      if (_controllers[index].text.isEmpty) {
+        return index;
+      }
+    }
+
+    return null;
+  }
+
+  void _focusNextEmptySlot(int startIndex) {
+    final nextEmptyIndex = _nextEmptyIndexFrom(startIndex);
+    if (nextEmptyIndex == null) {
+      _focusNodes.last.requestFocus();
+      return;
+    }
+
+    _focusNodes[nextEmptyIndex].requestFocus();
+  }
+
   void _handleDigitChanged(int index, String rawValue) {
     if (!_otpField.isEnabled) {
       return;
@@ -140,11 +160,7 @@ class _OtpCodeFieldState extends FormFieldState<String> {
       didChange(code);
       _otpField.onChanged?.call(code);
 
-      if (index < _controllers.length - 1) {
-        _focusNodes[index + 1].requestFocus();
-      } else {
-        _focusNodes[index].unfocus();
-      }
+      _focusNextEmptySlot(index + 1);
 
       return;
     }
@@ -171,14 +187,44 @@ class _OtpCodeFieldState extends FormFieldState<String> {
     didChange(code);
     _otpField.onChanged?.call(code);
 
-    if (nextIndex < _controllers.length) {
-      _focusNodes[nextIndex].requestFocus();
-    } else {
-      _focusNodes.last.unfocus();
-    }
+    _focusNextEmptySlot(nextIndex);
   }
 
-  InputDecoration _buildDecoration({required bool hasError}) {
+  KeyEventResult _handleKeyEvent(int index, KeyEvent event) {
+    if (event is! KeyDownEvent ||
+        event.logicalKey != LogicalKeyboardKey.backspace) {
+      return KeyEventResult.ignored;
+    }
+
+    if (_controllers[index].text.isNotEmpty) {
+      return KeyEventResult.ignored;
+    }
+
+    if (index == 0) {
+      return KeyEventResult.ignored;
+    }
+
+    final previousIndex = index - 1;
+    _controllers[previousIndex].clear();
+    final code = _controllers.map((controller) => controller.text).join();
+    didChange(code);
+    _otpField.onChanged?.call(code);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_otpField.isEnabled) {
+        return;
+      }
+
+      _focusNodes[previousIndex].requestFocus();
+    });
+
+    return KeyEventResult.handled;
+  }
+
+  InputDecoration _buildDecoration({
+    required bool hasError,
+    required String hintText,
+  }) {
     final borderColor = hasError ? AppColors.danger : AppColors.border;
     final focusedBorderColor = hasError ? AppColors.danger : AppColors.primary;
 
@@ -187,6 +233,11 @@ class _OtpCodeFieldState extends FormFieldState<String> {
       filled: true,
       fillColor: AppColors.surfaceVariant,
       contentPadding: EdgeInsets.zero,
+      hintText: hintText,
+      hintStyle: AppTextStyles.headlineSmall.copyWith(
+        fontWeight: FontWeight.w600,
+        color: AppColors.textSecondary,
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: AppRadii.medium,
         borderSide: BorderSide(color: borderColor),
@@ -219,28 +270,34 @@ class _OtpCodeFieldState extends FormFieldState<String> {
               return Expanded(
                 child: SizedBox(
                   height: _otpField.boxHeight,
-                  child: TextField(
-                    controller: _controllers[index],
-                    focusNode: _focusNodes[index],
-                    enabled: _otpField.isEnabled,
-                    keyboardType: TextInputType.number,
-                    textInputAction: index == _controllers.length - 1
-                        ? TextInputAction.done
-                        : TextInputAction.next,
-                    textAlign: TextAlign.center,
-                    textAlignVertical: TextAlignVertical.center,
-                    cursorColor: AppColors.primary,
-                    style: AppTextStyles.headlineSmall.copyWith(
-                      fontWeight: FontWeight.w600,
+                  child: Focus(
+                    onKeyEvent: (node, event) => _handleKeyEvent(index, event),
+                    child: TextField(
+                      controller: _controllers[index],
+                      focusNode: _focusNodes[index],
+                      enabled: _otpField.isEnabled,
+                      keyboardType: TextInputType.number,
+                      textInputAction: index == _controllers.length - 1
+                          ? TextInputAction.done
+                          : TextInputAction.next,
+                      textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.center,
+                      cursorColor: AppColors.primary,
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      autofillHints: index == 0
+                          ? const <String>[AutofillHints.oneTimeCode]
+                          : null,
+                      decoration: _buildDecoration(
+                        hasError: hasError,
+                        hintText: '${index + 1}',
+                      ),
+                      onChanged: (value) => _handleDigitChanged(index, value),
                     ),
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    autofillHints: index == 0
-                        ? const <String>[AutofillHints.oneTimeCode]
-                        : null,
-                    decoration: _buildDecoration(hasError: hasError),
-                    onChanged: (value) => _handleDigitChanged(index, value),
                   ),
                 ),
               );

@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../domain/auth_validators.dart';
-import '../widgets/auth_header.dart';
 import '../widgets/auth_surface_card.dart';
 
 class EmailRegistrationScreen extends StatefulWidget {
@@ -63,83 +63,167 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
         backgroundColor: AppColors.background,
         body: LayoutBuilder(
           builder: (context, constraints) {
-            return SingleChildScrollView(
+            return Padding(
               padding: EdgeInsets.only(
                 left: horizontalPadding,
                 right: horizontalPadding,
                 top: 32,
                 bottom: 32,
               ),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight - 64,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
                     children: [
-                      AuthHeader(
-                        stepLabel: 'Step 1 of 3',
-                        title: 'What is your email?',
-                        subtitle:
-                            'Enter your email address to continue registration.',
-                        onBackPressed: _goBack,
-                        helpTitle: 'Email Help',
-                        helpMessages: const [
-                          'Use an email you can access right now.',
-                          'Account updates and verification codes will be sent here.',
-                          'If you need help, ask a family member or caregiver.',
-                        ],
-                        helpIcons: const [
-                          Icons.email_outlined,
-                          Icons.mark_email_unread_outlined,
-                          Icons.volunteer_activism_outlined,
-                        ],
+                      IconButton(
+                        onPressed: _goBack,
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: AppColors.textPrimary,
+                        ),
+                        padding: const EdgeInsets.all(4),
+                        constraints: const BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 40,
+                        ),
+                        splashRadius: 20,
+                        tooltip: 'Back',
                       ),
-                      const SizedBox(height: 18),
-                      Form(
-                        key: _formKey,
-                        child: AuthSurfaceCard(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Email Address',
-                                style: AppTextStyles.titleLarge.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              TextFormField(
-                                controller: _emailController,
-                                focusNode: _emailFocusNode,
-                                keyboardType: TextInputType.emailAddress,
-                                textInputAction: TextInputAction.next,
-                                validator: validateEmail,
-                                style: AppTextStyles.bodyLarge,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter your email address',
-                                  prefixIcon: Icon(
-                                    Icons.email_outlined,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                      const SizedBox(width: 16),
+                      Text(
+                        'Step 1 of 3',
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          color: AppColors.textSecondary,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      PrimaryButtonWidget(
-                        text: 'Continue',
-                        onPressed: _continue,
-                        icon: Icons.arrow_forward,
+                      const Spacer(),
+                      TextButton.icon(
+                        onPressed: () {
+                          showDialog<void>(
+                            context: context,
+                            builder: (dialogContext) {
+                              return HelpModalWidget(
+                                title: 'Email Help',
+                                messages: const [
+                                  'Use an email you can access right now.',
+                                  'Account updates and verification codes will be sent here.',
+                                  'If you need help, ask a family member or caregiver.',
+                                ],
+                                icons: const [
+                                  Icons.email_outlined,
+                                  Icons.mark_email_unread_outlined,
+                                  Icons.volunteer_activism_outlined,
+                                ],
+                                onClose: () => Navigator.of(dialogContext).pop(),
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.help_outline, size: 20),
+                        label: Text(
+                          'Help',
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.primary,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          minimumSize: const Size(40, 40),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                       ),
                     ],
                   ),
-                ),
+                  Expanded(
+                    child: Transform.translate(
+                      offset: const Offset(0, -18),
+                      child: Center(
+                        child: SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: constraints.maxHeight - 64,
+                            ),
+                            child: IntrinsicHeight(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'What is your email?',
+                                    style: AppTextStyles.headlineLarge.copyWith(
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    'Enter your email address to continue registration.',
+                                    style: AppTextStyles.bodyLarge.copyWith(
+                                      color: AppColors.textSecondary,
+                                      height: 1.4,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 32),
+                                  Form(
+                                    key: _formKey,
+                                    child: AuthSurfaceCard(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Email Address',
+                                            style: AppTextStyles.titleLarge
+                                                .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          TextFormField(
+                                            controller: _emailController,
+                                            focusNode: _emailFocusNode,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: validateEmail,
+                                            style: AppTextStyles.bodyLarge,
+                                            decoration: const InputDecoration(
+                                              hintText:
+                                                  'Enter your email address',
+                                              prefixIcon: Icon(
+                                                Icons.email_outlined,
+                                                color: AppColors.textSecondary,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  PrimaryButtonWidget(
+                                    text: 'Continue',
+                                    onPressed: _continue,
+                                    icon: Icons.arrow_forward,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           },

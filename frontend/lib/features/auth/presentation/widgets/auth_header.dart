@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
-import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 
 class AuthHeader extends StatelessWidget {
   const AuthHeader({
@@ -47,8 +46,13 @@ class AuthHeader extends StatelessWidget {
                     size: 28,
                     color: AppColors.textPrimary,
                   ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  padding: const EdgeInsets.all(8),
+                  constraints: const BoxConstraints(
+                    minWidth: 48,
+                    minHeight: 48,
+                  ),
+                  splashRadius: 24,
+                  tooltip: 'Back',
                 )
               else
                 const SizedBox(width: 28),
@@ -62,23 +66,44 @@ class AuthHeader extends StatelessWidget {
                 ),
               const Spacer(),
               if (helpTitle != null)
-                SecondaryButtonWidget(
-                  onPressed: () {
-                    showDialog<void>(
-                      context: context,
-                      builder: (dialogContext) {
-                        return HelpModalWidget(
-                          title: helpTitle!,
-                          messages: helpMessages,
-                          icons: helpIcons,
-                          onClose: () => Navigator.of(dialogContext).pop(),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (dialogContext) {
+                            return HelpModalWidget(
+                              title: helpTitle!,
+                              messages: helpMessages,
+                              icons: helpIcons,
+                              onClose: () => Navigator.of(dialogContext).pop(),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                  text: 'Help',
-                  icon: Icons.help_outline,
-                  textColor: AppColors.primary,
+                      icon: const Icon(
+                        Icons.help_outline,
+                        color: AppColors.primary,
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      constraints: const BoxConstraints(
+                        minWidth: 40,
+                        minHeight: 40,
+                      ),
+                      splashRadius: 20,
+                      tooltip: 'Help',
+                    ),
+                    const SizedBox(width: 2),
+                    Text(
+                      'Help',
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
             ],
           ),

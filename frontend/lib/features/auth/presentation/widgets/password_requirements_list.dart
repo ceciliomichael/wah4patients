@@ -22,7 +22,7 @@ class PasswordRequirementsList extends StatelessWidget {
       duration: const Duration(milliseconds: 250),
       child: isVisible
           ? Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: requirements
@@ -38,7 +38,7 @@ class PasswordRequirementsList extends StatelessWidget {
                               height: 22,
                               decoration: BoxDecoration(
                                 color: requirement.isMet
-                                    ? AppColors.secondary
+                                    ? AppColors.success
                                     : AppColors.border,
                                 shape: BoxShape.circle,
                               ),
@@ -46,7 +46,7 @@ class PasswordRequirementsList extends StatelessWidget {
                                 requirement.isMet ? Icons.check : Icons.circle,
                                 size: 12,
                                 color: requirement.isMet
-                                    ? AppColors.white
+                                    ? AppColors.textOnSuccess
                                     : AppColors.textSecondary,
                               ),
                             ),
@@ -56,7 +56,7 @@ class PasswordRequirementsList extends StatelessWidget {
                                 requirement.description,
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: requirement.isMet
-                                      ? AppColors.primary
+                                      ? AppColors.success
                                       : AppColors.textSecondary,
                                   fontWeight: requirement.isMet
                                       ? FontWeight.w600

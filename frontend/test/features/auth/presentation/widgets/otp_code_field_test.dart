@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:frontend/features/auth/domain/auth_validators.dart';
@@ -50,5 +51,62 @@ void main() {
       clearedFields.every((field) => (field.controller?.text ?? '').isEmpty),
       isTrue,
     );
+  });
+
+  testWidgets('shows numeric hints and moves back on backspace', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: Scaffold(body: OtpCodeField(autofocus: false))),
+    );
+
+    final textFields = tester
+        .widgetList<TextField>(find.byType(TextField))
+        .toList();
+    expect(
+      textFields
+          .asMap()
+          .entries
+          .map((entry) => entry.value.decoration?.hintText)
+          .toList(growable: false),
+      equals(<String>['1', '2', '3', '4', '5', '6']),
+    );
+
+    await tester.enterText(find.byType(TextField).at(4), '5');
+    await tester.enterText(find.byType(TextField).at(5), '6');
+    await tester.pump();
+
+    await tester.tap(find.byType(TextField).at(5));
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.backspace);
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.backspace);
+    await tester.pump();
+
+    final updatedFields = tester
+        .widgetList<TextField>(find.byType(TextField))
+        .toList();
+    expect(updatedFields[4].controller?.text ?? '', isEmpty);
+    expect(updatedFields[5].controller?.text ?? '', isEmpty);
+  });
+
+  testWidgets('splits pasted otp digits across boxes and keeps focus', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: Scaffold(body: OtpCodeField(autofocus: false))),
+    );
+
+    await tester.enterText(find.byType(TextField).first, '123456');
+    await tester.pump();
+
+    final updatedFields = tester.widgetList<TextField>(find.byType(TextField));
+    expect(
+      updatedFields
+          .map((field) => field.controller?.text ?? '')
+          .toList(growable: false),
+      equals(<String>['1', '2', '3', '4', '5', '6']),
+    );
+    expect(FocusManager.instance.primaryFocus, isNotNull);
   });
 }
