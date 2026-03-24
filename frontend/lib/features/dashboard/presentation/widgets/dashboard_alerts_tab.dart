@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 
@@ -71,25 +72,34 @@ class _DashboardAlertsTabState extends State<DashboardAlertsTab> {
     final priorityCount = _alerts.where((alert) => alert.priority).length;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(isTablet ? 32 : 20, 18, isTablet ? 32 : 20, 24),
+      padding: EdgeInsets.fromLTRB(
+        isTablet ? 32 : 20,
+        18,
+        isTablet ? 32 : 20,
+        24,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Notification',
-            style: AppTextStyles.headlineMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.headlineMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'A lightweight notifications screen that keeps the same clean positioning.',
-            style: AppTextStyles.bodyLarge.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.bodyLarge.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: AppRadii.extraLarge,
               border: Border.all(color: AppColors.border),
             ),
             child: Row(
@@ -137,8 +147,12 @@ class _DashboardAlertsTabState extends State<DashboardAlertsTab> {
                   color: selected ? AppColors.primary : AppColors.textSecondary,
                   fontWeight: FontWeight.w700,
                 ),
-                side: BorderSide(color: selected ? AppColors.primary : AppColors.border),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                side: BorderSide(
+                  color: selected ? AppColors.primary : AppColors.border,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.small,
+                ),
               );
             }).toList(),
           ),
@@ -152,7 +166,7 @@ class _DashboardAlertsTabState extends State<DashboardAlertsTab> {
                   color: alert.unread
                       ? alert.color.withValues(alpha: 0.08)
                       : AppColors.surface,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadii.large,
                   border: Border.all(
                     color: alert.unread
                         ? alert.color.withValues(alpha: 0.18)
@@ -166,7 +180,7 @@ class _DashboardAlertsTabState extends State<DashboardAlertsTab> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: AppRadii.medium,
                       ),
                       child: Icon(alert.icon, color: alert.color),
                     ),
@@ -214,16 +228,15 @@ class _DashboardAlertsTabState extends State<DashboardAlertsTab> {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: AppColors.tertiary.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.tertiary.withValues(alpha: 0.2)),
+              borderRadius: AppRadii.large,
+              border: Border.all(
+                color: AppColors.tertiary.withValues(alpha: 0.2),
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.info_outline,
-                  color: AppColors.tertiary,
-                ),
+                const Icon(Icons.info_outline, color: AppColors.tertiary),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -260,7 +273,7 @@ class _AlertSummaryCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.large,
       ),
       child: Column(
         children: [

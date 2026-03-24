@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/constants/app_border_radii.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/widgets/ui/buttons/primary_button_widget.dart';
@@ -40,7 +41,7 @@ class PrivacyStatementScreen extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: AppRadii.medium,
                       border: Border.all(color: AppColors.border),
                     ),
                     child: IconButton(
@@ -60,7 +61,7 @@ class PrivacyStatementScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: AppRadii.extraLarge,
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Column(
@@ -116,10 +117,7 @@ class PrivacyStatementScreen extends StatelessWidget {
 }
 
 class _PrivacySection extends StatelessWidget {
-  const _PrivacySection({
-    required this.title,
-    required this.body,
-  });
+  const _PrivacySection({required this.title, required this.body});
 
   final String title;
   final String body;
@@ -131,7 +129,7 @@ class _PrivacySection extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.large,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

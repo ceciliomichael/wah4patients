@@ -48,7 +48,9 @@ class RegistrationScreen extends StatelessWidget {
                 bottom: 32,
               ),
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight - 64),
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight - 64,
+                ),
                 child: IntrinsicHeight(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +60,8 @@ class RegistrationScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       const AuthHeader(
                         title: 'Welcome!',
-                        subtitle: 'Let\'s create your account in just 3 simple steps',
+                        subtitle:
+                            'Let\'s create your account in just 3 simple steps',
                         centerTitle: true,
                       ),
                       const SizedBox(height: 18),

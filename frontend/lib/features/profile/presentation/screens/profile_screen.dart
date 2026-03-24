@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
@@ -139,9 +140,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.extraLarge),
           title: Text(
             'Sign Out',
             style: AppTextStyles.titleLarge.copyWith(
@@ -239,7 +238,7 @@ class _ProfileInfoCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.large,
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
@@ -321,7 +320,7 @@ class _SectionCard extends StatelessWidget {
     return Card(
       color: AppColors.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.large,
         side: const BorderSide(color: AppColors.border),
       ),
       child: ListTile(
@@ -329,7 +328,7 @@ class _SectionCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: AppColors.primary.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadii.small,
           ),
           child: Icon(icon, color: AppColors.primary, size: 34),
         ),
@@ -357,7 +356,7 @@ class _SectionCard extends StatelessWidget {
           horizontal: 16,
           vertical: 16,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
       ),
     );
   }
@@ -399,7 +398,7 @@ class _MenuCard extends StatelessWidget {
     return Card(
       color: cardColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.small,
         side: BorderSide(color: borderColor),
       ),
       child: ListTile(
@@ -423,7 +422,7 @@ class _MenuCard extends StatelessWidget {
           horizontal: 14,
           vertical: 12,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.small),
       ),
     );
   }

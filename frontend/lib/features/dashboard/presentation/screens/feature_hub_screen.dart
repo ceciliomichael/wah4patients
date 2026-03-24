@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
@@ -75,7 +76,7 @@ class FeatureHubScreen extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: AppRadii.medium,
                       border: Border.all(color: AppColors.border),
                     ),
                     child: IconButton(
@@ -99,7 +100,7 @@ class FeatureHubScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: AppRadii.extraLarge,
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Column(
@@ -111,11 +112,7 @@ class FeatureHubScreen extends StatelessWidget {
                         color: AppColors.primary.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        icon,
-                        size: 36,
-                        color: AppColors.primary,
-                      ),
+                      child: Icon(icon, size: 36, color: AppColors.primary),
                     ),
                     const SizedBox(height: 18),
                     Text(
@@ -143,14 +140,14 @@ class FeatureHubScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 14),
                   child: Material(
                     color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AppRadii.large,
                     child: InkWell(
                       onTap: () => onActionTap(action),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadii.large,
                       child: Container(
                         padding: const EdgeInsets.all(18),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: AppRadii.large,
                           border: Border.all(color: AppColors.border),
                         ),
                         child: Row(
@@ -159,8 +156,10 @@ class FeatureHubScreen extends StatelessWidget {
                               width: 52,
                               height: 52,
                               decoration: BoxDecoration(
-                                color: action.accentColor.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(16),
+                                color: action.accentColor.withValues(
+                                  alpha: 0.12,
+                                ),
+                                borderRadius: AppRadii.medium,
                               ),
                               child: Icon(
                                 action.icon,
@@ -207,7 +206,9 @@ class FeatureHubScreen extends StatelessWidget {
               PrimaryButtonWidget(
                 text: 'Back to Dashboard',
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.dashboard);
                 },
                 icon: Icons.home_outlined,
               ),

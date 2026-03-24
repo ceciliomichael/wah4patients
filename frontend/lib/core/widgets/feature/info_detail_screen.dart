@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_routes.dart';
+import '../../constants/app_border_radii.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_text_styles.dart';
 import '../ui/buttons/primary_button_widget.dart';
@@ -62,7 +63,7 @@ class InfoDetailScreen extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: AppRadii.medium,
                           border: Border.all(color: AppColors.border),
                         ),
                         child: IconButton(
@@ -77,9 +78,9 @@ class InfoDetailScreen extends StatelessWidget {
                       SecondaryButtonWidget(
                         text: 'Back to Dashboard',
                         onPressed: () {
-                          Navigator.of(context).pushReplacementNamed(
-                            AppRoutes.dashboard,
-                          );
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.dashboard);
                         },
                         textColor: AppColors.secondary,
                       ),
@@ -90,7 +91,7 @@ class InfoDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: AppRadii.extraLarge,
                       border: Border.all(color: AppColors.border),
                     ),
                     child: Column(
@@ -103,11 +104,7 @@ class InfoDetailScreen extends StatelessWidget {
                             color: AppColors.primary.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
-                            icon,
-                            size: 38,
-                            color: AppColors.primary,
-                          ),
+                          child: Icon(icon, size: 38, color: AppColors.primary),
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -153,7 +150,7 @@ class InfoDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: AppRadii.large,
                           border: Border.all(color: AppColors.border),
                         ),
                         child: Row(
@@ -165,7 +162,7 @@ class InfoDetailScreen extends StatelessWidget {
                                 color: AppColors.secondary.withValues(
                                   alpha: 0.12,
                                 ),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: AppRadii.small,
                               ),
                               child: const Icon(
                                 Icons.check_circle_outline,

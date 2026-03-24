@@ -32,8 +32,9 @@ class AuthHeader extends StatelessWidget {
     final titleAlign = centerTitle ? TextAlign.center : TextAlign.start;
 
     return Column(
-      crossAxisAlignment:
-          centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      crossAxisAlignment: centerTitle
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
       children: [
         if (onBackPressed != null || stepLabel != null || helpTitle != null)
           Row(

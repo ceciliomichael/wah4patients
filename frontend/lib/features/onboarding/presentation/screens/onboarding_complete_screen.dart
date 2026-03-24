@@ -35,8 +35,9 @@ class OnboardingCompleteScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 PrimaryButtonWidget(
                   text: 'Continue to Registration',
-                  onPressed: () => Navigator.of(context)
-                      .pushReplacementNamed(AppRoutes.registration),
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.registration),
                   icon: Icons.arrow_forward,
                 ),
               ],

@@ -13,10 +13,10 @@ class OnboardingScreen1 extends StatelessWidget {
       child: Scaffold(
         body: OnboardingBaseScreen(
           pageData: OnboardingPageRepository.page1,
-          onSkipPressed: () => Navigator.of(context)
-              .pushReplacementNamed(AppRoutes.onboarding4),
-          onActionPressed: () => Navigator.of(context)
-              .pushReplacementNamed(AppRoutes.onboarding2),
+          onSkipPressed: () =>
+              Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding4),
+          onActionPressed: () =>
+              Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding2),
         ),
       ),
     );

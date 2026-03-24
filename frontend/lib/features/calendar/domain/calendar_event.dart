@@ -2,20 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
-enum CalendarViewMode {
-  month,
-  week,
-  day,
-}
+enum CalendarViewMode { month, week, day }
 
-enum EventType {
-  appointment,
-  medication,
-  checkup,
-  labTest,
-  therapy,
-  other,
-}
+enum EventType { appointment, medication, checkup, labTest, therapy, other }
 
 extension EventTypeUi on EventType {
   String get label {

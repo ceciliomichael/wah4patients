@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 
@@ -67,15 +68,12 @@ class DashboardHeader extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.medium,
           ),
           child: IconButton(
             onPressed: onHelpPressed,
             tooltip: 'Help',
-            icon: const Icon(
-              Icons.help_outline,
-              color: AppColors.primary,
-            ),
+            icon: const Icon(Icons.help_outline, color: AppColors.primary),
           ),
         ),
       ],

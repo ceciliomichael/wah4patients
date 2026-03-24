@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../domain/calendar_event.dart';
 
 class CalendarEventCardWidget extends StatelessWidget {
-  const CalendarEventCardWidget({
-    super.key,
-    required this.event,
-    this.onTap,
-  });
+  const CalendarEventCardWidget({super.key, required this.event, this.onTap});
 
   final CalendarEvent event;
   final VoidCallback? onTap;
@@ -35,12 +32,12 @@ class CalendarEventCardWidget extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12.0),
+      borderRadius: AppRadii.small,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4.0),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: AppRadii.small,
           border: Border(left: BorderSide(color: eventColor, width: 4.0)),
           boxShadow: [
             BoxShadow(
@@ -60,7 +57,7 @@ class CalendarEventCardWidget extends StatelessWidget {
                 height: 40.0,
                 decoration: BoxDecoration(
                   color: eventColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: AppRadii.small,
                 ),
                 child: Icon(
                   event.eventType.icon,

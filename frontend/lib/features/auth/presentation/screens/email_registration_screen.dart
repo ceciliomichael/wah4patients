@@ -13,7 +13,8 @@ class EmailRegistrationScreen extends StatefulWidget {
   const EmailRegistrationScreen({super.key});
 
   @override
-  State<EmailRegistrationScreen> createState() => _EmailRegistrationScreenState();
+  State<EmailRegistrationScreen> createState() =>
+      _EmailRegistrationScreenState();
 }
 
 class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
@@ -70,7 +71,9 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                 bottom: 32,
               ),
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight - 64),
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight - 64,
+                ),
                 child: IntrinsicHeight(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +82,8 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                       AuthHeader(
                         stepLabel: 'Step 1 of 3',
                         title: 'What is your email?',
-                        subtitle: 'Enter your email address to continue registration.',
+                        subtitle:
+                            'Enter your email address to continue registration.',
                         onBackPressed: _goBack,
                         helpTitle: 'Email Help',
                         helpMessages: const [
@@ -115,30 +119,11 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                                 textInputAction: TextInputAction.next,
                                 validator: validateEmail,
                                 style: AppTextStyles.bodyLarge,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'Enter your email address',
-                                  prefixIcon: const Icon(
+                                  prefixIcon: Icon(
                                     Icons.email_outlined,
                                     color: AppColors.textSecondary,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                      color: AppColors.border,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                      color: AppColors.border,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                      color: AppColors.primary,
-                                      width: 2,
-                                    ),
                                   ),
                                 ),
                               ),

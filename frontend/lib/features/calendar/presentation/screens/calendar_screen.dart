@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../domain/calendar_event.dart';
 import '../widgets/calendar_event_card_widget.dart';
@@ -94,9 +95,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       return _events;
     }
 
-    return _events
-        .where((event) => event.eventType == _selectedType)
-        .toList();
+    return _events.where((event) => event.eventType == _selectedType).toList();
   }
 
   List<CalendarEvent> _eventsForDate(DateTime date) {
@@ -129,9 +128,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         .where(
           (event) =>
               !event.startTime.isBefore(startOfWeek) &&
-              !event.startTime.isAfter(
-                endOfWeek.add(const Duration(days: 1)),
-              ),
+              !event.startTime.isAfter(endOfWeek.add(const Duration(days: 1))),
         )
         .toList()
       ..sort((left, right) => left.startTime.compareTo(right.startTime));
@@ -141,9 +138,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topExtraLarge),
       builder: (context) {
         return SafeArea(
           child: Padding(
@@ -211,32 +206,32 @@ class _CalendarScreenState extends State<CalendarScreen> {
           Expanded(
             child: switch (_viewMode) {
               CalendarViewMode.month => MonthViewWidget(
-                  selectedDate: _selectedDate,
-                  events: filteredEvents,
-                  selectedDayEvents: selectedDayEvents,
-                  onDateSelected: (date) {
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  },
-                  onEventTap: _showEventDetails,
-                ),
+                selectedDate: _selectedDate,
+                events: filteredEvents,
+                selectedDayEvents: selectedDayEvents,
+                onDateSelected: (date) {
+                  setState(() {
+                    _selectedDate = date;
+                  });
+                },
+                onEventTap: _showEventDetails,
+              ),
               CalendarViewMode.week => WeekViewWidget(
-                  selectedDate: _selectedDate,
-                  events: _eventsForWeek(_selectedDate),
-                  onDateSelected: (date) {
-                    setState(() {
-                      _selectedDate = date;
-                      _viewMode = CalendarViewMode.day;
-                    });
-                  },
-                  onEventTap: _showEventDetails,
-                ),
+                selectedDate: _selectedDate,
+                events: _eventsForWeek(_selectedDate),
+                onDateSelected: (date) {
+                  setState(() {
+                    _selectedDate = date;
+                    _viewMode = CalendarViewMode.day;
+                  });
+                },
+                onEventTap: _showEventDetails,
+              ),
               CalendarViewMode.day => DayViewWidget(
-                  selectedDate: _selectedDate,
-                  events: selectedDayEvents,
-                  onEventTap: _showEventDetails,
-                ),
+                selectedDate: _selectedDate,
+                events: selectedDayEvents,
+                onEventTap: _showEventDetails,
+              ),
             },
           ),
         ],

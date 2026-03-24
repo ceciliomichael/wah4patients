@@ -39,7 +39,8 @@ class PersonalRecordsScreen extends StatelessWidget {
 
     return FeatureHubScreen(
       title: 'Personal Records',
-      subtitle: 'Fast access to the self-monitoring screens from the original app.',
+      subtitle:
+          'Fast access to the self-monitoring screens from the original app.',
       icon: Icons.monitor_heart_outlined,
       actions: actions,
       helpTitle: 'Personal Records Help',

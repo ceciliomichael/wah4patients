@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/app_border_radii.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
 import '../../../domain/calendar_event.dart';
@@ -25,7 +26,10 @@ class MonthViewWidget extends StatelessWidget {
     final firstOfMonth = DateTime(date.year, date.month, 1);
     final startWeekday = firstOfMonth.weekday % 7;
     final start = firstOfMonth.subtract(Duration(days: startWeekday));
-    return List<DateTime>.generate(42, (index) => start.add(Duration(days: index)));
+    return List<DateTime>.generate(
+      42,
+      (index) => start.add(Duration(days: index)),
+    );
   }
 
   @override
@@ -94,15 +98,15 @@ class MonthViewWidget extends StatelessWidget {
                       color: isSelected
                           ? AppColors.primary
                           : isToday
-                              ? AppColors.primary.withValues(alpha: 0.12)
-                              : Colors.transparent,
-                      borderRadius: BorderRadius.circular(12),
+                          ? AppColors.primary.withValues(alpha: 0.12)
+                          : Colors.transparent,
+                      borderRadius: AppRadii.small,
                       child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadii.small,
                         onTap: () => onDateSelected(date),
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadii.small,
                             border: Border.all(
                               color: isToday
                                   ? AppColors.primary
@@ -118,12 +122,13 @@ class MonthViewWidget extends StatelessWidget {
                                   color: isSelected
                                       ? AppColors.textOnPrimary
                                       : isCurrentMonth
-                                          ? AppColors.black
-                                          : AppColors.textSecondary.withValues(
-                                              alpha: 0.55,
-                                            ),
-                                  fontWeight:
-                                      isToday ? FontWeight.w700 : FontWeight.w500,
+                                      ? AppColors.black
+                                      : AppColors.textSecondary.withValues(
+                                          alpha: 0.55,
+                                        ),
+                                  fontWeight: isToday
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
                                 ),
                               ),
                               if (dayEvents.isNotEmpty) ...[
@@ -166,7 +171,7 @@ class MonthViewWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
                       color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: AppRadii.large,
                       border: Border.all(color: AppColors.border),
                     ),
                     child: Center(

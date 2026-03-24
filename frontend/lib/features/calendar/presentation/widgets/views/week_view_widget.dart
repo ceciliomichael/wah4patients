@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/app_border_radii.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
 import '../../../domain/calendar_event.dart';
@@ -37,7 +38,8 @@ class WeekViewWidget extends StatelessWidget {
     final weekDays = _buildWeekDays(selectedDate);
     final groupedEvents = <String, List<CalendarEvent>>{};
     for (final event in events) {
-      final key = '${event.startTime.year}-${event.startTime.month}-${event.startTime.day}';
+      final key =
+          '${event.startTime.year}-${event.startTime.month}-${event.startTime.day}';
       groupedEvents.putIfAbsent(key, () => <CalendarEvent>[]).add(event);
     }
 
@@ -66,7 +68,7 @@ class WeekViewWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.medium,
                     onTap: () => onDateSelected(day),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -74,15 +76,15 @@ class WeekViewWidget extends StatelessWidget {
                         color: isSelected
                             ? AppColors.primary
                             : isToday
-                                ? AppColors.secondary.withValues(alpha: 0.12)
-                                : AppColors.surfaceVariant,
-                        borderRadius: BorderRadius.circular(14),
+                            ? AppColors.secondary.withValues(alpha: 0.12)
+                            : AppColors.surfaceVariant,
+                        borderRadius: AppRadii.medium,
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
                               : isToday
-                                  ? AppColors.secondary
-                                  : AppColors.border,
+                              ? AppColors.secondary
+                              : AppColors.border,
                         ),
                       ),
                       child: Column(
@@ -103,8 +105,8 @@ class WeekViewWidget extends StatelessWidget {
                               color: isSelected
                                   ? AppColors.textOnPrimary
                                   : isToday
-                                      ? AppColors.secondary
-                                      : AppColors.black,
+                                  ? AppColors.secondary
+                                  : AppColors.black,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -126,7 +128,7 @@ class WeekViewWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                );
+              );
             }).toList(),
           ),
           const SizedBox(height: 16),
@@ -134,7 +136,7 @@ class WeekViewWidget extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.large,
               border: Border.all(color: AppColors.border),
             ),
             child: Row(
@@ -144,7 +146,7 @@ class WeekViewWidget extends StatelessWidget {
                   height: 44,
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.medium,
                   ),
                   child: const Icon(
                     Icons.view_week_outlined,
@@ -182,64 +184,68 @@ class WeekViewWidget extends StatelessWidget {
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                 color: AppColors.surface,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.large,
                 border: Border.all(color: AppColors.border),
               ),
               child: const Center(child: Text('No events this week')),
             )
           else
             Column(
-              children: weekDays.where((day) {
-                final key = '${day.year}-${day.month}-${day.day}';
-                return groupedEvents.containsKey(key);
-              }).map((day) {
-                final key = '${day.year}-${day.month}-${day.day}';
-                final dayEvents = groupedEvents[key] ?? const <CalendarEvent>[];
+              children: weekDays
+                  .where((day) {
+                    final key = '${day.year}-${day.month}-${day.day}';
+                    return groupedEvents.containsKey(key);
+                  })
+                  .map((day) {
+                    final key = '${day.year}-${day.month}-${day.day}';
+                    final dayEvents =
+                        groupedEvents[key] ?? const <CalendarEvent>[];
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: AppRadii.large,
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              _weekdayLabel(day.weekday),
-                              style: AppTextStyles.titleLarge.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  _weekdayLabel(day.weekday),
+                                  style: AppTextStyles.titleLarge.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '${day.month}/${day.day}',
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              '${day.month}/${day.day}',
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.textSecondary,
+                            const SizedBox(height: 12),
+                            ...dayEvents.map(
+                              (event) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: CalendarEventCardWidget(
+                                  event: event,
+                                  onTap: () => onEventTap(event),
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        ...dayEvents.map(
-                          (event) => Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: CalendarEventCardWidget(
-                              event: event,
-                              onTap: () => onEventTap(event),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+                      ),
+                    );
+                  })
+                  .toList(),
             ),
           const SizedBox(height: 24),
           if (events.isNotEmpty)
@@ -247,7 +253,7 @@ class WeekViewWidget extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.06),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.large,
               ),
               child: Text(
                 'This week is shown as a grouped agenda view for clarity in the preview build.',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/app_border_radii.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 
@@ -34,9 +35,18 @@ class PrimaryButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final padding = switch (size) {
-      AppButtonSize.small => const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      AppButtonSize.medium => const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      AppButtonSize.large => const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      AppButtonSize.small => const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 10,
+      ),
+      AppButtonSize.medium => const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 14,
+      ),
+      AppButtonSize.large => const EdgeInsets.symmetric(
+        horizontal: 24,
+        vertical: 16,
+      ),
     };
 
     final button = ElevatedButton(
@@ -46,9 +56,7 @@ class PrimaryButtonWidget extends StatelessWidget {
         foregroundColor: textColor,
         elevation: 0,
         padding: padding,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
       ),
       child: isLoading
           ? SizedBox(

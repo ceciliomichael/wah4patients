@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../domain/calendar_event.dart';
@@ -57,11 +58,7 @@ class _CalendarViewModeDropdownState extends State<CalendarViewModeDropdown> {
     }
   }
 
-  double _measureTextWidth(
-    BuildContext context,
-    String text,
-    TextStyle style,
-  ) {
+  double _measureTextWidth(BuildContext context, String text, TextStyle style) {
     final textScaler = MediaQuery.textScalerOf(context);
     final painter = TextPainter(
       text: TextSpan(text: text, style: style),
@@ -119,7 +116,7 @@ class _CalendarViewModeDropdownState extends State<CalendarViewModeDropdown> {
                     width: menuWidth,
                     decoration: BoxDecoration(
                       color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadii.large,
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.black.withValues(alpha: 0.12),
@@ -129,7 +126,7 @@ class _CalendarViewModeDropdownState extends State<CalendarViewModeDropdown> {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadii.large,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: CalendarViewMode.values.map((mode) {
@@ -164,12 +161,13 @@ class _CalendarViewModeDropdownState extends State<CalendarViewModeDropdown> {
                                         _menuLabelFor(mode),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: AppTextStyles.labelLarge.copyWith(
-                                          color: isSelected
-                                              ? AppColors.primary
-                                              : AppColors.textPrimary,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                        style: AppTextStyles.labelLarge
+                                            .copyWith(
+                                              color: isSelected
+                                                  ? AppColors.primary
+                                                  : AppColors.textPrimary,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -211,15 +209,15 @@ class _CalendarViewModeDropdownState extends State<CalendarViewModeDropdown> {
       link: _layerLink,
       child: Material(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.medium,
         child: InkWell(
           onTap: _toggleMenu,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.medium,
           child: IntrinsicWidth(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.medium,
                 border: Border.all(color: AppColors.border),
               ),
               child: Row(

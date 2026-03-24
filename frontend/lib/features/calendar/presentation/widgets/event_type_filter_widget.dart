@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../domain/calendar_event.dart';
@@ -45,12 +46,16 @@ class EventTypeFilterWidget extends StatelessWidget {
               selectedColor: AppColors.primary.withValues(alpha: 0.15),
               checkmarkColor: AppColors.primary,
               labelStyle: AppTextStyles.labelLarge.copyWith(
-                color: selectedType == null ? AppColors.primary : AppColors.black,
+                color: selectedType == null
+                    ? AppColors.primary
+                    : AppColors.black,
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: AppRadii.large,
                 side: BorderSide(
-                  color: selectedType == null ? AppColors.primary : Colors.transparent,
+                  color: selectedType == null
+                      ? AppColors.primary
+                      : Colors.transparent,
                 ),
               ),
             ),
@@ -80,7 +85,7 @@ class EventTypeFilterWidget extends StatelessWidget {
                   color: isSelected ? typeColor : AppColors.black,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: AppRadii.large,
                   side: BorderSide(
                     color: isSelected ? typeColor : Colors.transparent,
                   ),

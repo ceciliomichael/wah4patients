@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 
 class AuthSurfaceCard extends StatelessWidget {
@@ -18,7 +19,7 @@ class AuthSurfaceCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.large,
         border: Border.all(color: AppColors.border, width: 1),
         boxShadow: [
           BoxShadow(

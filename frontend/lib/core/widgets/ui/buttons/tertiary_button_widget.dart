@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/app_border_radii.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 
@@ -21,9 +22,7 @@ class TertiaryButtonWidget extends StatelessWidget {
         foregroundColor: AppColors.tertiary,
         side: const BorderSide(color: AppColors.tertiary),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
       ),
       child: Text(
         text,

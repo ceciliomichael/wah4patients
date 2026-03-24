@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../dashboard/domain/dashboard_models.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -18,10 +19,10 @@ class DashboardServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: data.accentColor.withValues(alpha: 0.08),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.large,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.large,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
@@ -33,13 +34,9 @@ class DashboardServiceCard extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.medium,
                 ),
-                child: Icon(
-                  data.icon,
-                  size: 28,
-                  color: data.accentColor,
-                ),
+                child: Icon(data.icon, size: 28, color: data.accentColor),
               ),
               const SizedBox(height: 12),
               Text(

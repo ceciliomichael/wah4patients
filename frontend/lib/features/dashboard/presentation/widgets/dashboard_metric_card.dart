@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../dashboard/domain/dashboard_models.dart';
 
 class DashboardMetricCard extends StatelessWidget {
-  const DashboardMetricCard({
-    super.key,
-    required this.data,
-  });
+  const DashboardMetricCard({super.key, required this.data});
 
   final DashboardMetricData data;
 
@@ -18,7 +16,7 @@ class DashboardMetricCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: data.accentColor.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.large,
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -35,7 +33,7 @@ class DashboardMetricCard extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: AppRadii.small,
                         ),
                         child: Icon(
                           data.icon,
@@ -96,7 +94,7 @@ class DashboardMetricCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.medium,
                 ),
                 child: CustomPaint(
                   painter: _MetricTrendPainter(
@@ -114,10 +112,7 @@ class DashboardMetricCard extends StatelessWidget {
 }
 
 class _MetricTrendPainter extends CustomPainter {
-  const _MetricTrendPainter({
-    required this.points,
-    required this.color,
-  });
+  const _MetricTrendPainter({required this.points, required this.color});
 
   final List<double> points;
   final Color color;
@@ -138,9 +133,15 @@ class _MetricTrendPainter extends CustomPainter {
       ..color = color.withValues(alpha: 0.12)
       ..style = PaintingStyle.fill;
 
-    final minPoint = points.reduce((value, element) => value < element ? value : element);
-    final maxPoint = points.reduce((value, element) => value > element ? value : element);
-    final range = (maxPoint - minPoint).abs() < 0.001 ? 1.0 : maxPoint - minPoint;
+    final minPoint = points.reduce(
+      (value, element) => value < element ? value : element,
+    );
+    final maxPoint = points.reduce(
+      (value, element) => value > element ? value : element,
+    );
+    final range = (maxPoint - minPoint).abs() < 0.001
+        ? 1.0
+        : maxPoint - minPoint;
 
     final path = Path();
     final areaPath = Path();
@@ -148,7 +149,10 @@ class _MetricTrendPainter extends CustomPainter {
     for (var index = 0; index < points.length; index++) {
       final x = size.width * index / (points.length - 1);
       final normalized = (points[index] - minPoint) / range;
-      final y = size.height - (normalized * (size.height * 0.8)) - (size.height * 0.1);
+      final y =
+          size.height -
+          (normalized * (size.height * 0.8)) -
+          (size.height * 0.1);
 
       if (index == 0) {
         path.moveTo(x, y);

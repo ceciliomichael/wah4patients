@@ -37,7 +37,9 @@ class _SplashScreenState extends State<SplashScreen>
   static const Duration splashDuration = Duration(seconds: 5);
   static const Duration logoAnimationDuration = Duration(milliseconds: 1500);
   static const Duration textAnimationDuration = Duration(milliseconds: 1000);
-  static const Duration backgroundAnimationDuration = Duration(milliseconds: 2000);
+  static const Duration backgroundAnimationDuration = Duration(
+    milliseconds: 2000,
+  );
 
   Timer? _navigationTimer;
 
@@ -222,10 +224,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   Widget _buildLogoSection() {
     return AnimatedBuilder(
-      animation: Listenable.merge([
-        _logoScaleAnimation,
-        _logoOpacityAnimation,
-      ]),
+      animation: Listenable.merge([_logoScaleAnimation, _logoOpacityAnimation]),
       builder: (context, child) {
         return Opacity(
           opacity: _logoOpacityAnimation.value,

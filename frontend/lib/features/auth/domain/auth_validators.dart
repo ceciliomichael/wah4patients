@@ -1,8 +1,5 @@
 class PasswordRequirement {
-  const PasswordRequirement({
-    required this.description,
-    required this.isMet,
-  });
+  const PasswordRequirement({required this.description, required this.isMet});
 
   final String description;
   final bool isMet;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/app_border_radii.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 
@@ -24,6 +25,7 @@ class SecondaryButtonWidget extends StatelessWidget {
       style: TextButton.styleFrom(
         foregroundColor: textColor,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
