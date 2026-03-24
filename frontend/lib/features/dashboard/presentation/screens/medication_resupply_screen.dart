@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/feature/info_detail_screen.dart';
 import '../../domain/dashboard_models.dart';
+import '../../../medication_resupply/presentation/screens/medication_resupply_history_screen.dart';
+import '../../../medication_resupply/presentation/screens/medication_resupply_request_screen.dart';
 import 'feature_hub_screen.dart';
 
 class MedicationResupplyScreen extends StatelessWidget {
@@ -32,30 +33,24 @@ class MedicationResupplyScreen extends StatelessWidget {
       actions: actions,
       helpTitle: 'Medication Resupply Help',
       helpMessages: const <String>[
-        'The cards mirror the original two-choice action sheet.',
-        'You can replace these placeholders with real forms later.',
-        'The layout is intentionally light and readable.',
+        'Open Request Resupply to choose a medicine and fill out a refill request.',
+        'Open Prescription History to review earlier requests and their status.',
+        'The screens stay frontend-only and do not connect to backend services yet.',
       ],
       onActionTap: (action) {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => InfoDetailScreen(
-              title: action.title,
-              subtitle: action.description,
-              body:
-                  'This frontend-only placeholder keeps the medication flow '
-                  'visible without adding any service integration yet.',
-              icon: action.icon,
-              highlights: const <String>[
-                'Designed to be extended later',
-                'Keeps refill and history as separate actions',
-                'No backend logic included',
-              ],
-              primaryButtonText: 'Back to Medication Resupply',
-              onPrimaryPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-        );
+        final Widget screen = switch (action.title) {
+          'Request Resupply' => const MedicationResupplyRequestScreen(),
+          'Prescription History' => const MedicationResupplyHistoryScreen(),
+          _ => const SizedBox.shrink(),
+        };
+
+        if (screen is SizedBox) {
+          return;
+        }
+
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => screen));
       },
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/feature/info_detail_screen.dart';
 import '../../domain/dashboard_models.dart';
 import 'feature_hub_screen.dart';
+import '../../../phr/body_mass_index/presentation/screen/body_mass_index_screen.dart';
+import '../../../phr/blood_pressure/presentation/screen/blood_pressure_screen.dart';
+import '../../../phr/temperature/presentation/screen/temperature_screen.dart';
+import '../../../phr/medicine_intake/presentation/screen/medicine_intake_screen.dart';
 
 class PersonalRecordsScreen extends StatelessWidget {
   const PersonalRecordsScreen({super.key});
@@ -45,30 +48,26 @@ class PersonalRecordsScreen extends StatelessWidget {
       actions: actions,
       helpTitle: 'Personal Records Help',
       helpMessages: const <String>[
-        'Use these cards for the vital-signs and intake workflows.',
-        'The screens remain frontend-only and lightweight.',
-        'The card layout mirrors the old visual spacing.',
+        'Open any card to review or record that part of your personal health data.',
+        'Use the tabbed screens for quick entry and a simple record history.',
+        'Each flow keeps the same spacing and color language used across the app.',
       ],
       onActionTap: (action) {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => InfoDetailScreen(
-              title: action.title,
-              subtitle: action.description,
-              body:
-                  'This placeholder keeps the screen structure visible and '
-                  'scalable without binding the experience to any backend.',
-              icon: action.icon,
-              highlights: const <String>[
-                'Ready for future forms and charts',
-                'Shared spacing and typography system',
-                'No Supabase or API logic included',
-              ],
-              primaryButtonText: 'Back to Personal Records',
-              onPrimaryPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-        );
+        final Widget screen = switch (action.title) {
+          'Body Mass Index (BMI)' => const BodyMassIndexScreen(),
+          'Blood Pressure' => const BloodPressureScreen(),
+          'Temperature' => const TemperatureScreen(),
+          'Medicine Intake' => const MedicineIntakeScreen(),
+          _ => const SizedBox.shrink(),
+        };
+
+        if (screen is SizedBox) {
+          return;
+        }
+
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => screen));
       },
     );
   }

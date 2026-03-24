@@ -5,9 +5,9 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
-import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../domain/dashboard_models.dart';
 
 class FeatureHubScreen extends StatelessWidget {
@@ -47,7 +47,7 @@ class FeatureHubScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final horizontalPadding = screenWidth > 600 ? 36.0 : 20.0;
+    final horizontalPadding = screenWidth > 600 ? 32.0 : 16.0;
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -65,35 +65,17 @@ class FeatureHubScreen extends StatelessWidget {
           padding: EdgeInsets.only(
             left: horizontalPadding,
             right: horizontalPadding,
-            top: 24,
             bottom: 24,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: AppRadii.medium,
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  SecondaryButtonWidget(
-                    text: 'Help',
-                    onPressed: () => _showHelpDialog(context),
-                    textColor: AppColors.secondary,
-                  ),
-                ],
+              AppScreenHeader(
+                title: title,
+                onBackPressed: () => Navigator.of(context).pop(),
+                onHelpPressed: () => _showHelpDialog(context),
+                isTablet: screenWidth > 600,
+                topPadding: 24.0,
               ),
               const SizedBox(height: 24),
               Container(
