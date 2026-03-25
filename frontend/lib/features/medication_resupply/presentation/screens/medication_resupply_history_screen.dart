@@ -135,12 +135,21 @@ class _MedicationResupplyHistoryScreenState
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ResupplyScreenHeader(
-              title: 'Prescription History',
-              onBackPressed: () => Navigator.of(context).pop(),
-              onHelpPressed: _showHelpDialog,
+            Padding(
+              padding: EdgeInsets.only(
+                left: isTablet ? 32.0 : 16.0,
+                right: isTablet ? 32.0 : 16.0,
+                top: 8.0,
+              ),
+              child: ResupplyScreenHeader(
+                title: 'Prescription History',
+                onBackPressed: () => Navigator.of(context).pop(),
+                onHelpPressed: _showHelpDialog,
+              ),
             ),
+            const SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: isTablet ? 32.0 : 16.0),
               child: Row(

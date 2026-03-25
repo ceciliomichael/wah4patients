@@ -6,10 +6,6 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
-import '../../../legal/presentation/privacy_statement_screen.dart';
-import 'about_app_screen.dart';
-import 'about_us_screen.dart';
-import 'personal_information_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -54,14 +50,9 @@ class ProfileScreen extends StatelessWidget {
                         icon: Icons.person_outline,
                         description:
                             'Manage your personal details and profile settings',
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (context) =>
-                                  const PersonalInformationScreen(),
-                            ),
-                          );
-                        },
+                        onTap: () => Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.personalInformation),
                       ),
                       const SizedBox(height: 20),
                       _SectionHeader(title: 'Legal'),
@@ -72,14 +63,9 @@ class ProfileScreen extends StatelessWidget {
                         description:
                             'View our privacy statement and data usage information',
                         isSignOut: false,
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (context) =>
-                                  const PrivacyStatementScreen(),
-                            ),
-                          );
-                        },
+                        onTap: () => Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.privacyStatement),
                       ),
                       const SizedBox(height: 20),
                       _SectionHeader(title: 'About'),
@@ -88,13 +74,8 @@ class ProfileScreen extends StatelessWidget {
                         title: 'About Us',
                         icon: Icons.group_outlined,
                         description: 'Learn about our team and mission',
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (context) => const AboutUsScreen(),
-                            ),
-                          );
-                        },
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(AppRoutes.aboutUs),
                       ),
                       const SizedBox(height: 12),
                       _MenuCard(
@@ -102,13 +83,8 @@ class ProfileScreen extends StatelessWidget {
                         icon: Icons.info_outlined,
                         description:
                             'View app version, build details, and information',
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (context) => const AboutAppScreen(),
-                            ),
-                          );
-                        },
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(AppRoutes.aboutApp),
                       ),
                       const SizedBox(height: 28),
                       _SectionHeader(title: 'Account'),

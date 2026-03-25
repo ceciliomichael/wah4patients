@@ -53,4 +53,6 @@ class OnboardingPageRepository {
     actionButtonText: 'Get Started',
     isLastPage: true,
   );
+
+  static const List<OnboardingPageData> pages = [page1, page2, page3, page4];
 }

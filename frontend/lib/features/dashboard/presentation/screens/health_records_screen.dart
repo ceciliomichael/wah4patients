@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../domain/dashboard_models.dart';
-import '../../../health_records/presentation/screens/immunization_records_screen.dart';
-import '../../../health_records/presentation/screens/laboratory_results_screen.dart';
-import '../../../health_records/presentation/screens/medical_consultations_screen.dart';
-import '../../../health_records/presentation/screens/medical_history_screen.dart';
 import 'feature_hub_screen.dart';
 
 class HealthRecordsScreen extends StatelessWidget {
@@ -52,21 +49,19 @@ class HealthRecordsScreen extends StatelessWidget {
         'This screen is ready for real data integration later.',
       ],
       onActionTap: (action) {
-        final Widget screen = switch (action.title) {
-          'Medical History' => const MedicalHistoryScreen(),
-          'Immunization Records' => const ImmunizationRecordsScreen(),
-          'Medical Consultations' => const MedicalConsultationsScreen(),
-          'Laboratory Results' => const LaboratoryResultsScreen(),
-          _ => const SizedBox.shrink(),
+        final String? routeName = switch (action.title) {
+          'Medical History' => AppRoutes.medicalHistory,
+          'Immunization Records' => AppRoutes.immunizationRecords,
+          'Medical Consultations' => AppRoutes.medicalConsultations,
+          'Laboratory Results' => AppRoutes.laboratoryResults,
+          _ => null,
         };
 
-        if (screen is SizedBox) {
+        if (routeName == null) {
           return;
         }
 
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute<void>(builder: (_) => screen));
+        Navigator.of(context).pushNamed(routeName);
       },
     );
   }

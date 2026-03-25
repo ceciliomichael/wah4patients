@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../domain/dashboard_models.dart';
 import 'feature_hub_screen.dart';
-import '../../../phr/body_mass_index/presentation/screen/body_mass_index_screen.dart';
-import '../../../phr/blood_pressure/presentation/screen/blood_pressure_screen.dart';
-import '../../../phr/temperature/presentation/screen/temperature_screen.dart';
-import '../../../phr/medicine_intake/presentation/screen/medicine_intake_screen.dart';
 
 class PersonalRecordsScreen extends StatelessWidget {
   const PersonalRecordsScreen({super.key});
@@ -53,21 +50,19 @@ class PersonalRecordsScreen extends StatelessWidget {
         'Each flow keeps the same spacing and color language used across the app.',
       ],
       onActionTap: (action) {
-        final Widget screen = switch (action.title) {
-          'Body Mass Index (BMI)' => const BodyMassIndexScreen(),
-          'Blood Pressure' => const BloodPressureScreen(),
-          'Temperature' => const TemperatureScreen(),
-          'Medicine Intake' => const MedicineIntakeScreen(),
-          _ => const SizedBox.shrink(),
+        final String? routeName = switch (action.title) {
+          'Body Mass Index (BMI)' => AppRoutes.bodyMassIndex,
+          'Blood Pressure' => AppRoutes.bloodPressure,
+          'Temperature' => AppRoutes.temperature,
+          'Medicine Intake' => AppRoutes.medicineIntake,
+          _ => null,
         };
 
-        if (screen is SizedBox) {
+        if (routeName == null) {
           return;
         }
 
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute<void>(builder: (_) => screen));
+        Navigator.of(context).pushNamed(routeName);
       },
     );
   }

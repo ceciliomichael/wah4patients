@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../appointments/presentation/screens/onsite_consultation_screen.dart';
-import '../../../appointments/presentation/screens/teleconsultation_screen.dart';
 import '../../domain/dashboard_models.dart';
 import 'feature_hub_screen.dart';
 
@@ -38,19 +37,17 @@ class AppointmentsScreen extends StatelessWidget {
         'Onsite and teleconsultation each keep their own details step.',
       ],
       onActionTap: (action) {
-        final Widget screen = switch (action.title) {
-          'Onsite Consultation' => const OnsiteConsultationScreen(),
-          'Teleconsultation' => const TeleconsultationScreen(),
-          _ => const SizedBox.shrink(),
+        final String? routeName = switch (action.title) {
+          'Onsite Consultation' => AppRoutes.onsiteConsultation,
+          'Teleconsultation' => AppRoutes.teleconsultation,
+          _ => null,
         };
 
-        if (screen is SizedBox) {
+        if (routeName == null) {
           return;
         }
 
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute<void>(builder: (_) => screen));
+        Navigator.of(context).pushNamed(routeName);
       },
     );
   }

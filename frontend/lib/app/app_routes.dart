@@ -16,9 +16,30 @@ class AppRoutes {
   static const String authPreview = '/auth/preview';
   static const String dashboard = '/dashboard';
   static const String healthRecords = '/dashboard/health-records';
+  static const String medicalHistory = '/dashboard/health-records/history';
+  static const String immunizationRecords =
+      '/dashboard/health-records/immunizations';
+  static const String medicalConsultations =
+      '/dashboard/health-records/consultations';
+  static const String laboratoryResults =
+      '/dashboard/health-records/laboratory-results';
   static const String personalRecords = '/dashboard/personal-records';
+  static const String bodyMassIndex = '/dashboard/personal-records/bmi';
+  static const String bloodPressure =
+      '/dashboard/personal-records/blood-pressure';
+  static const String temperature = '/dashboard/personal-records/temperature';
+  static const String medicineIntake =
+      '/dashboard/personal-records/medicine-intake';
   static const String appointments = '/dashboard/appointments';
+  static const String onsiteConsultation =
+      '/dashboard/appointments/onsite-consultation';
+  static const String teleconsultation =
+      '/dashboard/appointments/teleconsultation';
   static const String medicationResupply = '/dashboard/medication-resupply';
+  static const String medicationResupplyRequest =
+      '/dashboard/medication-resupply/request';
+  static const String medicationResupplyHistory =
+      '/dashboard/medication-resupply/history';
   static const String calendar = '/calendar';
   static const String notification = '/notification';
   static const String profile = '/profile';

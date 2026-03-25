@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../domain/dashboard_models.dart';
-import '../../../medication_resupply/presentation/screens/medication_resupply_history_screen.dart';
-import '../../../medication_resupply/presentation/screens/medication_resupply_request_screen.dart';
 import 'feature_hub_screen.dart';
 
 class MedicationResupplyScreen extends StatelessWidget {
@@ -38,19 +37,17 @@ class MedicationResupplyScreen extends StatelessWidget {
         'The screens stay frontend-only and do not connect to backend services yet.',
       ],
       onActionTap: (action) {
-        final Widget screen = switch (action.title) {
-          'Request Resupply' => const MedicationResupplyRequestScreen(),
-          'Prescription History' => const MedicationResupplyHistoryScreen(),
-          _ => const SizedBox.shrink(),
+        final String? routeName = switch (action.title) {
+          'Request Resupply' => AppRoutes.medicationResupplyRequest,
+          'Prescription History' => AppRoutes.medicationResupplyHistory,
+          _ => null,
         };
 
-        if (screen is SizedBox) {
+        if (routeName == null) {
           return;
         }
 
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute<void>(builder: (_) => screen));
+        Navigator.of(context).pushNamed(routeName);
       },
     );
   }
