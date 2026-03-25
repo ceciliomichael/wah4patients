@@ -301,35 +301,11 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   }
 
   Widget _buildSummaryCard(_BloodPressureHistoryEntry entry) {
-    return _buildReadingCard(
-      icon: Icons.favorite_outline,
-      iconColor: _categoryColor(entry.category),
-      title: 'Latest Reading',
-      value: '${entry.systolic}/${entry.diastolic}',
-      valueStyle: AppTextStyles.headlineLarge.copyWith(
-        color: AppColors.primary,
-        fontWeight: FontWeight.bold,
-      ),
-      detailRows: <Widget>[
-        _buildHistoryDetailRow('Systolic', '${entry.systolic} mmHg'),
-        _buildHistoryDetailRow('Diastolic', '${entry.diastolic} mmHg'),
-        _buildHistoryDetailRow('Category', entry.category),
-        _buildHistoryDetailRow('Recorded on', _formatDate(entry.recordedAt)),
-      ],
-    );
-  }
+    final categoryColor = _categoryColor(entry.category);
 
-  Widget _buildReadingCard({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required String value,
-    required TextStyle valueStyle,
-    required List<Widget> detailRows,
-  }) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: AppRadii.extraLarge,
@@ -346,45 +322,57 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 56,
-                height: 56,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
-                  color: iconColor.withValues(alpha: 0.12),
+                  color: categoryColor.withValues(alpha: 0.12),
                   borderRadius: AppRadii.extraLarge,
                 ),
-                child: Icon(icon, color: iconColor, size: 28),
+                child: Icon(
+                  Icons.favorite_outline,
+                  color: categoryColor,
+                  size: 24,
+                ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      value,
-                      style: valueStyle,
-                    ),
-                  ],
+                child: Text(
+                  'Latest Reading',
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          const Divider(color: AppColors.border, height: 1),
-          for (int i = 0; i < detailRows.length; i++) ...[
-            detailRows[i],
-            if (i != detailRows.length - 1)
-              const Divider(color: AppColors.border, height: 1),
-          ],
+          _buildHistoryRow(
+            label: 'Systolic',
+            value: '${entry.systolic} mmHg',
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Diastolic',
+            value: '${entry.diastolic} mmHg',
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Category',
+            value: entry.category,
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Recorded on',
+            value: _formatDate(entry.recordedAt),
+          ),
         ],
       ),
     );
@@ -418,65 +406,105 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     return ListView.separated(
       padding: const EdgeInsets.only(bottom: 24),
       itemCount: _history.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final entry = _history[index];
-        return _buildHistoryListItem(entry: entry, index: index);
+        final categoryColor = _categoryColor(entry.category);
+
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: AppRadii.extraLarge,
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: categoryColor.withValues(alpha: 0.12),
+                      borderRadius: AppRadii.extraLarge,
+                    ),
+                    child: Icon(
+                      Icons.favorite_outline,
+                      color: categoryColor,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Reading ${index + 1}',
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _buildHistoryRow(
+                label: 'Systolic',
+                value: '${entry.systolic} mmHg',
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildHistoryRow(
+                label: 'Diastolic',
+                value: '${entry.diastolic} mmHg',
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildHistoryRow(
+                label: 'Category',
+                value: entry.category,
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildHistoryRow(
+                label: 'Recorded on',
+                value: _formatDate(entry.recordedAt),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
 
-  Widget _buildHistoryListItem({
-    required _BloodPressureHistoryEntry entry,
-    required int index,
+  Widget _buildHistoryRow({
+    required String label,
+    required String value,
   }) {
-    final categoryColor = _categoryColor(entry.category);
-
-    return _buildReadingCard(
-      icon: Icons.favorite_outline,
-      iconColor: categoryColor,
-      title: 'Reading ${index + 1}',
-      value: '${entry.systolic}/${entry.diastolic}',
-      valueStyle: AppTextStyles.headlineSmall.copyWith(
-        fontWeight: FontWeight.w700,
-      ),
-      detailRows: <Widget>[
-        _buildHistoryDetailRow('Systolic', '${entry.systolic} mmHg'),
-        _buildHistoryDetailRow('Diastolic', '${entry.diastolic} mmHg'),
-        _buildHistoryDetailRow('Category', entry.category),
-        _buildHistoryDetailRow('Recorded on', _formatDate(entry.recordedAt)),
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Text(
+          value,
+          textAlign: TextAlign.end,
+          style: AppTextStyles.titleSmall.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
       ],
-    );
-  }
-
-  Widget _buildHistoryDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Flexible(
-            child: Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.right,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

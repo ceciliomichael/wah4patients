@@ -20,11 +20,14 @@ class MedicineIntakeMedicineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = entry.status.color;
+
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.extraLarge,
       child: Container(
-        padding: const EdgeInsets.all(18),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: AppRadii.extraLarge,
@@ -37,32 +40,33 @@ class MedicineIntakeMedicineCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 52,
-                  height: 52,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.12),
-                    borderRadius: AppRadii.medium,
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: AppRadii.extraLarge,
                   ),
-                  child: const Icon(
-                    Icons.medication_outlined,
-                    color: AppColors.primary,
+                  child: Icon(
+                    entry.status.icon,
+                    color: statusColor,
+                    size: 24,
                   ),
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         entry.name,
-                        style: AppTextStyles.titleLarge.copyWith(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         entry.dosage,
-                        style: AppTextStyles.bodyMedium.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -76,34 +80,31 @@ class MedicineIntakeMedicineCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                _statusChip(entry.status),
-                _detailChip('Schedule', entry.schedule),
-                _detailChip('Next dose', entry.nextDose),
-              ],
+            const SizedBox(height: 16),
+            _buildDetailRow(
+              label: 'Schedule',
+              value: entry.schedule,
+            ),
+            const SizedBox(height: 12),
+            const Divider(height: 1, thickness: 1),
+            const SizedBox(height: 12),
+            _buildDetailRow(
+              label: 'Next dose',
+              value: entry.nextDose,
+            ),
+            const SizedBox(height: 12),
+            const Divider(height: 1, thickness: 1),
+            const SizedBox(height: 12),
+            _buildDetailRow(
+              label: 'Status',
+              value: entry.status.label,
+              valueColor: statusColor,
             ),
             if (isExpanded) ...[
-              const SizedBox(height: 16),
-              const Divider(height: 1),
-              const SizedBox(height: 16),
-              Text(
-                'Notes',
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                entry.notes,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildNotesSection(entry.notes),
             ],
           ],
         ),
@@ -111,35 +112,73 @@ class MedicineIntakeMedicineCard extends StatelessWidget {
     );
   }
 
-  Widget _statusChip(MedicineStatus status) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: status.color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.pill,
-      ),
-      child: Text(
-        status.label,
-        style: AppTextStyles.labelMedium.copyWith(
-          color: status.color,
-          fontWeight: FontWeight.w700,
+  Widget _buildNotesSection(String notes) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Notes',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
-      ),
+        const SizedBox(height: 8),
+        Text(
+          notes,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w600,
+            height: 1.4,
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _detailChip(String label, String value) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: AppRadii.large,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Text(
-        '$label: $value',
-        style: AppTextStyles.labelMedium.copyWith(color: AppColors.textPrimary),
-      ),
+  Widget _buildDetailRow({
+    required String label,
+    required String value,
+    Color? valueColor,
+    TextAlign valueTextAlign = TextAlign.end,
+    TextStyle? valueStyle,
+    bool valueExpanded = false,
+  }) {
+    final resolvedValueStyle = valueStyle ??
+        AppTextStyles.titleSmall.copyWith(
+          fontWeight: FontWeight.w700,
+          color: valueColor ?? AppColors.textPrimary,
+        );
+
+    return Row(
+      crossAxisAlignment: valueExpanded
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        if (valueExpanded)
+          Expanded(
+            flex: 2,
+            child: Text(
+              value,
+              textAlign: valueTextAlign,
+              style: resolvedValueStyle,
+            ),
+          )
+        else
+          Text(
+            value,
+            textAlign: valueTextAlign,
+            style: resolvedValueStyle,
+          ),
+      ],
     );
   }
 }

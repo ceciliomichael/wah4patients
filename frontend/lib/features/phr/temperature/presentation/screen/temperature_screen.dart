@@ -331,7 +331,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     final categoryColor = _categoryColor(entry.category);
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: AppRadii.extraLarge,
@@ -343,49 +344,23 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
           Row(
             children: [
               Container(
-                width: 54,
-                height: 54,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: categoryColor.withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
+                  borderRadius: AppRadii.extraLarge,
                 ),
-                child: Icon(Icons.thermostat_outlined, color: categoryColor),
+                child: Icon(
+                  Icons.thermostat_outlined,
+                  color: categoryColor,
+                  size: 24,
+                ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Latest Temperature',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
-                      style: AppTextStyles.headlineLarge.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.pill,
-                ),
                 child: Text(
-                  entry.category,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: categoryColor,
+                  'Latest Temperature',
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -393,50 +368,30 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              _metricChip(
-                'Value',
-                '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
-              ),
-              _metricChip(
-                'Celsius',
-                '${_toCelsius(entry.temperature).toStringAsFixed(1)}°C',
-              ),
-              _metricChip('Recorded', _formatDate(entry.recordedAt)),
-            ],
+          _buildTemperatureRow(
+            label: 'Value',
+            value: '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _metricChip(String label, String value) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: AppRadii.large,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildTemperatureRow(
+            label: 'Celsius',
+            value: '${_toCelsius(entry.temperature).toStringAsFixed(1)}°C',
           ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: AppTextStyles.titleSmall.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildTemperatureRow(
+            label: 'Category',
+            value: entry.category,
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildTemperatureRow(
+            label: 'Recorded on',
+            value: _formatDate(entry.recordedAt),
           ),
         ],
       ),
@@ -474,69 +429,102 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final entry = _history[index];
-        final categoryColor = _categoryColor(entry.category);
 
         return Container(
-          padding: const EdgeInsets.all(18),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: AppRadii.extraLarge,
             border: Border.all(color: AppColors.border),
           ),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.medium,
-                ),
-                child: Icon(Icons.thermostat_outlined, color: categoryColor),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol} · ${entry.category}',
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.12),
+                      borderRadius: AppRadii.extraLarge,
+                    ),
+                    child: const Icon(
+                      Icons.thermostat_outlined,
+                      color: AppColors.primary,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Reading ${index + 1}',
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Recorded on ${_formatDate(entry.recordedAt)}',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.pill,
-                ),
-                child: Text(
-                  entry.category,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: categoryColor,
-                    fontWeight: FontWeight.w700,
                   ),
-                ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _buildTemperatureRow(
+                label: 'Value',
+                value:
+                    '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildTemperatureRow(
+                label: 'Celsius',
+                value: '${_toCelsius(entry.temperature).toStringAsFixed(1)}°C',
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildTemperatureRow(
+                label: 'Category',
+                value: entry.category,
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1, thickness: 1),
+              const SizedBox(height: 12),
+              _buildTemperatureRow(
+                label: 'Recorded on',
+                value: _formatDate(entry.recordedAt),
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildTemperatureRow({
+    required String label,
+    required String value,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Text(
+          value,
+          textAlign: TextAlign.end,
+          style: AppTextStyles.titleSmall.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ],
     );
   }
 }

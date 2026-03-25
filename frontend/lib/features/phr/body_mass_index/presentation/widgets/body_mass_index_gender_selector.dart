@@ -27,29 +27,89 @@ class BodyMassIndexGenderSelector extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: BmiGender.values.map((gender) {
-            final isSelected = selectedGender == gender;
-            return ChoiceChip(
-              label: Text(gender.label),
-              selected: isSelected,
-              selectedColor: AppColors.secondary.withValues(alpha: 0.1),
-              backgroundColor: AppColors.surface,
-              labelStyle: AppTextStyles.labelLarge.copyWith(
-                color: isSelected ? AppColors.secondary : AppColors.textPrimary,
-                fontWeight: FontWeight.w600,
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: AppRadii.large,
+            border: Border.all(color: AppColors.border),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: _GenderSegment(
+                  label: 'Male',
+                  selected: selectedGender == BmiGender.male,
+                  selectedColor: AppColors.primary,
+                  onTap: () => onGenderChanged(BmiGender.male),
+                ),
               ),
-              onSelected: (_) => onGenderChanged(gender),
-              side: BorderSide(
-                color: isSelected ? AppColors.secondary : AppColors.border,
+              Container(width: 1, height: 48, color: AppColors.border),
+              Expanded(
+                child: _GenderSegment(
+                  label: 'Female',
+                  selected: selectedGender == BmiGender.female,
+                  selectedColor: AppColors.secondary,
+                  onTap: () => onGenderChanged(BmiGender.female),
+                ),
               ),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
-            );
-          }).toList(),
+              Container(width: 1, height: 48, color: AppColors.border),
+              Expanded(
+                child: _GenderSegment(
+                  label: 'Other',
+                  selected: selectedGender == BmiGender.other,
+                  selectedColor: AppColors.tertiary,
+                  onTap: () => onGenderChanged(BmiGender.other),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
+    );
+  }
+}
+
+class _GenderSegment extends StatelessWidget {
+  const _GenderSegment({
+    required this.label,
+    required this.selected,
+    required this.selectedColor,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final Color selectedColor;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: Material(
+        color: selected
+            ? selectedColor.withValues(alpha: 0.12)
+            : Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: SizedBox(
+            height: 48,
+            child: Center(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.labelLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: selected ? selectedColor : AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

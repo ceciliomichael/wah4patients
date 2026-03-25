@@ -16,59 +16,97 @@ class BodyMassIndexHistoryItem extends StatelessWidget {
     final categoryColor = bmiCategoryColor(entry.category);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: AppRadii.large,
+        borderRadius: AppRadii.extraLarge,
         border: Border.all(color: AppColors.border),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: categoryColor.withValues(alpha: 0.12),
-              borderRadius: AppRadii.medium,
-            ),
-            child: Icon(
-              Icons.monitor_weight_outlined,
-              color: categoryColor,
-              size: 22,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${entry.bmi.toStringAsFixed(1)} BMI',
-                  style: AppTextStyles.titleLarge.copyWith(
+          Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: categoryColor.withValues(alpha: 0.12),
+                  borderRadius: AppRadii.extraLarge,
+                ),
+                child: Icon(
+                  Icons.monitor_weight_outlined,
+                  color: categoryColor,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Reading',
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: categoryColor,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '${formatMeasurement(entry)} · ${entry.gender.label} · ${entry.age} yrs',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SizedBox(width: 10),
-          Text(
-            formatDate(entry.recordedAt),
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w600,
-            ),
+          const SizedBox(height: 16),
+          _buildHistoryRow(
+            label: 'BMI',
+            value: entry.bmi.toStringAsFixed(1),
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Measurement',
+            value: formatMeasurement(entry),
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Category',
+            value: entry.category,
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 12),
+          _buildHistoryRow(
+            label: 'Recorded on',
+            value: formatDate(entry.recordedAt),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHistoryRow({
+    required String label,
+    required String value,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Text(
+          value,
+          textAlign: TextAlign.end,
+          style: AppTextStyles.titleSmall.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ],
     );
   }
 }
