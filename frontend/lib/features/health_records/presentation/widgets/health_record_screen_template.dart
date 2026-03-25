@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../models/health_record_models.dart';
-import 'health_record_detail_dialog.dart';
+import 'health_record_detail_sheet_widget.dart';
 import 'health_record_list_item.dart';
 import 'health_record_search_filter_bar.dart';
 
@@ -73,10 +74,14 @@ class _HealthRecordScreenTemplateState
     );
   }
 
-  void _showDetailDialog(HealthRecordEntry entry) {
-    showDialog<void>(
+  void _showDetailSheet(HealthRecordEntry entry) {
+    showModalBottomSheet<void>(
       context: context,
-      builder: (_) => HealthRecordDetailDialog(entry: entry),
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topRounded),
+      clipBehavior: Clip.antiAlias,
+      builder: (_) => HealthRecordDetailSheetWidget(entry: entry),
     );
   }
 
@@ -132,7 +137,7 @@ class _HealthRecordScreenTemplateState
                           final entry = entries[index];
                           return HealthRecordListItem(
                             entry: entry,
-                            onTap: () => _showDetailDialog(entry),
+                            onTap: () => _showDetailSheet(entry),
                           );
                         },
                       ),
