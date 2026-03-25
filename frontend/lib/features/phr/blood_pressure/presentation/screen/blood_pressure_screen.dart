@@ -301,28 +301,61 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   }
 
   Widget _buildSummaryCard(_BloodPressureHistoryEntry entry) {
-    final categoryColor = _categoryColor(entry.category);
+    return _buildReadingCard(
+      icon: Icons.favorite_outline,
+      iconColor: _categoryColor(entry.category),
+      title: 'Latest Reading',
+      value: '${entry.systolic}/${entry.diastolic}',
+      valueStyle: AppTextStyles.headlineLarge.copyWith(
+        color: AppColors.primary,
+        fontWeight: FontWeight.bold,
+      ),
+      detailRows: <Widget>[
+        _buildHistoryDetailRow('Systolic', '${entry.systolic} mmHg'),
+        _buildHistoryDetailRow('Diastolic', '${entry.diastolic} mmHg'),
+        _buildHistoryDetailRow('Category', entry.category),
+        _buildHistoryDetailRow('Recorded on', _formatDate(entry.recordedAt)),
+      ],
+    );
+  }
 
+  Widget _buildReadingCard({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String value,
+    required TextStyle valueStyle,
+    required List<Widget> detailRows,
+  }) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: AppRadii.extraLarge,
         border: Border.all(color: AppColors.border),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.04),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 54,
-                height: 54,
+                width: 56,
+                height: 56,
                 decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
+                  color: iconColor.withValues(alpha: 0.12),
+                  borderRadius: AppRadii.extraLarge,
                 ),
-                child: Icon(Icons.favorite_outline, color: categoryColor),
+                child: Icon(icon, color: iconColor, size: 28),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -330,81 +363,28 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Latest Reading',
+                      title,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${entry.systolic}/${entry.diastolic}',
-                      style: AppTextStyles.headlineLarge.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      value,
+                      style: valueStyle,
                     ),
                   ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.pill,
-                ),
-                child: Text(
-                  entry.category,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: categoryColor,
-                    fontWeight: FontWeight.w700,
-                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              _metricChip('Systolic', '${entry.systolic} mmHg'),
-              _metricChip('Diastolic', '${entry.diastolic} mmHg'),
-              _metricChip('Recorded', _formatDate(entry.recordedAt)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _metricChip(String label, String value) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: AppRadii.large,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: AppTextStyles.titleSmall.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          const Divider(color: AppColors.border, height: 1),
+          for (int i = 0; i < detailRows.length; i++) ...[
+            detailRows[i],
+            if (i != detailRows.length - 1)
+              const Divider(color: AppColors.border, height: 1),
+          ],
         ],
       ),
     );
@@ -438,72 +418,65 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     return ListView.separated(
       padding: const EdgeInsets.only(bottom: 24),
       itemCount: _history.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, __) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final entry = _history[index];
-        final categoryColor = _categoryColor(entry.category);
-
-        return Container(
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: AppRadii.extraLarge,
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.medium,
-                ),
-                child: Icon(Icons.favorite_outline, color: categoryColor),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${entry.systolic}/${entry.diastolic} · ${entry.category}',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Recorded on ${_formatDate(entry.recordedAt)}',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: categoryColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.pill,
-                ),
-                child: Text(
-                  entry.category,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: categoryColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
+        return _buildHistoryListItem(entry: entry, index: index);
       },
+    );
+  }
+
+  Widget _buildHistoryListItem({
+    required _BloodPressureHistoryEntry entry,
+    required int index,
+  }) {
+    final categoryColor = _categoryColor(entry.category);
+
+    return _buildReadingCard(
+      icon: Icons.favorite_outline,
+      iconColor: categoryColor,
+      title: 'Reading ${index + 1}',
+      value: '${entry.systolic}/${entry.diastolic}',
+      valueStyle: AppTextStyles.headlineSmall.copyWith(
+        fontWeight: FontWeight.w700,
+      ),
+      detailRows: <Widget>[
+        _buildHistoryDetailRow('Systolic', '${entry.systolic} mmHg'),
+        _buildHistoryDetailRow('Diastolic', '${entry.diastolic} mmHg'),
+        _buildHistoryDetailRow('Category', entry.category),
+        _buildHistoryDetailRow('Recorded on', _formatDate(entry.recordedAt)),
+      ],
+    );
+  }
+
+  Widget _buildHistoryDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Flexible(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.right,
+              style: AppTextStyles.titleMedium.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
