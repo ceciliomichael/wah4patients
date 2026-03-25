@@ -5,6 +5,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../../health_records/presentation/widgets/health_record_search_filter_bar.dart';
 import '../models/medication_resupply_models.dart';
 import '../widgets/resupply_screen_header.dart';
 
@@ -149,91 +150,31 @@ class _MedicationResupplyHistoryScreenState
                 onHelpPressed: _showHelpDialog,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: isTablet ? 32.0 : 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.surface,
-                        borderRadius: AppRadii.large,
-                        border: Border.all(color: AppColors.border),
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (_) => setState(() {}),
-                        style: AppTextStyles.bodyLarge,
-                        decoration: InputDecoration(
-                          hintText: 'Search prescriptions',
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            color: AppColors.primary,
-                          ),
-                          suffixIcon: _searchController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.close,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _searchController.clear();
-                                    });
-                                  },
-                                )
-                              : null,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Container(
-                    height: 56,
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: AppRadii.large,
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _statusFilter,
-                        borderRadius: AppRadii.large,
-                        icon: const Icon(
-                          Icons.filter_list,
-                          color: AppColors.primary,
-                        ),
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        items:
-                            const <String>[
-                              'All',
-                              'Pending',
-                              'Approved',
-                              'Rejected',
-                              'Cancelled',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value == 'All' ? 'All status' : value,
-                                ),
-                              );
-                            }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _statusFilter = value ?? 'All';
-                          });
-                        },
-                      ),
-                    ),
-                  ),
+              child: HealthRecordSearchFilterBar(
+                searchController: _searchController,
+                searchHint: 'Search prescriptions',
+                selectedFilter: _statusFilter,
+                filterOptions: const <String>[
+                  'All',
+                  'Pending',
+                  'Approved',
+                  'Rejected',
+                  'Cancelled',
                 ],
+                onSearchChanged: (_) => setState(() {}),
+                onClearSearch: () {
+                  setState(() {
+                    _searchController.clear();
+                  });
+                },
+                onFilterChanged: (value) {
+                  setState(() {
+                    _statusFilter = value ?? 'All';
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
