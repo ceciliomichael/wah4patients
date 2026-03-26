@@ -43,11 +43,15 @@ void main() {
 
     expect(find.text('COVID-19 Booster'), findsOneWidget);
     expect(find.text('mRNA vaccine booster dose'), findsOneWidget);
-    expect(find.text('Status'), findsOneWidget);
     expect(find.text('Completed'), findsOneWidget);
     expect(find.text('Clinic: WAH Community Clinic'), findsOneWidget);
+    expect(find.text('Details'), findsOneWidget);
     expect(find.text('Dose'), findsOneWidget);
     expect(find.text('Booster'), findsOneWidget);
+    expect(find.text('Date'), findsOneWidget);
+    expect(find.text('January 08, 2026'), findsOneWidget);
+    expect(find.text('Performer'), findsOneWidget);
+    expect(find.text('Nurse Garcia'), findsOneWidget);
     expect(find.text('Lot number'), findsOneWidget);
     expect(find.text('CVB-24018'), findsOneWidget);
   });
