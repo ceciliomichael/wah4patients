@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../models/health_record_models.dart';
-import 'health_record_detail_sheet_widget.dart';
 import 'health_record_list_item.dart';
 import 'health_record_search_filter_bar.dart';
 
@@ -24,6 +22,7 @@ class _HealthRecordScreenTemplateState
     extends State<HealthRecordScreenTemplate> {
   final TextEditingController _searchController = TextEditingController();
   late String _selectedFilter;
+  final Set<String> _expandedEntryIds = <String>{};
 
   @override
   void initState() {
@@ -35,6 +34,16 @@ class _HealthRecordScreenTemplateState
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _toggleExpanded(String entryId) {
+    setState(() {
+      if (_expandedEntryIds.contains(entryId)) {
+        _expandedEntryIds.remove(entryId);
+      } else {
+        _expandedEntryIds.add(entryId);
+      }
+    });
   }
 
   List<HealthRecordEntry> get _filteredEntries {
@@ -71,17 +80,6 @@ class _HealthRecordScreenTemplateState
           onClose: () => Navigator.of(dialogContext).pop(),
         );
       },
-    );
-  }
-
-  void _showDetailSheet(HealthRecordEntry entry) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topRounded),
-      clipBehavior: Clip.antiAlias,
-      builder: (_) => HealthRecordDetailSheetWidget(entry: entry),
     );
   }
 
@@ -135,9 +133,13 @@ class _HealthRecordScreenTemplateState
                         separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final entry = entries[index];
+                          final isExpanded = _expandedEntryIds.contains(
+                            entry.id,
+                          );
                           return HealthRecordListItem(
                             entry: entry,
-                            onTap: () => _showDetailSheet(entry),
+                            isExpanded: isExpanded,
+                            onTap: () => _toggleExpanded(entry.id),
                           );
                         },
                       ),
