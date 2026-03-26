@@ -65,18 +65,38 @@ class DashboardHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 16),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: AppRadii.medium,
-          ),
-          child: IconButton(
-            onPressed: onHelpPressed,
-            tooltip: 'Help',
-            icon: const Icon(Icons.help_outline, color: AppColors.primary),
+        _HeaderHelpButton(onPressed: onHelpPressed),
+      ],
+    );
+  }
+}
+
+class _HeaderHelpButton extends StatelessWidget {
+  const _HeaderHelpButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.primary.withValues(alpha: 0.1),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.medium),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onPressed,
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.medium,
+        ),
+        splashColor: AppColors.black.withValues(alpha: 0.12),
+        highlightColor: AppColors.black.withValues(alpha: 0.08),
+        child: const SizedBox(
+          width: 48,
+          height: 48,
+          child: Center(
+            child: Icon(Icons.help_outline, size: 22, color: AppColors.primary),
           ),
         ),
-      ],
+      ),
     );
   }
 }

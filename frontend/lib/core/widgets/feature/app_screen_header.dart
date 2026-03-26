@@ -27,17 +27,7 @@ class AppScreenHeader extends StatelessWidget {
       padding: EdgeInsets.only(top: topPadding, bottom: 8.0),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: AppRadii.medium,
-              border: Border.all(color: AppColors.border),
-            ),
-            child: IconButton(
-              onPressed: onBackPressed,
-              icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-            ),
-          ),
+          _HeaderBackButton(onPressed: onBackPressed),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
@@ -55,6 +45,43 @@ class AppScreenHeader extends StatelessWidget {
             icon: Icons.help_outline,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HeaderBackButton extends StatelessWidget {
+  const _HeaderBackButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.medium,
+        side: BorderSide(color: AppColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onPressed,
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.medium,
+        ),
+        splashColor: AppColors.black.withValues(alpha: 0.12),
+        highlightColor: AppColors.black.withValues(alpha: 0.08),
+        child: const SizedBox(
+          width: 48,
+          height: 48,
+          child: Center(
+            child: Icon(
+              Icons.arrow_back,
+              size: 22,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
       ),
     );
   }
