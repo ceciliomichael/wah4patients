@@ -4,8 +4,7 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
-import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
+import '../widgets/sign_out_confirmation_sheet_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -110,49 +109,20 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showLogoutConfirmationModal(BuildContext context) {
-    showDialog<void>(
+    showModalBottomSheet<void>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.extraLarge),
-          title: Text(
-            'Sign Out',
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          content: Text(
-            'Do you want to sign out of the preview build and return to the splash screen?',
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-          actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          actions: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SecondaryButtonWidget(
-                  text: 'Cancel',
-                  onPressed: () => Navigator.of(dialogContext).pop(),
-                ),
-                const SizedBox(height: 8),
-                PrimaryButtonWidget(
-                  text: 'Sign Out',
-                  backgroundColor: AppColors.danger,
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      AppRoutes.splash,
-                      (route) => false,
-                    );
-                  },
-                  icon: Icons.logout,
-                ),
-              ],
-            ),
-          ],
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.topRounded),
+      clipBehavior: Clip.antiAlias,
+      builder: (sheetContext) {
+        return SignOutConfirmationSheetWidget(
+          onSignOut: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoutes.splash,
+              (route) => false,
+            );
+          },
         );
       },
     );
