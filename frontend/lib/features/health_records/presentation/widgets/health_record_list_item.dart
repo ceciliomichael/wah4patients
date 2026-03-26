@@ -25,6 +25,11 @@ class HealthRecordListItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.large,
+        splashFactory: NoSplash.splashFactory,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(20),
