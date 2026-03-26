@@ -13,7 +13,8 @@ void main() {
       id: 'imm-001',
       title: 'COVID-19 Booster',
       subtitle: 'mRNA vaccine booster dose',
-      caption: 'Clinic: WAH Community Clinic',
+      summaryLabel: 'Clinic',
+      summaryValue: 'WAH Community Clinic',
       filterValue: 'Completed',
       statusLabel: 'Completed',
       statusColor: AppColors.success,
@@ -24,6 +25,10 @@ void main() {
         HealthRecordDetailField(label: 'Date', value: 'January 08, 2026'),
         HealthRecordDetailField(label: 'Performer', value: 'Nurse Garcia'),
         HealthRecordDetailField(label: 'Lot number', value: 'CVB-24018'),
+        HealthRecordDetailField(
+          label: 'Note',
+          value: 'Administered at WAH Community Clinic',
+        ),
       ],
     );
 
@@ -43,8 +48,10 @@ void main() {
 
     expect(find.text('COVID-19 Booster'), findsOneWidget);
     expect(find.text('mRNA vaccine booster dose'), findsOneWidget);
+    expect(find.text('Status'), findsOneWidget);
     expect(find.text('Completed'), findsOneWidget);
-    expect(find.text('Clinic: WAH Community Clinic'), findsOneWidget);
+    expect(find.text('Clinic'), findsOneWidget);
+    expect(find.text('WAH Community Clinic'), findsOneWidget);
     expect(find.text('Details'), findsOneWidget);
     expect(find.text('Dose'), findsOneWidget);
     expect(find.text('Booster'), findsOneWidget);
@@ -54,5 +61,7 @@ void main() {
     expect(find.text('Nurse Garcia'), findsOneWidget);
     expect(find.text('Lot number'), findsOneWidget);
     expect(find.text('CVB-24018'), findsOneWidget);
+    expect(find.text('Note'), findsOneWidget);
+    expect(find.text('Administered at WAH Community Clinic'), findsOneWidget);
   });
 }

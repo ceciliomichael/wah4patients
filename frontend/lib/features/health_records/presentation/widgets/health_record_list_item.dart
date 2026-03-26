@@ -21,10 +21,10 @@ class HealthRecordListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface,
-      borderRadius: AppRadii.large,
+      borderRadius: AppRadii.extraLarge,
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadii.large,
+        borderRadius: AppRadii.extraLarge,
         splashFactory: NoSplash.splashFactory,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -32,9 +32,10 @@ class HealthRecordListItem extends StatelessWidget {
         focusColor: Colors.transparent,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           decoration: BoxDecoration(
-            borderRadius: AppRadii.large,
+            color: AppColors.surface,
+            borderRadius: AppRadii.extraLarge,
             border: Border.all(color: AppColors.border),
           ),
           child: Column(
@@ -44,64 +45,31 @@ class HealthRecordListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 52,
-                    height: 52,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
                       color: entry.accentColor.withValues(alpha: 0.12),
-                      borderRadius: AppRadii.medium,
+                      borderRadius: AppRadii.extraLarge,
                     ),
-                    child: Icon(entry.icon, color: entry.accentColor, size: 28),
+                    child: Icon(entry.icon, color: entry.accentColor, size: 24),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           entry.title,
-                          style: AppTextStyles.titleLarge.copyWith(
+                          style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           entry.subtitle,
-                          style: AppTextStyles.bodyMedium.copyWith(
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.textSecondary,
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: entry.statusColor.withValues(alpha: 0.12),
-                                borderRadius: AppRadii.pill,
-                              ),
-                              child: Text(
-                                entry.statusLabel,
-                                style: AppTextStyles.labelMedium.copyWith(
-                                  color: entry.statusColor,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                entry.caption,
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
-                                softWrap: true,
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
@@ -113,10 +81,21 @@ class HealthRecordListItem extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
+              _buildDetailRow(
+                label: 'Status',
+                value: entry.statusLabel,
+                valueColor: entry.statusColor,
+              ),
+              const SizedBox(height: 12),
+              _buildDetailRow(
+                label: entry.summaryLabel,
+                value: entry.summaryValue,
+              ),
               if (isExpanded) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 const Divider(height: 1, thickness: 1),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 _buildDetailsSection(),
               ],
             ],
@@ -137,15 +116,15 @@ class HealthRecordListItem extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 6),
         ...entry.details.map(
           (detail) => Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 1,
+                SizedBox(
+                  width: 104,
                   child: Text(
                     detail.label,
                     style: AppTextStyles.bodyMedium.copyWith(
@@ -156,7 +135,6 @@ class HealthRecordListItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  flex: 2,
                   child: Text(
                     detail.value,
                     style: AppTextStyles.bodyMedium.copyWith(
@@ -168,6 +146,41 @@ class HealthRecordListItem extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDetailRow({
+    required String label,
+    required String value,
+    Color? valueColor,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 104,
+          child: Text(
+            label,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            value,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: valueColor ?? AppColors.textPrimary,
+              fontWeight: FontWeight.w600,
+              height: 1.4,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

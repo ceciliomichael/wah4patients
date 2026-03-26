@@ -12,7 +12,8 @@ class HealthRecordEntry {
     required this.id,
     required this.title,
     required this.subtitle,
-    required this.caption,
+    required this.summaryLabel,
+    required this.summaryValue,
     required this.filterValue,
     required this.statusLabel,
     required this.statusColor,
@@ -24,7 +25,8 @@ class HealthRecordEntry {
   final String id;
   final String title;
   final String subtitle;
-  final String caption;
+  final String summaryLabel;
+  final String summaryValue;
   final String filterValue;
   final String statusLabel;
   final Color statusColor;

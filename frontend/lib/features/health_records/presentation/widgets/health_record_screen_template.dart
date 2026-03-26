@@ -56,7 +56,8 @@ class _HealthRecordScreenTemplateState
       final haystack = [
         entry.title,
         entry.subtitle,
-        entry.caption,
+        entry.summaryLabel,
+        entry.summaryValue,
         entry.statusLabel,
         ...entry.details.map((detail) => '${detail.label} ${detail.value}'),
       ].join(' ').toLowerCase();
