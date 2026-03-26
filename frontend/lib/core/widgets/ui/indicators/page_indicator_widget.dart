@@ -7,19 +7,32 @@ class PageIndicatorStyles {
   PageIndicatorStyles._();
 
   static Widget onboarding({required int currentPage, required int pageCount}) {
+    return onboardingWithProgress(
+      pageProgress: currentPage.toDouble(),
+      pageCount: pageCount,
+    );
+  }
+
+  static Widget onboardingWithProgress({
+    required double pageProgress,
+    required int pageCount,
+  }) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List<Widget>.generate(pageCount, (index) {
-        final isActive = index == currentPage;
+        final distance = (pageProgress - index).abs().clamp(0.0, 1.0);
+        final activation = 1.0 - distance;
+        final width = 8.0 + (12.0 * activation);
+        final alpha = 0.45 + (0.55 * activation);
+
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 120),
+          curve: Curves.easeOut,
           margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: isActive ? 20 : 8,
+          width: width,
           height: 8,
           decoration: BoxDecoration(
-            color: isActive
-                ? AppColors.white
-                : AppColors.white.withValues(alpha: 0.45),
+            color: AppColors.white.withValues(alpha: alpha),
             borderRadius: AppRadii.pill,
           ),
         );

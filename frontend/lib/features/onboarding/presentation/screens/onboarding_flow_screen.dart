@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../core/widgets/ui/indicators/page_indicator_widget.dart';
 import '../../domain/onboarding_page_repository.dart';
 import '../widgets/onboarding_base_screen.dart';
 
@@ -18,16 +19,20 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
 
   late final PageController _pageController;
   late int _currentPageIndex;
+  late double _pageProgress;
 
   @override
   void initState() {
     super.initState();
     _currentPageIndex = _sanitizePageIndex(widget.initialPageIndex);
+    _pageProgress = _currentPageIndex.toDouble();
     _pageController = PageController(initialPage: _currentPageIndex);
+    _pageController.addListener(_handlePageProgressChanged);
   }
 
   @override
   void dispose() {
+    _pageController.removeListener(_handlePageProgressChanged);
     _pageController.dispose();
     super.dispose();
   }
@@ -55,6 +60,17 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
     });
   }
 
+  void _handlePageProgressChanged() {
+    final page = _pageController.page;
+    if (page == null || (_pageProgress - page).abs() < 0.001) {
+      return;
+    }
+
+    setState(() {
+      _pageProgress = page;
+    });
+  }
+
   void _handleSkipPressed() {
     final currentPage = OnboardingPageRepository.pages[_currentPageIndex];
     if (currentPage.isLastPage) {
@@ -77,20 +93,39 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const topPadding = 24.0;
+
     return SafeArea(
       child: Scaffold(
-        body: PageView.builder(
-          controller: _pageController,
-          onPageChanged: _handlePageChanged,
-          itemCount: OnboardingPageRepository.pages.length,
-          itemBuilder: (context, index) {
-            return OnboardingBaseScreen(
-              key: ValueKey<int>(index),
-              pageData: OnboardingPageRepository.pages[index],
-              onSkipPressed: _handleSkipPressed,
-              onActionPressed: _handleActionPressed,
-            );
-          },
+        body: Stack(
+          children: [
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: _handlePageChanged,
+              itemCount: OnboardingPageRepository.pages.length,
+              itemBuilder: (context, index) {
+                return OnboardingBaseScreen(
+                  key: ValueKey<int>(index),
+                  pageData: OnboardingPageRepository.pages[index],
+                  onSkipPressed: _handleSkipPressed,
+                  onActionPressed: _handleActionPressed,
+                );
+              },
+            ),
+            Positioned(
+              top: topPadding,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Center(
+                  child: PageIndicatorStyles.onboardingWithProgress(
+                    pageProgress: _pageProgress,
+                    pageCount: OnboardingPageRepository.pages.length,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

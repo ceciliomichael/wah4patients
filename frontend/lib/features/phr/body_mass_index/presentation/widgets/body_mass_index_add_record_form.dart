@@ -43,6 +43,13 @@ class BodyMassIndexAddRecordForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            'Unit System',
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
           BodyMassIndexUnitToggle(
             unitSystem: unitSystem,
             onUnitSystemChanged: onUnitSystemChanged,

@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import '../../domain/models/onboarding_page_data.dart';
 import 'onboarding_background.dart';
 import 'onboarding_content.dart';
-import 'onboarding_header.dart';
 import 'onboarding_navigation.dart';
 
 class OnboardingBaseScreen extends StatefulWidget {
@@ -109,11 +108,7 @@ class _OnboardingBaseScreenState extends State<OnboardingBaseScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              OnboardingHeader(
-                currentPage: widget.pageData.pageIndex,
-                pageCount: widget.pageData.totalPages,
-                fadeAnimation: _fadeAnimation,
-              ),
+              const SizedBox(height: 40),
               Expanded(
                 child: OnboardingContent(
                   title: widget.pageData.title,

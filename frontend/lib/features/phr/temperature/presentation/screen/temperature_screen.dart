@@ -87,29 +87,10 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     );
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.primary),
-    );
-  }
-
   double _toCelsius(double value) {
     return _unitSystem == TemperatureUnitSystem.celsius
         ? value
         : (value - 32) * 5 / 9;
-  }
-
-  String _categorize(double celsius) {
-    if (celsius < 36.0) {
-      return 'Low';
-    }
-    if (celsius < 37.3) {
-      return 'Normal';
-    }
-    if (celsius < 38.0) {
-      return 'Elevated';
-    }
-    return 'Fever';
   }
 
   Color _categoryColor(String category) {
@@ -128,27 +109,17 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     return '$day/$month/${dateTime.year}';
   }
 
-  void _saveTemperature() {
-    final temperature = double.tryParse(_temperatureController.text.trim());
-    if (temperature == null || temperature <= 0) {
-      _showSnackBar('Enter a valid temperature reading.');
-      return;
+  String _categorize(double celsius) {
+    if (celsius < 36.0) {
+      return 'Low';
     }
-
-    final celsius = _toCelsius(temperature);
-    final entry = _TemperatureHistoryEntry(
-      recordedAt: DateTime.now(),
-      temperature: double.parse(temperature.toStringAsFixed(1)),
-      unitSystem: _unitSystem,
-      category: _categorize(celsius),
-    );
-
-    setState(() {
-      _latestEntry = entry;
-      _history.insert(0, entry);
-    });
-
-    _showSnackBar('Temperature entry saved locally for this session.');
+    if (celsius < 37.3) {
+      return 'Normal';
+    }
+    if (celsius < 38.0) {
+      return 'Elevated';
+    }
+    return 'Fever';
   }
 
   void _toggleUnitSystem(TemperatureUnitSystem value) {
@@ -158,6 +129,25 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
 
     setState(() {
       _unitSystem = value;
+    });
+  }
+
+  void _saveTemperature() {
+    final temperature = double.tryParse(_temperatureController.text.trim());
+    if (temperature == null || temperature <= 0) {
+      return;
+    }
+
+    final entry = _TemperatureHistoryEntry(
+      recordedAt: DateTime.now(),
+      temperature: double.parse(temperature.toStringAsFixed(1)),
+      unitSystem: _unitSystem,
+      category: _categorize(_toCelsius(temperature)),
+    );
+
+    setState(() {
+      _latestEntry = entry;
+      _history.insert(0, entry);
       _temperatureController.clear();
     });
   }
@@ -236,88 +226,49 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
             _buildSummaryCard(latestEntry),
             const SizedBox(height: 20),
           ],
-          _buildSectionCard(
-            title: 'Temperature Entry',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: TemperatureUnitSystem.values.map((unit) {
-                    final isSelected = _unitSystem == unit;
-                    return Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: unit == TemperatureUnitSystem.celsius ? 8 : 0,
-                          left: unit == TemperatureUnitSystem.fahrenheit
-                              ? 8
-                              : 0,
-                        ),
-                        child: ChoiceChip(
-                          label: Text(unit.label),
-                          selected: isSelected,
-                          selectedColor: AppColors.tertiary.withValues(
-                            alpha: 0.12,
-                          ),
-                          labelStyle: AppTextStyles.labelLarge.copyWith(
-                            color: isSelected
-                                ? AppColors.tertiary
-                                : AppColors.textPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          onSelected: (_) => _toggleUnitSystem(unit),
-                          side: BorderSide(
-                            color: isSelected
-                                ? AppColors.tertiary
-                                : AppColors.border,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.large,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Temperature (${_unitSystem.symbol})',
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: _temperatureController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: _unitSystem == TemperatureUnitSystem.celsius
-                        ? 'Enter temperature in °C'
-                        : 'Enter temperature in °F',
-                    prefixIcon: const Icon(
-                      Icons.thermostat_outlined,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-              ],
+          Text(
+            'Temperature Entry',
+            style: AppTextStyles.titleLarge.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 16),
+          TemperatureUnitToggle(
+            unitSystem: _unitSystem,
+            onUnitSystemChanged: _toggleUnitSystem,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Temperature (${_unitSystem.symbol})',
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _temperatureController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            style: AppTextStyles.bodyLarge.copyWith(
+              color: AppColors.textPrimary,
+            ),
+            decoration: InputDecoration(
+              hintText: _unitSystem == TemperatureUnitSystem.celsius
+                  ? 'Enter temperature in °C'
+                  : 'Enter temperature in °F',
+              prefixIcon: const Icon(
+                Icons.thermostat_outlined,
+                color: AppColors.primary,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           PrimaryButtonWidget(
-            text: _latestEntry == null
-                ? 'Save Temperature'
-                : 'Save New Reading',
+            text: 'SAVE TEMPERATURE',
             onPressed: _saveTemperature,
           ),
           const SizedBox(height: 12),
           Text(
-            'Your latest reading stays visible above the form for quick comparison.',
-            textAlign: TextAlign.center,
+            'Selected unit: ${_unitSystem.symbol}',
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -370,7 +321,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
           const SizedBox(height: 16),
           _buildTemperatureRow(
             label: 'Value',
-            value: '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
+            value:
+                '${entry.temperature.toStringAsFixed(1)}${entry.unitSystem.symbol}',
           ),
           const SizedBox(height: 12),
           const Divider(height: 1, thickness: 1),
@@ -382,10 +334,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
           const SizedBox(height: 12),
           const Divider(height: 1, thickness: 1),
           const SizedBox(height: 12),
-          _buildTemperatureRow(
-            label: 'Category',
-            value: entry.category,
-          ),
+          _buildTemperatureRow(label: 'Category', value: entry.category),
           const SizedBox(height: 12),
           const Divider(height: 1, thickness: 1),
           const SizedBox(height: 12),
@@ -393,30 +342,6 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
             label: 'Recorded on',
             value: _formatDate(entry.recordedAt),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionCard({required String title, required Widget child}) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.extraLarge,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 16),
-          child,
         ],
       ),
     );
@@ -483,10 +408,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
               const SizedBox(height: 12),
               const Divider(height: 1, thickness: 1),
               const SizedBox(height: 12),
-              _buildTemperatureRow(
-                label: 'Category',
-                value: entry.category,
-              ),
+              _buildTemperatureRow(label: 'Category', value: entry.category),
               const SizedBox(height: 12),
               const Divider(height: 1, thickness: 1),
               const SizedBox(height: 12),
@@ -501,10 +423,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     );
   }
 
-  Widget _buildTemperatureRow({
-    required String label,
-    required String value,
-  }) {
+  Widget _buildTemperatureRow({required String label, required String value}) {
     return Row(
       children: [
         Expanded(
@@ -541,4 +460,82 @@ class _TemperatureHistoryEntry {
   final double temperature;
   final TemperatureUnitSystem unitSystem;
   final String category;
+}
+
+class TemperatureUnitToggle extends StatelessWidget {
+  const TemperatureUnitToggle({
+    super.key,
+    required this.unitSystem,
+    required this.onUnitSystemChanged,
+  });
+
+  final TemperatureUnitSystem unitSystem;
+  final ValueChanged<TemperatureUnitSystem> onUnitSystemChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final isCelsius = unitSystem == TemperatureUnitSystem.celsius;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadii.large,
+        border: Border.all(color: AppColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildSegment(
+              label: TemperatureUnitSystem.celsius.label,
+              selected: isCelsius,
+              onTap: () => onUnitSystemChanged(TemperatureUnitSystem.celsius),
+            ),
+          ),
+          Container(width: 1, height: 48, color: AppColors.border),
+          Expanded(
+            child: _buildSegment(
+              label: TemperatureUnitSystem.fahrenheit.label,
+              selected: !isCelsius,
+              onTap: () =>
+                  onUnitSystemChanged(TemperatureUnitSystem.fahrenheit),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSegment({
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: Material(
+        color: selected
+            ? AppColors.tertiary.withValues(alpha: 0.12)
+            : Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: SizedBox(
+            height: 48,
+            child: Center(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.labelLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: selected ? AppColors.tertiary : AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
