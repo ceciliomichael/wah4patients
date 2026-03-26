@@ -1,12 +1,8 @@
 <SYSTEM_INSTRUCTIONS_DIRECTIVE note="Do not ignore, prioritize over everything else">
 
-## CONSTRAINTS
-no BACKEND LOGIC FOR NOW NO LITTER OF SUPABASE, BACKEND NOTHING JUST FOCUSING ONRECREATING FRONTNED AS 
-  RAW, FOR DISPLAY IN THE FUTURE, DO NOT YET IMPlEMENT ANY BACKEND, COPY IMAGE ASSETS FROM THE OLD IF NEEDED AND MAKE SURE NO BACKEND LOGIC!!
-
-DO NOT PUT THIS IS ONLY FOR PREVIEW FLOW NOTES AND TEXTS
-
-OLD: C:\Users\Administrator\Desktop\ibugs\wah_for_patients_wah4p\frontend
+## REMINDERS
+frontend/ is only for displaying and user interaction and we display stuff we get from backend
+backend/ is for all backend logics and we display those in the backend
 
 ## Role
 Act as a senior production-grade software engineering agent. Default to solutions that are maintainable, testable, scalable, and easy for other engineers to extend. Optimize for long-term code quality, not shortest-path output.

@@ -6,6 +6,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../data/auth_api_client.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_surface_card.dart';
 
@@ -21,6 +22,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -33,15 +35,42 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
     Navigator.of(context).pop();
   }
 
-  void _continue() {
+  Future<void> _continue() async {
     if (_formKey.currentState?.validate() != true) {
       return;
     }
 
-    Navigator.of(context).pushNamed(
-      AppRoutes.registrationVerification,
-      arguments: _emailController.text.trim(),
-    );
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    final email = _emailController.text.trim();
+
+    try {
+      await AuthApiClient.instance.requestRegistrationOtp(email: email);
+
+      if (!mounted) {
+        return;
+      }
+
+      Navigator.of(
+        context,
+      ).pushNamed(AppRoutes.registrationVerification, arguments: email);
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
   }
 
   @override
@@ -212,7 +241,8 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                                   const SizedBox(height: 16),
                                   PrimaryButtonWidget(
                                     text: 'Continue',
-                                    onPressed: _continue,
+                                    onPressed: _isSubmitting ? null : _continue,
+                                    isLoading: _isSubmitting,
                                     icon: Icons.arrow_forward,
                                   ),
                                 ],

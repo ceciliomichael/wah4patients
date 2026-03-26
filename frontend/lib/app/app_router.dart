@@ -9,6 +9,7 @@ import '../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/password_registration_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
+import '../features/auth/domain/models/auth_api_models.dart';
 import '../features/calendar/presentation/screens/calendar_route_screen.dart';
 import '../features/dashboard/presentation/screens/appointments_screen.dart';
 import '../features/dashboard/presentation/screens/dashboard_screen.dart';
@@ -95,14 +96,27 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
       return _buildSlideRoute(
         settings: settings,
         builder: (_) {
-          final email = settings.arguments as String? ?? '';
-          return PasswordRegistrationScreen(email: email);
+          final args = settings.arguments;
+          if (args is RegistrationPasswordArguments) {
+            return PasswordRegistrationScreen(
+              email: args.email,
+              registrationToken: args.registrationToken,
+            );
+          }
+
+          final email = args is String ? args : '';
+          return PasswordRegistrationScreen(email: email, registrationToken: '');
         },
       );
     case AppRoutes.login:
       return _buildFadeScaleRoute(
         settings: settings,
-        builder: (_) => const LoginScreen(),
+        builder: (_) {
+          final initialEmail = settings.arguments is String
+              ? settings.arguments as String
+              : '';
+          return LoginScreen(initialEmail: initialEmail);
+        },
       );
     case AppRoutes.forgotPassword:
       return _buildSlideRoute(

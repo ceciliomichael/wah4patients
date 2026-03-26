@@ -6,6 +6,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
+import '../../data/auth_api_client.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_brand_logo.dart';
 import '../widgets/auth_footer_link.dart';
@@ -13,7 +14,9 @@ import '../widgets/auth_header.dart';
 import '../widgets/auth_surface_card.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, this.initialEmail = ''});
+
+  final String initialEmail;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -27,6 +30,15 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _passwordFocusNode = FocusNode();
 
   bool _passwordVisible = false;
+  bool _isSubmitting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialEmail.trim().isNotEmpty) {
+      _emailController.text = widget.initialEmail.trim();
+    }
+  }
 
   @override
   void dispose() {
@@ -45,12 +57,45 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.of(context).pushNamed(AppRoutes.forgotPassword);
   }
 
-  void _signIn() {
+  Future<void> _signIn() async {
     if (_formKey.currentState?.validate() != true) {
       return;
     }
 
-    Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+    if (_isSubmitting) {
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      await AuthApiClient.instance.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
   }
 
   @override
@@ -113,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextFormField(
                                 controller: _emailController,
                                 focusNode: _emailFocusNode,
+                                enabled: !_isSubmitting,
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
                                 validator: validateEmail,
@@ -138,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextFormField(
                                 controller: _passwordController,
                                 focusNode: _passwordFocusNode,
+                                enabled: !_isSubmitting,
                                 obscureText: !_passwordVisible,
                                 textInputAction: TextInputAction.done,
                                 validator: validatePassword,
@@ -171,7 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 16),
                       PrimaryButtonWidget(
                         text: 'Sign In',
-                        onPressed: _signIn,
+                        onPressed: _isSubmitting ? null : _signIn,
+                        isLoading: _isSubmitting,
                         icon: Icons.login_outlined,
                       ),
                       const SizedBox(height: 12),

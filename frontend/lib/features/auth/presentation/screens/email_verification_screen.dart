@@ -9,6 +9,8 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
+import '../../data/auth_api_client.dart';
+import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_surface_card.dart';
 import '../widgets/otp_code_field.dart';
@@ -30,6 +32,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Timer? _resendTimer;
   int _resendCooldown = 45;
   bool _resending = false;
+  bool _verifying = false;
 
   @override
   void initState() {
@@ -66,7 +69,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     });
   }
 
-  void _resendCode() {
+  Future<void> _resendCode() async {
     if (_resendCooldown > 0 || _resending) {
       return;
     }
@@ -75,32 +78,82 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       _resending = true;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Preview mode: a new verification code was sent.'),
-      ),
-    );
+    try {
+      await AuthApiClient.instance.resendRegistrationOtp(email: widget.email);
 
-    _otpFieldKey.currentState?.reset();
-    _startCooldown();
+      if (!mounted) {
+        return;
+      }
 
-    setState(() {
-      _resending = false;
-    });
+      _otpFieldKey.currentState?.reset();
+      _startCooldown();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('A new verification code was sent.')),
+      );
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _resending = false;
+        });
+      }
+    }
   }
 
   void _goBack() {
     Navigator.of(context).pop();
   }
 
-  void _verify() {
+  Future<void> _verify() async {
     if (_formKey.currentState?.validate() != true) {
       return;
     }
 
-    Navigator.of(
-      context,
-    ).pushNamed(AppRoutes.registrationPassword, arguments: widget.email);
+    final otpCode = _otpFieldKey.currentState?.value?.trim() ?? '';
+
+    setState(() {
+      _verifying = true;
+    });
+
+    try {
+      final registrationToken = await AuthApiClient.instance.verifyRegistrationOtp(
+        email: widget.email,
+        otpCode: otpCode,
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      Navigator.of(context).pushNamed(
+        AppRoutes.registrationPassword,
+        arguments: RegistrationPasswordArguments(
+          email: widget.email,
+          registrationToken: registrationToken,
+        ),
+      );
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _verifying = false;
+        });
+      }
+    }
   }
 
   String _formatCountdown(int seconds) {
@@ -171,7 +224,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                 title: 'Verification Help',
                                 messages: const [
                                   'If you do not see the email, check spam or junk.',
-                                  'The code is only for preview flow demonstration.',
+                                  'Codes expire quickly for account security.',
                                 ],
                                 icons: const [
                                   Icons.mark_email_unread_outlined,
@@ -253,6 +306,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                           OtpCodeField(
                                             key: _otpFieldKey,
                                             validator: validateOtp,
+                                            isEnabled: !_verifying,
                                           ),
                                           const SizedBox(height: 12),
                                           Text(
@@ -269,7 +323,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                   const SizedBox(height: 16),
                                   PrimaryButtonWidget(
                                     text: 'Verify OTP',
-                                    onPressed: _verify,
+                                    onPressed: _verifying ? null : _verify,
+                                    isLoading: _verifying,
                                   ),
                                   const SizedBox(height: 12),
                                   Center(
@@ -287,7 +342,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                                 : 'Resend code',
                                             onPressed: _resendCooldown > 0
                                                 ? () {}
-                                                : _resendCode,
+                                                : () => _resendCode(),
                                             textColor: _resendCooldown > 0
                                                 ? AppColors.textSecondary
                                                 : AppColors.secondary,

@@ -63,7 +63,7 @@ class AuthPreviewScreen extends StatelessWidget {
                       const AuthBrandLogo(height: 92),
                       const SizedBox(height: 24),
                       Text(
-                        'Preview mode ready',
+                        'Auth flow ready',
                         style: AppTextStyles.headlineLarge.copyWith(
                           color: AppColors.primary,
                         ),
@@ -71,7 +71,7 @@ class AuthPreviewScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'The auth flow is now frontend-only and ready for future wiring.',
+                        'Registration and login are connected to the backend API.',
                         style: AppTextStyles.bodyLarge.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -91,13 +91,13 @@ class AuthPreviewScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 16),
                                 Text(
-                                  'This is a local UI preview.',
+                                  'Authentication is connected.',
                                   style: AppTextStyles.titleLarge,
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  'No Supabase or backend logic is connected yet.',
+                                  'Use the API key configuration before testing auth.',
                                   style: AppTextStyles.bodyLarge,
                                   textAlign: TextAlign.center,
                                 ),

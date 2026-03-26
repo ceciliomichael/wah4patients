@@ -7,14 +7,20 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../data/auth_api_client.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_surface_card.dart';
 import '../widgets/password_requirements_list.dart';
 
 class PasswordRegistrationScreen extends StatefulWidget {
-  const PasswordRegistrationScreen({super.key, required this.email});
+  const PasswordRegistrationScreen({
+    super.key,
+    required this.email,
+    required this.registrationToken,
+  });
 
   final String email;
+  final String registrationToken;
 
   @override
   State<PasswordRegistrationScreen> createState() =>
@@ -33,6 +39,7 @@ class _PasswordRegistrationScreenState
 
   bool _passwordVisible = false;
   bool _agreedToTerms = false;
+  bool _isSubmitting = false;
 
   @override
   void initState() {
@@ -85,8 +92,8 @@ class _PasswordRegistrationScreenState
           title: 'Privacy Statement',
           messages: const [
             'This is a local frontend preview of the registration flow.',
-            'No backend or account storage is connected yet.',
-            'The final privacy policy can be wired in later.',
+            'Account creation uses the secure backend API.',
+            'The final privacy policy details can be updated later.',
           ],
           icons: const [
             Icons.visibility_off_outlined,
@@ -99,12 +106,62 @@ class _PasswordRegistrationScreenState
     );
   }
 
-  void _createAccount() {
+  Future<void> _createAccount() async {
     if (_formKey.currentState?.validate() != true || !_canSubmit) {
       return;
     }
 
-    Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+    if (_isSubmitting) {
+      return;
+    }
+
+    if (widget.registrationToken.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Missing registration token. Please verify your email again.'),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      await AuthApiClient.instance.completeRegistration(
+        email: widget.email,
+        password: _passwordController.text,
+        registrationToken: widget.registrationToken.trim(),
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Account created successfully. Please sign in.')),
+      );
+
+      Navigator.of(context).pushReplacementNamed(
+        AppRoutes.login,
+        arguments: widget.email,
+      );
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
   }
 
   @override
@@ -171,7 +228,7 @@ class _PasswordRegistrationScreenState
                                 messages: const [
                                   'Use at least 8 characters.',
                                   'Include upper and lower case letters and a number.',
-                                  'This flow is frontend-only for now.',
+                                  'Password is sent to the backend over HTTPS.',
                                 ],
                                 icons: const [
                                   Icons.lock_outline,
@@ -255,6 +312,7 @@ class _PasswordRegistrationScreenState
                                             controller: _passwordController,
                                             focusNode: _passwordFocusNode,
                                             obscureText: !_passwordVisible,
+                                            enabled: !_isSubmitting,
                                             textInputAction:
                                                 TextInputAction.next,
                                             validator: validatePassword,
@@ -307,6 +365,7 @@ class _PasswordRegistrationScreenState
                                             focusNode:
                                                 _confirmPasswordFocusNode,
                                             obscureText: !_passwordVisible,
+                                            enabled: !_isSubmitting,
                                             textInputAction:
                                                 TextInputAction.done,
                                             validator: (value) =>
@@ -353,7 +412,7 @@ class _PasswordRegistrationScreenState
                                                     const EdgeInsets.only(top: 1),
                                                 child: Checkbox(
                                                   value: _agreedToTerms,
-                                                  onChanged: (value) {
+                                                  onChanged: _isSubmitting ? null : (value) {
                                                     setState(() {
                                                       _agreedToTerms =
                                                           value ?? false;
@@ -413,6 +472,7 @@ class _PasswordRegistrationScreenState
                                   PrimaryButtonWidget(
                                     text: 'Create Account',
                                     onPressed: _canSubmit ? _createAccount : null,
+                                    isLoading: _isSubmitting,
                                   ),
                                 ],
                               ),
