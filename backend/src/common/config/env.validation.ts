@@ -1,9 +1,9 @@
-import Joi from 'joi';
+import Joi from "joi";
 
 export const envValidationSchema = Joi.object({
   NODE_ENV: Joi.string()
-    .valid('development', 'test', 'production')
-    .default('development'),
+    .valid("development", "test", "production")
+    .default("development"),
   PORT: Joi.number().integer().min(1).max(65535).default(3000),
   FRONTEND_ORIGIN: Joi.string().trim().required(),
   BACKEND_API_KEY: Joi.string().trim().min(24).required(),
@@ -24,6 +24,12 @@ export const envValidationSchema = Joi.object({
   OTP_HASH_SECRET: Joi.string().trim().min(32).required(),
   REGISTRATION_TOKEN_SECRET: Joi.string().trim().min(32).required(),
   REGISTRATION_TOKEN_TTL_SECONDS: Joi.number()
+    .integer()
+    .min(300)
+    .max(3600)
+    .default(900),
+  PASSWORD_RESET_TOKEN_SECRET: Joi.string().trim().min(32).required(),
+  PASSWORD_RESET_TOKEN_TTL_SECONDS: Joi.number()
     .integer()
     .min(300)
     .max(3600)

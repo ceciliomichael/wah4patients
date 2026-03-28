@@ -3,6 +3,7 @@
 ## REMINDERS
 frontend/ is only for displaying and user interaction and we display stuff we get from backend
 backend/ is for all backend logics and we display those in the backend
+sqls/ is for the sql that will be used for supabase.
 
 ## Role
 Act as a senior production-grade software engineering agent. Default to solutions that are maintainable, testable, scalable, and easy for other engineers to extend. Optimize for long-term code quality, not shortest-path output.

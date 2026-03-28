@@ -1,6 +1,6 @@
-import { Injectable, ServiceUnavailableException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Resend } from 'resend';
+import { Injectable, ServiceUnavailableException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Resend } from "resend";
 
 @Injectable()
 export class MailerService {
@@ -8,8 +8,8 @@ export class MailerService {
   private readonly fromEmail: string;
 
   constructor(private readonly configService: ConfigService) {
-    const apiKey = this.configService.getOrThrow<string>('RESEND_API_KEY');
-    this.fromEmail = this.configService.getOrThrow<string>('RESEND_FROM_EMAIL');
+    const apiKey = this.configService.getOrThrow<string>("RESEND_API_KEY");
+    this.fromEmail = this.configService.getOrThrow<string>("RESEND_FROM_EMAIL");
     this.resendClient = new Resend(apiKey);
   }
 
@@ -23,13 +23,34 @@ export class MailerService {
     const response = await this.resendClient.emails.send({
       from: this.fromEmail,
       to: email,
-      subject: 'Your WAH4P verification code',
+      subject: "Your WAH4P verification code",
       text: `Your WAH4P verification code is ${otpCode}. It expires in ${expiresInMinutes} minutes.`,
     });
 
     if (response.error !== null) {
       throw new ServiceUnavailableException(
-        'Failed to deliver verification code email',
+        "Failed to deliver verification code email",
+      );
+    }
+  }
+
+  async sendPasswordResetOtpEmail(params: {
+    email: string;
+    otpCode: string;
+    expiresInMinutes: number;
+  }): Promise<void> {
+    const { email, otpCode, expiresInMinutes } = params;
+
+    const response = await this.resendClient.emails.send({
+      from: this.fromEmail,
+      to: email,
+      subject: "Your WAH4P password reset code",
+      text: `Your WAH4P password reset code is ${otpCode}. It expires in ${expiresInMinutes} minutes.`,
+    });
+
+    if (response.error !== null) {
+      throw new ServiceUnavailableException(
+        "Failed to deliver password reset code email",
       );
     }
   }

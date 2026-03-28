@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../features/appointments/presentation/screens/onsite_consultation_screen.dart';
 import '../features/appointments/presentation/screens/teleconsultation_screen.dart';
+import '../features/auth/domain/models/auth_api_models.dart';
 import '../features/auth/presentation/screens/auth_preview_screen.dart';
 import '../features/auth/presentation/screens/email_registration_screen.dart';
 import '../features/auth/presentation/screens/email_verification_screen.dart';
@@ -9,18 +10,17 @@ import '../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/password_registration_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
-import '../features/auth/domain/models/auth_api_models.dart';
 import '../features/calendar/presentation/screens/calendar_route_screen.dart';
 import '../features/dashboard/presentation/screens/appointments_screen.dart';
 import '../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../features/dashboard/presentation/screens/health_records_screen.dart';
 import '../features/dashboard/presentation/screens/medication_resupply_screen.dart';
 import '../features/dashboard/presentation/screens/personal_records_screen.dart';
-import '../features/legal/presentation/privacy_statement_screen.dart';
 import '../features/health_records/presentation/screens/immunization_records_screen.dart';
 import '../features/health_records/presentation/screens/laboratory_results_screen.dart';
 import '../features/health_records/presentation/screens/medical_consultations_screen.dart';
 import '../features/health_records/presentation/screens/medical_history_screen.dart';
+import '../features/legal/presentation/privacy_statement_screen.dart';
 import '../features/medication_resupply/presentation/screens/medication_resupply_history_screen.dart';
 import '../features/medication_resupply/presentation/screens/medication_resupply_request_screen.dart';
 import '../features/notification/presentation/screens/notification_screen.dart';
@@ -121,7 +121,12 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
     case AppRoutes.forgotPassword:
       return _buildSlideRoute(
         settings: settings,
-        builder: (_) => const ForgotPasswordScreen(),
+        builder: (_) {
+          final initialEmail = settings.arguments is String
+              ? settings.arguments as String
+              : '';
+          return ForgotPasswordScreen(initialEmail: initialEmail);
+        },
       );
     case AppRoutes.authPreview:
       return _buildFadeScaleRoute(
