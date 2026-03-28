@@ -54,7 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _goToForgotPassword() {
-    Navigator.of(context).pushNamed(AppRoutes.forgotPassword);
+    Navigator.of(context).pushNamed(
+      AppRoutes.forgotPassword,
+      arguments: _emailController.text.trim(),
+    );
   }
 
   Future<void> _signIn() async {

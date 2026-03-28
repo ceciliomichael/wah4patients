@@ -13,7 +13,8 @@ class AuthApiException implements Exception {
 }
 
 class AuthApiClient {
-  AuthApiClient({http.Client? httpClient}) : _httpClient = httpClient ?? http.Client();
+  AuthApiClient({http.Client? httpClient})
+      : _httpClient = httpClient ?? http.Client();
 
   static final AuthApiClient instance = AuthApiClient();
 
@@ -65,6 +66,57 @@ class AuthApiClient {
         'registrationToken': registrationToken,
       },
     );
+  }
+
+  Future<RequestPasswordResetOtpResult> requestPasswordResetOtp({
+    required String email,
+  }) async {
+    final response = await _post(
+      path: '/auth/password-reset/request-otp',
+      body: <String, dynamic>{'email': email},
+    );
+
+    return RequestPasswordResetOtpResult.fromJson(response);
+  }
+
+  Future<RequestPasswordResetOtpResult> resendPasswordResetOtp({
+    required String email,
+  }) async {
+    final response = await _post(
+      path: '/auth/password-reset/resend-otp',
+      body: <String, dynamic>{'email': email},
+    );
+
+    return RequestPasswordResetOtpResult.fromJson(response);
+  }
+
+  Future<VerifyPasswordResetOtpResult> verifyPasswordResetOtp({
+    required String email,
+    required String otpCode,
+  }) async {
+    final response = await _post(
+      path: '/auth/password-reset/verify-otp',
+      body: <String, dynamic>{'email': email, 'otpCode': otpCode},
+    );
+
+    return VerifyPasswordResetOtpResult.fromJson(response);
+  }
+
+  Future<CompletePasswordResetResult> completePasswordReset({
+    required String email,
+    required String password,
+    required String passwordResetToken,
+  }) async {
+    final response = await _post(
+      path: '/auth/password-reset/complete',
+      body: <String, dynamic>{
+        'email': email,
+        'password': password,
+        'passwordResetToken': passwordResetToken,
+      },
+    );
+
+    return CompletePasswordResetResult.fromJson(response);
   }
 
   Future<LoginResult> login({

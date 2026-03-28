@@ -8,6 +8,53 @@ class RegistrationPasswordArguments {
   final String registrationToken;
 }
 
+class RequestPasswordResetOtpResult {
+  const RequestPasswordResetOtpResult({
+    required this.message,
+    required this.cooldownSeconds,
+  });
+
+  final String message;
+  final int cooldownSeconds;
+
+  factory RequestPasswordResetOtpResult.fromJson(Map<String, dynamic> json) {
+    return RequestPasswordResetOtpResult(
+      message: _readString(json['message']),
+      cooldownSeconds: _readInt(json['cooldownSeconds']),
+    );
+  }
+}
+
+class VerifyPasswordResetOtpResult {
+  const VerifyPasswordResetOtpResult({
+    required this.message,
+    required this.passwordResetToken,
+    required this.expiresInSeconds,
+  });
+
+  final String message;
+  final String passwordResetToken;
+  final int expiresInSeconds;
+
+  factory VerifyPasswordResetOtpResult.fromJson(Map<String, dynamic> json) {
+    return VerifyPasswordResetOtpResult(
+      message: _readString(json['message']),
+      passwordResetToken: _readString(json['passwordResetToken']),
+      expiresInSeconds: _readInt(json['expiresInSeconds']),
+    );
+  }
+}
+
+class CompletePasswordResetResult {
+  const CompletePasswordResetResult({required this.message});
+
+  final String message;
+
+  factory CompletePasswordResetResult.fromJson(Map<String, dynamic> json) {
+    return CompletePasswordResetResult(message: _readString(json['message']));
+  }
+}
+
 class LoginResult {
   const LoginResult({
     required this.accessToken,

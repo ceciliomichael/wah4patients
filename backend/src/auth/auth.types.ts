@@ -16,9 +16,34 @@ export interface RegistrationOtpUpsert {
   verifiedAt: string | null;
 }
 
+export interface PasswordResetOtpRecord {
+  email: string;
+  codeHash: string;
+  expiresAt: string;
+  failedAttempts: number;
+  lastSentAt: string;
+  verifiedAt: string | null;
+}
+
+export interface PasswordResetOtpUpsert {
+  email: string;
+  codeHash: string;
+  expiresAt: string;
+  failedAttempts: number;
+  lastSentAt: string;
+  verifiedAt: string | null;
+}
+
 export interface RegistrationTokenPayload {
   sub: string;
-  purpose: 'registration';
+  purpose: "registration";
+  iat: number;
+  exp: number;
+}
+
+export interface PasswordResetTokenPayload {
+  sub: string;
+  purpose: "password-reset";
   iat: number;
   exp: number;
 }
@@ -32,6 +57,21 @@ export interface VerifyOtpResponse {
   message: string;
   registrationToken: string;
   expiresInSeconds: number;
+}
+
+export interface RequestPasswordResetOtpResponse {
+  message: string;
+  cooldownSeconds: number;
+}
+
+export interface VerifyPasswordResetOtpResponse {
+  message: string;
+  passwordResetToken: string;
+  expiresInSeconds: number;
+}
+
+export interface CompletePasswordResetResponse {
+  message: string;
 }
 
 export interface CompleteRegistrationResponse {
