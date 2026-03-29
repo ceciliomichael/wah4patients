@@ -1,19 +1,33 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Headers,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
 import { AuthService } from "./auth.service";
 import { CompletePasswordResetDto } from "./dto/complete-password-reset.dto";
 import { CompleteRegistrationDto } from "./dto/complete-registration.dto";
+import { DisableTotpDto } from "./dto/disable-totp.dto";
 import { LoginDto } from "./dto/login.dto";
 import { RequestPasswordResetOtpDto } from "./dto/request-password-reset-otp.dto";
 import { RequestRegistrationOtpDto } from "./dto/request-registration-otp.dto";
+import { VerifyMfaChallengeDto } from "./dto/verify-mfa-challenge.dto";
+import { VerifyMfaBackupCodeDto } from "./dto/verify-mfa-backup-code.dto";
 import { VerifyPasswordResetOtpDto } from "./dto/verify-password-reset-otp.dto";
 import { VerifyRegistrationOtpDto } from "./dto/verify-registration-otp.dto";
+import { VerifyTotpCodeDto } from "./dto/verify-totp-code.dto";
 import {
   CompletePasswordResetResponse,
   CompleteRegistrationResponse,
   LoginResponse,
+  LoginResultResponse,
   RequestOtpResponse,
   RequestPasswordResetOtpResponse,
+  TotpSetupStartResponse,
+  TotpSetupVerifyResponse,
   VerifyOtpResponse,
   VerifyPasswordResetOtpResponse,
 } from "./auth.types";
@@ -90,7 +104,54 @@ export class AuthController {
   @Post("login")
   @HttpCode(HttpStatus.OK)
   @Throttle({ default: { ttl: 60_000, limit: 10 } })
-  login(@Body() dto: LoginDto): Promise<LoginResponse> {
+  login(@Body() dto: LoginDto): Promise<LoginResultResponse> {
     return this.authService.login(dto);
+  }
+
+  @Post("2fa/setup/start")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 5 } })
+  startTotpSetup(
+    @Headers("authorization") authorizationHeader: string | undefined,
+  ): Promise<TotpSetupStartResponse> {
+    return this.authService.startTotpSetup(authorizationHeader);
+  }
+
+  @Post("2fa/setup/verify")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 8 } })
+  verifyTotpSetup(
+    @Headers("authorization") authorizationHeader: string | undefined,
+    @Body() dto: VerifyTotpCodeDto,
+  ): Promise<TotpSetupVerifyResponse> {
+    return this.authService.verifyTotpSetup(authorizationHeader, dto);
+  }
+
+  @Post("2fa/challenge/verify")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 10 } })
+  verifyMfaChallenge(
+    @Body() dto: VerifyMfaChallengeDto,
+  ): Promise<LoginResponse> {
+    return this.authService.verifyMfaChallenge(dto);
+  }
+
+  @Post("2fa/challenge/verify-backup-code")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 8 } })
+  verifyMfaBackupCode(
+    @Body() dto: VerifyMfaBackupCodeDto,
+  ): Promise<LoginResponse> {
+    return this.authService.verifyMfaBackupCode(dto);
+  }
+
+  @Post("2fa/disable")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 5 } })
+  disableTotp(
+    @Headers("authorization") authorizationHeader: string | undefined,
+    @Body() dto: DisableTotpDto,
+  ): Promise<{ message: string }> {
+    return this.authService.disableTotp(authorizationHeader, dto);
   }
 }

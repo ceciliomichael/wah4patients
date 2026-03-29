@@ -8,7 +8,9 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../data/auth_api_client.dart';
+import '../../domain/auth_session.dart';
 import '../../domain/auth_validators.dart';
+import '../../domain/models/auth_api_models.dart';
 import '../widgets/auth_surface_card.dart';
 import '../widgets/password_requirements_list.dart';
 
@@ -135,18 +137,34 @@ class _PasswordRegistrationScreenState
         registrationToken: widget.registrationToken.trim(),
       );
 
+      final loginResult = await AuthApiClient.instance.login(
+        email: widget.email,
+        password: _passwordController.text,
+      );
+
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Account created successfully. Please sign in.')),
-      );
+      if (loginResult.mfaRequired) {
+        AuthSession.clear();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.mfaChallenge,
+          (route) => false,
+          arguments: MfaChallengeArguments(
+            email: loginResult.userEmail,
+            mfaChallengeToken: loginResult.mfaChallengeToken,
+          ),
+        );
+        return;
+      }
 
+      AuthSession.setFromLoginResult(loginResult);
       Navigator.of(context).pushReplacementNamed(
-        AppRoutes.login,
-        arguments: widget.email,
+        AppRoutes.totpSetup,
+        arguments: const TotpSetupScreenArguments(allowSkip: true),
       );
+      return;
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;

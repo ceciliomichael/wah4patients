@@ -10,6 +10,8 @@ import '../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/password_registration_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
+import '../features/auth/presentation/screens/totp_challenge_screen.dart';
+import '../features/auth/presentation/screens/totp_setup_screen.dart';
 import '../features/calendar/presentation/screens/calendar_route_screen.dart';
 import '../features/dashboard/presentation/screens/appointments_screen.dart';
 import '../features/dashboard/presentation/screens/dashboard_screen.dart';
@@ -37,6 +39,7 @@ import '../features/profile/presentation/screens/about_app_screen.dart';
 import '../features/profile/presentation/screens/about_us_screen.dart';
 import '../features/profile/presentation/screens/personal_information_screen.dart';
 import '../features/profile/presentation/screens/profile_route_screen.dart';
+import '../features/profile/presentation/screens/security_settings_screen.dart';
 import '../features/splash/presentation/splash_screen.dart';
 import 'app_routes.dart';
 
@@ -112,10 +115,31 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
       return _buildFadeScaleRoute(
         settings: settings,
         builder: (_) {
-          final initialEmail = settings.arguments is String
-              ? settings.arguments as String
-              : '';
+          final args = settings.arguments;
+          if (args is LoginScreenArguments) {
+            return LoginScreen(
+              initialEmail: args.initialEmail,
+              promptTwoFactorSetup: args.promptTwoFactorSetup,
+            );
+          }
+
+          final initialEmail = args is String ? args : '';
           return LoginScreen(initialEmail: initialEmail);
+        },
+      );
+    case AppRoutes.mfaChallenge:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) {
+          final args = settings.arguments;
+          if (args is MfaChallengeArguments) {
+            return TotpChallengeScreen(
+              email: args.email,
+              mfaChallengeToken: args.mfaChallengeToken,
+            );
+          }
+
+          return const LoginScreen();
         },
       );
     case AppRoutes.forgotPassword:
@@ -232,6 +256,23 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
       return _buildInstantRoute(
         settings: settings,
         builder: (_) => const ProfileRouteScreen(),
+      );
+    case AppRoutes.securitySettings:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) => const SecuritySettingsScreen(),
+      );
+    case AppRoutes.totpSetup:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) {
+          final args = settings.arguments;
+          if (args is TotpSetupScreenArguments) {
+            return TotpSetupScreen(allowSkip: args.allowSkip);
+          }
+
+          return const TotpSetupScreen();
+        },
       );
     case AppRoutes.personalInformation:
       return _buildSlideRoute(

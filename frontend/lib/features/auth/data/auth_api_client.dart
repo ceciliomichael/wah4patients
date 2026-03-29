@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -131,9 +132,82 @@ class AuthApiClient {
     return LoginResult.fromJson(response);
   }
 
+  Future<LoginResult> verifyMfaChallenge({
+    required String mfaChallengeToken,
+    required String code,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/challenge/verify',
+      body: <String, dynamic>{
+        'mfaChallengeToken': mfaChallengeToken,
+        'code': code,
+      },
+    );
+
+    return LoginResult.fromJson(response);
+  }
+
+  Future<LoginResult> verifyMfaBackupCode({
+    required String mfaChallengeToken,
+    required String backupCode,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/challenge/verify-backup-code',
+      body: <String, dynamic>{
+        'mfaChallengeToken': mfaChallengeToken,
+        'backupCode': backupCode,
+      },
+    );
+
+    return LoginResult.fromJson(response);
+  }
+
+  Future<TotpSetupStartResult> startTotpSetup({
+    required String accessToken,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/setup/start',
+      body: const <String, dynamic>{},
+      bearerToken: accessToken,
+    );
+
+    return TotpSetupStartResult.fromJson(response);
+  }
+
+  Future<TotpSetupVerifyResult> verifyTotpSetup({
+    required String accessToken,
+    required String code,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/setup/verify',
+      body: <String, dynamic>{'code': code},
+      bearerToken: accessToken,
+    );
+
+    return TotpSetupVerifyResult.fromJson(response);
+  }
+
+  Future<DisableTotpResult> disableTotp({
+    required String accessToken,
+    required String password,
+    required String code,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/disable',
+      body: <String, dynamic>{
+        'password': password,
+        'code': code,
+      },
+      bearerToken: accessToken,
+    );
+
+    return DisableTotpResult.fromJson(response);
+  }
+
   Future<Map<String, dynamic>> _post({
     required String path,
     required Map<String, dynamic> body,
+    String? bearerToken,
   }) async {
     await AppEnvironment.load();
 
@@ -144,14 +218,34 @@ class AuthApiClient {
     }
 
     final uri = _buildUri(path);
-    final response = await _httpClient.post(
-      uri,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'x-api-key': AppEnvironment.backendApiKey.trim(),
-      },
-      body: jsonEncode(body),
-    );
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+      'x-api-key': AppEnvironment.backendApiKey.trim(),
+    };
+
+    final trimmedBearerToken = bearerToken?.trim() ?? '';
+    if (trimmedBearerToken.isNotEmpty) {
+      headers['authorization'] = 'Bearer $trimmedBearerToken';
+    }
+
+    late final http.Response response;
+    try {
+      response = await _httpClient
+          .post(
+            uri,
+            headers: headers,
+            body: jsonEncode(body),
+          )
+          .timeout(const Duration(seconds: 20));
+    } on TimeoutException {
+      throw const AuthApiException(
+        'Request timed out. Please ensure the backend is running and try again.',
+      );
+    } on http.ClientException {
+      throw const AuthApiException(
+        'Unable to reach the backend. Check BACKEND_BASE_URL and backend server status.',
+      );
+    }
 
     final decodedBody = _decodeResponseBody(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
