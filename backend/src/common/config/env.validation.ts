@@ -43,4 +43,7 @@ export const envValidationSchema = Joi.object({
   TOTP_ISSUER: Joi.string().trim().min(2).max(64).default("WAH4P"),
   TOTP_RECOVERY_CODES_COUNT: Joi.number().integer().min(6).max(20).default(8),
   TOTP_SECRET_ENCRYPTION_KEY: Joi.string().trim().min(32).required(),
+  MPIN_MAX_FAILED_ATTEMPTS: Joi.number().integer().min(3).max(10).default(5),
+  MPIN_LOCK_DURATION_MINUTES: Joi.number().integer().min(1).max(60).default(15),
+  MPIN_BCRYPT_ROUNDS: Joi.number().integer().min(10).max(14).default(12),
 });

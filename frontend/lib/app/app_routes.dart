@@ -12,7 +12,7 @@ class AppRoutes {
   static const String registrationVerification = '/registration/verification';
   static const String registrationPassword = '/registration/password';
   static const String login = '/login';
-    static const String mfaChallenge = '/login/mfa-challenge';
+  static const String mfaChallenge = '/login/mfa-challenge';
   static const String forgotPassword = '/login/forgot-password';
   static const String authPreview = '/auth/preview';
   static const String dashboard = '/dashboard';
@@ -44,8 +44,11 @@ class AppRoutes {
   static const String calendar = '/calendar';
   static const String notification = '/notification';
   static const String profile = '/profile';
-    static const String securitySettings = '/profile/security';
-    static const String totpSetup = '/profile/security/totp-setup';
+  static const String securitySettings = '/profile/security';
+  static const String totpSetup = '/profile/security/totp-setup';
+  static const String mpinSetup = '/profile/security/mpin/setup';
+  static const String mpinConfirm = '/profile/security/mpin/confirm';
+  static const String mpinUnlock = '/lock/mpin';
   static const String personalInformation = '/profile/personal-information';
   static const String aboutUs = '/profile/about-us';
   static const String aboutApp = '/profile/about-app';

@@ -140,6 +140,47 @@ export interface Database {
           },
         ];
       };
+      user_mpins: {
+        Row: {
+          user_id: string;
+          device_id: string;
+          mpin_hash: string;
+          failed_attempts: number;
+          locked_until: string | null;
+          last_verified_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          device_id: string;
+          mpin_hash: string;
+          failed_attempts?: number;
+          locked_until?: string | null;
+          last_verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          device_id?: string;
+          mpin_hash?: string;
+          failed_attempts?: number;
+          locked_until?: string | null;
+          last_verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_mpins_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       profiles: {
         Row: {
           id: string;

@@ -14,8 +14,10 @@ import { DisableTotpDto } from "./dto/disable-totp.dto";
 import { LoginDto } from "./dto/login.dto";
 import { RequestPasswordResetOtpDto } from "./dto/request-password-reset-otp.dto";
 import { RequestRegistrationOtpDto } from "./dto/request-registration-otp.dto";
+import { SetMpinDto } from "./dto/set-mpin.dto";
 import { VerifyMfaChallengeDto } from "./dto/verify-mfa-challenge.dto";
 import { VerifyMfaBackupCodeDto } from "./dto/verify-mfa-backup-code.dto";
+import { VerifyMpinDto } from "./dto/verify-mpin.dto";
 import { VerifyPasswordResetOtpDto } from "./dto/verify-password-reset-otp.dto";
 import { VerifyRegistrationOtpDto } from "./dto/verify-registration-otp.dto";
 import { VerifyTotpCodeDto } from "./dto/verify-totp-code.dto";
@@ -26,8 +28,10 @@ import {
   LoginResultResponse,
   RequestOtpResponse,
   RequestPasswordResetOtpResponse,
+  SetMpinResponse,
   TotpSetupStartResponse,
   TotpSetupVerifyResponse,
+  VerifyMpinResponse,
   VerifyOtpResponse,
   VerifyPasswordResetOtpResponse,
 } from "./auth.types";
@@ -153,5 +157,25 @@ export class AuthController {
     @Body() dto: DisableTotpDto,
   ): Promise<{ message: string }> {
     return this.authService.disableTotp(authorizationHeader, dto);
+  }
+
+  @Post("mpin/set")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 5 } })
+  setMpin(
+    @Headers("authorization") authorizationHeader: string | undefined,
+    @Body() dto: SetMpinDto,
+  ): Promise<SetMpinResponse> {
+    return this.authService.setMpin(authorizationHeader, dto);
+  }
+
+  @Post("mpin/verify")
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 12 } })
+  verifyMpin(
+    @Headers("authorization") authorizationHeader: string | undefined,
+    @Body() dto: VerifyMpinDto,
+  ): Promise<VerifyMpinResponse> {
+    return this.authService.verifyMpin(authorizationHeader, dto);
   }
 }
