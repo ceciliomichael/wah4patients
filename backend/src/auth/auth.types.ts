@@ -48,6 +48,41 @@ export interface PasswordResetTokenPayload {
   exp: number;
 }
 
+export interface MfaChallengeTokenPayload {
+  sub: string;
+  purpose: "mfa-challenge";
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  tokenType: string;
+  iat: number;
+  exp: number;
+}
+
+export interface UserTotpFactorRecord {
+  userId: string;
+  isEnabled: boolean;
+  totpSecretCiphertext: string | null;
+  totpSecretTempCiphertext: string | null;
+  enabledAt: string | null;
+}
+
+export interface UserTotpFactorUpsert {
+  userId: string;
+  isEnabled?: boolean;
+  totpSecretCiphertext?: string | null;
+  totpSecretTempCiphertext?: string | null;
+  enabledAt?: string | null;
+}
+
+export interface UserTotpRecoveryCodeRecord {
+  id: string;
+  userId: string;
+  codeHash: string;
+  usedAt: string | null;
+}
+
 export interface RequestOtpResponse {
   message: string;
   cooldownSeconds: number;
@@ -89,4 +124,26 @@ export interface LoginResponse {
     id: string;
     email: string;
   };
+}
+
+export interface LoginMfaRequiredResponse {
+  mfaRequired: true;
+  mfaChallengeToken: string;
+  expiresInSeconds: number;
+  user: {
+    id: string;
+    email: string;
+  };
+}
+
+export type LoginResultResponse = LoginResponse | LoginMfaRequiredResponse;
+
+export interface TotpSetupStartResponse {
+  otpauthUrl: string;
+  manualEntryKey: string;
+}
+
+export interface TotpSetupVerifyResponse {
+  message: string;
+  recoveryCodes: string[];
 }

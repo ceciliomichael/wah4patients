@@ -27,7 +27,7 @@ async function bootstrap() {
   app.enableCors({
     origin: configuredOrigins,
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'x-api-key'],
+    allowedHeaders: ['Content-Type', 'x-api-key', 'authorization'],
   });
 
   const port = configService.get<number>('PORT', 3000);

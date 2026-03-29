@@ -7,6 +7,8 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../data/auth_api_client.dart';
+import '../../domain/auth_session.dart';
+import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_brand_logo.dart';
 import '../widgets/auth_footer_link.dart';
@@ -14,9 +16,14 @@ import '../widgets/auth_header.dart';
 import '../widgets/auth_surface_card.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, this.initialEmail = ''});
+  const LoginScreen({
+    super.key,
+    this.initialEmail = '',
+    this.promptTwoFactorSetup = false,
+  });
 
   final String initialEmail;
+  final bool promptTwoFactorSetup;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -74,12 +81,34 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await AuthApiClient.instance.login(
+      final result = await AuthApiClient.instance.login(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
       if (!mounted) {
+        return;
+      }
+
+      if (result.mfaRequired) {
+        AuthSession.clear();
+        Navigator.of(context).pushNamed(
+          AppRoutes.mfaChallenge,
+          arguments: MfaChallengeArguments(
+            email: result.userEmail,
+            mfaChallengeToken: result.mfaChallengeToken,
+          ),
+        );
+        return;
+      }
+
+      AuthSession.setFromLoginResult(result);
+
+      if (widget.promptTwoFactorSetup) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.totpSetup,
+          (route) => false,
+        );
         return;
       }
 

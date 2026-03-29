@@ -4,6 +4,7 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../auth/domain/auth_session.dart';
 import '../widgets/sign_out_confirmation_sheet_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -67,6 +68,18 @@ class ProfileScreen extends StatelessWidget {
                         ).pushNamed(AppRoutes.privacyStatement),
                       ),
                       const SizedBox(height: 20),
+                      _SectionHeader(title: 'Security'),
+                      const SizedBox(height: 12),
+                      _MenuCard(
+                        title: 'Two-Factor Authentication',
+                        icon: Icons.shield_outlined,
+                        description:
+                            'Set up Google Authenticator and manage account security.',
+                        onTap: () => Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.securitySettings),
+                      ),
+                      const SizedBox(height: 20),
                       _SectionHeader(title: 'About'),
                       const SizedBox(height: 12),
                       _MenuCard(
@@ -118,6 +131,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (sheetContext) {
         return SignOutConfirmationSheetWidget(
           onSignOut: () {
+            AuthSession.clear();
             Navigator.of(context).pushNamedAndRemoveUntil(
               AppRoutes.splash,
               (route) => false,
