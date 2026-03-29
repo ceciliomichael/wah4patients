@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
-import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../../auth/data/auth_api_client.dart';
 import '../../../auth/domain/auth_session.dart';
 import '../../../auth/domain/auth_validators.dart';
@@ -105,128 +105,242 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
 
   void _goToLogin() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please sign in again to access security settings.')),
+      const SnackBar(
+        content: Text('Please sign in again to access security settings.'),
+      ),
     );
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes.login,
-      (route) => false,
-    );
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isTablet = mediaQuery.size.width > 600;
+    final horizontalPadding = isTablet ? 32.0 : 16.0;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: AppColors.background,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: AppColors.background,
-          elevation: 0,
-          title: Text(
-            'Security',
-            style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.w700),
-          ),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+        body: AnimatedPadding(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 640),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  AuthSurfaceCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          'Authenticator app',
-                          style: AppTextStyles.titleLarge.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+              constraints: const BoxConstraints(maxWidth: 760),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  horizontalPadding,
+                  24,
+                  horizontalPadding,
+                  24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: AppColors.textPrimary,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Set up Google Authenticator as your second factor for safer sign-ins.',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                        padding: const EdgeInsets.all(4),
+                        constraints: const BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 40,
                         ),
-                        const SizedBox(height: 16),
-                        PrimaryButtonWidget(
-                          text: 'Set up 2FA',
-                          onPressed: _openSetupFlow,
-                          icon: Icons.shield_outlined,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Form(
-                    key: _disableFormKey,
-                    child: AuthSurfaceCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Disable 2FA',
-                            style: AppTextStyles.titleLarge.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.danger,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Confirm your password and current authenticator code to disable.',
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            enabled: !_isDisabling,
-                            validator: _validateCurrentPassword,
-                            decoration: const InputDecoration(
-                              hintText: 'Current password',
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          OtpCodeField(
-                            key: _otpFieldKey,
-                            validator: validateOtp,
-                            isEnabled: !_isDisabling,
-                          ),
-                          const SizedBox(height: 16),
-                          PrimaryButtonWidget(
-                            text: 'Disable 2FA',
-                            onPressed: _isDisabling ? null : _disable2fa,
-                            isLoading: _isDisabling,
-                            icon: Icons.gpp_bad_outlined,
-                            backgroundColor: AppColors.danger,
-                            textColor: AppColors.white,
-                          ),
-                        ],
+                        splashRadius: 20,
+                        tooltip: 'Back',
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Center(
-                    child: SecondaryButtonWidget(
-                      text: 'Back to Profile',
-                      onPressed: () => Navigator.of(context).pop(),
+                    const SizedBox(height: 16),
+                    _PageHeader(isTablet: isTablet),
+                    const SizedBox(height: 28),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const _SectionTitle(
+                              icon: Icons.shield_outlined,
+                              title: 'Authenticator app',
+                            ),
+                            const SizedBox(height: 12),
+                            AuthSurfaceCard(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'Set up Google Authenticator as your second factor for safer sign-ins.',
+                                    style: AppTextStyles.bodyMedium.copyWith(
+                                      color: AppColors.textSecondary,
+                                      height: 1.6,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  PrimaryButtonWidget(
+                                    text: 'Set up 2FA',
+                                    onPressed: _openSetupFlow,
+                                    icon: Icons.shield_outlined,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            const Divider(color: AppColors.border, height: 1),
+                            const SizedBox(height: 24),
+                            const _SectionTitle(
+                              icon: Icons.gpp_bad_outlined,
+                              title: 'Disable 2FA',
+                            ),
+                            const SizedBox(height: 12),
+                            Form(
+                              key: _disableFormKey,
+                              child: AuthSurfaceCard(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      'Confirm your password and current authenticator code to disable.',
+                                      style: AppTextStyles.bodyMedium.copyWith(
+                                        color: AppColors.textSecondary,
+                                        height: 1.6,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      enabled: !_isDisabling,
+                                      validator: _validateCurrentPassword,
+                                      decoration: const InputDecoration(
+                                        hintText: 'Current password',
+                                        prefixIcon: Icon(
+                                          Icons.lock_outline,
+                                          color: AppColors.textSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    OtpCodeField(
+                                      key: _otpFieldKey,
+                                      validator: validateOtp,
+                                      isEnabled: !_isDisabling,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    PrimaryButtonWidget(
+                                      text: 'Disable 2FA',
+                                      onPressed: _isDisabling
+                                          ? null
+                                          : _disable2fa,
+                                      isLoading: _isDisabling,
+                                      icon: Icons.gpp_bad_outlined,
+                                      backgroundColor: AppColors.danger,
+                                      textColor: AppColors.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    PrimaryButtonWidget(
+                      text: 'Back to Profile',
+                      onPressed: () {
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.profile);
+                      },
+                      icon: Icons.arrow_forward,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PageHeader extends StatelessWidget {
+  const _PageHeader({required this.isTablet});
+
+  final bool isTablet;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Center(
+          child: Text(
+            'Security',
+            style: AppTextStyles.headlineMedium.copyWith(
+              color: AppColors.primary,
+              fontSize: isTablet ? 36.0 : 30.0,
+              fontWeight: FontWeight.w800,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Center(
+          child: Text(
+            'Manage your two-factor authentication settings.',
+            style: AppTextStyles.bodyLarge.copyWith(
+              color: AppColors.textSecondary,
+              height: 1.55,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: AppColors.primary, size: 22),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.titleLarge.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
