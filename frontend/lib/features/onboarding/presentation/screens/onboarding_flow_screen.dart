@@ -71,20 +71,18 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
     });
   }
 
-  void _handleSkipPressed() {
-    final currentPage = OnboardingPageRepository.pages[_currentPageIndex];
-    if (currentPage.isLastPage) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.registration);
-      return;
-    }
+  void _goToRegistration() {
+    Navigator.of(context).pushReplacementNamed(AppRoutes.registration);
+  }
 
-    _animateToPage(OnboardingPageRepository.pages.length - 1);
+  void _handleSkipPressed() {
+    _goToRegistration();
   }
 
   void _handleActionPressed() {
     final currentPage = OnboardingPageRepository.pages[_currentPageIndex];
     if (currentPage.isLastPage) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.registration);
+      _goToRegistration();
       return;
     }
 
