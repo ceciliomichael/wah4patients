@@ -58,6 +58,7 @@ class AuthApiClient {
     required String email,
     required String password,
     required String registrationToken,
+    required RegistrationProfileDraft profile,
   }) async {
     await _post(
       path: '/auth/register/complete',
@@ -65,8 +66,36 @@ class AuthApiClient {
         'email': email,
         'password': password,
         'registrationToken': registrationToken,
+        'firstName': profile.firstName,
+        'secondName': profile.secondName,
+        'middleName': profile.middleName,
+        'lastName': profile.lastName,
       },
     );
+  }
+
+  Future<ProfileResult> updateMyProfile({
+    required String accessToken,
+    required RegistrationProfileDraft profile,
+  }) async {
+    final response = await _patch(
+      path: '/profile/me',
+      body: <String, dynamic>{
+        'firstName': profile.firstName,
+        'secondName': profile.secondName,
+        'middleName': profile.middleName,
+        'lastName': profile.lastName,
+      },
+      bearerToken: accessToken,
+    );
+
+    return ProfileResult.fromJson(response);
+  }
+
+  Future<ProfileResult> getMyProfile({required String accessToken}) async {
+    final response = await _get(path: '/profile/me', bearerToken: accessToken);
+
+    return ProfileResult.fromJson(response);
   }
 
   Future<RequestPasswordResetOtpResult> requestPasswordResetOtp({
@@ -260,6 +289,107 @@ class AuthApiClient {
     try {
       response = await _httpClient
           .post(uri, headers: headers, body: jsonEncode(body))
+          .timeout(const Duration(seconds: 20));
+    } on TimeoutException {
+      throw const AuthApiException(
+        'Request timed out. Please ensure the backend is running and try again.',
+      );
+    } on http.ClientException {
+      throw const AuthApiException(
+        'Unable to reach the backend. Check BACKEND_BASE_URL and backend server status.',
+      );
+    }
+
+    final decodedBody = _decodeResponseBody(response.body);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return decodedBody;
+    }
+
+    throw AuthApiException(
+      _extractErrorMessage(decodedBody) ??
+          'Request failed with status ${response.statusCode}',
+      statusCode: response.statusCode,
+    );
+  }
+
+  Future<Map<String, dynamic>> _get({
+    required String path,
+    String? bearerToken,
+  }) async {
+    await AppEnvironment.load();
+
+    if (!AppEnvironment.isAuthApiConfigured) {
+      throw const AuthApiException(
+        'Missing auth API config. Set BACKEND_BASE_URL and BACKEND_API_KEY in frontend/.env.',
+      );
+    }
+
+    final uri = _buildUri(path);
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+      'x-api-key': AppEnvironment.backendApiKey.trim(),
+    };
+
+    final trimmedBearerToken = bearerToken?.trim() ?? '';
+    if (trimmedBearerToken.isNotEmpty) {
+      headers['authorization'] = 'Bearer $trimmedBearerToken';
+    }
+
+    late final http.Response response;
+    try {
+      response = await _httpClient
+          .get(uri, headers: headers)
+          .timeout(const Duration(seconds: 20));
+    } on TimeoutException {
+      throw const AuthApiException(
+        'Request timed out. Please ensure the backend is running and try again.',
+      );
+    } on http.ClientException {
+      throw const AuthApiException(
+        'Unable to reach the backend. Check BACKEND_BASE_URL and backend server status.',
+      );
+    }
+
+    final decodedBody = _decodeResponseBody(response.body);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return decodedBody;
+    }
+
+    throw AuthApiException(
+      _extractErrorMessage(decodedBody) ??
+          'Request failed with status ${response.statusCode}',
+      statusCode: response.statusCode,
+    );
+  }
+
+  Future<Map<String, dynamic>> _patch({
+    required String path,
+    required Map<String, dynamic> body,
+    String? bearerToken,
+  }) async {
+    await AppEnvironment.load();
+
+    if (!AppEnvironment.isAuthApiConfigured) {
+      throw const AuthApiException(
+        'Missing auth API config. Set BACKEND_BASE_URL and BACKEND_API_KEY in frontend/.env.',
+      );
+    }
+
+    final uri = _buildUri(path);
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+      'x-api-key': AppEnvironment.backendApiKey.trim(),
+    };
+
+    final trimmedBearerToken = bearerToken?.trim() ?? '';
+    if (trimmedBearerToken.isNotEmpty) {
+      headers['authorization'] = 'Bearer $trimmedBearerToken';
+    }
+
+    late final http.Response response;
+    try {
+      response = await _httpClient
+          .patch(uri, headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 20));
     } on TimeoutException {
       throw const AuthApiException(

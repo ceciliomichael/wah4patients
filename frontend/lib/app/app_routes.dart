@@ -10,6 +10,7 @@ class AppRoutes {
   static const String registration = '/registration';
   static const String registrationEmail = '/registration/email';
   static const String registrationVerification = '/registration/verification';
+  static const String registrationDetails = '/registration/details';
   static const String registrationPassword = '/registration/password';
   static const String login = '/login';
   static const String mfaChallenge = '/login/mfa-challenge';

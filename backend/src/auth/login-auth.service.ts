@@ -4,26 +4,28 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { authenticator } from "otplib";
-import { AuthSettingsService } from "./auth-settings.service";
-import { AuthSupportService } from "./auth-support.service";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { authenticator } from 'otplib';
+import { AuthSettingsService } from './auth-settings.service';
+import { AuthSupportService } from './auth-support.service';
 import {
+  PatientProfileResponse,
   LoginMfaRequiredResponse,
   LoginResponse,
   LoginResultResponse,
   MfaChallengeTokenPayload,
   TotpSetupStartResponse,
   TotpSetupVerifyResponse,
-} from "./auth.types";
-import { DisableTotpDto } from "./dto/disable-totp.dto";
-import { LoginDto } from "./dto/login.dto";
-import { VerifyMfaBackupCodeDto } from "./dto/verify-mfa-backup-code.dto";
-import { VerifyMfaChallengeDto } from "./dto/verify-mfa-challenge.dto";
-import { VerifyTotpCodeDto } from "./dto/verify-totp-code.dto";
-import { TotpFactorRepository } from "./totp-factor.repository";
-import { TotpRecoveryCodesRepository } from "./totp-recovery-codes.repository";
+} from './auth.types';
+import { DisableTotpDto } from './dto/disable-totp.dto';
+import { LoginDto } from './dto/login.dto';
+import { VerifyMfaBackupCodeDto } from './dto/verify-mfa-backup-code.dto';
+import { VerifyMfaChallengeDto } from './dto/verify-mfa-challenge.dto';
+import { VerifyTotpCodeDto } from './dto/verify-totp-code.dto';
+import { TotpFactorRepository } from './totp-factor.repository';
+import { TotpRecoveryCodesRepository } from './totp-recovery-codes.repository';
+import { ProfileService } from './profile.service';
 
 @Injectable()
 export class LoginAuthService {
@@ -33,6 +35,7 @@ export class LoginAuthService {
     private readonly jwtService: JwtService,
     private readonly totpFactorRepository: TotpFactorRepository,
     private readonly totpRecoveryCodesRepository: TotpRecoveryCodesRepository,
+    private readonly profileService: ProfileService,
     private readonly settings: AuthSettingsService,
     private readonly support: AuthSupportService,
   ) {}
@@ -46,19 +49,23 @@ export class LoginAuthService {
     const { data, error } = signInResult;
 
     if (error !== null || data.session === null || data.user === null) {
-      this.logger.error("Failed to sign in Supabase auth user", {
+      this.logger.error('Failed to sign in Supabase auth user', {
         email: normalizedEmail,
-        message: error?.message ?? "Missing session or user in response",
+        message: error?.message ?? 'Missing session or user in response',
       });
 
       throw new UnauthorizedException(
         error?.message?.trim().length
           ? `Login failed: ${error.message}`
-          : "Invalid email or password",
+          : 'Invalid email or password',
       );
     }
 
     const session = data.session;
+    const profile = await this.resolveProfile(
+      data.user.id,
+      data.user.email ?? normalizedEmail,
+    );
     const factor = await this.totpFactorRepository.findByUserId(data.user.id);
 
     if (factor?.isEnabled === true) {
@@ -66,22 +73,22 @@ export class LoginAuthService {
         factor.totpSecretCiphertext === null ||
         factor.totpSecretCiphertext.trim().length === 0
       ) {
-        this.logger.error("2FA is enabled but no active secret is available", {
+        this.logger.error('2FA is enabled but no active secret is available', {
           userId: data.user.id,
         });
-        throw new BadGatewayException("Unable to complete login challenge");
+        throw new BadGatewayException('Unable to complete login challenge');
       }
 
       const challengeToken = await this.jwtService.signAsync(
         {
           sub: data.user.id,
-          purpose: "mfa-challenge",
+          purpose: 'mfa-challenge',
           email: data.user.email ?? normalizedEmail,
           accessToken: session.access_token,
           refreshToken: session.refresh_token,
           expiresIn: session.expires_in,
           tokenType: session.token_type,
-        } satisfies Omit<MfaChallengeTokenPayload, "iat" | "exp">,
+        } satisfies Omit<MfaChallengeTokenPayload, 'iat' | 'exp'>,
         {
           secret: this.settings.mfaChallengeTokenSecret,
           expiresIn: `${this.settings.mfaChallengeTokenTtlSeconds}s`,
@@ -107,6 +114,7 @@ export class LoginAuthService {
       user: {
         id: data.user.id,
         email: data.user.email ?? normalizedEmail,
+        profile,
       },
     };
   }
@@ -150,9 +158,9 @@ export class LoginAuthService {
       authenticatedUser.id,
     );
 
-    const temporarySecretCiphertext = factor?.totpSecretTempCiphertext ?? "";
+    const temporarySecretCiphertext = factor?.totpSecretTempCiphertext ?? '';
     if (temporarySecretCiphertext.trim().length === 0) {
-      throw new BadRequestException("No pending 2FA setup was found");
+      throw new BadRequestException('No pending 2FA setup was found');
     }
 
     const temporarySecret = this.support.decryptTotpSecret(
@@ -162,7 +170,7 @@ export class LoginAuthService {
     this.support.configureTotpAuthenticator();
     const isValidCode = authenticator.check(dto.code.trim(), temporarySecret);
     if (!isValidCode) {
-      throw new UnauthorizedException("Invalid authentication code");
+      throw new UnauthorizedException('Invalid authentication code');
     }
 
     await this.totpFactorRepository.enableWithActiveSecret(
@@ -182,7 +190,7 @@ export class LoginAuthService {
     );
 
     return {
-      message: "Two-factor authentication enabled",
+      message: 'Two-factor authentication enabled',
       recoveryCodes,
     };
   }
@@ -199,7 +207,7 @@ export class LoginAuthService {
       factor.totpSecretCiphertext === null
     ) {
       throw new UnauthorizedException(
-        "Two-factor authentication is not enabled",
+        'Two-factor authentication is not enabled',
       );
     }
 
@@ -209,8 +217,10 @@ export class LoginAuthService {
     );
     const isValidCode = authenticator.check(dto.code.trim(), activeSecret);
     if (!isValidCode) {
-      throw new UnauthorizedException("Invalid authentication code");
+      throw new UnauthorizedException('Invalid authentication code');
     }
+
+    const profile = await this.resolveProfile(payload.sub, payload.email);
 
     return {
       accessToken: payload.accessToken,
@@ -220,6 +230,7 @@ export class LoginAuthService {
       user: {
         id: payload.sub,
         email: payload.email,
+        profile,
       },
     };
   }
@@ -232,7 +243,7 @@ export class LoginAuthService {
     );
     const normalizedCode = dto.backupCode.trim().toUpperCase();
     if (normalizedCode.length === 0) {
-      throw new UnauthorizedException("Invalid backup code");
+      throw new UnauthorizedException('Invalid backup code');
     }
 
     const codeHash = this.support.hashRecoveryCode(payload.sub, normalizedCode);
@@ -242,8 +253,10 @@ export class LoginAuthService {
     );
 
     if (!consumed) {
-      throw new UnauthorizedException("Invalid backup code");
+      throw new UnauthorizedException('Invalid backup code');
     }
+
+    const profile = await this.resolveProfile(payload.sub, payload.email);
 
     return {
       accessToken: payload.accessToken,
@@ -253,6 +266,7 @@ export class LoginAuthService {
       user: {
         id: payload.sub,
         email: payload.email,
+        profile,
       },
     };
   }
@@ -270,7 +284,7 @@ export class LoginAuthService {
     );
 
     if (signInResult.error !== null) {
-      throw new UnauthorizedException("Password verification failed");
+      throw new UnauthorizedException('Password verification failed');
     }
 
     const factor = await this.totpFactorRepository.findByUserId(
@@ -281,7 +295,7 @@ export class LoginAuthService {
       factor.isEnabled !== true ||
       factor.totpSecretCiphertext === null
     ) {
-      throw new BadRequestException("Two-factor authentication is not enabled");
+      throw new BadRequestException('Two-factor authentication is not enabled');
     }
 
     this.support.configureTotpAuthenticator();
@@ -290,14 +304,33 @@ export class LoginAuthService {
     );
     const isValidCode = authenticator.check(dto.code.trim(), activeSecret);
     if (!isValidCode) {
-      throw new UnauthorizedException("Invalid authentication code");
+      throw new UnauthorizedException('Invalid authentication code');
     }
 
     await this.totpFactorRepository.disable(authenticatedUser.id);
     await this.totpRecoveryCodesRepository.clearAll(authenticatedUser.id);
 
     return {
-      message: "Two-factor authentication disabled",
+      message: 'Two-factor authentication disabled',
     };
+  }
+
+  private async resolveProfile(
+    userId: string,
+    email: string,
+  ): Promise<PatientProfileResponse> {
+    try {
+      return await this.profileService.getProfileResponse(userId, email);
+    } catch (error) {
+      this.logger.warn('Falling back to an empty profile snapshot', {
+        userId,
+        email,
+      });
+      return {
+        givenNames: [],
+        familyName: '',
+        displayName: '',
+      };
+    }
   }
 }

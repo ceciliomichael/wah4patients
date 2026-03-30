@@ -36,21 +36,27 @@ export interface PasswordResetOtpUpsert {
 
 export interface RegistrationTokenPayload {
   sub: string;
-  purpose: "registration";
+  purpose: 'registration';
   iat: number;
   exp: number;
 }
 
+export interface PatientProfileResponse {
+  givenNames: string[];
+  familyName: string;
+  displayName: string;
+}
+
 export interface PasswordResetTokenPayload {
   sub: string;
-  purpose: "password-reset";
+  purpose: 'password-reset';
   iat: number;
   exp: number;
 }
 
 export interface MfaChallengeTokenPayload {
   sub: string;
-  purpose: "mfa-challenge";
+  purpose: 'mfa-challenge';
   email: string;
   accessToken: string;
   refreshToken: string;
@@ -131,6 +137,7 @@ export interface CompleteRegistrationResponse {
   message: string;
   userId: string;
   email: string;
+  profile: PatientProfileResponse;
 }
 
 export interface LoginResponse {
@@ -141,6 +148,7 @@ export interface LoginResponse {
   user: {
     id: string;
     email: string;
+    profile: PatientProfileResponse;
   };
 }
 

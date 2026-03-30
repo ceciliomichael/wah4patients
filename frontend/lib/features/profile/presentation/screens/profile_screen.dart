@@ -21,95 +21,112 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          backgroundColor: AppColors.background,
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight - 48,
-              ),
-              child: Center(
+    final content = ValueListenableBuilder<int>(
+      valueListenable: AuthSession.notifier,
+      builder: (context, _, __) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return Scaffold(
+              backgroundColor: AppColors.background,
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 24,
+                ),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: centerContent
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _ProfileHeader(showBackButton: showBackButton),
-                      const SizedBox(height: 32),
-                      _ProfileInfoCard(),
-                      const SizedBox(height: 32),
-                      _SectionCard(
-                        title: 'Personal Information',
-                        icon: Icons.person_outline,
-                        description:
-                            'Manage your personal details and profile settings',
-                        onTap: () => Navigator.of(
-                          context,
-                        ).pushNamed(AppRoutes.personalInformation),
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight - 48,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 560),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: centerContent
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ProfileHeader(showBackButton: showBackButton),
+                          const SizedBox(height: 32),
+                          _ProfileInfoCard(
+                            displayName: AuthSession.displayName,
+                            email: AuthSession.userEmail ?? '',
+                            initials: _buildInitials(
+                              AuthSession.givenNames,
+                              AuthSession.familyName,
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          _SectionCard(
+                            title: 'Personal Information',
+                            icon: Icons.person_outline,
+                            description:
+                                'Manage your personal details and profile settings',
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.personalInformation),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionHeader(title: 'Legal'),
+                          const SizedBox(height: 12),
+                          _MenuCard(
+                            title: 'Privacy Statement',
+                            icon: Icons.privacy_tip_outlined,
+                            description:
+                                'View our privacy statement and data usage information',
+                            isSignOut: false,
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.privacyStatement),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionHeader(title: 'Security'),
+                          const SizedBox(height: 12),
+                          _MenuCard(
+                            title: 'Two-Factor Authentication',
+                            icon: Icons.shield_outlined,
+                            description:
+                                'Set up Google Authenticator and manage account security.',
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.securitySettings),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionHeader(title: 'About'),
+                          const SizedBox(height: 12),
+                          _MenuCard(
+                            title: 'About Us',
+                            icon: Icons.group_outlined,
+                            description: 'Learn about our team and mission',
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.aboutUs),
+                          ),
+                          const SizedBox(height: 12),
+                          _MenuCard(
+                            title: 'About the App',
+                            icon: Icons.info_outlined,
+                            description:
+                                'View app version, build details, and information',
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.aboutApp),
+                          ),
+                          const SizedBox(height: 28),
+                          _SectionHeader(title: 'Account'),
+                          const SizedBox(height: 12),
+                          _SignOutCard(
+                            onTap: () => _showLogoutConfirmationModal(context),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
-                      _SectionHeader(title: 'Legal'),
-                      const SizedBox(height: 12),
-                      _MenuCard(
-                        title: 'Privacy Statement',
-                        icon: Icons.privacy_tip_outlined,
-                        description:
-                            'View our privacy statement and data usage information',
-                        isSignOut: false,
-                        onTap: () => Navigator.of(
-                          context,
-                        ).pushNamed(AppRoutes.privacyStatement),
-                      ),
-                      const SizedBox(height: 20),
-                      _SectionHeader(title: 'Security'),
-                      const SizedBox(height: 12),
-                      _MenuCard(
-                        title: 'Two-Factor Authentication',
-                        icon: Icons.shield_outlined,
-                        description:
-                            'Set up Google Authenticator and manage account security.',
-                        onTap: () => Navigator.of(
-                          context,
-                        ).pushNamed(AppRoutes.securitySettings),
-                      ),
-                      const SizedBox(height: 20),
-                      _SectionHeader(title: 'About'),
-                      const SizedBox(height: 12),
-                      _MenuCard(
-                        title: 'About Us',
-                        icon: Icons.group_outlined,
-                        description: 'Learn about our team and mission',
-                        onTap: () =>
-                            Navigator.of(context).pushNamed(AppRoutes.aboutUs),
-                      ),
-                      const SizedBox(height: 12),
-                      _MenuCard(
-                        title: 'About the App',
-                        icon: Icons.info_outlined,
-                        description:
-                            'View app version, build details, and information',
-                        onTap: () =>
-                            Navigator.of(context).pushNamed(AppRoutes.aboutApp),
-                      ),
-                      const SizedBox(height: 28),
-                      _SectionHeader(title: 'Account'),
-                      const SizedBox(height: 12),
-                      _SignOutCard(
-                        onTap: () => _showLogoutConfirmationModal(context),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );
@@ -132,10 +149,9 @@ class ProfileScreen extends StatelessWidget {
         return SignOutConfirmationSheetWidget(
           onSignOut: () {
             AuthSession.clear();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              AppRoutes.splash,
-              (route) => false,
-            );
+            Navigator.of(
+              context,
+            ).pushNamedAndRemoveUntil(AppRoutes.splash, (route) => false);
           },
         );
       },
@@ -191,6 +207,16 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _ProfileInfoCard extends StatelessWidget {
+  const _ProfileInfoCard({
+    required this.displayName,
+    required this.email,
+    required this.initials,
+  });
+
+  final String displayName;
+  final String email;
+  final String initials;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -218,7 +244,7 @@ class _ProfileInfoCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'WP',
+                initials,
                 style: AppTextStyles.headlineMedium.copyWith(
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
@@ -228,14 +254,14 @@ class _ProfileInfoCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'WAH Patient',
+            displayName.isEmpty ? 'WAH Patient' : displayName,
             style: AppTextStyles.headlineMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'preview@wahforpatients.com',
+            email.isEmpty ? 'Sign in to load your account email' : email,
             style: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -462,4 +488,20 @@ class _SignOutCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String _buildInitials(List<String> givenNames, String familyName) {
+  final initials = <String>[];
+  if (givenNames.isNotEmpty && givenNames[0].trim().isNotEmpty) {
+    initials.add(givenNames[0].trim()[0]);
+  }
+  if (familyName.trim().isNotEmpty) {
+    initials.add(familyName.trim()[0]);
+  }
+
+  if (initials.isEmpty) {
+    return 'WP';
+  }
+
+  return initials.join();
 }

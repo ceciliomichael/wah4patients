@@ -7,11 +7,11 @@ import '../../../../core/constants/app_text_styles.dart';
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({
     super.key,
-    required this.userName,
+    required this.displayName,
     required this.onHelpPressed,
   });
 
-  final String userName;
+  final String displayName;
   final VoidCallback onHelpPressed;
 
   @override
@@ -48,15 +48,18 @@ class DashboardHeader extends StatelessWidget {
                         fontFamily: 'Open Sans',
                       ),
                     ),
-                    const TextSpan(text: 'nderful day, '),
-                    TextSpan(
-                      text: userName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                        fontFamily: 'Open Sans',
+                    const TextSpan(text: 'nderful day'),
+                    if (displayName.trim().isNotEmpty) ...[
+                      const TextSpan(text: ', '),
+                      TextSpan(
+                        text: displayName.trim(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                          fontFamily: 'Open Sans',
+                        ),
                       ),
-                    ),
+                    ],
                     const TextSpan(text: '!'),
                   ],
                 ),

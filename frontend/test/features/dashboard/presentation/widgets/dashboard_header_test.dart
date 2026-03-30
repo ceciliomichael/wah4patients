@@ -13,7 +13,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: DashboardHeader(
-            userName: 'User',
+            displayName: 'User',
             onHelpPressed: () {
               helpPressed = true;
             },

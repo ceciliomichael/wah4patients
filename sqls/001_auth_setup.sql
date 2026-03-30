@@ -16,9 +16,17 @@ create table if not exists public.registration_otps (
 create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text not null unique check (char_length(email) between 6 and 254),
+  given_names text[] not null default '{}'::text[],
+  family_name text not null default '',
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
+
+alter table public.profiles
+  add column if not exists given_names text[] not null default '{}'::text[];
+
+alter table public.profiles
+  add column if not exists family_name text not null default '';
 
 create or replace function public.set_updated_at_timestamp()
 returns trigger

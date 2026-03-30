@@ -6,6 +6,7 @@ import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
+import '../../../auth/domain/auth_session.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
 import '../../domain/dashboard_models.dart';
 import '../widgets/dashboard_alerts_tab.dart';
@@ -135,110 +136,118 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildHomeTab(bool isTablet) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(
-        isTablet ? 32 : 20,
-        18,
-        isTablet ? 32 : 20,
-        24,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DashboardHeader(userName: 'User', onHelpPressed: _showHelp),
-          const SizedBox(height: 24),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.0,
-            children: _services
-                .map(
-                  (service) => DashboardServiceCard(
-                    data: service,
-                    onTap: () => _onServiceTap(service),
-                  ),
-                )
-                .toList(),
+    return ValueListenableBuilder<int>(
+      valueListenable: AuthSession.notifier,
+      builder: (context, _, __) {
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            isTablet ? 32 : 20,
+            18,
+            isTablet ? 32 : 20,
+            24,
           ),
-          const SizedBox(height: 24),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: <Color>[
-                  AppColors.tertiary.withValues(alpha: 0.16),
-                  AppColors.tertiary.withValues(alpha: 0.06),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DashboardHeader(
+                displayName: AuthSession.greetingName,
+                onHelpPressed: _showHelp,
               ),
-              borderRadius: AppRadii.large,
-              border: Border.all(
-                color: AppColors.tertiary.withValues(alpha: 0.3),
+              const SizedBox(height: 24),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 1.0,
+                children: _services
+                    .map(
+                      (service) => DashboardServiceCard(
+                        data: service,
+                        onTap: () => _onServiceTap(service),
+                      ),
+                    )
+                    .toList(),
               ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: const BoxDecoration(
-                    color: AppColors.tertiary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.lightbulb_outline,
-                    size: 28,
-                    color: AppColors.white,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Daily Health Tip',
-                        style: AppTextStyles.labelLarge.copyWith(
-                          color: AppColors.tertiary,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        _currentTip(),
-                        style: AppTextStyles.bodyLarge.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w500,
-                          height: 1.45,
-                        ),
-                      ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      AppColors.tertiary.withValues(alpha: 0.16),
+                      AppColors.tertiary.withValues(alpha: 0.06),
                     ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: AppRadii.large,
+                  border: Border.all(
+                    color: AppColors.tertiary.withValues(alpha: 0.3),
                   ),
                 ),
-              ],
-            ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        color: AppColors.tertiary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.lightbulb_outline,
+                        size: 28,
+                        color: AppColors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Daily Health Tip',
+                            style: AppTextStyles.labelLarge.copyWith(
+                              color: AppColors.tertiary,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            _currentTip(),
+                            style: AppTextStyles.bodyLarge.copyWith(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w500,
+                              height: 1.45,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Weekly Health Report',
+                style: AppTextStyles.headlineMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 14),
+              ..._metrics.map(
+                (metric) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: DashboardMetricCard(data: metric),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 24),
-          Text(
-            'Weekly Health Report',
-            style: AppTextStyles.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 14),
-          ..._metrics.map(
-            (metric) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: DashboardMetricCard(data: metric),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -251,7 +260,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildProfileTab() {
-    return const ProfileScreen(showBackButton: false, wrapWithSafeArea: false);
+    return ValueListenableBuilder<int>(
+      valueListenable: AuthSession.notifier,
+      builder: (context, _, __) {
+        return const ProfileScreen(
+          showBackButton: false,
+          wrapWithSafeArea: false,
+        );
+      },
+    );
   }
 
   void _onBottomNavChanged(int index) {

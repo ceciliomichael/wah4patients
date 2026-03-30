@@ -97,11 +97,11 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "user_totp_factors_user_id_fkey";
-            columns: ["user_id"];
+            foreignKeyName: 'user_totp_factors_user_id_fkey';
+            columns: ['user_id'];
             isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -132,11 +132,11 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "user_totp_recovery_codes_user_id_fkey";
-            columns: ["user_id"];
+            foreignKeyName: 'user_totp_recovery_codes_user_id_fkey';
+            columns: ['user_id'];
             isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -173,11 +173,11 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "user_mpins_user_id_fkey";
-            columns: ["user_id"];
+            foreignKeyName: 'user_mpins_user_id_fkey';
+            columns: ['user_id'];
             isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -185,28 +185,34 @@ export interface Database {
         Row: {
           id: string;
           email: string;
+          given_names: string[];
+          family_name: string;
           created_at: string;
           updated_at: string;
         };
         Insert: {
           id: string;
           email: string;
+          given_names?: string[];
+          family_name?: string;
           created_at?: string;
           updated_at?: string;
         };
         Update: {
           id?: string;
           email?: string;
+          given_names?: string[];
+          family_name?: string;
           created_at?: string;
           updated_at?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
+            foreignKeyName: 'profiles_id_fkey';
+            columns: ['id'];
             isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
           },
         ];
       };

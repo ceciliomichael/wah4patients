@@ -1,11 +1,45 @@
-class RegistrationPasswordArguments {
-  const RegistrationPasswordArguments({
+class RegistrationPersonalDetailsArguments {
+  const RegistrationPersonalDetailsArguments({
     required this.email,
     required this.registrationToken,
   });
 
   final String email;
   final String registrationToken;
+}
+
+class RegistrationProfileDraft {
+  const RegistrationProfileDraft({
+    required this.firstName,
+    required this.secondName,
+    required this.middleName,
+    required this.lastName,
+  });
+
+  final String firstName;
+  final String secondName;
+  final String middleName;
+  final String lastName;
+
+  List<String> get givenNames {
+    final values = <String>[firstName, secondName, middleName]
+        .map((value) => value.trim())
+        .where((value) => value.isNotEmpty)
+        .toList(growable: false);
+    return values;
+  }
+}
+
+class RegistrationPasswordArguments {
+  const RegistrationPasswordArguments({
+    required this.email,
+    required this.registrationToken,
+    required this.profileDraft,
+  });
+
+  final String email;
+  final String registrationToken;
+  final RegistrationProfileDraft profileDraft;
 }
 
 class MfaChallengeArguments {
@@ -38,6 +72,58 @@ class MpinConfirmArguments {
   const MpinConfirmArguments({required this.initialMpin});
 
   final String initialMpin;
+}
+
+class UserProfileSummary {
+  const UserProfileSummary({
+    required this.givenNames,
+    required this.familyName,
+    required this.displayName,
+  });
+
+  final List<String> givenNames;
+  final String familyName;
+  final String displayName;
+
+  factory UserProfileSummary.fromJson(Map<String, dynamic> json) {
+    final givenNamesValue = json['givenNames'];
+    final givenNames = givenNamesValue is List
+        ? givenNamesValue.whereType<String>().toList(growable: false)
+        : <String>[];
+
+    return UserProfileSummary(
+      givenNames: givenNames,
+      familyName: _readString(json['familyName']),
+      displayName: _readString(json['displayName']),
+    );
+  }
+}
+
+class ProfileResult {
+  const ProfileResult({
+    required this.userId,
+    required this.userEmail,
+    required this.profile,
+  });
+
+  final String userId;
+  final String userEmail;
+  final UserProfileSummary profile;
+
+  factory ProfileResult.fromJson(Map<String, dynamic> json) {
+    final user = json['user'];
+    final userMap = user is Map<String, dynamic> ? user : <String, dynamic>{};
+    final profile = userMap['profile'];
+    final profileMap = profile is Map<String, dynamic>
+        ? profile
+        : <String, dynamic>{};
+
+    return ProfileResult(
+      userId: _readString(userMap['id']),
+      userEmail: _readString(userMap['email']),
+      profile: UserProfileSummary.fromJson(profileMap),
+    );
+  }
 }
 
 class RequestPasswordResetOtpResult {
@@ -167,6 +253,7 @@ class LoginResult {
     required this.tokenType,
     required this.userId,
     required this.userEmail,
+    required this.profile,
   });
 
   final bool mfaRequired;
@@ -178,10 +265,15 @@ class LoginResult {
   final String tokenType;
   final String userId;
   final String userEmail;
+  final UserProfileSummary profile;
 
   factory LoginResult.fromJson(Map<String, dynamic> json) {
     final user = json['user'];
     final userMap = user is Map<String, dynamic> ? user : <String, dynamic>{};
+    final profile = userMap['profile'];
+    final profileMap = profile is Map<String, dynamic>
+        ? profile
+        : <String, dynamic>{};
     final mfaRequired = json['mfaRequired'] == true;
 
     return LoginResult(
@@ -194,6 +286,7 @@ class LoginResult {
       tokenType: _readString(json['tokenType']),
       userId: _readString(userMap['id']),
       userEmail: _readString(userMap['email']),
+      profile: UserProfileSummary.fromJson(profileMap),
     );
   }
 }

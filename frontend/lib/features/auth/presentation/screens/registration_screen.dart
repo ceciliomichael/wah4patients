@@ -61,7 +61,7 @@ class RegistrationScreen extends StatelessWidget {
                       const AuthHeader(
                         title: 'Welcome!',
                         subtitle:
-                            'Let\'s create your account in just 3 simple steps',
+                            'Let\'s create your account in just 4 simple steps',
                         centerTitle: true,
                       ),
                       const SizedBox(height: 18),
@@ -89,6 +89,15 @@ class RegistrationScreen extends StatelessWidget {
                             SizedBox(height: 20),
                             _RegistrationStep(
                               number: '3',
+                              title: 'Add personal details',
+                              description:
+                                  'Enter your name details so the app can personalize your dashboard and profile.',
+                            ),
+                            SizedBox(height: 20),
+                            Divider(height: 1, color: AppColors.border),
+                            SizedBox(height: 20),
+                            _RegistrationStep(
+                              number: '4',
                               title: 'Create a password',
                               description:
                                   'Choose a secure password with simple requirements.',

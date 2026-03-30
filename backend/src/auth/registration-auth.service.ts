@@ -7,22 +7,23 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { MailerService } from "../mailer/mailer.service";
-import { SupabaseService } from "../supabase/supabase.service";
-import { AuthSettingsService } from "./auth-settings.service";
-import { AuthSupportService } from "./auth-support.service";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '../mailer/mailer.service';
+import { SupabaseService } from '../supabase/supabase.service';
+import { AuthSettingsService } from './auth-settings.service';
+import { AuthSupportService } from './auth-support.service';
 import {
   CompleteRegistrationResponse,
   RegistrationTokenPayload,
   RequestOtpResponse,
   VerifyOtpResponse,
-} from "./auth.types";
-import { CompleteRegistrationDto } from "./dto/complete-registration.dto";
-import { RequestRegistrationOtpDto } from "./dto/request-registration-otp.dto";
-import { VerifyRegistrationOtpDto } from "./dto/verify-registration-otp.dto";
-import { RegistrationOtpRepository } from "./registration-otp.repository";
+} from './auth.types';
+import { CompleteRegistrationDto } from './dto/complete-registration.dto';
+import { RequestRegistrationOtpDto } from './dto/request-registration-otp.dto';
+import { VerifyRegistrationOtpDto } from './dto/verify-registration-otp.dto';
+import { RegistrationOtpRepository } from './registration-otp.repository';
+import { ProfileService } from './profile.service';
 
 @Injectable()
 export class RegistrationAuthService {
@@ -33,6 +34,7 @@ export class RegistrationAuthService {
     private readonly mailerService: MailerService,
     private readonly supabaseService: SupabaseService,
     private readonly registrationOtpRepository: RegistrationOtpRepository,
+    private readonly profileService: ProfileService,
     private readonly settings: AuthSettingsService,
     private readonly support: AuthSupportService,
   ) {}
@@ -88,7 +90,7 @@ export class RegistrationAuthService {
     }
 
     return {
-      message: "Verification code sent",
+      message: 'Verification code sent',
       cooldownSeconds: this.settings.otpResendCooldownSeconds,
     };
   }
@@ -102,21 +104,21 @@ export class RegistrationAuthService {
 
     if (record === null) {
       throw new BadRequestException(
-        "Verification code request not found for this email",
+        'Verification code request not found for this email',
       );
     }
 
     if (new Date(record.expiresAt) <= new Date()) {
       await this.registrationOtpRepository.deleteByEmail(normalizedEmail);
       throw new BadRequestException(
-        "Verification code expired, please request a new code",
+        'Verification code expired, please request a new code',
       );
     }
 
     if (record.failedAttempts >= this.settings.otpMaxAttempts) {
       await this.registrationOtpRepository.deleteByEmail(normalizedEmail);
       throw new UnauthorizedException(
-        "Maximum verification attempts reached, request a new code",
+        'Maximum verification attempts reached, request a new code',
       );
     }
 
@@ -133,11 +135,11 @@ export class RegistrationAuthService {
 
       if (updatedAttempts >= this.settings.otpMaxAttempts) {
         throw new UnauthorizedException(
-          "Maximum verification attempts reached, request a new code",
+          'Maximum verification attempts reached, request a new code',
         );
       }
 
-      throw new UnauthorizedException("Invalid verification code");
+      throw new UnauthorizedException('Invalid verification code');
     }
 
     const verifiedAt = new Date().toISOString();
@@ -149,8 +151,8 @@ export class RegistrationAuthService {
     const registrationToken = await this.jwtService.signAsync(
       {
         sub: normalizedEmail,
-        purpose: "registration",
-      } satisfies Omit<RegistrationTokenPayload, "iat" | "exp">,
+        purpose: 'registration',
+      } satisfies Omit<RegistrationTokenPayload, 'iat' | 'exp'>,
       {
         secret: this.settings.registrationTokenSecret,
         expiresIn: `${this.settings.registrationTokenTtlSeconds}s`,
@@ -158,7 +160,7 @@ export class RegistrationAuthService {
     );
 
     return {
-      message: "Email verified successfully",
+      message: 'Email verified successfully',
       registrationToken,
       expiresInSeconds: this.settings.registrationTokenTtlSeconds,
     };
@@ -172,7 +174,7 @@ export class RegistrationAuthService {
 
     if (!this.support.isPasswordStrong(password)) {
       throw new BadRequestException(
-        "Password must include uppercase, lowercase, and at least one number",
+        'Password must include uppercase, lowercase, and at least one number',
       );
     }
 
@@ -181,7 +183,7 @@ export class RegistrationAuthService {
     );
 
     if (tokenPayload.sub !== normalizedEmail) {
-      throw new UnauthorizedException("Registration token email mismatch");
+      throw new UnauthorizedException('Registration token email mismatch');
     }
 
     const otpRecord =
@@ -192,7 +194,7 @@ export class RegistrationAuthService {
       new Date(otpRecord.expiresAt) <= new Date()
     ) {
       throw new BadRequestException(
-        "Email verification is required before creating an account",
+        'Email verification is required before creating an account',
       );
     }
 
@@ -204,37 +206,55 @@ export class RegistrationAuthService {
       });
 
     if (error !== null) {
-      this.logger.error("Failed to create Supabase auth user", {
+      this.logger.error('Failed to create Supabase auth user', {
         email: normalizedEmail,
         message: error.message,
       });
 
       if (this.support.isSupabaseDuplicateUserError(error.message)) {
         throw new ConflictException(
-          "An account with this email already exists",
+          'An account with this email already exists',
         );
       }
 
       throw new BadGatewayException(
         error.message.trim().length > 0
           ? `Failed to create account: ${error.message}`
-          : "Failed to create account",
+          : 'Failed to create account',
       );
     }
 
     const userId = data.user?.id;
-    if (typeof userId !== "string" || userId.length === 0) {
+    if (typeof userId !== 'string' || userId.length === 0) {
       throw new BadGatewayException(
-        "Account was created with invalid user data",
+        'Account was created with invalid user data',
       );
+    }
+
+    let profile;
+    try {
+      profile = await this.profileService.saveRegistrationProfile(
+        userId,
+        normalizedEmail,
+        dto,
+      );
+    } catch (error) {
+      this.logger.error('Failed to persist registration profile', {
+        email: normalizedEmail,
+        userId,
+      });
+
+      await this.supabaseService.adminClient.auth.admin.deleteUser(userId);
+      throw error;
     }
 
     await this.registrationOtpRepository.deleteByEmail(normalizedEmail);
 
     return {
-      message: "Registration successful",
+      message: 'Registration successful',
       userId,
       email: normalizedEmail,
+      profile,
     };
   }
 }

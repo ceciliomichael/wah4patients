@@ -123,18 +123,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     });
 
     try {
-      final registrationToken = await AuthApiClient.instance.verifyRegistrationOtp(
-        email: widget.email,
-        otpCode: otpCode,
-      );
+      final registrationToken = await AuthApiClient.instance
+          .verifyRegistrationOtp(email: widget.email, otpCode: otpCode);
 
       if (!mounted) {
         return;
       }
 
       Navigator.of(context).pushNamed(
-        AppRoutes.registrationPassword,
-        arguments: RegistrationPasswordArguments(
+        AppRoutes.registrationDetails,
+        arguments: RegistrationPersonalDetailsArguments(
           email: widget.email,
           registrationToken: registrationToken,
         ),
@@ -209,7 +207,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        'Step 2 of 3',
+                        'Step 2 of 4',
                         style: AppTextStyles.bodyLarge.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -230,7 +228,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                   Icons.mark_email_unread_outlined,
                                   Icons.verified_user_outlined,
                                 ],
-                                onClose: () => Navigator.of(dialogContext).pop(),
+                                onClose: () =>
+                                    Navigator.of(dialogContext).pop(),
                               );
                             },
                           );
@@ -299,8 +298,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                             'OTP Code',
                                             style: AppTextStyles.titleLarge
                                                 .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
                                           const SizedBox(height: 16),
                                           OtpCodeField(
@@ -313,8 +312,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                             'Sent to ${widget.email}',
                                             style: AppTextStyles.bodyMedium
                                                 .copyWith(
-                                              color: AppColors.textSecondary,
-                                            ),
+                                                  color:
+                                                      AppColors.textSecondary,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -333,8 +333,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                             'Sending new code...',
                                             style: AppTextStyles.bodyMedium
                                                 .copyWith(
-                                              color: AppColors.textSecondary,
-                                            ),
+                                                  color:
+                                                      AppColors.textSecondary,
+                                                ),
                                           )
                                         : SecondaryButtonWidget(
                                             text: _resendCooldown > 0

@@ -13,6 +13,7 @@ import '../features/auth/presentation/screens/mpin_setup_screen.dart';
 import '../features/auth/presentation/screens/mpin_unlock_screen.dart';
 import '../features/auth/presentation/screens/password_registration_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
+import '../features/auth/presentation/screens/registration_personal_details_screen.dart';
 import '../features/auth/presentation/screens/totp_challenge_screen.dart';
 import '../features/auth/presentation/screens/totp_setup_screen.dart';
 import '../features/calendar/presentation/screens/calendar_route_screen.dart';
@@ -98,6 +99,21 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
           return EmailVerificationScreen(email: email);
         },
       );
+    case AppRoutes.registrationDetails:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) {
+          final args = settings.arguments;
+          if (args is RegistrationPersonalDetailsArguments) {
+            return RegistrationPersonalDetailsScreen(
+              email: args.email,
+              registrationToken: args.registrationToken,
+            );
+          }
+
+          return const RegistrationScreen();
+        },
+      );
     case AppRoutes.registrationPassword:
       return _buildSlideRoute(
         settings: settings,
@@ -107,6 +123,7 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
             return PasswordRegistrationScreen(
               email: args.email,
               registrationToken: args.registrationToken,
+              profileDraft: args.profileDraft,
             );
           }
 
@@ -114,6 +131,12 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
           return PasswordRegistrationScreen(
             email: email,
             registrationToken: '',
+            profileDraft: const RegistrationProfileDraft(
+              firstName: '',
+              secondName: '',
+              middleName: '',
+              lastName: '',
+            ),
           );
         },
       );
