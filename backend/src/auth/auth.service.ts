@@ -19,6 +19,7 @@ import {
   randomInt,
   timingSafeEqual,
 } from "node:crypto";
+import { compare, hash } from "bcryptjs";
 import { MailerService } from "../mailer/mailer.service";
 import { SupabaseService } from "../supabase/supabase.service";
 import { CompletePasswordResetDto } from "./dto/complete-password-reset.dto";
@@ -27,8 +28,10 @@ import { DisableTotpDto } from "./dto/disable-totp.dto";
 import { LoginDto } from "./dto/login.dto";
 import { RequestPasswordResetOtpDto } from "./dto/request-password-reset-otp.dto";
 import { RequestRegistrationOtpDto } from "./dto/request-registration-otp.dto";
+import { SetMpinDto } from "./dto/set-mpin.dto";
 import { VerifyMfaChallengeDto } from "./dto/verify-mfa-challenge.dto";
 import { VerifyMfaBackupCodeDto } from "./dto/verify-mfa-backup-code.dto";
+import { VerifyMpinDto } from "./dto/verify-mpin.dto";
 import { VerifyPasswordResetOtpDto } from "./dto/verify-password-reset-otp.dto";
 import { VerifyRegistrationOtpDto } from "./dto/verify-registration-otp.dto";
 import { VerifyTotpCodeDto } from "./dto/verify-totp-code.dto";
@@ -43,8 +46,10 @@ import {
   RegistrationTokenPayload,
   RequestOtpResponse,
   RequestPasswordResetOtpResponse,
+  SetMpinResponse,
   TotpSetupStartResponse,
   TotpSetupVerifyResponse,
+  VerifyMpinResponse,
   VerifyOtpResponse,
   VerifyPasswordResetOtpResponse,
 } from "./auth.types";
@@ -52,6 +57,7 @@ import { PasswordResetOtpRepository } from "./password-reset-otp.repository";
 import { RegistrationOtpRepository } from "./registration-otp.repository";
 import { TotpFactorRepository } from "./totp-factor.repository";
 import { TotpRecoveryCodesRepository } from "./totp-recovery-codes.repository";
+import { UserMpinRepository } from "./user-mpin.repository";
 
 @Injectable()
 export class AuthService {
@@ -69,6 +75,9 @@ export class AuthService {
   private readonly totpIssuer: string;
   private readonly totpRecoveryCodesCount: number;
   private readonly totpSecretEncryptionKey: string;
+  private readonly mpinMaxFailedAttempts: number;
+  private readonly mpinLockDurationMinutes: number;
+  private readonly mpinBcryptRounds: number;
 
   constructor(
     private readonly configService: ConfigService,
@@ -79,6 +88,7 @@ export class AuthService {
     private readonly passwordResetOtpRepository: PasswordResetOtpRepository,
     private readonly totpFactorRepository: TotpFactorRepository,
     private readonly totpRecoveryCodesRepository: TotpRecoveryCodesRepository,
+    private readonly userMpinRepository: UserMpinRepository,
   ) {
     this.otpTtlMinutes = this.configService.get<number>("OTP_TTL_MINUTES", 10);
     this.otpResendCooldownSeconds = this.configService.get<number>(
@@ -116,6 +126,18 @@ export class AuthService {
     );
     this.totpSecretEncryptionKey = this.configService.getOrThrow<string>(
       "TOTP_SECRET_ENCRYPTION_KEY",
+    );
+    this.mpinMaxFailedAttempts = this.configService.get<number>(
+      "MPIN_MAX_FAILED_ATTEMPTS",
+      5,
+    );
+    this.mpinLockDurationMinutes = this.configService.get<number>(
+      "MPIN_LOCK_DURATION_MINUTES",
+      15,
+    );
+    this.mpinBcryptRounds = this.configService.get<number>(
+      "MPIN_BCRYPT_ROUNDS",
+      12,
     );
   }
 
@@ -772,8 +794,126 @@ export class AuthService {
     };
   }
 
+  async setMpin(
+    authorizationHeader: string | undefined,
+    dto: SetMpinDto,
+  ): Promise<SetMpinResponse> {
+    const authenticatedUser = await this.getAuthenticatedUserFromHeader(
+      authorizationHeader,
+    );
+
+    const mpin = dto.mpin.trim();
+    const confirmMpin = dto.confirmMpin.trim();
+    const deviceId = dto.deviceId.trim();
+
+    if (mpin !== confirmMpin) {
+      throw new BadRequestException("MPIN confirmation does not match");
+    }
+
+    const mpinHash = await hash(
+      this.buildMpinComparisonValue(authenticatedUser.id, deviceId, mpin),
+      this.mpinBcryptRounds,
+    );
+
+    await this.userMpinRepository.upsert({
+      userId: authenticatedUser.id,
+      deviceId,
+      mpinHash,
+      failedAttempts: 0,
+      lockedUntil: null,
+      lastVerifiedAt: null,
+    });
+
+    return {
+      message: "MPIN configured successfully",
+    };
+  }
+
+  async verifyMpin(
+    authorizationHeader: string | undefined,
+    dto: VerifyMpinDto,
+  ): Promise<VerifyMpinResponse> {
+    const authenticatedUser = await this.getAuthenticatedUserFromHeader(
+      authorizationHeader,
+    );
+
+    const mpin = dto.mpin.trim();
+    const deviceId = dto.deviceId.trim();
+    const record = await this.userMpinRepository.findByUserId(authenticatedUser.id);
+
+    if (record === null) {
+      throw new UnauthorizedException("MPIN is not configured for this account");
+    }
+
+    if (record.deviceId !== deviceId) {
+      throw new UnauthorizedException(
+        "MPIN login is only allowed on the registered device",
+      );
+    }
+
+    const now = new Date();
+    if (record.lockedUntil !== null && new Date(record.lockedUntil) > now) {
+      throw new HttpException(
+        {
+          message: "MPIN is temporarily locked",
+          lockedUntil: record.lockedUntil,
+        },
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
+
+    const isValid = await compare(
+      this.buildMpinComparisonValue(authenticatedUser.id, deviceId, mpin),
+      record.mpinHash,
+    );
+
+    if (!isValid) {
+      const nextFailedAttempts = record.failedAttempts + 1;
+      const shouldLock = nextFailedAttempts >= this.mpinMaxFailedAttempts;
+      const lockedUntil = shouldLock
+        ? this.addMinutes(now, this.mpinLockDurationMinutes).toISOString()
+        : null;
+
+      await this.userMpinRepository.updateFailureState(
+        authenticatedUser.id,
+        nextFailedAttempts,
+        lockedUntil,
+      );
+
+      if (shouldLock) {
+        throw new HttpException(
+          {
+            message: "MPIN is temporarily locked",
+            lockedUntil,
+          },
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
+      }
+
+      throw new UnauthorizedException(
+        `Invalid MPIN. ${this.mpinMaxFailedAttempts - nextFailedAttempts} attempts remaining`,
+      );
+    }
+
+    await this.userMpinRepository.markVerified(authenticatedUser.id);
+
+    return {
+      message: "MPIN verified successfully",
+      remainingAttempts: this.mpinMaxFailedAttempts,
+      lockedUntil: null,
+    };
+  }
+
   private normalizeEmail(email: string): string {
     return email.trim().toLowerCase();
+  }
+
+  private buildMpinComparisonValue(
+    userId: string,
+    deviceId: string,
+    mpin: string,
+  ): string {
+    return `${userId}:${deviceId}:${mpin}`;
   }
 
   private generateOtpCode(): string {

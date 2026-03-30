@@ -15,7 +15,7 @@ class AuthApiException implements Exception {
 
 class AuthApiClient {
   AuthApiClient({http.Client? httpClient})
-      : _httpClient = httpClient ?? http.Client();
+    : _httpClient = httpClient ?? http.Client();
 
   static final AuthApiClient instance = AuthApiClient();
 
@@ -194,14 +194,42 @@ class AuthApiClient {
   }) async {
     final response = await _post(
       path: '/auth/2fa/disable',
-      body: <String, dynamic>{
-        'password': password,
-        'code': code,
-      },
+      body: <String, dynamic>{'password': password, 'code': code},
       bearerToken: accessToken,
     );
 
     return DisableTotpResult.fromJson(response);
+  }
+
+  Future<void> setMpin({
+    required String accessToken,
+    required String mpin,
+    required String confirmMpin,
+    required String deviceId,
+  }) async {
+    await _post(
+      path: '/auth/mpin/set',
+      body: <String, dynamic>{
+        'mpin': mpin,
+        'confirmMpin': confirmMpin,
+        'deviceId': deviceId,
+      },
+      bearerToken: accessToken,
+    );
+  }
+
+  Future<VerifyMpinResult> verifyMpin({
+    required String accessToken,
+    required String mpin,
+    required String deviceId,
+  }) async {
+    final response = await _post(
+      path: '/auth/mpin/verify',
+      body: <String, dynamic>{'mpin': mpin, 'deviceId': deviceId},
+      bearerToken: accessToken,
+    );
+
+    return VerifyMpinResult.fromJson(response);
   }
 
   Future<Map<String, dynamic>> _post({
@@ -231,11 +259,7 @@ class AuthApiClient {
     late final http.Response response;
     try {
       response = await _httpClient
-          .post(
-            uri,
-            headers: headers,
-            body: jsonEncode(body),
-          )
+          .post(uri, headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 20));
     } on TimeoutException {
       throw const AuthApiException(

@@ -83,6 +83,24 @@ export interface UserTotpRecoveryCodeRecord {
   usedAt: string | null;
 }
 
+export interface UserMpinRecord {
+  userId: string;
+  deviceId: string;
+  mpinHash: string;
+  failedAttempts: number;
+  lockedUntil: string | null;
+  lastVerifiedAt: string | null;
+}
+
+export interface UserMpinUpsert {
+  userId: string;
+  deviceId: string;
+  mpinHash: string;
+  failedAttempts: number;
+  lockedUntil: string | null;
+  lastVerifiedAt: string | null;
+}
+
 export interface RequestOtpResponse {
   message: string;
   cooldownSeconds: number;
@@ -146,4 +164,14 @@ export interface TotpSetupStartResponse {
 export interface TotpSetupVerifyResponse {
   message: string;
   recoveryCodes: string[];
+}
+
+export interface SetMpinResponse {
+  message: string;
+}
+
+export interface VerifyMpinResponse {
+  message: string;
+  remainingAttempts: number;
+  lockedUntil: string | null;
 }

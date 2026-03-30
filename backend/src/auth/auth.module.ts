@@ -8,6 +8,7 @@ import { PasswordResetOtpRepository } from "./password-reset-otp.repository";
 import { RegistrationOtpRepository } from "./registration-otp.repository";
 import { TotpFactorRepository } from "./totp-factor.repository";
 import { TotpRecoveryCodesRepository } from "./totp-recovery-codes.repository";
+import { UserMpinRepository } from "./user-mpin.repository";
 
 @Module({
   imports: [JwtModule.register({}), SupabaseModule, MailerModule],
@@ -18,6 +19,7 @@ import { TotpRecoveryCodesRepository } from "./totp-recovery-codes.repository";
     PasswordResetOtpRepository,
     TotpFactorRepository,
     TotpRecoveryCodesRepository,
+    UserMpinRepository,
   ],
 })
 export class AuthModule {}

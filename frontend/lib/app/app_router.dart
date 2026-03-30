@@ -8,6 +8,9 @@ import '../features/auth/presentation/screens/email_registration_screen.dart';
 import '../features/auth/presentation/screens/email_verification_screen.dart';
 import '../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
+import '../features/auth/presentation/screens/mpin_confirm_screen.dart';
+import '../features/auth/presentation/screens/mpin_setup_screen.dart';
+import '../features/auth/presentation/screens/mpin_unlock_screen.dart';
 import '../features/auth/presentation/screens/password_registration_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
 import '../features/auth/presentation/screens/totp_challenge_screen.dart';
@@ -108,7 +111,10 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
           }
 
           final email = args is String ? args : '';
-          return PasswordRegistrationScreen(email: email, registrationToken: '');
+          return PasswordRegistrationScreen(
+            email: email,
+            registrationToken: '',
+          );
         },
       );
     case AppRoutes.login:
@@ -273,6 +279,28 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
 
           return const TotpSetupScreen();
         },
+      );
+    case AppRoutes.mpinSetup:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) => const MpinSetupScreen(),
+      );
+    case AppRoutes.mpinConfirm:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) {
+          final args = settings.arguments;
+          if (args is MpinConfirmArguments) {
+            return MpinConfirmScreen(arguments: args);
+          }
+
+          return const MpinSetupScreen();
+        },
+      );
+    case AppRoutes.mpinUnlock:
+      return _buildFadeScaleRoute(
+        settings: settings,
+        builder: (_) => const MpinUnlockScreen(),
       );
     case AppRoutes.personalInformation:
       return _buildSlideRoute(

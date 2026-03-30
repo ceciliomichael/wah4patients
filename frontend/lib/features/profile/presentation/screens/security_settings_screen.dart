@@ -51,6 +51,16 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
     await Navigator.of(context).pushNamed(AppRoutes.totpSetup);
   }
 
+  Future<void> _openMpinSetup() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _goToLogin();
+      return;
+    }
+
+    await Navigator.of(context).pushNamed(AppRoutes.mpinSetup);
+  }
+
   Future<void> _disable2fa() async {
     if (_disableFormKey.currentState?.validate() != true) {
       return;
@@ -196,6 +206,34 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                                     text: 'Set up 2FA',
                                     onPressed: _openSetupFlow,
                                     icon: Icons.shield_outlined,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            const Divider(color: AppColors.border, height: 1),
+                            const SizedBox(height: 24),
+                            const _SectionTitle(
+                              icon: Icons.pin_outlined,
+                              title: 'App MPIN',
+                            ),
+                            const SizedBox(height: 12),
+                            AuthSurfaceCard(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'Use a secure 4-digit MPIN to quickly unlock this app on your device.',
+                                    style: AppTextStyles.bodyMedium.copyWith(
+                                      color: AppColors.textSecondary,
+                                      height: 1.6,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  PrimaryButtonWidget(
+                                    text: 'Set up MPIN',
+                                    onPressed: _openMpinSetup,
+                                    icon: Icons.pin,
                                   ),
                                 ],
                               ),

@@ -29,11 +29,15 @@ class LoginScreenArguments {
 }
 
 class TotpSetupScreenArguments {
-  const TotpSetupScreenArguments({
-    this.allowSkip = false,
-  });
+  const TotpSetupScreenArguments({this.allowSkip = false});
 
   final bool allowSkip;
+}
+
+class MpinConfirmArguments {
+  const MpinConfirmArguments({required this.initialMpin});
+
+  final String initialMpin;
 }
 
 class RequestPasswordResetOtpResult {
@@ -129,6 +133,26 @@ class DisableTotpResult {
 
   factory DisableTotpResult.fromJson(Map<String, dynamic> json) {
     return DisableTotpResult(message: _readString(json['message']));
+  }
+}
+
+class VerifyMpinResult {
+  const VerifyMpinResult({
+    required this.message,
+    required this.remainingAttempts,
+    required this.lockedUntil,
+  });
+
+  final String message;
+  final int remainingAttempts;
+  final String lockedUntil;
+
+  factory VerifyMpinResult.fromJson(Map<String, dynamic> json) {
+    return VerifyMpinResult(
+      message: _readString(json['message']),
+      remainingAttempts: _readInt(json['remainingAttempts']),
+      lockedUntil: _readString(json['lockedUntil']),
+    );
   }
 }
 
