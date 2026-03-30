@@ -14,16 +14,20 @@ class SecondaryButtonWidget extends StatelessWidget {
   });
 
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color textColor;
   final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
+    final bool isEnabled = onPressed != null;
+
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        foregroundColor: textColor,
+        foregroundColor: isEnabled
+            ? textColor
+            : textColor.withValues(alpha: 0.45),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
       ),
@@ -31,13 +35,17 @@ class SecondaryButtonWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 18, color: textColor),
+            Icon(
+              icon,
+              size: 18,
+              color: isEnabled ? textColor : textColor.withValues(alpha: 0.45),
+            ),
             const SizedBox(width: 6),
           ],
           Text(
             text,
             style: AppTextStyles.buttonMedium.copyWith(
-              color: textColor,
+              color: isEnabled ? textColor : textColor.withValues(alpha: 0.45),
               decoration: TextDecoration.none,
             ),
           ),

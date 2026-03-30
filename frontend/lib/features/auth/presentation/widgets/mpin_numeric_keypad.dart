@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 
@@ -24,9 +23,9 @@ class MpinNumericKeypad extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 3,
-      childAspectRatio: 1.2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
+      childAspectRatio: 1.52,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
         for (int value = 1; value <= 9; value++)
@@ -51,7 +50,7 @@ class MpinNumericKeypad extends StatelessWidget {
   }
 }
 
-class _MpinKeyButton extends StatelessWidget {
+class _MpinKeyButton extends StatefulWidget {
   const _MpinKeyButton({this.label, this.icon, this.onPressed});
 
   final String? label;
@@ -59,44 +58,59 @@ class _MpinKeyButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    final bool enabled = onPressed != null;
+  State<_MpinKeyButton> createState() => _MpinKeyButtonState();
+}
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          decoration: BoxDecoration(
-            color: enabled ? AppColors.surface : AppColors.surfaceVariant,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.border),
-            boxShadow: const <BoxShadow>[
-              BoxShadow(
-                color: Color(0x14000000),
-                blurRadius: 8,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Center(
-            child: label != null
-                ? Text(
-                    label!,
-                    style: AppTextStyles.headlineSmall.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w700,
+class _MpinKeyButtonState extends State<_MpinKeyButton> {
+  bool _isPressed = false;
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool enabled = widget.onPressed != null;
+    final String? label = widget.label;
+    final Color contentColor = enabled
+        ? AppColors.primary
+        : AppColors.textSecondary;
+    final double scale = !enabled
+        ? 1
+        : _isPressed
+        ? 0.88
+        : (_isHovered ? 1.04 : 1.0);
+
+    return MouseRegion(
+      cursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
+      onEnter: enabled ? (_) => setState(() => _isHovered = true) : null,
+      onExit: enabled ? (_) => setState(() => _isHovered = false) : null,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onPressed,
+        onTapDown: enabled ? (_) => setState(() => _isPressed = true) : null,
+        onTapUp: enabled ? (_) => setState(() => _isPressed = false) : null,
+        onTapCancel: enabled ? () => setState(() => _isPressed = false) : null,
+        child: Center(
+          child: AnimatedScale(
+            duration: const Duration(milliseconds: 120),
+            curve: Curves.easeOut,
+            scale: scale,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 120),
+              opacity: enabled ? 1 : 0.4,
+              child: label != null
+                  ? Text(
+                      label,
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        fontSize: 18,
+                        color: contentColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    )
+                  : Icon(
+                      widget.icon ?? Icons.block,
+                      color: contentColor,
+                      size: 22,
                     ),
-                  )
-                : Icon(
-                    icon ?? Icons.block,
-                    color: enabled
-                        ? AppColors.primary
-                        : AppColors.textSecondary,
-                    size: 26,
-                  ),
+            ),
           ),
         ),
       ),

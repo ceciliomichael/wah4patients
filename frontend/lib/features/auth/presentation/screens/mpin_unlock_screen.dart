@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../app/app_routes.dart';
 import '../../../../core/config/screen_protection.dart';
@@ -13,7 +12,7 @@ import '../../data/auth_api_client.dart';
 import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
 import '../controllers/mpin_entry_controller.dart';
-import '../widgets/auth_surface_card.dart';
+import '../widgets/mpin_flow_scaffold.dart';
 import '../widgets/mpin_numeric_keypad.dart';
 import '../widgets/mpin_pin_indicator.dart';
 
@@ -200,157 +199,96 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isTablet = mediaQuery.size.width > 600;
-    final horizontalPadding = isTablet ? 32.0 : 16.0;
+    return Focus(
+      autofocus: true,
+      onKeyEvent: (_, __) => KeyEventResult.handled,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_controller, _errorShakeController]),
+        builder: (context, _) {
+          final bool isLocked = _controller.isLocked;
+          final bool canInteract = !_controller.isSubmitting && !isLocked;
+          final Duration remaining = _controller.remainingLockDuration;
+          final double shake =
+              (1 - (_errorShakeController.value - 0.5).abs() * 2) * 10;
 
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.background,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
-
-    return SafeArea(
-      child: Focus(
-        autofocus: true,
-        onKeyEvent: (_, __) => KeyEventResult.handled,
-        child: Scaffold(
-          backgroundColor: AppColors.background,
-          body: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 760),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  horizontalPadding,
-                  24,
-                  horizontalPadding,
-                  24,
+          return MpinFlowScaffold(
+            title: 'Enter your MPIN',
+            subtitle: 'Continue securely on this device.',
+            surfaceTitle: 'Enter your MPIN',
+            surfaceSubtitle: '',
+            heroIcon: Icons.lock_outline,
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Transform.translate(
+                  offset: Offset(shake, 0),
+                  child: MpinPinIndicator(
+                    filledCount: _controller.value.length,
+                    isError: _hasInputError,
+                  ),
                 ),
-                child: AnimatedBuilder(
-                  animation: Listenable.merge([
-                    _controller,
-                    _errorShakeController,
-                  ]),
-                  builder: (context, _) {
-                    final bool isLocked = _controller.isLocked;
-                    final bool canInteract =
-                        !_controller.isSubmitting && !isLocked;
-                    final Duration remaining =
-                        _controller.remainingLockDuration;
-                    final double shake =
-                        (1 - (_errorShakeController.value - 0.5).abs() * 2) *
-                        10;
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: 28),
-                        const Icon(
-                          Icons.lock_outline,
-                          size: 48,
-                          color: AppColors.primary,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'App Locked',
-                          style: AppTextStyles.headlineMedium.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w800,
+                const SizedBox(height: 16),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 360),
+                    child: MpinNumericKeypad(
+                      isEnabled: canInteract,
+                      onDigitTap: _onDigitTap,
+                      onDeleteTap: _onDeleteTap,
+                      onBiometricTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Biometric sign-in will be available soon.',
+                            ),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Enter your MPIN to continue securely.',
-                          style: AppTextStyles.bodyLarge.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 24),
-                        AuthSurfaceCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const Text(
-                                'Unlock with MPIN',
-                                style: AppTextStyles.titleLarge,
-                              ),
-                              const SizedBox(height: 12),
-                              Transform.translate(
-                                offset: Offset(shake, 0),
-                                child: MpinPinIndicator(
-                                  filledCount: _controller.value.length,
-                                  isError: _hasInputError,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              MpinNumericKeypad(
-                                isEnabled: canInteract,
-                                onDigitTap: _onDigitTap,
-                                onDeleteTap: _onDeleteTap,
-                                onBiometricTap: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        'Biometric unlock will be available soon.',
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              if (isLocked) ...[
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Locked for ${_formatLockDuration(remaining)}',
-                                  style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.danger,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                              if (_controller.errorMessage != null) ...[
-                                const SizedBox(height: 8),
-                                Text(
-                                  _controller.errorMessage!,
-                                  style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.danger,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                        const Spacer(),
-                        PrimaryButtonWidget(
-                          text: 'Unlock App',
-                          onPressed: _unlock,
-                          isLoading: _controller.isSubmitting,
-                          icon: Icons.lock_open,
-                        ),
-                        const SizedBox(height: 12),
-                        Center(
-                          child: SecondaryButtonWidget(
-                            text: 'Sign out',
-                            onPressed: _controller.isSubmitting
-                                ? () {}
-                                : _forceSignOut,
-                            textColor: AppColors.danger,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
+                if (isLocked) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    'Locked for ${_formatLockDuration(remaining)}',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.danger,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+                if (_controller.errorMessage != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _controller.errorMessage!,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.danger,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ],
             ),
-          ),
-        ),
+            primaryAction: PrimaryButtonWidget(
+              text: 'Continue',
+              onPressed:
+                  (_controller.isComplete &&
+                      !_controller.isSubmitting &&
+                      !isLocked)
+                  ? _unlock
+                  : null,
+              isLoading: _controller.isSubmitting,
+              icon: Icons.arrow_forward,
+            ),
+            secondaryAction: SecondaryButtonWidget(
+              text: 'Sign out',
+              onPressed: _controller.isSubmitting ? null : _forceSignOut,
+              icon: Icons.logout,
+              textColor: AppColors.danger,
+            ),
+          );
+        },
       ),
     );
   }
