@@ -7,6 +7,7 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../data/auth_api_client.dart';
+import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
 import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
@@ -67,6 +68,28 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Future<void> _registerCurrentDeviceAfterLogin(String accessToken) async {
+    try {
+      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+      await AuthApiClient.instance.registerMpinDevice(
+        accessToken: accessToken,
+        deviceId: deviceId,
+      );
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Signed in, but MPIN device registration failed: ${error.message}',
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> _signIn() async {
     if (_formKey.currentState?.validate() != true) {
       return;
@@ -103,12 +126,15 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       AuthSession.setFromLoginResult(result);
+      await _registerCurrentDeviceAfterLogin(result.accessToken);
+      if (!mounted) {
+        return;
+      }
 
       if (widget.promptTwoFactorSetup) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.totpSetup,
-          (route) => false,
-        );
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil(AppRoutes.totpSetup, (route) => false);
         return;
       }
 

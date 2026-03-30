@@ -11,7 +11,9 @@ import '../widgets/mpin_numeric_keypad.dart';
 import '../widgets/mpin_pin_indicator.dart';
 
 class MpinSetupScreen extends StatefulWidget {
-  const MpinSetupScreen({super.key});
+  const MpinSetupScreen({super.key, this.arguments});
+
+  final MpinSetupArguments? arguments;
 
   @override
   State<MpinSetupScreen> createState() => _MpinSetupScreenState();
@@ -34,7 +36,10 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
 
     Navigator.of(context).pushNamed(
       AppRoutes.mpinConfirm,
-      arguments: MpinConfirmArguments(initialMpin: _controller.value),
+      arguments: MpinConfirmArguments(
+        initialMpin: _controller.value,
+        securityVerificationToken: widget.arguments?.securityVerificationToken,
+      ),
     );
   }
 
@@ -45,7 +50,7 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
       builder: (context, _) {
         return MpinFlowScaffold(
           title: 'Create MPIN',
-          subtitle: 'Set a 4-digit MPIN for quick app unlock on this device.',
+          subtitle: 'Set a 4-digit MPIN for quick app unlock and login.',
           surfaceTitle: 'Enter your 4-digit MPIN',
           surfaceSubtitle:
               'Choose a code you can remember, then continue to confirm it.',

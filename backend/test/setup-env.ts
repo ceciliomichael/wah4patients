@@ -12,3 +12,9 @@ process.env.REGISTRATION_TOKEN_SECRET =
   "registration-token-secret-1234567890123456";
 process.env.PASSWORD_RESET_TOKEN_SECRET =
   "password-reset-token-secret-1234567890";
+process.env.MFA_CHALLENGE_TOKEN_SECRET =
+  "mfa-challenge-token-secret-123456789012";
+process.env.SECURITY_VERIFICATION_TOKEN_SECRET =
+  "security-verification-token-secret-123456";
+process.env.TOTP_SECRET_ENCRYPTION_KEY =
+  "totp-encryption-secret-12345678901234567890";

@@ -15,6 +15,7 @@ import { PasswordResetAuthService } from './password-reset-auth.service';
 import { PasswordResetOtpRepository } from './password-reset-otp.repository';
 import { RegistrationAuthService } from './registration-auth.service';
 import { RegistrationOtpRepository } from './registration-otp.repository';
+import { UserMpinDeviceRepository } from './user-mpin-device.repository';
 import { TotpFactorRepository } from './totp-factor.repository';
 import { TotpRecoveryCodesRepository } from './totp-recovery-codes.repository';
 import { UserMpinRepository } from './user-mpin.repository';
@@ -37,6 +38,7 @@ import { UserMpinRepository } from './user-mpin.repository';
     TotpFactorRepository,
     TotpRecoveryCodesRepository,
     UserMpinRepository,
+    UserMpinDeviceRepository,
   ],
 })
 export class AuthModule {}

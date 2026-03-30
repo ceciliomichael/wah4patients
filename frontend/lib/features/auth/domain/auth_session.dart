@@ -26,6 +26,8 @@ class AuthSession {
   static String get familyName => _familyName;
   static String get displayName =>
       _composeDisplayName(_givenNames, _familyName);
+  static String get shortDisplayName =>
+      _composeShortDisplayName(_givenNames, _familyName);
   static String get greetingName =>
       _composeGreetingName(_givenNames, _familyName);
   static bool get isAuthenticated =>
@@ -90,6 +92,28 @@ class AuthSession {
     }
     final trimmedFamilyName = familyName.trim();
 
+    final parts = <String>[
+      if (firstName != null) firstName,
+      if (trimmedFamilyName.isNotEmpty) trimmedFamilyName,
+    ];
+
+    return parts.join(' ');
+  }
+
+  static String _composeShortDisplayName(
+    List<String> givenNames,
+    String familyName,
+  ) {
+    String? firstName;
+    for (final value in givenNames) {
+      final trimmedValue = value.trim();
+      if (trimmedValue.isNotEmpty) {
+        firstName = trimmedValue;
+        break;
+      }
+    }
+
+    final trimmedFamilyName = familyName.trim();
     final parts = <String>[
       if (firstName != null) firstName,
       if (trimmedFamilyName.isNotEmpty) trimmedFamilyName,

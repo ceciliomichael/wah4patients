@@ -15,7 +15,7 @@ class MpinFlowScaffold extends StatelessWidget {
     required this.surfaceTitle,
     required this.surfaceSubtitle,
     required this.content,
-    required this.primaryAction,
+    this.primaryAction,
     this.secondaryAction,
     this.heroIcon = Icons.lock_outline,
     this.onBackPressed,
@@ -27,7 +27,7 @@ class MpinFlowScaffold extends StatelessWidget {
   final String surfaceTitle;
   final String surfaceSubtitle;
   final Widget content;
-  final Widget primaryAction;
+  final Widget? primaryAction;
   final Widget? secondaryAction;
   final IconData heroIcon;
   final VoidCallback? onBackPressed;
@@ -56,10 +56,13 @@ class MpinFlowScaffold extends StatelessWidget {
               );
               final double surfacePadding = isTablet
                   ? 24.0
-                  : (isCompactHeight ? 20.0 : 24.0);
-              final double contentTopGap = isCompactHeight ? 16.0 : 28.0;
-              final double cardInnerGap = isCompactHeight ? 14.0 : 20.0;
-              final double footerBottomPadding = isTablet ? 24.0 : 8.0;
+                  : (isCompactHeight ? 16.0 : 24.0);
+              final double contentTopGap = isCompactHeight ? 12.0 : 24.0;
+              final double cardInnerGap = isCompactHeight ? 10.0 : 18.0;
+              final double footerBottomPadding = isTablet ? 24.0 : 20.0;
+              final double secondaryFooterBottomPadding = isTablet
+                  ? 24.0
+                  : 16.0;
 
               return Container(
                 decoration: BoxDecoration(
@@ -114,7 +117,7 @@ class MpinFlowScaffold extends StatelessWidget {
                               horizontalPadding,
                               contentTopGap,
                               horizontalPadding,
-                              contentTopGap,
+                              footerBottomPadding,
                             ),
                             child: Center(
                               child: ConstrainedBox(
@@ -122,105 +125,139 @@ class MpinFlowScaffold extends StatelessWidget {
                                   maxWidth: 760,
                                 ),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    _MpinHero(
-                                      title: title,
-                                      subtitle: subtitle,
-                                      icon: heroIcon,
-                                      compact: isCompactHeight,
-                                    ),
-                                    SizedBox(height: contentTopGap),
-                                    Center(
-                                      child: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          maxWidth: surfaceMaxWidth,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.all(
-                                            surfacePadding,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.surface.withValues(
-                                              alpha: 0.98,
+                                    Expanded(
+                                      child: Center(
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          alignment: Alignment.topCenter,
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              maxWidth: surfaceMaxWidth,
                                             ),
-                                            borderRadius: AppRadii.extraLarge,
-                                            border: Border.all(
-                                              color: AppColors.border,
-                                              width: 1,
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: AppColors.black
-                                                    .withValues(alpha: 0.04),
-                                                blurRadius: 28,
-                                                offset: const Offset(0, 10),
-                                              ),
-                                            ],
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              Text(
-                                                surfaceTitle,
-                                                style: AppTextStyles.titleLarge
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                _MpinHero(
+                                                  title: title,
+                                                  subtitle: subtitle,
+                                                  icon: heroIcon,
+                                                  compact: isCompactHeight,
+                                                ),
+                                                SizedBox(height: contentTopGap),
+                                                Container(
+                                                  padding: EdgeInsets.all(
+                                                    surfacePadding,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.surface
+                                                        .withValues(
+                                                          alpha: 0.98,
+                                                        ),
+                                                    borderRadius:
+                                                        AppRadii.extraLarge,
+                                                    border: Border.all(
+                                                      color: AppColors.border,
+                                                      width: 1,
                                                     ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              if (surfaceSubtitle
-                                                  .trim()
-                                                  .isNotEmpty) ...[
-                                                const SizedBox(height: 8),
-                                                Text(
-                                                  surfaceSubtitle,
-                                                  style: AppTextStyles
-                                                      .bodyMedium
-                                                      .copyWith(
-                                                        color: AppColors
-                                                            .textSecondary,
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: AppColors.black
+                                                            .withValues(
+                                                              alpha: 0.04,
+                                                            ),
+                                                        blurRadius: 28,
+                                                        offset: const Offset(
+                                                          0,
+                                                          10,
+                                                        ),
                                                       ),
-                                                  textAlign: TextAlign.center,
+                                                    ],
+                                                  ),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .stretch,
+                                                    children: [
+                                                      Text(
+                                                        surfaceTitle,
+                                                        style: AppTextStyles
+                                                            .titleLarge
+                                                            .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      if (surfaceSubtitle
+                                                          .trim()
+                                                          .isNotEmpty) ...[
+                                                        const SizedBox(
+                                                          height: 8,
+                                                        ),
+                                                        Text(
+                                                          surfaceSubtitle,
+                                                          style: AppTextStyles
+                                                              .bodyMedium
+                                                              .copyWith(
+                                                                color: AppColors
+                                                                    .textSecondary,
+                                                              ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ],
+                                                      SizedBox(
+                                                        height: cardInnerGap,
+                                                      ),
+                                                      content,
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
-                                              SizedBox(height: cardInnerGap),
-                                              content,
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
+                                    if (primaryAction != null ||
+                                        secondaryAction != null) ...[
+                                      SizedBox(height: contentTopGap),
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: surfaceMaxWidth,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            if (primaryAction != null)
+                                              primaryAction!,
+                                            if (primaryAction != null &&
+                                                secondaryAction != null)
+                                              const SizedBox(height: 12),
+                                            if (secondaryAction != null)
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom:
+                                                      secondaryFooterBottomPadding,
+                                                ),
+                                                child: Center(
+                                                  child: secondaryAction!,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ],
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            horizontalPadding,
-                            0,
-                            horizontalPadding,
-                            footerBottomPadding,
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: surfaceMaxWidth,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                primaryAction,
-                                if (secondaryAction != null) ...[
-                                  const SizedBox(height: 12),
-                                  Center(child: secondaryAction!),
-                                ],
-                              ],
                             ),
                           ),
                         ),

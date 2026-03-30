@@ -14,6 +14,7 @@ class AppRoutes {
   static const String registrationPassword = '/registration/password';
   static const String login = '/login';
   static const String mfaChallenge = '/login/mfa-challenge';
+  static const String securityVerify = '/profile/security/verify';
   static const String forgotPassword = '/login/forgot-password';
   static const String authPreview = '/auth/preview';
   static const String dashboard = '/dashboard';

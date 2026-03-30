@@ -69,9 +69,29 @@ class TotpSetupScreenArguments {
 }
 
 class MpinConfirmArguments {
-  const MpinConfirmArguments({required this.initialMpin});
+  const MpinConfirmArguments({
+    required this.initialMpin,
+    this.securityVerificationToken,
+  });
 
   final String initialMpin;
+  final String? securityVerificationToken;
+}
+
+class MpinSetupArguments {
+  const MpinSetupArguments({this.securityVerificationToken});
+
+  final String? securityVerificationToken;
+}
+
+class MpinLoginArguments {
+  const MpinLoginArguments({
+    required this.email,
+    required this.mfaChallengeToken,
+  });
+
+  final String email;
+  final String mfaChallengeToken;
 }
 
 class UserProfileSummary {
@@ -191,24 +211,12 @@ class TotpSetupStartResult {
 }
 
 class TotpSetupVerifyResult {
-  const TotpSetupVerifyResult({
-    required this.message,
-    required this.recoveryCodes,
-  });
+  const TotpSetupVerifyResult({required this.message});
 
   final String message;
-  final List<String> recoveryCodes;
 
   factory TotpSetupVerifyResult.fromJson(Map<String, dynamic> json) {
-    final recoveryCodesValue = json['recoveryCodes'];
-    final recoveryCodes = recoveryCodesValue is List
-        ? recoveryCodesValue.whereType<String>().toList(growable: false)
-        : <String>[];
-
-    return TotpSetupVerifyResult(
-      message: _readString(json['message']),
-      recoveryCodes: recoveryCodes,
-    );
+    return TotpSetupVerifyResult(message: _readString(json['message']));
   }
 }
 
@@ -219,6 +227,66 @@ class DisableTotpResult {
 
   factory DisableTotpResult.fromJson(Map<String, dynamic> json) {
     return DisableTotpResult(message: _readString(json['message']));
+  }
+}
+
+class RegisterMpinDeviceResult {
+  const RegisterMpinDeviceResult({required this.message});
+
+  final String message;
+
+  factory RegisterMpinDeviceResult.fromJson(Map<String, dynamic> json) {
+    return RegisterMpinDeviceResult(message: _readString(json['message']));
+  }
+}
+
+class UnregisterMpinDeviceResult {
+  const UnregisterMpinDeviceResult({required this.message});
+
+  final String message;
+
+  factory UnregisterMpinDeviceResult.fromJson(Map<String, dynamic> json) {
+    return UnregisterMpinDeviceResult(message: _readString(json['message']));
+  }
+}
+
+class SecuritySettingsStatusResult {
+  const SecuritySettingsStatusResult({
+    required this.isTotpEnabled,
+    required this.isMpinConfigured,
+    required this.isMpinDeviceRegistered,
+  });
+
+  final bool isTotpEnabled;
+  final bool isMpinConfigured;
+  final bool isMpinDeviceRegistered;
+
+  factory SecuritySettingsStatusResult.fromJson(Map<String, dynamic> json) {
+    return SecuritySettingsStatusResult(
+      isTotpEnabled: json['isTotpEnabled'] == true,
+      isMpinConfigured: json['isMpinConfigured'] == true,
+      isMpinDeviceRegistered: json['isMpinDeviceRegistered'] == true,
+    );
+  }
+}
+
+class VerifySecurityActionResult {
+  const VerifySecurityActionResult({
+    required this.message,
+    required this.securityVerificationToken,
+    required this.expiresInSeconds,
+  });
+
+  final String message;
+  final String securityVerificationToken;
+  final int expiresInSeconds;
+
+  factory VerifySecurityActionResult.fromJson(Map<String, dynamic> json) {
+    return VerifySecurityActionResult(
+      message: _readString(json['message']),
+      securityVerificationToken: _readString(json['securityVerificationToken']),
+      expiresInSeconds: _readInt(json['expiresInSeconds']),
+    );
   }
 }
 

@@ -31,6 +31,7 @@ class MpinLocalStore {
 
   static Future<void> clearMpin() async {
     await _storage.delete(key: _enabledKey);
+    await _storage.delete(key: _deviceIdKey);
   }
 
   static String _generateDeviceId() {

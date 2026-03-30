@@ -49,33 +49,47 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
     }
 
     await _controller.submit((pin) async {
-      if (pin != widget.arguments.initialMpin) {
+      try {
+        if (pin != widget.arguments.initialMpin) {
+          _controller.clear();
+          _controller.setError('MPIN does not match. Try again.');
+          return;
+        }
+
+        await AuthApiClient.instance.setMpin(
+          accessToken: accessToken,
+          mpin: pin,
+          confirmMpin: pin,
+          securityVerificationToken: widget.arguments.securityVerificationToken,
+        );
+
+        final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+        await AuthApiClient.instance.registerMpinDevice(
+          accessToken: accessToken,
+          deviceId: deviceId,
+        );
+        await MpinLocalStore.setMpinEnabled(true);
+
+        if (!mounted) {
+          return;
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'MPIN saved successfully. This device is now registered for MPIN unlock.',
+            ),
+          ),
+        );
+
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.securitySettings,
+          (route) => route.settings.name == AppRoutes.dashboard,
+        );
+      } on AuthApiException catch (error) {
         _controller.clear();
-        _controller.setError('MPIN does not match. Try again.');
-        return;
+        _controller.setError(error.message);
       }
-
-      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
-      await AuthApiClient.instance.setMpin(
-        accessToken: accessToken,
-        mpin: pin,
-        confirmMpin: pin,
-        deviceId: deviceId,
-      );
-      await MpinLocalStore.setMpinEnabled(true);
-
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('MPIN set successfully')));
-
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRoutes.securitySettings,
-        (route) => route.settings.name == AppRoutes.dashboard,
-      );
     });
   }
 

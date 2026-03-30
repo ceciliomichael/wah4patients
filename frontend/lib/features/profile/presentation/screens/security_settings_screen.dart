@@ -5,11 +5,13 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../../auth/data/auth_api_client.dart';
+import '../../../auth/data/mpin_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
-import '../../../auth/domain/auth_validators.dart';
+import '../../../auth/domain/models/auth_api_models.dart';
+import '../../../auth/presentation/screens/security_verification_screen.dart';
 import '../../../auth/presentation/widgets/auth_surface_card.dart';
-import '../../../auth/presentation/widgets/otp_code_field.dart';
 
 class SecuritySettingsScreen extends StatefulWidget {
   const SecuritySettingsScreen({super.key});
@@ -19,26 +21,58 @@ class SecuritySettingsScreen extends StatefulWidget {
 }
 
 class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
-  final GlobalKey<FormState> _disableFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormFieldState<String>> _otpFieldKey =
-      GlobalKey<FormFieldState<String>>();
-  final TextEditingController _passwordController = TextEditingController();
-
+  bool _isLoadingStatus = true;
+  bool _isTotpEnabled = false;
+  bool _isMpinConfigured = false;
+  bool _isMpinDeviceRegistered = false;
   bool _isDisabling = false;
-
-  String? _validateCurrentPassword(String? value) {
-    final password = value ?? '';
-    if (password.trim().isEmpty) {
-      return 'Please enter your current password';
-    }
-
-    return null;
-  }
+  bool _isUnregisteringMpin = false;
 
   @override
-  void dispose() {
-    _passwordController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadSecurityStatus();
+  }
+
+  Future<void> _loadSecurityStatus() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _goToLogin();
+      return;
+    }
+    final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+
+    setState(() {
+      _isLoadingStatus = true;
+    });
+
+    try {
+      final status = await AuthApiClient.instance.getSecuritySettingsStatus(
+        accessToken: accessToken,
+        deviceId: deviceId,
+      );
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isTotpEnabled = status.isTotpEnabled;
+        _isMpinConfigured = status.isMpinConfigured;
+        _isMpinDeviceRegistered = status.isMpinDeviceRegistered;
+      });
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoadingStatus = false;
+        });
+      }
+    }
   }
 
   Future<void> _openSetupFlow() async {
@@ -49,6 +83,9 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
     }
 
     await Navigator.of(context).pushNamed(AppRoutes.totpSetup);
+    if (mounted) {
+      await _loadSecurityStatus();
+    }
   }
 
   Future<void> _openMpinSetup() async {
@@ -58,21 +95,136 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       return;
     }
 
-    await Navigator.of(context).pushNamed(AppRoutes.mpinSetup);
+    String token = '';
+    if (_isMpinConfigured) {
+      token = await _requestSecurityVerificationToken(
+        'changing your MPIN',
+        preferredMethod: _isTotpEnabled
+            ? SecurityVerificationMethod.authenticator
+            : SecurityVerificationMethod.emailOtp,
+      );
+      if (!mounted || token.isEmpty) {
+        return;
+      }
+    }
+
+    await Navigator.of(context).pushNamed(
+      AppRoutes.mpinSetup,
+      arguments: MpinSetupArguments(
+        securityVerificationToken: token.isEmpty ? null : token,
+      ),
+    );
+    if (mounted) {
+      await _loadSecurityStatus();
+    }
   }
 
-  Future<void> _disable2fa() async {
-    if (_disableFormKey.currentState?.validate() != true) {
-      return;
-    }
+  Future<bool> _confirmUnregisterMpin() async {
+    return (await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) {
+            return AlertDialog(
+              title: const Text('Unregister MPIN device?'),
+              content: const Text(
+                'This will remove the current device binding, clear local MPIN access, and sign you out immediately.',
+              ),
+              actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+              actions: [
+                SecondaryButtonWidget(
+                  text: 'Cancel',
+                  onPressed: () => Navigator.of(dialogContext).pop(false),
+                ),
+                const SizedBox(width: 12),
+                SecondaryButtonWidget(
+                  text: 'Unregister',
+                  onPressed: () => Navigator.of(dialogContext).pop(true),
+                  textColor: AppColors.danger,
+                  icon: Icons.logout_outlined,
+                ),
+              ],
+            );
+          },
+        )) ??
+        false;
+  }
 
-    if (_isDisabling) {
-      return;
-    }
+  Future<void> _unregisterMpinDevice() async {
+    if (_isUnregisteringMpin) return;
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       _goToLogin();
+      return;
+    }
+
+    final shouldContinue = await _confirmUnregisterMpin();
+    if (!mounted || !shouldContinue) {
+      return;
+    }
+
+    final token = await _requestSecurityVerificationToken(
+      'unregistering the MPIN device',
+      preferredMethod: _isTotpEnabled
+          ? SecurityVerificationMethod.authenticator
+          : SecurityVerificationMethod.emailOtp,
+    );
+    if (!mounted || token.isEmpty) {
+      return;
+    }
+
+    setState(() {
+      _isUnregisteringMpin = true;
+    });
+
+    try {
+      final response = await AuthApiClient.instance.unregisterMpinDevice(
+        accessToken: accessToken,
+        securityVerificationToken: token,
+      );
+
+      await MpinLocalStore.clearMpin();
+      AuthSession.clear();
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(response.message)));
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUnregisteringMpin = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _disable2fa() async {
+    if (_isDisabling) return;
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _goToLogin();
+      return;
+    }
+
+    final token = await _requestSecurityVerificationToken(
+      'disabling 2FA',
+      preferredMethod: SecurityVerificationMethod.authenticator,
+    );
+    if (!mounted || token.isEmpty) {
       return;
     }
 
@@ -83,8 +235,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
     try {
       final response = await AuthApiClient.instance.disableTotp(
         accessToken: accessToken,
-        password: _passwordController.text,
-        code: _otpFieldKey.currentState?.value?.trim() ?? '',
+        securityVerificationToken: token,
       );
 
       if (!mounted) {
@@ -94,8 +245,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(response.message)));
-      _passwordController.clear();
-      _otpFieldKey.currentState?.reset();
+      await _loadSecurityStatus();
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -111,6 +261,23 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         });
       }
     }
+  }
+
+  Future<String> _requestSecurityVerificationToken(
+    String purpose, {
+    SecurityVerificationMethod? preferredMethod,
+  }) async {
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.securityVerify,
+      arguments: SecurityVerificationArguments(
+        purpose: purpose,
+        preferredMethod: preferredMethod,
+      ),
+    );
+    if (result is String) {
+      return result.trim();
+    }
+    return '';
   }
 
   void _goToLogin() {
@@ -182,121 +349,134 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                     Expanded(
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.only(bottom: 24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const _SectionTitle(
-                              icon: Icons.shield_outlined,
-                              title: 'Authenticator app',
-                            ),
-                            const SizedBox(height: 12),
-                            AuthSurfaceCard(
-                              child: Column(
+                        child: _isLoadingStatus
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 64),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  Text(
-                                    'Set up Google Authenticator as your second factor for safer sign-ins.',
-                                    style: AppTextStyles.bodyMedium.copyWith(
-                                      color: AppColors.textSecondary,
-                                      height: 1.6,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  PrimaryButtonWidget(
-                                    text: 'Set up 2FA',
-                                    onPressed: _openSetupFlow,
+                                  const _SectionTitle(
                                     icon: Icons.shield_outlined,
+                                    title: 'Authenticator app',
                                   ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            const Divider(color: AppColors.border, height: 1),
-                            const SizedBox(height: 24),
-                            const _SectionTitle(
-                              icon: Icons.pin_outlined,
-                              title: 'App MPIN',
-                            ),
-                            const SizedBox(height: 12),
-                            AuthSurfaceCard(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    'Use a secure 4-digit MPIN to quickly unlock this app on your device.',
-                                    style: AppTextStyles.bodyMedium.copyWith(
-                                      color: AppColors.textSecondary,
-                                      height: 1.6,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  PrimaryButtonWidget(
-                                    text: 'Set up MPIN',
-                                    onPressed: _openMpinSetup,
-                                    icon: Icons.pin,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            const Divider(color: AppColors.border, height: 1),
-                            const SizedBox(height: 24),
-                            const _SectionTitle(
-                              icon: Icons.gpp_bad_outlined,
-                              title: 'Disable 2FA',
-                            ),
-                            const SizedBox(height: 12),
-                            Form(
-                              key: _disableFormKey,
-                              child: AuthSurfaceCard(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(
-                                      'Confirm your password and current authenticator code to disable.',
-                                      style: AppTextStyles.bodyMedium.copyWith(
-                                        color: AppColors.textSecondary,
-                                        height: 1.6,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    TextFormField(
-                                      controller: _passwordController,
-                                      obscureText: true,
-                                      enabled: !_isDisabling,
-                                      validator: _validateCurrentPassword,
-                                      decoration: const InputDecoration(
-                                        hintText: 'Current password',
-                                        prefixIcon: Icon(
-                                          Icons.lock_outline,
-                                          color: AppColors.textSecondary,
+                                  const SizedBox(height: 12),
+                                  AuthSurfaceCard(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          'Set up Google Authenticator as your second factor for safer sign-ins.',
+                                          style: AppTextStyles.bodyMedium
+                                              .copyWith(
+                                                color: AppColors.textSecondary,
+                                                height: 1.6,
+                                              ),
                                         ),
-                                      ),
+                                        const SizedBox(height: 16),
+                                        PrimaryButtonWidget(
+                                          text: _isTotpEnabled
+                                              ? 'Disable 2FA'
+                                              : 'Set up 2FA',
+                                          onPressed: _isTotpEnabled
+                                              ? (_isDisabling
+                                                    ? null
+                                                    : _disable2fa)
+                                              : _openSetupFlow,
+                                          isLoading: _isDisabling,
+                                          icon: _isTotpEnabled
+                                              ? Icons.gpp_bad_outlined
+                                              : Icons.shield_outlined,
+                                          backgroundColor: _isTotpEnabled
+                                              ? AppColors.danger
+                                              : AppColors.primary,
+                                          textColor: _isTotpEnabled
+                                              ? AppColors.white
+                                              : AppColors.textOnPrimary,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const Divider(
+                                    color: AppColors.border,
+                                    height: 1,
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const _SectionTitle(
+                                    icon: Icons.pin_outlined,
+                                    title: 'App MPIN',
+                                  ),
+                                  const SizedBox(height: 12),
+                                  AuthSurfaceCard(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          'Use a secure 4-digit MPIN to quickly unlock this app on your device.',
+                                          style: AppTextStyles.bodyMedium
+                                              .copyWith(
+                                                color: AppColors.textSecondary,
+                                                height: 1.6,
+                                              ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        PrimaryButtonWidget(
+                                          text: _isMpinConfigured
+                                              ? 'Change MPIN'
+                                              : 'Set up MPIN',
+                                          onPressed: _openMpinSetup,
+                                          icon: Icons.pin,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (_isMpinConfigured) ...[
+                                    const SizedBox(height: 24),
+                                    const _SectionTitle(
+                                      icon: Icons.devices_outlined,
+                                      title: 'Device registration',
                                     ),
                                     const SizedBox(height: 12),
-                                    OtpCodeField(
-                                      key: _otpFieldKey,
-                                      validator: validateOtp,
-                                      isEnabled: !_isDisabling,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    PrimaryButtonWidget(
-                                      text: 'Disable 2FA',
-                                      onPressed: _isDisabling
-                                          ? null
-                                          : _disable2fa,
-                                      isLoading: _isDisabling,
-                                      icon: Icons.gpp_bad_outlined,
-                                      backgroundColor: AppColors.danger,
-                                      textColor: AppColors.white,
+                                    AuthSurfaceCard(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Text(
+                                            _isMpinDeviceRegistered
+                                                ? 'This device is registered for MPIN unlock. If you move to a new device, sign in there and it will register automatically.'
+                                                : 'This device is not currently registered for MPIN unlock. It will register automatically after the next successful sign-in or MPIN setup.',
+                                            style: AppTextStyles.bodyMedium
+                                                .copyWith(
+                                                  color:
+                                                      AppColors.textSecondary,
+                                                  height: 1.6,
+                                                ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          PrimaryButtonWidget(
+                                            text: 'Unregister device',
+                                            onPressed: _isUnregisteringMpin
+                                                ? null
+                                                : _unregisterMpinDevice,
+                                            isLoading: _isUnregisteringMpin,
+                                            icon: Icons.logout_outlined,
+                                            iconPosition: IconPosition.leading,
+                                            backgroundColor: AppColors.danger,
+                                            textColor: AppColors.white,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
-                                ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

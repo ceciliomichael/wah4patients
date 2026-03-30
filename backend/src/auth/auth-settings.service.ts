@@ -19,6 +19,8 @@ export class AuthSettingsService {
   readonly mpinMaxFailedAttempts: number;
   readonly mpinLockDurationMinutes: number;
   readonly mpinBcryptRounds: number;
+  readonly securityVerificationTokenSecret: string;
+  readonly securityVerificationTokenTtlSeconds: number;
 
   constructor(private readonly configService: ConfigService) {
     this.otpTtlMinutes = this.configService.get<number>("OTP_TTL_MINUTES", 10);
@@ -69,6 +71,13 @@ export class AuthSettingsService {
     this.mpinBcryptRounds = this.configService.get<number>(
       "MPIN_BCRYPT_ROUNDS",
       12,
+    );
+    this.securityVerificationTokenSecret = this.configService.getOrThrow<string>(
+      "SECURITY_VERIFICATION_TOKEN_SECRET",
+    );
+    this.securityVerificationTokenTtlSeconds = this.configService.get<number>(
+      "SECURITY_VERIFICATION_TOKEN_TTL_SECONDS",
+      300,
     );
   }
 }

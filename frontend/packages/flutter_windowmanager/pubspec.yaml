@@ -1,0 +1,18 @@
+name: flutter_windowmanager
+description: Local Android window manager plugin used by the frontend app.
+version: 0.2.0+local
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.adaptant.labs.flutter_windowmanager
+        pluginClass: FlutterWindowManagerPlugin
+
+dependencies:
+  flutter:
+    sdk: flutter

@@ -218,33 +218,128 @@ class AuthApiClient {
 
   Future<DisableTotpResult> disableTotp({
     required String accessToken,
-    required String password,
-    required String code,
+    required String securityVerificationToken,
   }) async {
     final response = await _post(
       path: '/auth/2fa/disable',
-      body: <String, dynamic>{'password': password, 'code': code},
+      body: <String, dynamic>{
+        'securityVerificationToken': securityVerificationToken,
+      },
       bearerToken: accessToken,
     );
 
     return DisableTotpResult.fromJson(response);
   }
 
+  Future<RegisterMpinDeviceResult> registerMpinDevice({
+    required String accessToken,
+    required String deviceId,
+    String? securityVerificationToken,
+  }) async {
+    final body = <String, dynamic>{'deviceId': deviceId};
+    final token = securityVerificationToken?.trim() ?? '';
+    if (token.isNotEmpty) {
+      body['securityVerificationToken'] = token;
+    }
+
+    final response = await _post(
+      path: '/auth/mpin/register-device',
+      body: body,
+      bearerToken: accessToken,
+    );
+
+    return RegisterMpinDeviceResult.fromJson(response);
+  }
+
+  Future<UnregisterMpinDeviceResult> unregisterMpinDevice({
+    required String accessToken,
+    required String securityVerificationToken,
+  }) async {
+    final response = await _post(
+      path: '/auth/mpin/unregister-device',
+      body: <String, dynamic>{
+        'securityVerificationToken': securityVerificationToken,
+      },
+      bearerToken: accessToken,
+    );
+
+    return UnregisterMpinDeviceResult.fromJson(response);
+  }
+
+  Future<SecuritySettingsStatusResult> getSecuritySettingsStatus({
+    required String accessToken,
+    required String deviceId,
+  }) async {
+    final response = await _post(
+      path: '/auth/security/status',
+      body: <String, dynamic>{'deviceId': deviceId},
+      bearerToken: accessToken,
+    );
+
+    return SecuritySettingsStatusResult.fromJson(response);
+  }
+
+  Future<RequestPasswordResetOtpResult> requestSecurityEmailOtp({
+    required String email,
+  }) async {
+    final response = await _post(
+      path: '/auth/security/request-email-otp',
+      body: <String, dynamic>{'email': email},
+    );
+    return RequestPasswordResetOtpResult.fromJson(response);
+  }
+
+  Future<VerifySecurityActionResult> verifySecurityEmailOtp({
+    required String email,
+    required String otpCode,
+  }) async {
+    final response = await _post(
+      path: '/auth/security/verify-email-otp',
+      body: <String, dynamic>{'email': email, 'otpCode': otpCode},
+    );
+    return VerifySecurityActionResult.fromJson(response);
+  }
+
+  Future<VerifySecurityActionResult> verifyTotpForSecurityAction({
+    required String accessToken,
+    required String code,
+  }) async {
+    final response = await _post(
+      path: '/auth/security/verify-totp',
+      body: <String, dynamic>{'accessToken': accessToken, 'code': code},
+    );
+    return VerifySecurityActionResult.fromJson(response);
+  }
+
+  Future<LoginResult> verifyMpinChallenge({
+    required String mfaChallengeToken,
+    required String mpin,
+    required String deviceId,
+  }) async {
+    final response = await _post(
+      path: '/auth/2fa/challenge/verify-mpin',
+      body: <String, dynamic>{
+        'mfaChallengeToken': mfaChallengeToken,
+        'mpin': mpin,
+        'deviceId': deviceId,
+      },
+    );
+
+    return LoginResult.fromJson(response);
+  }
+
   Future<void> setMpin({
     required String accessToken,
     required String mpin,
     required String confirmMpin,
-    required String deviceId,
+    String? securityVerificationToken,
   }) async {
-    await _post(
-      path: '/auth/mpin/set',
-      body: <String, dynamic>{
-        'mpin': mpin,
-        'confirmMpin': confirmMpin,
-        'deviceId': deviceId,
-      },
-      bearerToken: accessToken,
-    );
+    final body = <String, dynamic>{'mpin': mpin, 'confirmMpin': confirmMpin};
+    final token = securityVerificationToken?.trim() ?? '';
+    if (token.isNotEmpty) {
+      body['securityVerificationToken'] = token;
+    }
+    await _post(path: '/auth/mpin/set', body: body, bearerToken: accessToken);
   }
 
   Future<VerifyMpinResult> verifyMpin({

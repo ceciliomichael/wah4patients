@@ -1,4 +1,10 @@
-import { IsString, Length, Matches, MaxLength, MinLength } from "class-validator";
+import {
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  MaxLength,
+} from 'class-validator';
 
 export class SetMpinDto {
   @IsString()
@@ -11,8 +17,8 @@ export class SetMpinDto {
   @Matches(/^\d{4}$/)
   confirmMpin!: string;
 
+  @IsOptional()
   @IsString()
-  @MinLength(16)
-  @MaxLength(128)
-  deviceId!: string;
+  @MaxLength(2048)
+  securityVerificationToken?: string;
 }

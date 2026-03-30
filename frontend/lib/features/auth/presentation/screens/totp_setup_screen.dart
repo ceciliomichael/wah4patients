@@ -9,15 +9,13 @@ import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../data/auth_api_client.dart';
 import '../../domain/auth_session.dart';
-import '../../domain/auth_validators.dart';
+import '../controllers/mpin_entry_controller.dart';
 import '../widgets/auth_surface_card.dart';
-import '../widgets/otp_code_field.dart';
+import '../widgets/mpin_numeric_keypad.dart';
+import '../widgets/mpin_pin_indicator.dart';
 
 class TotpSetupScreen extends StatefulWidget {
-  const TotpSetupScreen({
-    super.key,
-    this.allowSkip = false,
-  });
+  const TotpSetupScreen({super.key, this.allowSkip = false});
 
   final bool allowSkip;
 
@@ -25,36 +23,36 @@ class TotpSetupScreen extends StatefulWidget {
   State<TotpSetupScreen> createState() => _TotpSetupScreenState();
 }
 
-enum _SetupStage {
-  loading,
-  loadFailed,
-  showQr,
-  showRecoveryCodes,
-}
+enum _SetupStage { loading, loadFailed, showQr, showSuccess }
 
 class _TotpSetupScreenState extends State<TotpSetupScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormFieldState<String>> _otpFieldKey =
-      GlobalKey<FormFieldState<String>>();
+  final MpinEntryController _verificationController = MpinEntryController(
+    requiredLength: 6,
+  );
 
   _SetupStage _stage = _SetupStage.loading;
   bool _isSubmitting = false;
   String _otpauthUrl = '';
   String _manualEntryKey = '';
-  List<String> _recoveryCodes = const <String>[];
   String _loadErrorMessage = '';
 
   void _copyManualKey() {
     Clipboard.setData(ClipboardData(text: _manualEntryKey));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Manual setup key copied.')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Manual setup key copied.')));
   }
 
   @override
   void initState() {
     super.initState();
     _startSetup();
+  }
+
+  @override
+  void dispose() {
+    _verificationController.dispose();
+    super.dispose();
   }
 
   Future<void> _startSetup() async {
@@ -121,15 +119,11 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
   }
 
   Future<void> _verifyCode() async {
-    if (_formKey.currentState?.validate() != true) {
+    if (!_verificationController.isComplete || _isSubmitting) {
       return;
     }
 
-    if (_isSubmitting) {
-      return;
-    }
-
-    final code = _otpFieldKey.currentState?.value?.trim() ?? '';
+    final code = _verificationController.value.trim();
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -157,16 +151,14 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(result.message)));
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.dashboard,
-          (route) => false,
-        );
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
         return;
       }
 
       setState(() {
-        _recoveryCodes = result.recoveryCodes;
-        _stage = _SetupStage.showRecoveryCodes;
+        _stage = _SetupStage.showSuccess;
       });
 
       ScaffoldMessenger.of(
@@ -177,6 +169,8 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         return;
       }
 
+      _verificationController.clear();
+      _verificationController.setError(error.message);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(error.message)));
@@ -189,12 +183,19 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
     }
   }
 
-  void _copyRecoveryCodes() {
-    final payload = _recoveryCodes.join('\n');
-    Clipboard.setData(ClipboardData(text: payload));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Recovery codes copied to clipboard.')),
-    );
+  void _onDigitTap(String digit) {
+    if (_isSubmitting || _verificationController.isLocked) {
+      return;
+    }
+
+    _verificationController.appendDigit(digit);
+    if (_verificationController.isComplete) {
+      _verifyCode();
+    }
+  }
+
+  void _onDeleteTap() {
+    _verificationController.removeLastDigit();
   }
 
   void _leaveSetupFlow() {
@@ -203,17 +204,15 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
       return;
     }
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes.dashboard,
-      (route) => false,
-    );
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
   }
 
   void _skipSetup() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes.dashboard,
-      (route) => false,
-    );
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
   }
 
   @override
@@ -238,15 +237,14 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
           elevation: 0,
           leading: IconButton(
             onPressed: _leaveSetupFlow,
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColors.textPrimary,
-            ),
+            icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
             tooltip: 'Back',
           ),
           title: Text(
             'Set Up Authenticator',
-            style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.w700),
+            style: AppTextStyles.titleLarge.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         body: SingleChildScrollView(
@@ -378,47 +376,68 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            Form(
-              key: _formKey,
-              child: AuthSurfaceCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+            AuthSurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '2. Verify 6-digit code',
+                    style: AppTextStyles.titleLarge.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  MpinPinIndicator(
+                    filledCount: _verificationController.value.length,
+                    length: 6,
+                    isError: _verificationController.errorMessage != null,
+                    showDigits: true,
+                    displayValue: _verificationController.value,
+                  ),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 360),
+                      child: MpinNumericKeypad(
+                        isEnabled: !_isSubmitting,
+                        showBiometricButton: false,
+                        onDigitTap: _onDigitTap,
+                        onDeleteTap: _onDeleteTap,
+                      ),
+                    ),
+                  ),
+                  if (_verificationController.errorMessage != null) ...[
+                    const SizedBox(height: 8),
                     Text(
-                      '2. Verify 6-digit code',
-                      style: AppTextStyles.titleLarge.copyWith(
-                        fontWeight: FontWeight.w700,
+                      _verificationController.errorMessage!,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.danger,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 12),
-                    OtpCodeField(
-                      key: _otpFieldKey,
-                      validator: validateOtp,
-                      isEnabled: !_isSubmitting,
-                    ),
-                    const SizedBox(height: 16),
-                    PrimaryButtonWidget(
-                      text: 'Enable 2FA',
-                      onPressed: _isSubmitting ? null : _verifyCode,
-                      isLoading: _isSubmitting,
-                      icon: Icons.verified_outlined,
-                    ),
-                    if (widget.allowSkip) ...[
-                      const SizedBox(height: 8),
-                      Center(
-                        child: SecondaryButtonWidget(
-                          text: 'Skip for now',
-                          onPressed: _skipSetup,
-                        ),
-                      ),
-                    ],
                   ],
-                ),
+                  const SizedBox(height: 16),
+                  PrimaryButtonWidget(
+                    text: 'Enable 2FA',
+                    onPressed: _isSubmitting ? null : _verifyCode,
+                    isLoading: _isSubmitting,
+                    icon: Icons.verified_outlined,
+                  ),
+                  if (widget.allowSkip) ...[
+                    const SizedBox(height: 8),
+                    Center(
+                      child: SecondaryButtonWidget(
+                        text: 'Skip for now',
+                        onPressed: _skipSetup,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
         );
-      case _SetupStage.showRecoveryCodes:
+      case _SetupStage.showSuccess:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -426,6 +445,12 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Icon(
+                    Icons.verified_outlined,
+                    color: AppColors.success,
+                    size: 56,
+                  ),
+                  const SizedBox(height: 12),
                   Text(
                     '2FA Enabled',
                     style: AppTextStyles.headlineSmall.copyWith(
@@ -435,35 +460,9 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Save these recovery codes now. Each code can only be used once.',
+                    'Your authenticator app is now linked to this account.',
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.surfaceVariant,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _recoveryCodes
-                          .map(
-                            (code) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Text(
-                                code,
-                                style: AppTextStyles.bodyLarge.copyWith(
-                                  color: AppColors.textPrimary,
-                                  letterSpacing: 0.6,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(growable: false),
                     ),
                   ),
                 ],
@@ -471,14 +470,14 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
             ),
             const SizedBox(height: 16),
             PrimaryButtonWidget(
-              text: 'Copy recovery codes',
-              onPressed: _copyRecoveryCodes,
-              icon: Icons.copy_all_outlined,
+              text: 'Back to Security',
+              onPressed: _leaveSetupFlow,
+              icon: Icons.arrow_forward,
             ),
             const SizedBox(height: 8),
             Center(
               child: SecondaryButtonWidget(
-                text: 'Back to Security',
+                text: 'Close',
                 onPressed: _leaveSetupFlow,
               ),
             ),

@@ -1,10 +1,9 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { SupabaseService } from "../supabase/supabase.service";
-import { UserMpinRecord, UserMpinUpsert } from "./auth.types";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { SupabaseService } from '../supabase/supabase.service';
+import { UserMpinRecord, UserMpinUpsert } from './auth.types';
 
 interface UserMpinRow {
   user_id: string;
-  device_id: string;
   mpin_hash: string;
   failed_attempts: number;
   locked_until: string | null;
@@ -17,15 +16,15 @@ export class UserMpinRepository {
 
   async findByUserId(userId: string): Promise<UserMpinRecord | null> {
     const { data, error } = await this.supabaseService.adminClient
-      .from("user_mpins")
+      .from('user_mpins')
       .select(
-        "user_id, device_id, mpin_hash, failed_attempts, locked_until, last_verified_at",
+        'user_id, mpin_hash, failed_attempts, locked_until, last_verified_at',
       )
-      .eq("user_id", userId)
+      .eq('user_id', userId)
       .maybeSingle();
 
     if (error !== null) {
-      throw new InternalServerErrorException("Unable to read MPIN record");
+      throw new InternalServerErrorException('Unable to read MPIN record');
     }
 
     const row = data as unknown as UserMpinRow | null;
@@ -35,7 +34,6 @@ export class UserMpinRepository {
 
     return {
       userId: row.user_id,
-      deviceId: row.device_id,
       mpinHash: row.mpin_hash,
       failedAttempts: row.failed_attempts,
       lockedUntil: row.locked_until,
@@ -45,21 +43,20 @@ export class UserMpinRepository {
 
   async upsert(input: UserMpinUpsert): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("user_mpins")
+      .from('user_mpins')
       .upsert(
         {
           user_id: input.userId,
-          device_id: input.deviceId,
           mpin_hash: input.mpinHash,
           failed_attempts: input.failedAttempts,
           locked_until: input.lockedUntil,
           last_verified_at: input.lastVerifiedAt,
         },
-        { onConflict: "user_id" },
+        { onConflict: 'user_id' },
       );
 
     if (error !== null) {
-      throw new InternalServerErrorException("Unable to store MPIN record");
+      throw new InternalServerErrorException('Unable to store MPIN record');
     }
   }
 
@@ -69,30 +66,43 @@ export class UserMpinRepository {
     lockedUntil: string | null,
   ): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("user_mpins")
+      .from('user_mpins')
       .update({
         failed_attempts: failedAttempts,
         locked_until: lockedUntil,
       })
-      .eq("user_id", userId);
+      .eq('user_id', userId);
 
     if (error !== null) {
-      throw new InternalServerErrorException("Unable to update MPIN state");
+      throw new InternalServerErrorException('Unable to update MPIN state');
     }
   }
 
   async markVerified(userId: string): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("user_mpins")
+      .from('user_mpins')
       .update({
         failed_attempts: 0,
         locked_until: null,
         last_verified_at: new Date().toISOString(),
       })
-      .eq("user_id", userId);
+      .eq('user_id', userId);
 
     if (error !== null) {
-      throw new InternalServerErrorException("Unable to update MPIN verification");
+      throw new InternalServerErrorException(
+        'Unable to update MPIN verification',
+      );
+    }
+  }
+
+  async deleteByUserId(userId: string): Promise<void> {
+    const { error } = await this.supabaseService.adminClient
+      .from('user_mpins')
+      .delete()
+      .eq('user_id', userId);
+
+    if (error !== null) {
+      throw new InternalServerErrorException('Unable to remove MPIN record');
     }
   }
 }

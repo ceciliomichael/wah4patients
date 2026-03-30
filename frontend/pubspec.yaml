@@ -37,7 +37,8 @@ dependencies:
   http: ^1.2.2
   qr_flutter: ^4.1.0
   flutter_secure_storage: ^9.2.2
-  flutter_windowmanager: ^0.2.0
+  flutter_windowmanager:
+    path: packages/flutter_windowmanager
 
 dev_dependencies:
   flutter_test:

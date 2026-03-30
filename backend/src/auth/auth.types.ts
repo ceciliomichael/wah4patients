@@ -66,6 +66,13 @@ export interface MfaChallengeTokenPayload {
   exp: number;
 }
 
+export interface SecurityVerificationTokenPayload {
+  sub: string;
+  purpose: 'security-verification';
+  iat: number;
+  exp: number;
+}
+
 export interface UserTotpFactorRecord {
   userId: string;
   isEnabled: boolean;
@@ -91,7 +98,6 @@ export interface UserTotpRecoveryCodeRecord {
 
 export interface UserMpinRecord {
   userId: string;
-  deviceId: string;
   mpinHash: string;
   failedAttempts: number;
   lockedUntil: string | null;
@@ -100,11 +106,22 @@ export interface UserMpinRecord {
 
 export interface UserMpinUpsert {
   userId: string;
-  deviceId: string;
   mpinHash: string;
   failedAttempts: number;
   lockedUntil: string | null;
   lastVerifiedAt: string | null;
+}
+
+export interface UserMpinDeviceRecord {
+  userId: string;
+  deviceId: string;
+  registeredAt: string;
+}
+
+export interface UserMpinDeviceUpsert {
+  userId: string;
+  deviceId: string;
+  registeredAt?: string | null;
 }
 
 export interface RequestOtpResponse {
@@ -126,6 +143,18 @@ export interface RequestPasswordResetOtpResponse {
 export interface VerifyPasswordResetOtpResponse {
   message: string;
   passwordResetToken: string;
+  expiresInSeconds: number;
+}
+
+export interface SecuritySettingsStatusResponse {
+  isTotpEnabled: boolean;
+  isMpinConfigured: boolean;
+  isMpinDeviceRegistered: boolean;
+}
+
+export interface VerifySecurityActionResponse {
+  message: string;
+  securityVerificationToken: string;
   expiresInSeconds: number;
 }
 
@@ -175,6 +204,14 @@ export interface TotpSetupVerifyResponse {
 }
 
 export interface SetMpinResponse {
+  message: string;
+}
+
+export interface RegisterMpinDeviceResponse {
+  message: string;
+}
+
+export interface UnregisterMpinDeviceResponse {
   message: string;
 }
 

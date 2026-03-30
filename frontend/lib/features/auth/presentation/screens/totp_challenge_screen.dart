@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../data/auth_api_client.dart';
+import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
-import '../../domain/auth_validators.dart';
-import '../widgets/auth_header.dart';
-import '../widgets/auth_surface_card.dart';
-import '../widgets/otp_code_field.dart';
+import '../controllers/mpin_entry_controller.dart';
+import '../widgets/mpin_flow_scaffold.dart';
+import '../widgets/mpin_numeric_keypad.dart';
+import '../widgets/mpin_pin_indicator.dart';
 
 class TotpChallengeScreen extends StatefulWidget {
   const TotpChallengeScreen({
@@ -26,159 +26,182 @@ class TotpChallengeScreen extends StatefulWidget {
   State<TotpChallengeScreen> createState() => _TotpChallengeScreenState();
 }
 
-class _TotpChallengeScreenState extends State<TotpChallengeScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormFieldState<String>> _otpFieldKey =
-      GlobalKey<FormFieldState<String>>();
+class _TotpChallengeScreenState extends State<TotpChallengeScreen>
+    with SingleTickerProviderStateMixin {
+  final MpinEntryController _controller = MpinEntryController(
+    requiredLength: 6,
+  );
+  late final AnimationController _errorShakeController;
+  bool _hasInputError = false;
 
-  bool _isVerifying = false;
-
-  void _goBack() {
-    Navigator.of(context).pop();
+  @override
+  void initState() {
+    super.initState();
+    _errorShakeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 420),
+    );
+    ScreenProtection.enableSecureMode();
   }
 
-  Future<void> _verify() async {
-    if (_formKey.currentState?.validate() != true) {
-      return;
-    }
+  @override
+  void dispose() {
+    _errorShakeController.dispose();
+    ScreenProtection.disableSecureMode();
+    _controller.dispose();
+    super.dispose();
+  }
 
-    final code = _otpFieldKey.currentState?.value?.trim() ?? '';
-    if (_isVerifying) {
-      return;
-    }
-
+  Future<void> _playErrorAnimation() async {
     setState(() {
-      _isVerifying = true;
+      _hasInputError = true;
     });
+    await _errorShakeController.forward(from: 0);
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _hasInputError = false;
+    });
+  }
 
+  Future<void> _registerCurrentDeviceAfterLogin(String accessToken) async {
     try {
-      final result = await AuthApiClient.instance.verifyMfaChallenge(
-        mfaChallengeToken: widget.mfaChallengeToken,
-        code: code,
-      );
-
-      AuthSession.setFromLoginResult(result);
-
-      if (!mounted) {
-        return;
-      }
-
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRoutes.dashboard,
-        (route) => false,
+      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+      await AuthApiClient.instance.registerMpinDevice(
+        accessToken: accessToken,
+        deviceId: deviceId,
       );
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isVerifying = false;
-        });
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Signed in, but MPIN device registration failed: ${error.message}',
+          ),
+        ),
+      );
     }
+  }
+
+  Future<void> _verify() async {
+    if (!_controller.isComplete || _controller.isSubmitting) {
+      return;
+    }
+
+    try {
+      await _controller.submit((code) async {
+        try {
+          final result = await AuthApiClient.instance.verifyMfaChallenge(
+            mfaChallengeToken: widget.mfaChallengeToken,
+            code: code,
+          );
+
+          AuthSession.setFromLoginResult(result);
+          await _registerCurrentDeviceAfterLogin(result.accessToken);
+
+          if (!mounted) {
+            return;
+          }
+
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
+        } on AuthApiException catch (error) {
+          _controller.registerFailure(message: error.message);
+          await _playErrorAnimation();
+        }
+      });
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      _controller.clear();
+      _controller.setError(error.message);
+    }
+  }
+
+  void _onDigitTap(String digit) {
+    if (_controller.isSubmitting) {
+      return;
+    }
+
+    _controller.appendDigit(digit);
+    if (_controller.isComplete) {
+      _verify();
+    }
+  }
+
+  void _onDeleteTap() {
+    _controller.removeLastDigit();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final horizontalPadding = screenWidth > 600 ? 48.0 : 24.0;
+    return Focus(
+      autofocus: true,
+      onKeyEvent: (_, __) => KeyEventResult.handled,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_controller, _errorShakeController]),
+        builder: (context, _) {
+          final bool canInteract =
+              !_controller.isSubmitting && !_controller.isLocked;
+          final double shake =
+              (1 - (_errorShakeController.value - 0.5).abs() * 2) * 10;
 
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.background,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: EdgeInsets.only(
-                left: horizontalPadding,
-                right: horizontalPadding,
-                top: 32,
-                bottom: 32,
-              ),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight - 64,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      IconButton(
-                        onPressed: _goBack,
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: AppColors.textPrimary,
-                        ),
-                        alignment: Alignment.centerLeft,
-                        tooltip: 'Back',
-                      ),
-                      const SizedBox(height: 8),
-                      const AuthHeader(
-                        title: 'Two-factor verification',
-                        subtitle:
-                            'Enter the 6-digit code from your authenticator app.',
-                        centerTitle: false,
-                      ),
-                      const SizedBox(height: 24),
-                      Form(
-                        key: _formKey,
-                        child: AuthSurfaceCard(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Authenticator code',
-                                style: AppTextStyles.titleLarge.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              OtpCodeField(
-                                key: _otpFieldKey,
-                                validator: validateOtp,
-                                isEnabled: !_isVerifying,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                'Signing in as ${widget.email}',
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      PrimaryButtonWidget(
-                        text: 'Verify and continue',
-                        onPressed: _isVerifying ? null : _verify,
-                        isLoading: _isVerifying,
-                        icon: Icons.verified_user_outlined,
-                      ),
-                    ],
+          return MpinFlowScaffold(
+            title: 'Verify with Authenticator',
+            subtitle: 'Enter the 6-digit code to finish sign in.',
+            surfaceTitle: 'Authenticator code',
+            surfaceSubtitle:
+                'Use the code from Google Authenticator on this account.',
+            heroIcon: Icons.verified_user_outlined,
+            onBackPressed: _controller.isSubmitting
+                ? null
+                : () => Navigator.of(context).pop(),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Transform.translate(
+                  offset: Offset(shake, 0),
+                  child: MpinPinIndicator(
+                    filledCount: _controller.value.length,
+                    length: 6,
+                    isError: _hasInputError,
+                    showDigits: true,
+                    displayValue: _controller.value,
                   ),
                 ),
-              ),
-            );
-          },
-        ),
+                const SizedBox(height: 16),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 360),
+                    child: MpinNumericKeypad(
+                      isEnabled: canInteract,
+                      showBiometricButton: false,
+                      onDigitTap: _onDigitTap,
+                      onDeleteTap: _onDeleteTap,
+                    ),
+                  ),
+                ),
+                if (_controller.errorMessage != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _controller.errorMessage!,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.danger,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }

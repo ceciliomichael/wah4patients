@@ -6,7 +6,6 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../data/auth_api_client.dart';
 import '../../data/mpin_local_store.dart';
@@ -122,57 +121,66 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
       return;
     }
 
-    await _controller.submit((pin) async {
-      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+    try {
+      await _controller.submit((pin) async {
+        final deviceId = await MpinLocalStore.readOrCreateDeviceId();
 
-      try {
-        final result = await AuthApiClient.instance.verifyMpin(
-          accessToken: accessToken,
-          mpin: pin,
-          deviceId: deviceId,
-        );
-
-        final backendLock = _parseBackendLock(result.lockedUntil);
-        if (backendLock != null && DateTime.now().isBefore(backendLock)) {
-          _controller.registerFailure(
-            remainingAttempts: result.remainingAttempts,
-            backendLockedUntil: backendLock,
-            message: 'Too many attempts. Please wait before retrying.',
+        try {
+          final result = await AuthApiClient.instance.verifyMpin(
+            accessToken: accessToken,
+            mpin: pin,
+            deviceId: deviceId,
           );
+
+          final backendLock = _parseBackendLock(result.lockedUntil);
+          if (backendLock != null && DateTime.now().isBefore(backendLock)) {
+            _controller.registerFailure(
+              remainingAttempts: result.remainingAttempts,
+              backendLockedUntil: backendLock,
+              message: 'Too many attempts. Please wait before retrying.',
+            );
+            _startLockCountdown();
+            await _playErrorAnimation();
+            return;
+          }
+
+          _controller.registerSuccess();
+
+          if (!mounted) {
+            return;
+          }
+
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(result.message)));
+          Navigator.of(context).pop(true);
+        } on AuthApiException catch (error) {
+          final statusCode = error.statusCode;
+          final shouldCountAsAttempt =
+              statusCode == 400 ||
+              statusCode == 401 ||
+              statusCode == 403 ||
+              statusCode == 429;
+
+          if (!shouldCountAsAttempt) {
+            _controller.clear();
+            _controller.setError(error.message);
+            return;
+          }
+
+          _controller.registerFailure(message: error.message);
           _startLockCountdown();
           await _playErrorAnimation();
-          return;
         }
-
-        _controller.registerSuccess();
-
-        if (!mounted) {
-          return;
-        }
-
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result.message)));
-        Navigator.of(context).pop(true);
-      } on AuthApiException catch (error) {
-        final statusCode = error.statusCode;
-        final shouldCountAsAttempt =
-            statusCode == 400 ||
-            statusCode == 401 ||
-            statusCode == 403 ||
-            statusCode == 429;
-
-        if (!shouldCountAsAttempt) {
-          _controller.clear();
-          _controller.setError(error.message);
-          return;
-        }
-
-        _controller.registerFailure(message: error.message);
-        _startLockCountdown();
-        await _playErrorAnimation();
+      });
+    } on AuthApiException catch (error) {
+      if (!mounted) {
+        return;
       }
-    });
+
+      _controller.clear();
+      _controller.setError(error.message);
+    }
   }
 
   void _onDigitTap(String digit) {
@@ -213,7 +221,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
 
           return MpinFlowScaffold(
             title: 'Enter your MPIN',
-            subtitle: 'Continue securely on this device.',
+            subtitle: 'Continue securely on this registered device.',
             surfaceTitle: 'Enter your MPIN',
             surfaceSubtitle: '',
             heroIcon: Icons.lock_outline,
@@ -269,17 +277,6 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
                   ),
                 ],
               ],
-            ),
-            primaryAction: PrimaryButtonWidget(
-              text: 'Continue',
-              onPressed:
-                  (_controller.isComplete &&
-                      !_controller.isSubmitting &&
-                      !isLocked)
-                  ? _unlock
-                  : null,
-              isLoading: _controller.isSubmitting,
-              icon: Icons.arrow_forward,
             ),
             secondaryAction: SecondaryButtonWidget(
               text: 'Sign out',

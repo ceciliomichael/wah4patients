@@ -50,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                           _ProfileHeader(showBackButton: showBackButton),
                           const SizedBox(height: 32),
                           _ProfileInfoCard(
-                            displayName: AuthSession.displayName,
+                            displayName: AuthSession.shortDisplayName,
                             email: AuthSession.userEmail ?? '',
                             initials: _buildInitials(
                               AuthSession.givenNames,
@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 32),
-                          _SectionCard(
+                          _MenuCard(
                             title: 'Personal Information',
                             icon: Icons.person_outline,
                             description:
@@ -283,66 +283,6 @@ class _SectionHeader extends StatelessWidget {
     return Text(
       title,
       style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
-    );
-  }
-}
-
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.title,
-    required this.icon,
-    required this.description,
-    required this.onTap,
-  });
-
-  final String title;
-  final IconData icon;
-  final String description;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.large,
-        side: const BorderSide(color: AppColors.border),
-      ),
-      child: ListTile(
-        leading: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.12),
-            borderRadius: AppRadii.small,
-          ),
-          child: Icon(icon, color: AppColors.primary, size: 34),
-        ),
-        title: Text(
-          title,
-          style: AppTextStyles.titleLarge.copyWith(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Text(
-          description,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: const Icon(
-          Icons.chevron_right,
-          color: AppColors.textSecondary,
-        ),
-        onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
-      ),
     );
   }
 }
