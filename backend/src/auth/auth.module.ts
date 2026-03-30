@@ -4,7 +4,13 @@ import { MailerModule } from "../mailer/mailer.module";
 import { SupabaseModule } from "../supabase/supabase.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
+import { AuthSettingsService } from "./auth-settings.service";
+import { AuthSupportService } from "./auth-support.service";
+import { LoginAuthService } from "./login-auth.service";
+import { MpinAuthService } from "./mpin-auth.service";
+import { PasswordResetAuthService } from "./password-reset-auth.service";
 import { PasswordResetOtpRepository } from "./password-reset-otp.repository";
+import { RegistrationAuthService } from "./registration-auth.service";
 import { RegistrationOtpRepository } from "./registration-otp.repository";
 import { TotpFactorRepository } from "./totp-factor.repository";
 import { TotpRecoveryCodesRepository } from "./totp-recovery-codes.repository";
@@ -15,6 +21,12 @@ import { UserMpinRepository } from "./user-mpin.repository";
   controllers: [AuthController],
   providers: [
     AuthService,
+    AuthSettingsService,
+    AuthSupportService,
+    RegistrationAuthService,
+    PasswordResetAuthService,
+    LoginAuthService,
+    MpinAuthService,
     RegistrationOtpRepository,
     PasswordResetOtpRepository,
     TotpFactorRepository,
