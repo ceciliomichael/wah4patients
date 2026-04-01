@@ -95,22 +95,27 @@ class MpinFlowScaffold extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        if (onBackPressed != null)
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              horizontalPadding,
-                              isTablet ? 24 : 20,
-                              horizontalPadding,
-                              0,
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: _MpinBackButton(
-                                onPressed: onBackPressed!,
-                                tooltip: backTooltip,
-                              ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            horizontalPadding,
+                            isTablet ? 24 : 20,
+                            horizontalPadding,
+                            0,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: onBackPressed != null
+                                  ? _MpinBackButton(
+                                      onPressed: onBackPressed!,
+                                      tooltip: backTooltip,
+                                    )
+                                  : const SizedBox.shrink(),
                             ),
                           ),
+                        ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(
