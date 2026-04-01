@@ -235,39 +235,44 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
       ),
     );
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: AppColors.background,
-          elevation: 0,
-          leading: IconButton(
-            onPressed: _leaveSetupFlow,
-            icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-            tooltip: 'Back',
-          ),
-          title: Text(
-            'Set Up Authenticator',
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.w700,
+    return AnimatedBuilder(
+      animation: _verificationController,
+      builder: (context, _) {
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: AppColors.background,
+            appBar: AppBar(
+              backgroundColor: AppColors.background,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: _leaveSetupFlow,
+                icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+                tooltip: 'Back',
+              ),
+              title: Text(
+                'Set Up Authenticator',
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            body: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(
+                horizontalPadding,
+                24,
+                horizontalPadding,
+                24,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 640),
+                  child: _buildContent(),
+                ),
+              ),
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            horizontalPadding,
-            24,
-            horizontalPadding,
-            24,
-          ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 640),
-              child: _buildContent(),
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
