@@ -1,10 +1,25 @@
 # frontend
 
-A new Flutter project.
+Flutter frontend for WAH for Patients.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+## Runtime Configuration
+
+The app reads backend settings from `frontend/.env` at runtime. For local
+development and physical-device builds, you can also pass the same values at
+build time with `--dart-define`.
+
+Example:
+
+```bash
+flutter run \
+  --dart-define=BACKEND_BASE_URL=https://your-backend.example.com/api/v1 \
+  --dart-define=BACKEND_API_KEY=your-api-key
+```
+
+If you are testing on a physical phone, the backend URL must be reachable from
+that phone. `localhost` only works for the device itself, not for your computer.
 
 A few resources to get you started if this is your first Flutter project:
 
