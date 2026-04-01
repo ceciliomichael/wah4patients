@@ -11,6 +11,7 @@ import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
 import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
+import '../services/post_login_route_service.dart';
 import '../widgets/auth_brand_logo.dart';
 import '../widgets/auth_footer_link.dart';
 import '../widgets/auth_header.dart';
@@ -90,6 +91,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _goToNextRouteAfterLogin(String accessToken) async {
+    final nextRoute = await PostLoginRouteService.resolveNextRouteAfterLogin(
+      accessToken: accessToken,
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    Navigator.of(context).pushNamedAndRemoveUntil(nextRoute, (route) => false);
+  }
+
   Future<void> _signIn() async {
     if (_formKey.currentState?.validate() != true) {
       return;
@@ -125,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      AuthSession.setFromLoginResult(result);
+      await AuthSession.persist(result);
       await _registerCurrentDeviceAfterLogin(result.accessToken);
       if (!mounted) {
         return;
@@ -138,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+      await _goToNextRouteAfterLogin(result.accessToken);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;

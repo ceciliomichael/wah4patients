@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../app/app_routes.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 
@@ -34,26 +33,21 @@ class _SplashScreenState extends State<SplashScreen>
   late final Animation<double> _communitiesOpacity;
   late final Animation<Color?> _backgroundColorAnimation;
 
-  static const Duration splashDuration = Duration(seconds: 5);
   static const Duration logoAnimationDuration = Duration(milliseconds: 1500);
   static const Duration textAnimationDuration = Duration(milliseconds: 1000);
   static const Duration backgroundAnimationDuration = Duration(
     milliseconds: 2000,
   );
 
-  Timer? _navigationTimer;
-
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
     _startAnimationSequence();
-    _navigateToOnboarding();
   }
 
   @override
   void dispose() {
-    _navigationTimer?.cancel();
     _logoAnimationController.dispose();
     _textAnimationController.dispose();
     _taglineScaleController.dispose();
@@ -175,15 +169,6 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         _communitiesController.forward();
       }
-    });
-  }
-
-  void _navigateToOnboarding() {
-    _navigationTimer = Timer(splashDuration, () {
-      if (!mounted) {
-        return;
-      }
-      Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding1);
     });
   }
 

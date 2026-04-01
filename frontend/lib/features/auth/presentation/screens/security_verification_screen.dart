@@ -52,7 +52,7 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
 
   bool _sendingEmailOtp = false;
   bool _verifying = false;
-  bool _emailOtpRequested = false;
+  bool _autoRequestedEmailOtp = false;
   bool _hasInputError = false;
 
   SecuritySettingsStatusResult? _status;
@@ -106,6 +106,7 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
       setState(() {
         _status = status;
       });
+      await _requestEmailOtpIfNeeded();
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -130,7 +131,17 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
             : SecurityVerificationMethod.emailOtp);
   }
 
-  Future<void> _requestEmailOtp() async {
+  Future<void> _requestEmailOtpIfNeeded() async {
+    if (_autoRequestedEmailOtp ||
+        _verificationMethod != SecurityVerificationMethod.emailOtp) {
+      return;
+    }
+
+    _autoRequestedEmailOtp = true;
+    await _requestEmailOtp(showSuccessMessage: false);
+  }
+
+  Future<void> _requestEmailOtp({bool showSuccessMessage = true}) async {
     final email = AuthSession.userEmail?.trim() ?? '';
     if (email.isEmpty || _sendingEmailOtp) {
       return;
@@ -147,12 +158,11 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
       if (!mounted) {
         return;
       }
-      setState(() {
-        _emailOtpRequested = true;
-      });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(response.message)));
+      if (showSuccessMessage) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(response.message)));
+      }
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -261,7 +271,7 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
         : 'Verify with Email OTP';
     final subtitle = usingAuthenticator
         ? 'Enter the code from Google Authenticator to continue ${widget.arguments.purpose}.'
-        : '2FA is not enabled. Verify using email OTP to continue ${widget.arguments.purpose}.';
+        : 'Check your email and enter the one-time code to continue ${widget.arguments.purpose}.';
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -382,19 +392,6 @@ class _SecurityVerificationScreenState extends State<SecurityVerificationScreen>
                               ),
                             ),
                             const SizedBox(height: 16),
-                            if (!usingAuthenticator) ...[
-                              PrimaryButtonWidget(
-                                text: _emailOtpRequested
-                                    ? 'Resend email OTP'
-                                    : 'Send email OTP',
-                                onPressed: _sendingEmailOtp
-                                    ? null
-                                    : _requestEmailOtp,
-                                isLoading: _sendingEmailOtp,
-                                icon: Icons.email_outlined,
-                              ),
-                              const SizedBox(height: 12),
-                            ],
                             OtpCodeField(
                               key: _otpFieldKey,
                               validator: validateOtp,

@@ -1,0 +1,38 @@
+import '../features/auth/data/auth_local_store.dart';
+import '../features/auth/data/mpin_local_store.dart';
+import '../features/auth/domain/auth_session.dart';
+import 'app_routes.dart';
+
+class AppStartupResult {
+  const AppStartupResult._(this.initialRoute);
+
+  final String initialRoute;
+
+  static const AppStartupResult onboarding = AppStartupResult._('/onboarding/1');
+  static const AppStartupResult login = AppStartupResult._('/login');
+  static const AppStartupResult dashboard = AppStartupResult._('/dashboard');
+  static const AppStartupResult mpinUnlock = AppStartupResult._(
+    AppRoutes.mpinUnlock,
+  );
+}
+
+class AppStartupService {
+  AppStartupService._();
+
+  static Future<AppStartupResult> resolveInitialRoute() async {
+    final hasValidSession = await AuthSession.refreshIfNeeded();
+    if (hasValidSession && AuthSession.isAuthenticated) {
+      final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+      return isMpinEnabled
+          ? AppStartupResult.mpinUnlock
+          : AppStartupResult.dashboard;
+    }
+
+    final onboardingCompleted = await AuthLocalStore.isOnboardingCompleted();
+    if (!onboardingCompleted) {
+      return AppStartupResult.onboarding;
+    }
+
+    return AppStartupResult.login;
+  }
+}

@@ -193,6 +193,8 @@ export interface LoginMfaRequiredResponse {
 
 export type LoginResultResponse = LoginResponse | LoginMfaRequiredResponse;
 
+export interface RefreshSessionResponse extends LoginResponse {}
+
 export interface TotpSetupStartResponse {
   otpauthUrl: string;
   manualEntryKey: string;

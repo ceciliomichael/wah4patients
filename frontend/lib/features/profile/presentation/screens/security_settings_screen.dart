@@ -126,7 +126,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
             return AlertDialog(
               title: const Text('Unregister MPIN device?'),
               content: const Text(
-                'This will remove the current device binding, clear local MPIN access, and sign you out immediately.',
+                'This will remove the current device binding and sign you out immediately. Your MPIN will stay on this account for future use.',
               ),
               actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
               actions: [
@@ -182,7 +182,6 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         securityVerificationToken: token,
       );
 
-      await MpinLocalStore.clearMpin();
       AuthSession.clear();
 
       if (!mounted) {
@@ -478,16 +477,6 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                                 ],
                               ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    PrimaryButtonWidget(
-                      text: 'Back to Profile',
-                      onPressed: () {
-                        Navigator.of(
-                          context,
-                        ).pushReplacementNamed(AppRoutes.profile);
-                      },
-                      icon: Icons.arrow_forward,
                     ),
                   ],
                 ),

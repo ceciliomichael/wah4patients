@@ -166,6 +166,8 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
             return TotpChallengeScreen(
               email: args.email,
               mfaChallengeToken: args.mfaChallengeToken,
+              nextRouteAfterSuccess: args.nextRouteAfterSuccess,
+              nextRouteArguments: args.nextRouteArguments,
             );
           }
 

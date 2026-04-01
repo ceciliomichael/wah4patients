@@ -61,7 +61,7 @@ class RegistrationScreen extends StatelessWidget {
                       const AuthHeader(
                         title: 'Welcome!',
                         subtitle:
-                            'Let\'s create your account in just 4 simple steps',
+                            'Let\'s create your account in just 5 simple steps',
                         centerTitle: true,
                       ),
                       const SizedBox(height: 18),
@@ -101,6 +101,15 @@ class RegistrationScreen extends StatelessWidget {
                               title: 'Create a password',
                               description:
                                   'Choose a secure password with simple requirements.',
+                            ),
+                            SizedBox(height: 20),
+                            Divider(height: 1, color: AppColors.border),
+                            SizedBox(height: 20),
+                            _RegistrationStep(
+                              number: '5',
+                              title: 'Set up MPIN',
+                              description:
+                                  'Create your 4-digit MPIN and confirm it before finishing registration.',
                             ),
                           ],
                         ),

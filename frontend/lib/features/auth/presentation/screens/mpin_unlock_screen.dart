@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -121,6 +122,21 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
       return;
     }
 
+    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+    if (!isMpinEnabled) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('MPIN is not enabled on this device. Please sign in again.'),
+        ),
+      );
+      _forceSignOut();
+      return;
+    }
+
     try {
       await _controller.submit((pin) async {
         final deviceId = await MpinLocalStore.readOrCreateDeviceId();
@@ -145,6 +161,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
           }
 
           _controller.registerSuccess();
+          AppLockStateService.clearBackgroundState();
 
           if (!mounted) {
             return;
@@ -153,7 +170,15 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(result.message)));
-          Navigator.of(context).pop(true);
+          final navigator = Navigator.of(context);
+          if (navigator.canPop()) {
+            navigator.pop(true);
+          } else {
+            navigator.pushNamedAndRemoveUntil(
+              AppRoutes.dashboard,
+              (route) => false,
+            );
+          }
         } on AuthApiException catch (error) {
           final statusCode = error.statusCode;
           final shouldCountAsAttempt =

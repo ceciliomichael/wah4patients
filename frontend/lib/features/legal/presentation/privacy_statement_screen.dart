@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../app/app_routes.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/widgets/ui/buttons/primary_button_widget.dart';
 
 class PrivacyStatementScreen extends StatelessWidget {
   const PrivacyStatementScreen({super.key});
@@ -97,6 +99,16 @@ class PrivacyStatementScreen extends StatelessWidget {
                       child: _PrivacySection(section: section),
                     );
                   }),
+                  const SizedBox(height: 8),
+                  PrimaryButtonWidget(
+                    text: 'Back to Profile',
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(
+                        AppRoutes.profile,
+                      );
+                    },
+                    icon: Icons.arrow_forward,
+                  ),
                 ],
               ),
             ),

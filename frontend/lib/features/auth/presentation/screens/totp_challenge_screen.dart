@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/app_routes.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../data/auth_api_client.dart';
 import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
+import '../services/post_login_route_service.dart';
 import '../controllers/mpin_entry_controller.dart';
 import '../widgets/mpin_flow_scaffold.dart';
 import '../widgets/mpin_numeric_keypad.dart';
@@ -17,10 +17,14 @@ class TotpChallengeScreen extends StatefulWidget {
     super.key,
     required this.email,
     required this.mfaChallengeToken,
+    this.nextRouteAfterSuccess,
+    this.nextRouteArguments,
   });
 
   final String email;
   final String mfaChallengeToken;
+  final String? nextRouteAfterSuccess;
+  final Object? nextRouteArguments;
 
   @override
   State<TotpChallengeScreen> createState() => _TotpChallengeScreenState();
@@ -100,16 +104,33 @@ class _TotpChallengeScreenState extends State<TotpChallengeScreen>
             code: code,
           );
 
-          AuthSession.setFromLoginResult(result);
+          await AuthSession.persist(result);
           await _registerCurrentDeviceAfterLogin(result.accessToken);
 
           if (!mounted) {
             return;
           }
 
-          Navigator.of(
-            context,
-          ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
+          final navigator = Navigator.of(context);
+
+          final nextRoute = widget.nextRouteAfterSuccess;
+          if (nextRoute != null && nextRoute.isNotEmpty) {
+            navigator.pushNamedAndRemoveUntil(
+              nextRoute,
+              (route) => false,
+              arguments: widget.nextRouteArguments,
+            );
+            return;
+          }
+
+          final postLoginRoute = await PostLoginRouteService
+              .resolveNextRouteAfterLogin(
+            accessToken: result.accessToken,
+          );
+          navigator.pushNamedAndRemoveUntil(
+            postLoginRoute,
+            (route) => false,
+          );
         } on AuthApiException catch (error) {
           _controller.registerFailure(message: error.message);
           await _playErrorAnimation();

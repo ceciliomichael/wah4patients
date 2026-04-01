@@ -46,7 +46,13 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
   @override
   void initState() {
     super.initState();
-    _startSetup();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+
+      _startSetup();
+    });
   }
 
   @override

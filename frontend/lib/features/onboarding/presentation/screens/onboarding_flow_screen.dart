@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_routes.dart';
 import '../../../../core/widgets/ui/indicators/page_indicator_widget.dart';
+import '../../../auth/data/auth_local_store.dart';
 import '../../domain/onboarding_page_repository.dart';
 import '../widgets/onboarding_base_screen.dart';
 
@@ -75,14 +78,24 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
     Navigator.of(context).pushReplacementNamed(AppRoutes.registration);
   }
 
+  Future<void> _completeOnboarding() async {
+    await AuthLocalStore.setOnboardingCompleted(true);
+    if (!mounted) {
+      return;
+    }
+
+    _goToRegistration();
+  }
+
   void _handleSkipPressed() {
+    unawaited(AuthLocalStore.setOnboardingCompleted(true));
     _goToRegistration();
   }
 
   void _handleActionPressed() {
     final currentPage = OnboardingPageRepository.pages[_currentPageIndex];
     if (currentPage.isLastPage) {
-      _goToRegistration();
+      unawaited(_completeOnboarding());
       return;
     }
 

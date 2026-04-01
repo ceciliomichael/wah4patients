@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../core/constants/app_border_radii.dart';
 import '../core/constants/app_colors.dart';
 import '../core/constants/app_text_styles.dart';
+import 'app_lock_state_service.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
 import 'app_router.dart';
 import 'app_routes.dart';
+import 'startup_gate_screen.dart';
 
 class WAH4PApp extends StatefulWidget {
   const WAH4PApp({super.key});
@@ -36,6 +38,12 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      AppLockStateService.markBackgrounded();
+      return;
+    }
+
     if (state == AppLifecycleState.resumed) {
       _tryShowMpinLock();
     }
@@ -48,6 +56,7 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
 
     final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
     if (!isMpinEnabled ||
+        !AppLockStateService.shouldRequireUnlockOnResume() ||
         _routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {
       return;
     }
@@ -165,7 +174,20 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
       theme: theme,
       initialRoute: AppRoutes.splash,
-      onGenerateRoute: buildAppRoute,
+      onGenerateRoute: (settings) {
+        if (settings.name == AppRoutes.splash) {
+          return _buildStartupRoute(settings);
+        }
+
+        return buildAppRoute(settings);
+      },
+    );
+  }
+
+  Route<dynamic> _buildStartupRoute(RouteSettings settings) {
+    return MaterialPageRoute<dynamic>(
+      settings: settings,
+      builder: (_) => const StartupGateScreen(),
     );
   }
 }

@@ -28,72 +28,97 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
     super.dispose();
   }
 
-  void _continue() {
+  Future<void> _continue() async {
     if (!_controller.isComplete || _controller.isSubmitting) {
       _controller.setError('Enter your 4-digit MPIN first');
       return;
     }
 
-    Navigator.of(context).pushNamed(
-      AppRoutes.mpinConfirm,
-      arguments: MpinConfirmArguments(
-        initialMpin: _controller.value,
-        securityVerificationToken: widget.arguments?.securityVerificationToken,
-      ),
-    );
+    await _controller.submit((_) async {
+      if (!mounted) {
+        return;
+      }
+
+      Navigator.of(context).pushNamed(
+        AppRoutes.mpinConfirm,
+        arguments: MpinConfirmArguments(
+          initialMpin: _controller.value,
+          securityVerificationToken:
+              widget.arguments?.securityVerificationToken,
+          nextRouteAfterSave: widget.arguments?.nextRouteAfterSave,
+          nextRouteArguments: widget.arguments?.nextRouteArguments,
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final isRequiredFlow = widget.arguments?.nextRouteAfterSave != null;
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        return MpinFlowScaffold(
-          title: 'Create MPIN',
-          subtitle: 'Set a 4-digit MPIN for quick app unlock and login.',
-          surfaceTitle: 'Enter your 4-digit MPIN',
-          surfaceSubtitle:
-              'Choose a code you can remember, then continue to confirm it.',
-          heroIcon: Icons.pin_outlined,
-          onBackPressed: _controller.isSubmitting
-              ? null
-              : () => Navigator.of(context).pop(),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MpinPinIndicator(
-                filledCount: _controller.value.length,
-                isError: _controller.errorMessage != null,
+        return PopScope<void>(
+          canPop: !isRequiredFlow,
+          onPopInvokedWithResult: (didPop, _) {
+            if (didPop || !isRequiredFlow || !mounted) {
+              return;
+            }
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Complete MPIN setup to continue registration.'),
               ),
-              const SizedBox(height: 16),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 360),
-                  child: MpinNumericKeypad(
-                    isEnabled: !_controller.isSubmitting,
-                    showBiometricButton: false,
-                    onDigitTap: _controller.appendDigit,
-                    onDeleteTap: _controller.removeLastDigit,
+            );
+          },
+          child: MpinFlowScaffold(
+            title: 'Create MPIN',
+            subtitle: 'Set a 4-digit MPIN for quick app unlock and login.',
+            surfaceTitle: 'Enter your 4-digit MPIN',
+            surfaceSubtitle:
+                'Choose a code you can remember, then continue to confirm it.',
+            heroIcon: Icons.pin_outlined,
+            onBackPressed: _controller.isSubmitting || isRequiredFlow
+                ? null
+                : () => Navigator.of(context).pop(),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                MpinPinIndicator(
+                  filledCount: _controller.value.length,
+                  isError: _controller.errorMessage != null,
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 360),
+                    child: MpinNumericKeypad(
+                      isEnabled: !_controller.isSubmitting,
+                      showBiometricButton: false,
+                      onDigitTap: _controller.appendDigit,
+                      onDeleteTap: _controller.removeLastDigit,
+                    ),
                   ),
                 ),
-              ),
-              if (_controller.errorMessage != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  _controller.errorMessage!,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.danger,
+                if (_controller.errorMessage != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _controller.errorMessage!,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.danger,
+                    ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
-          primaryAction: PrimaryButtonWidget(
-            text: 'Continue',
-            onPressed: (_controller.isComplete && !_controller.isSubmitting)
-                ? _continue
-                : null,
-            icon: Icons.arrow_forward,
+            ),
+            primaryAction: PrimaryButtonWidget(
+              text: 'Continue',
+              onPressed: (_controller.isComplete && !_controller.isSubmitting)
+                  ? _continue
+                  : null,
+              icon: Icons.arrow_forward,
+            ),
           ),
         );
       },

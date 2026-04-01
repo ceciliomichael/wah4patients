@@ -151,23 +151,34 @@ class _PasswordRegistrationScreenState
         return;
       }
 
+      final navigator = Navigator.of(context);
+
       if (loginResult.mfaRequired) {
         AuthSession.clear();
-        Navigator.of(context).pushNamedAndRemoveUntil(
+        navigator.pushNamedAndRemoveUntil(
           AppRoutes.mfaChallenge,
           (route) => false,
           arguments: MfaChallengeArguments(
             email: loginResult.userEmail,
             mfaChallengeToken: loginResult.mfaChallengeToken,
+            nextRouteAfterSuccess: AppRoutes.mpinSetup,
+            nextRouteArguments: const MpinSetupArguments(
+              nextRouteAfterSave: AppRoutes.totpSetup,
+              nextRouteArguments: TotpSetupScreenArguments(allowSkip: true),
+            ),
           ),
         );
         return;
       }
 
-      AuthSession.setFromLoginResult(loginResult);
-      Navigator.of(context).pushReplacementNamed(
-        AppRoutes.totpSetup,
-        arguments: const TotpSetupScreenArguments(allowSkip: true),
+      await AuthSession.persist(loginResult);
+      navigator.pushNamedAndRemoveUntil(
+        AppRoutes.mpinSetup,
+        (route) => false,
+        arguments: const MpinSetupArguments(
+          nextRouteAfterSave: AppRoutes.totpSetup,
+          nextRouteArguments: TotpSetupScreenArguments(allowSkip: true),
+        ),
       );
       return;
     } on AuthApiException catch (error) {
@@ -233,7 +244,7 @@ class _PasswordRegistrationScreenState
                   ),
                   const SizedBox(width: 16),
                   Text(
-                    'Step 4 of 4',
+                    'Step 4 of 5',
                     style: AppTextStyles.bodyLarge.copyWith(
                       color: AppColors.textSecondary,
                     ),

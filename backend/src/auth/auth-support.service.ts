@@ -39,6 +39,22 @@ export interface PasswordSignInResult {
   error: { message: string } | null;
 }
 
+export interface RefreshSessionResult {
+  data: {
+    session: {
+      access_token: string;
+      refresh_token: string;
+      expires_in: number;
+      token_type: string;
+    } | null;
+    user: {
+      id: string;
+      email?: string | null;
+    } | null;
+  };
+  error: { message: string } | null;
+}
+
 @Injectable()
 export class AuthSupportService {
   private readonly logger = new Logger(AuthSupportService.name);
@@ -258,6 +274,12 @@ export class AuthSupportService {
       email,
       password: trimmedPassword,
     })) as PasswordSignInResult;
+  }
+
+  async refreshSession(refreshToken: string): Promise<RefreshSessionResult> {
+    return (await this.supabaseService.authClient.auth.refreshSession({
+      refresh_token: refreshToken,
+    })) as RefreshSessionResult;
   }
 
   configureTotpAuthenticator(): void {

@@ -46,10 +46,14 @@ class MfaChallengeArguments {
   const MfaChallengeArguments({
     required this.email,
     required this.mfaChallengeToken,
+    this.nextRouteAfterSuccess,
+    this.nextRouteArguments,
   });
 
   final String email;
   final String mfaChallengeToken;
+  final String? nextRouteAfterSuccess;
+  final Object? nextRouteArguments;
 }
 
 class LoginScreenArguments {
@@ -72,16 +76,26 @@ class MpinConfirmArguments {
   const MpinConfirmArguments({
     required this.initialMpin,
     this.securityVerificationToken,
+    this.nextRouteAfterSave,
+    this.nextRouteArguments,
   });
 
   final String initialMpin;
   final String? securityVerificationToken;
+  final String? nextRouteAfterSave;
+  final Object? nextRouteArguments;
 }
 
 class MpinSetupArguments {
-  const MpinSetupArguments({this.securityVerificationToken});
+  const MpinSetupArguments({
+    this.securityVerificationToken,
+    this.nextRouteAfterSave,
+    this.nextRouteArguments,
+  });
 
   final String? securityVerificationToken;
+  final String? nextRouteAfterSave;
+  final Object? nextRouteArguments;
 }
 
 class MpinLoginArguments {

@@ -53,7 +53,7 @@ class _MpinLoginScreenState extends State<MpinLoginScreen> {
           deviceId: deviceId,
         );
 
-        AuthSession.setFromLoginResult(result);
+        await AuthSession.persist(result);
 
         if (!mounted) {
           return;

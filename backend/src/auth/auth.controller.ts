@@ -14,6 +14,7 @@ import { DisableTotpDto } from './dto/disable-totp.dto';
 import { GetSecuritySettingsStatusDto } from './dto/get-security-settings-status.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterMpinDeviceDto } from './dto/register-mpin-device.dto';
+import { RefreshSessionDto } from './dto/refresh-session.dto';
 import { RequestPasswordResetOtpDto } from './dto/request-password-reset-otp.dto';
 import { RequestSecurityEmailOtpDto } from './dto/request-security-email-otp.dto';
 import { RequestRegistrationOtpDto } from './dto/request-registration-otp.dto';
@@ -120,6 +121,15 @@ export class AuthController {
   @Throttle({ default: { ttl: 60_000, limit: 10 } })
   login(@Body() dto: LoginDto): Promise<LoginResultResponse> {
     return this.authService.login(dto);
+  }
+
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { ttl: 60_000, limit: 10 } })
+  refreshSession(
+    @Body() dto: RefreshSessionDto,
+  ): Promise<LoginResponse> {
+    return this.authService.refreshSession(dto);
   }
 
   @Post('2fa/setup/start')

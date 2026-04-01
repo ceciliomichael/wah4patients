@@ -5,6 +5,7 @@ import { DisableTotpDto } from './dto/disable-totp.dto';
 import { GetSecuritySettingsStatusDto } from './dto/get-security-settings-status.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterMpinDeviceDto } from './dto/register-mpin-device.dto';
+import { RefreshSessionDto } from './dto/refresh-session.dto';
 import { RequestPasswordResetOtpDto } from './dto/request-password-reset-otp.dto';
 import { RequestRegistrationOtpDto } from './dto/request-registration-otp.dto';
 import { SetMpinDto } from './dto/set-mpin.dto';
@@ -88,6 +89,10 @@ export class AuthService {
 
   login(dto: LoginDto): Promise<LoginResultResponse> {
     return this.loginAuthService.login(dto);
+  }
+
+  refreshSession(dto: RefreshSessionDto): Promise<LoginResponse> {
+    return this.loginAuthService.refreshSession(dto);
   }
 
   startTotpSetup(

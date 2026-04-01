@@ -27,6 +27,7 @@ import {
 import { DisableTotpDto } from './dto/disable-totp.dto';
 import { LoginDto } from './dto/login.dto';
 import { GetSecuritySettingsStatusDto } from './dto/get-security-settings-status.dto';
+import { RefreshSessionDto } from './dto/refresh-session.dto';
 import { RequestSecurityEmailOtpDto } from './dto/request-security-email-otp.dto';
 import { VerifySecurityEmailOtpDto } from './dto/verify-security-email-otp.dto';
 import { VerifyTotpForSecurityActionDto } from './dto/verify-totp-for-security-action.dto';
@@ -134,6 +135,45 @@ export class LoginAuthService {
       user: {
         id: data.user.id,
         email: data.user.email ?? normalizedEmail,
+        profile,
+      },
+    };
+  }
+
+  async refreshSession(dto: RefreshSessionDto): Promise<LoginResponse> {
+    const refreshToken = dto.refreshToken.trim();
+    if (refreshToken.length === 0) {
+      throw new UnauthorizedException('Missing refresh token');
+    }
+
+    const refreshResult = await this.support.refreshSession(refreshToken);
+
+    const { data, error } = refreshResult;
+    if (error !== null || data.session === null || data.user === null) {
+      this.logger.error('Failed to refresh Supabase auth session', {
+        message: error?.message ?? 'Missing session or user in response',
+      });
+
+      throw new UnauthorizedException(
+        error?.message?.trim().length
+          ? `Refresh failed: ${error.message}`
+          : 'Invalid or expired refresh token',
+      );
+    }
+
+    const profile = await this.resolveProfile(
+      data.user.id,
+      data.user.email ?? '',
+    );
+
+    return {
+      accessToken: data.session.access_token,
+      refreshToken: data.session.refresh_token,
+      expiresIn: data.session.expires_in,
+      tokenType: data.session.token_type,
+      user: {
+        id: data.user.id,
+        email: data.user.email ?? '',
         profile,
       },
     };

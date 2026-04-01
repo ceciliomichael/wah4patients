@@ -82,6 +82,17 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
           ),
         );
 
+        final nextRouteAfterSave = widget.arguments.nextRouteAfterSave;
+        if (nextRouteAfterSave != null &&
+            nextRouteAfterSave.trim().isNotEmpty) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            nextRouteAfterSave,
+            (route) => false,
+            arguments: widget.arguments.nextRouteArguments,
+          );
+          return;
+        }
+
         Navigator.of(context).pushNamedAndRemoveUntil(
           AppRoutes.securitySettings,
           (route) => route.settings.name == AppRoutes.dashboard,
@@ -95,56 +106,72 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isRequiredFlow = widget.arguments.nextRouteAfterSave != null;
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        return MpinFlowScaffold(
-          title: 'Confirm MPIN',
-          subtitle: 'Re-enter your MPIN to finish setup.',
-          surfaceTitle: 'Confirm your MPIN',
-          surfaceSubtitle:
-              'Type the same 4-digit code again to lock in your new MPIN.',
-          heroIcon: Icons.verified_outlined,
-          onBackPressed: _controller.isSubmitting
-              ? null
-              : () => Navigator.of(context).pop(),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MpinPinIndicator(
-                filledCount: _controller.value.length,
-                isError: _controller.errorMessage != null,
+        return PopScope<void>(
+          canPop: !isRequiredFlow,
+          onPopInvokedWithResult: (didPop, _) {
+            if (didPop || !isRequiredFlow || !mounted) {
+              return;
+            }
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Complete MPIN setup to continue registration.'),
               ),
-              const SizedBox(height: 16),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 360),
-                  child: MpinNumericKeypad(
-                    isEnabled: !_controller.isSubmitting,
-                    showBiometricButton: false,
-                    onDigitTap: _controller.appendDigit,
-                    onDeleteTap: _controller.removeLastDigit,
+            );
+          },
+          child: MpinFlowScaffold(
+            title: 'Confirm MPIN',
+            subtitle: 'Re-enter your MPIN to finish setup.',
+            surfaceTitle: 'Confirm your MPIN',
+            surfaceSubtitle:
+                'Type the same 4-digit code again to lock in your new MPIN.',
+            heroIcon: Icons.verified_outlined,
+            onBackPressed: _controller.isSubmitting || isRequiredFlow
+                ? null
+                : () => Navigator.of(context).pop(),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                MpinPinIndicator(
+                  filledCount: _controller.value.length,
+                  isError: _controller.errorMessage != null,
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 360),
+                    child: MpinNumericKeypad(
+                      isEnabled: !_controller.isSubmitting,
+                      showBiometricButton: false,
+                      onDigitTap: _controller.appendDigit,
+                      onDeleteTap: _controller.removeLastDigit,
+                    ),
                   ),
                 ),
-              ),
-              if (_controller.errorMessage != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  _controller.errorMessage!,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.danger,
+                if (_controller.errorMessage != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _controller.errorMessage!,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.danger,
+                    ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
-          primaryAction: PrimaryButtonWidget(
-            text: 'Save MPIN',
-            onPressed: (_controller.isComplete && !_controller.isSubmitting)
-                ? _saveMpin
-                : null,
-            isLoading: _controller.isSubmitting,
-            icon: Icons.check,
+            ),
+            primaryAction: PrimaryButtonWidget(
+              text: 'Save MPIN',
+              onPressed: (_controller.isComplete && !_controller.isSubmitting)
+                  ? _saveMpin
+                  : null,
+              isLoading: _controller.isSubmitting,
+              icon: Icons.check,
+            ),
           ),
         );
       },

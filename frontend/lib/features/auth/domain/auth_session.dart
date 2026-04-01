@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
+import '../data/auth_api_client.dart';
+import '../data/auth_local_store.dart';
 import 'models/auth_api_models.dart';
 
 class AuthSession {
@@ -34,6 +38,67 @@ class AuthSession {
       (_accessToken?.trim().isNotEmpty ?? false) &&
       (_userId?.trim().isNotEmpty ?? false);
 
+  static Future<void> restoreFromStorage() async {
+    final storedSession = await AuthLocalStore.readSession();
+    if (storedSession == null || storedSession.isExpired) {
+      await AuthLocalStore.clearSession();
+      clear();
+      return;
+    }
+
+    _accessToken = storedSession.accessToken.trim();
+    _refreshToken = storedSession.refreshToken.trim();
+    _expiresIn = storedSession.expiresIn;
+    _tokenType = storedSession.tokenType.trim();
+    _userId = storedSession.userId.trim();
+    _userEmail = storedSession.userEmail.trim();
+    _givenNames = storedSession.givenNames;
+    _familyName = storedSession.familyName.trim();
+    _notifyChanged();
+  }
+
+  static Future<bool> refreshIfNeeded() async {
+    final storedSession = await AuthLocalStore.readSession();
+    if (storedSession == null) {
+      clear();
+      return false;
+    }
+
+    if (!storedSession.isExpired) {
+      await restoreFromStorage();
+      return true;
+    }
+
+    final refreshToken = storedSession.refreshToken.trim();
+    if (refreshToken.isEmpty) {
+      await AuthLocalStore.clearSession();
+      clear();
+      return false;
+    }
+
+    try {
+      final refreshed = await AuthApiClient.instance.refreshSession(
+        refreshToken: refreshToken,
+      );
+      await AuthLocalStore.saveSession(refreshed);
+      setFromLoginResult(refreshed);
+      return true;
+    } on AuthApiException {
+      await AuthLocalStore.clearSession();
+      clear();
+      return false;
+    }
+  }
+
+  static Future<void> persist(LoginResult result) async {
+    setFromLoginResult(result);
+    await AuthLocalStore.saveSession(result);
+  }
+
+  static Future<void> clearPersistedSession() {
+    return AuthLocalStore.clearSession();
+  }
+
   static void setFromLoginResult(LoginResult result) {
     _accessToken = result.accessToken.trim();
     _refreshToken = result.refreshToken.trim();
@@ -50,6 +115,8 @@ class AuthSession {
     _givenNames = profile.givenNames;
     _familyName = profile.familyName.trim();
     _notifyChanged();
+
+    unawaited(AuthLocalStore.updateProfile(profile));
   }
 
   static void clear() {
@@ -62,6 +129,8 @@ class AuthSession {
     _givenNames = <String>[];
     _familyName = '';
     _notifyChanged();
+
+    unawaited(AuthLocalStore.clearSession());
   }
 
   static String _composeDisplayName(

@@ -161,6 +161,15 @@ class AuthApiClient {
     return LoginResult.fromJson(response);
   }
 
+  Future<LoginResult> refreshSession({required String refreshToken}) async {
+    final response = await _post(
+      path: '/auth/refresh',
+      body: <String, dynamic>{'refreshToken': refreshToken},
+    );
+
+    return LoginResult.fromJson(response);
+  }
+
   Future<LoginResult> verifyMfaChallenge({
     required String mfaChallengeToken,
     required String code,
