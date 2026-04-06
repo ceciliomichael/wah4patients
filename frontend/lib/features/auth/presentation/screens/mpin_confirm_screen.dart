@@ -5,10 +5,10 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../data/auth_api_client.dart';
-import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
 import '../../domain/models/auth_api_models.dart';
 import '../controllers/mpin_entry_controller.dart';
+import '../services/mpin_device_registration_service.dart';
 import '../widgets/mpin_flow_scaffold.dart';
 import '../widgets/mpin_numeric_keypad.dart';
 import '../widgets/mpin_pin_indicator.dart';
@@ -63,12 +63,9 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
           securityVerificationToken: widget.arguments.securityVerificationToken,
         );
 
-        final deviceId = await MpinLocalStore.readOrCreateDeviceId();
-        await AuthApiClient.instance.registerMpinDevice(
+        await MpinDeviceRegistrationService.registerCurrentDevice(
           accessToken: accessToken,
-          deviceId: deviceId,
         );
-        await MpinLocalStore.setMpinEnabled(true);
 
         if (!mounted) {
           return;

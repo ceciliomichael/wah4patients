@@ -11,11 +11,13 @@ import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
 import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
+import '../services/mpin_device_registration_service.dart';
 import '../services/post_login_route_service.dart';
 import '../widgets/auth_brand_logo.dart';
 import '../widgets/auth_footer_link.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_surface_card.dart';
+import 'security_verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -69,25 +71,71 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _registerCurrentDeviceAfterLogin(String accessToken) async {
+  Future<String> _requestSecurityVerificationTokenForMpinRegistration() async {
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.securityVerify,
+      arguments: const SecurityVerificationArguments(
+        purpose: 'registering this device for MPIN',
+        preferredMethod: SecurityVerificationMethod.emailOtp,
+      ),
+    );
+
+    return result is String ? result.trim() : '';
+  }
+
+  Future<bool> _prepareMpinDeviceAfterLogin(String accessToken) async {
     try {
       final deviceId = await MpinLocalStore.readOrCreateDeviceId();
-      await AuthApiClient.instance.registerMpinDevice(
+
+      final securityStatus = await AuthApiClient.instance.getSecuritySettingsStatus(
         accessToken: accessToken,
         deviceId: deviceId,
       );
+
+      if (!securityStatus.isMpinConfigured) {
+        return true;
+      }
+
+      if (!securityStatus.isMpinDeviceRegistered) {
+        final securityVerificationToken =
+            await _requestSecurityVerificationTokenForMpinRegistration();
+
+        if (!mounted) {
+          return false;
+        }
+
+        if (securityVerificationToken.isEmpty) {
+          AuthSession.clear();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Email verification is required to register this device for MPIN.',
+              ),
+            ),
+          );
+          return false;
+        }
+
+        await MpinDeviceRegistrationService.registerCurrentDevice(
+          accessToken: accessToken,
+          securityVerificationToken: securityVerificationToken,
+        );
+        return true;
+      }
+
+      await MpinLocalStore.setMpinEnabled(true);
+      return true;
     } on AuthApiException catch (error) {
       if (!mounted) {
-        return;
+        return false;
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            'Signed in, but MPIN device registration failed: ${error.message}',
-          ),
+          content: Text('Signed in, but MPIN device registration failed: ${error.message}'),
         ),
       );
+      return true;
     }
   }
 
@@ -139,7 +187,14 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       await AuthSession.persist(result);
-      await _registerCurrentDeviceAfterLogin(result.accessToken);
+
+      final shouldContinue = await _prepareMpinDeviceAfterLogin(
+        result.accessToken,
+      );
+      if (!shouldContinue) {
+        return;
+      }
+
       if (!mounted) {
         return;
       }

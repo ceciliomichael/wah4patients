@@ -1,4 +1,5 @@
 import '../features/auth/data/auth_local_store.dart';
+import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
 import 'app_routes.dart';
@@ -22,6 +23,24 @@ class AppStartupService {
   static Future<AppStartupResult> resolveInitialRoute() async {
     final hasValidSession = await AuthSession.refreshIfNeeded();
     if (hasValidSession && AuthSession.isAuthenticated) {
+      try {
+        final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+        final accessToken = AuthSession.accessToken?.trim() ?? '';
+        final status = await AuthApiClient.instance.getSecuritySettingsStatus(
+          accessToken: accessToken,
+          deviceId: deviceId,
+        );
+
+        if (status.isMpinConfigured && status.isMpinDeviceRegistered) {
+          await MpinLocalStore.setMpinEnabled(true);
+          return AppStartupResult.mpinUnlock;
+        }
+
+        await MpinLocalStore.setMpinEnabled(false);
+      } on AuthApiException {
+        // Keep the local device state as the fallback if security status cannot be resolved.
+      }
+
       final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
       return isMpinEnabled
           ? AppStartupResult.mpinUnlock

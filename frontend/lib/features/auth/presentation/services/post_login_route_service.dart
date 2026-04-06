@@ -16,8 +16,11 @@ class PostLoginRouteService {
       );
 
       if (status.isMpinConfigured && status.isMpinDeviceRegistered) {
+        await MpinLocalStore.setMpinEnabled(true);
         return AppRoutes.mpinUnlock;
       }
+
+      await MpinLocalStore.setMpinEnabled(false);
     } on AuthApiException {
       // Fall back to the dashboard when security status cannot be resolved.
     }

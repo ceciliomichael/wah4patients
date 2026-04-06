@@ -4,6 +4,7 @@ import '../core/constants/app_border_radii.dart';
 import '../core/constants/app_colors.dart';
 import '../core/constants/app_text_styles.dart';
 import 'app_lock_state_service.dart';
+import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
 import 'app_router.dart';
@@ -52,6 +53,23 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
   Future<void> _tryShowMpinLock() async {
     if (_isLockRouteVisible || !AuthSession.isAuthenticated) {
       return;
+    }
+
+    try {
+      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
+      final accessToken = AuthSession.accessToken?.trim() ?? '';
+      final status = await AuthApiClient.instance.getSecuritySettingsStatus(
+        accessToken: accessToken,
+        deviceId: deviceId,
+      );
+
+      if (status.isMpinConfigured && status.isMpinDeviceRegistered) {
+        await MpinLocalStore.setMpinEnabled(true);
+      } else {
+        await MpinLocalStore.setMpinEnabled(false);
+      }
+    } on AuthApiException {
+      // Keep the local device state as the fallback when security status cannot be resolved.
     }
 
     final isMpinEnabled = await MpinLocalStore.isMpinEnabled();

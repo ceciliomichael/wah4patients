@@ -4,8 +4,8 @@ import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../data/auth_api_client.dart';
-import '../../data/mpin_local_store.dart';
 import '../../domain/auth_session.dart';
+import '../services/mpin_device_registration_service.dart';
 import '../services/post_login_route_service.dart';
 import '../controllers/mpin_entry_controller.dart';
 import '../widgets/mpin_flow_scaffold.dart';
@@ -71,10 +71,8 @@ class _TotpChallengeScreenState extends State<TotpChallengeScreen>
 
   Future<void> _registerCurrentDeviceAfterLogin(String accessToken) async {
     try {
-      final deviceId = await MpinLocalStore.readOrCreateDeviceId();
-      await AuthApiClient.instance.registerMpinDevice(
+      await MpinDeviceRegistrationService.registerCurrentDevice(
         accessToken: accessToken,
-        deviceId: deviceId,
       );
     } on AuthApiException catch (error) {
       if (!mounted) {
