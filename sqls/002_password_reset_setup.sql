@@ -14,6 +14,7 @@ create table if not exists public.password_reset_otps (
 create or replace function public.set_updated_at_timestamp()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.updated_at = timezone('utc', now());
@@ -27,5 +28,13 @@ before update on public.password_reset_otps
 for each row execute function public.set_updated_at_timestamp();
 
 alter table public.password_reset_otps enable row level security;
+
+drop policy if exists password_reset_otps_deny_client_access on public.password_reset_otps;
+create policy password_reset_otps_deny_client_access
+on public.password_reset_otps
+for all
+to public
+using (false)
+with check (false);
 
 commit;
