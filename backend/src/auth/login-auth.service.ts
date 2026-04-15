@@ -559,7 +559,7 @@ export class LoginAuthService {
     });
 
     try {
-      await this.mailerService.sendPasswordResetOtpEmail({
+      await this.mailerService.sendSecurityVerificationOtpEmail({
         email: normalizedEmail,
         otpCode,
         expiresInMinutes: this.settings.otpTtlMinutes,

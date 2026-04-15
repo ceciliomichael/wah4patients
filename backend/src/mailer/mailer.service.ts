@@ -54,4 +54,25 @@ export class MailerService {
       );
     }
   }
+
+  async sendSecurityVerificationOtpEmail(params: {
+    email: string;
+    otpCode: string;
+    expiresInMinutes: number;
+  }): Promise<void> {
+    const { email, otpCode, expiresInMinutes } = params;
+
+    const response = await this.resendClient.emails.send({
+      from: this.fromEmail,
+      to: email,
+      subject: "Your WAH4P verification code",
+      text: `Your WAH4P verification code is ${otpCode}. It expires in ${expiresInMinutes} minutes.`,
+    });
+
+    if (response.error !== null) {
+      throw new ServiceUnavailableException(
+        "Failed to deliver verification code email",
+      );
+    }
+  }
 }
