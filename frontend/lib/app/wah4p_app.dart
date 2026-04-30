@@ -7,6 +7,7 @@ import 'app_lock_state_service.dart';
 import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
+import '../features/auth/presentation/services/security_settings_status_cache_service.dart';
 import 'app_router.dart';
 import 'app_routes.dart';
 import 'startup_gate_screen.dart';
@@ -61,6 +62,10 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       final status = await AuthApiClient.instance.getSecuritySettingsStatus(
         accessToken: accessToken,
         deviceId: deviceId,
+      );
+      SecuritySettingsStatusCacheService.cacheStatus(
+        userId: AuthSession.userId ?? '',
+        status: status,
       );
 
       if (status.isMpinConfigured && status.isMpinDeviceRegistered) {

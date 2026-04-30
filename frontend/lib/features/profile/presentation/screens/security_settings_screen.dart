@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +13,7 @@ import '../../../auth/data/mpin_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
 import '../../../auth/domain/models/auth_api_models.dart';
 import '../../../auth/presentation/screens/security_verification_screen.dart';
+import '../../../auth/presentation/services/security_settings_status_cache_service.dart';
 import '../../../auth/presentation/widgets/auth_surface_card.dart';
 
 class SecuritySettingsScreen extends StatefulWidget {
@@ -31,20 +34,52 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _loadSecurityStatus();
+    _hydrateSecurityStatus();
   }
 
-  Future<void> _loadSecurityStatus() async {
+  void _applySecurityStatus(SecuritySettingsStatusResult status) {
+    _isTotpEnabled = status.isTotpEnabled;
+    _isMpinConfigured = status.isMpinConfigured;
+    _isMpinDeviceRegistered = status.isMpinDeviceRegistered;
+  }
+
+  Future<void> _hydrateSecurityStatus() async {
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       _goToLogin();
       return;
     }
-    final deviceId = await MpinLocalStore.readOrCreateDeviceId();
 
-    setState(() {
-      _isLoadingStatus = true;
-    });
+    final cachedStatus = SecuritySettingsStatusCacheService.getCachedStatus(
+      userId: AuthSession.userId ?? '',
+    );
+
+    if (cachedStatus != null) {
+      _applySecurityStatus(cachedStatus);
+      _isLoadingStatus = false;
+      unawaited(_refreshSecurityStatus(showLoadingIndicator: false));
+      return;
+    }
+
+    await _refreshSecurityStatus(showLoadingIndicator: true);
+  }
+
+  Future<void> _refreshSecurityStatus({
+    required bool showLoadingIndicator,
+  }) async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _goToLogin();
+      return;
+    }
+
+    if (showLoadingIndicator && mounted) {
+      setState(() {
+        _isLoadingStatus = true;
+      });
+    }
+
+    final deviceId = await MpinLocalStore.readOrCreateDeviceId();
 
     try {
       final status = await AuthApiClient.instance.getSecuritySettingsStatus(
@@ -55,10 +90,13 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
       setState(() {
-        _isTotpEnabled = status.isTotpEnabled;
-        _isMpinConfigured = status.isMpinConfigured;
-        _isMpinDeviceRegistered = status.isMpinDeviceRegistered;
+        _applySecurityStatus(status);
+        _isLoadingStatus = false;
       });
+      SecuritySettingsStatusCacheService.cacheStatus(
+        userId: AuthSession.userId ?? '',
+        status: status,
+      );
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -67,7 +105,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(error.message)));
     } finally {
-      if (mounted) {
+      if (mounted && showLoadingIndicator) {
         setState(() {
           _isLoadingStatus = false;
         });
@@ -84,7 +122,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
 
     await Navigator.of(context).pushNamed(AppRoutes.totpSetup);
     if (mounted) {
-      await _loadSecurityStatus();
+      await _refreshSecurityStatus(showLoadingIndicator: false);
     }
   }
 
@@ -115,7 +153,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       ),
     );
     if (mounted) {
-      await _loadSecurityStatus();
+      await _refreshSecurityStatus(showLoadingIndicator: false);
     }
   }
 
@@ -244,7 +282,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(response.message)));
-      await _loadSecurityStatus();
+      await _refreshSecurityStatus(showLoadingIndicator: false);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -280,14 +318,20 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
   }
 
   void _goToLogin() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Please sign in again to access security settings.'),
-      ),
-    );
-    Navigator.of(
-      context,
-    ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        const SnackBar(
+          content: Text('Please sign in again to access security settings.'),
+        ),
+      );
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+    });
   }
 
   @override

@@ -2,6 +2,7 @@ import '../features/auth/data/auth_local_store.dart';
 import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
+import '../features/auth/presentation/services/security_settings_status_cache_service.dart';
 import 'app_routes.dart';
 
 class AppStartupResult {
@@ -29,6 +30,10 @@ class AppStartupService {
         final status = await AuthApiClient.instance.getSecuritySettingsStatus(
           accessToken: accessToken,
           deviceId: deviceId,
+        );
+        SecuritySettingsStatusCacheService.cacheStatus(
+          userId: AuthSession.userId ?? '',
+          status: status,
         );
 
         if (status.isMpinConfigured && status.isMpinDeviceRegistered) {

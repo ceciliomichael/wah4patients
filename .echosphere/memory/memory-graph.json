@@ -1,0 +1,1876 @@
+{
+  "nodes": [
+    {
+      "memoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "rootMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [],
+      "childMemoryIds": [
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "sectionKind": "fact",
+      "summary": "Audited the WAH4P repository and saved a clear project snapshot for future work. The repo is split into a NestJS backend, a Flutter frontend, and supporting SQL/docs. The backend is a secured API with global API-key protection, throttling, strict env validation, Supabase auth/data integration, and Resend email delivery. The frontend is a Flutter mobile app with centralized theming, secure local storage, a startup gate, and MPIN/session lifecycle handling. The docs describe a Supabase/Postgres source of truth for patient data, with frontend screens mostly acting as presentation and interaction layers. I also captured the current testing surface and a couple of documentation mismatches that future work should reconcile.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Contains repository-wide operating rules, architecture reminders, and documentation guidance that shape how the project should be understood.",
+          "notes": "Established the backend/frontend responsibility split and project conventions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines the canonical data model, storage layers, and screen-to-data mapping used by the app.",
+          "notes": "Important for understanding persistence and source-of-truth rules."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Lists the current persistence and validation work items across the app and acts as a project readiness tracker.",
+          "notes": "Useful for identifying unfinished foundation work."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents the screen inventory and route mapping, which is critical for understanding the frontend surface area.",
+          "notes": "Contains a likely path mismatch with the live repo layout."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\package.json",
+          "action": "inspected",
+          "reason": "Shows the backend stack, scripts, test tooling, and key runtime dependencies.",
+          "notes": "Confirms NestJS, Supabase, Resend, Jest, and validation tooling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "inspected",
+          "reason": "Summarizes backend setup, auth endpoints, SQL bootstrap, and local development steps.",
+          "notes": "Useful for capturing the intended API surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "inspected",
+          "reason": "Shows backend bootstrap behavior, including security middleware, route prefixing, validation, and CORS configuration.",
+          "notes": "Establishes the HTTP entrypoint behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines the backend module composition, including global guards and configuration wiring.",
+          "notes": "Confirms API-key and throttling guards are global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "inspected",
+          "reason": "Lists the required environment variables and validation constraints for the backend.",
+          "notes": "Critical for deployment and security readiness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\guards\\api-key.guard.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend enforces the x-api-key header and compares secrets safely.",
+          "notes": "Important security boundary for all non-public routes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\README.md",
+          "action": "inspected",
+          "reason": "Documents runtime configuration for the Flutter client and how it connects to the backend.",
+          "notes": "Confirms the app uses backend URL and API key configuration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\pubspec.yaml",
+          "action": "inspected",
+          "reason": "Shows the Flutter SDK version, package dependencies, and bundled assets used by the app.",
+          "notes": "Confirms secure storage, HTTP, QR, and local asset usage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\analysis_options.yaml",
+          "action": "inspected",
+          "reason": "Captures the Flutter lint baseline for the client codebase.",
+          "notes": "No custom lint overrides beyond the default Flutter lint set."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\main.dart",
+          "action": "inspected",
+          "reason": "Shows the Flutter application entrypoint and how the app widget is launched.",
+          "notes": "Thin entrypoint that delegates to the app shell."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route generation, startup gate, and MPIN lock-on-resume behavior.",
+          "notes": "Central file for app lifecycle and navigation policy."
+        }
+      ],
+      "createdAt": "2026-04-25T17:58:25.690Z",
+      "updatedAt": "2026-04-25T17:58:25.690Z"
+    },
+    {
+      "memoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "rootMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "parentMemoryIds": [
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b"
+      ],
+      "relatedMemoryIds": [],
+      "childMemoryIds": [
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "sectionKind": "decision",
+      "summary": "Audited the WAH4P repository and saved a clear project snapshot for future work. The repo is split into a NestJS backend, a Flutter frontend, and supporting SQL/docs. The backend is a secured API with global API-key protection, throttling, strict env validation, Supabase auth/data integration, and Resend email delivery. The frontend is a Flutter mobile app with centralized theming, secure local storage, a startup gate, and MPIN/session lifecycle handling. The docs describe a Supabase/Postgres source of truth for patient data, with frontend screens mostly acting as presentation and interaction layers. I also captured the current testing surface and a couple of documentation mismatches that future work should reconcile.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Contains repository-wide operating rules, architecture reminders, and documentation guidance that shape how the project should be understood.",
+          "notes": "Established the backend/frontend responsibility split and project conventions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines the canonical data model, storage layers, and screen-to-data mapping used by the app.",
+          "notes": "Important for understanding persistence and source-of-truth rules."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Lists the current persistence and validation work items across the app and acts as a project readiness tracker.",
+          "notes": "Useful for identifying unfinished foundation work."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents the screen inventory and route mapping, which is critical for understanding the frontend surface area.",
+          "notes": "Contains a likely path mismatch with the live repo layout."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\package.json",
+          "action": "inspected",
+          "reason": "Shows the backend stack, scripts, test tooling, and key runtime dependencies.",
+          "notes": "Confirms NestJS, Supabase, Resend, Jest, and validation tooling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "inspected",
+          "reason": "Summarizes backend setup, auth endpoints, SQL bootstrap, and local development steps.",
+          "notes": "Useful for capturing the intended API surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "inspected",
+          "reason": "Shows backend bootstrap behavior, including security middleware, route prefixing, validation, and CORS configuration.",
+          "notes": "Establishes the HTTP entrypoint behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines the backend module composition, including global guards and configuration wiring.",
+          "notes": "Confirms API-key and throttling guards are global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "inspected",
+          "reason": "Lists the required environment variables and validation constraints for the backend.",
+          "notes": "Critical for deployment and security readiness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\guards\\api-key.guard.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend enforces the x-api-key header and compares secrets safely.",
+          "notes": "Important security boundary for all non-public routes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\README.md",
+          "action": "inspected",
+          "reason": "Documents runtime configuration for the Flutter client and how it connects to the backend.",
+          "notes": "Confirms the app uses backend URL and API key configuration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\pubspec.yaml",
+          "action": "inspected",
+          "reason": "Shows the Flutter SDK version, package dependencies, and bundled assets used by the app.",
+          "notes": "Confirms secure storage, HTTP, QR, and local asset usage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\analysis_options.yaml",
+          "action": "inspected",
+          "reason": "Captures the Flutter lint baseline for the client codebase.",
+          "notes": "No custom lint overrides beyond the default Flutter lint set."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\main.dart",
+          "action": "inspected",
+          "reason": "Shows the Flutter application entrypoint and how the app widget is launched.",
+          "notes": "Thin entrypoint that delegates to the app shell."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route generation, startup gate, and MPIN lock-on-resume behavior.",
+          "notes": "Central file for app lifecycle and navigation policy."
+        }
+      ],
+      "createdAt": "2026-04-25T17:58:25.717Z",
+      "updatedAt": "2026-04-25T17:58:25.717Z"
+    },
+    {
+      "memoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "rootMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "parentMemoryIds": [
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "relatedMemoryIds": [],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Audited the WAH4P repository and saved a clear project snapshot for future work. The repo is split into a NestJS backend, a Flutter frontend, and supporting SQL/docs. The backend is a secured API with global API-key protection, throttling, strict env validation, Supabase auth/data integration, and Resend email delivery. The frontend is a Flutter mobile app with centralized theming, secure local storage, a startup gate, and MPIN/session lifecycle handling. The docs describe a Supabase/Postgres source of truth for patient data, with frontend screens mostly acting as presentation and interaction layers. I also captured the current testing surface and a couple of documentation mismatches that future work should reconcile.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Contains repository-wide operating rules, architecture reminders, and documentation guidance that shape how the project should be understood.",
+          "notes": "Established the backend/frontend responsibility split and project conventions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines the canonical data model, storage layers, and screen-to-data mapping used by the app.",
+          "notes": "Important for understanding persistence and source-of-truth rules."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Lists the current persistence and validation work items across the app and acts as a project readiness tracker.",
+          "notes": "Useful for identifying unfinished foundation work."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents the screen inventory and route mapping, which is critical for understanding the frontend surface area.",
+          "notes": "Contains a likely path mismatch with the live repo layout."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\package.json",
+          "action": "inspected",
+          "reason": "Shows the backend stack, scripts, test tooling, and key runtime dependencies.",
+          "notes": "Confirms NestJS, Supabase, Resend, Jest, and validation tooling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "inspected",
+          "reason": "Summarizes backend setup, auth endpoints, SQL bootstrap, and local development steps.",
+          "notes": "Useful for capturing the intended API surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "inspected",
+          "reason": "Shows backend bootstrap behavior, including security middleware, route prefixing, validation, and CORS configuration.",
+          "notes": "Establishes the HTTP entrypoint behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines the backend module composition, including global guards and configuration wiring.",
+          "notes": "Confirms API-key and throttling guards are global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "inspected",
+          "reason": "Lists the required environment variables and validation constraints for the backend.",
+          "notes": "Critical for deployment and security readiness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\guards\\api-key.guard.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend enforces the x-api-key header and compares secrets safely.",
+          "notes": "Important security boundary for all non-public routes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\README.md",
+          "action": "inspected",
+          "reason": "Documents runtime configuration for the Flutter client and how it connects to the backend.",
+          "notes": "Confirms the app uses backend URL and API key configuration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\pubspec.yaml",
+          "action": "inspected",
+          "reason": "Shows the Flutter SDK version, package dependencies, and bundled assets used by the app.",
+          "notes": "Confirms secure storage, HTTP, QR, and local asset usage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\analysis_options.yaml",
+          "action": "inspected",
+          "reason": "Captures the Flutter lint baseline for the client codebase.",
+          "notes": "No custom lint overrides beyond the default Flutter lint set."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\main.dart",
+          "action": "inspected",
+          "reason": "Shows the Flutter application entrypoint and how the app widget is launched.",
+          "notes": "Thin entrypoint that delegates to the app shell."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route generation, startup gate, and MPIN lock-on-resume behavior.",
+          "notes": "Central file for app lifecycle and navigation policy."
+        }
+      ],
+      "createdAt": "2026-04-25T17:58:25.743Z",
+      "updatedAt": "2026-04-25T17:58:25.743Z"
+    },
+    {
+      "memoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "rootMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "parentMemoryIds": [
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "relatedMemoryIds": [
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774"
+      ],
+      "sectionKind": "fact",
+      "summary": "Saved a deeper project map for WAH4P that focuses on navigation, feature boundaries, and service responsibilities. The repository presents a clear two-tier architecture: a NestJS backend that owns auth/security/business rules and a Flutter frontend that owns display, navigation, and device-scoped state. The frontend route tree now has a precise map from startup through onboarding, auth, dashboard, PHR, EHR-style records, appointments, calendar, notifications, profile, and legal screens. The backend API surface is also clearer: a public health check plus a broad auth/profile domain that covers registration, login, 2FA, MPIN, password reset, and profile hydration/update. This memory layer is intended to function as an app map, not just a summary.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route entrypoint, and resume-time lock behavior, which are central to the app map.",
+          "notes": "Confirms where app-wide navigation and lifecycle control live."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Contains the full named route registry and screen-to-route mapping for the Flutter client.",
+          "notes": "This is the best source of truth for the app’s visible navigation tree."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists every canonical route constant used by the Flutter app.",
+          "notes": "Useful for maintaining route names and screen grouping."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows how the app waits for startup resolution and then redirects to the correct initial route.",
+          "notes": "Important for understanding the launch flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Implements startup routing decisions from auth, onboarding, and MPIN state.",
+          "notes": "This is the decision engine behind splash-to-app routing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the app’s background timing and unlock requirement policy.",
+          "notes": "Key to understanding resume/lock behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "Directory structure reveals the major presentation feature families that make up the client.",
+          "notes": "Confirms the app is organized by domain feature."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines backend module composition and global guards, which frame the server-side architecture map.",
+          "notes": "Shows the core backend wiring."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend auth domain is composed from controllers, services, and repositories.",
+          "notes": "Critical for understanding auth responsibility split."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Lists the auth workflow endpoints and groups them into registration, login, 2FA, security, and MPIN routes.",
+          "notes": "Primary backend workflow surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes profile hydration and update endpoints separate from the auth workflow controller.",
+          "notes": "Important for profile screen integration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Provides the public health endpoint and marks the small public server surface.",
+          "notes": "Useful for operational checks."
+        }
+      ],
+      "createdAt": "2026-04-25T18:01:36.025Z",
+      "updatedAt": "2026-04-25T18:01:36.025Z"
+    },
+    {
+      "memoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "rootMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "parentMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "relatedMemoryIds": [
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e"
+      ],
+      "sectionKind": "decision",
+      "summary": "Saved a deeper project map for WAH4P that focuses on navigation, feature boundaries, and service responsibilities. The repository presents a clear two-tier architecture: a NestJS backend that owns auth/security/business rules and a Flutter frontend that owns display, navigation, and device-scoped state. The frontend route tree now has a precise map from startup through onboarding, auth, dashboard, PHR, EHR-style records, appointments, calendar, notifications, profile, and legal screens. The backend API surface is also clearer: a public health check plus a broad auth/profile domain that covers registration, login, 2FA, MPIN, password reset, and profile hydration/update. This memory layer is intended to function as an app map, not just a summary.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route entrypoint, and resume-time lock behavior, which are central to the app map.",
+          "notes": "Confirms where app-wide navigation and lifecycle control live."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Contains the full named route registry and screen-to-route mapping for the Flutter client.",
+          "notes": "This is the best source of truth for the app’s visible navigation tree."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists every canonical route constant used by the Flutter app.",
+          "notes": "Useful for maintaining route names and screen grouping."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows how the app waits for startup resolution and then redirects to the correct initial route.",
+          "notes": "Important for understanding the launch flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Implements startup routing decisions from auth, onboarding, and MPIN state.",
+          "notes": "This is the decision engine behind splash-to-app routing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the app’s background timing and unlock requirement policy.",
+          "notes": "Key to understanding resume/lock behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "Directory structure reveals the major presentation feature families that make up the client.",
+          "notes": "Confirms the app is organized by domain feature."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines backend module composition and global guards, which frame the server-side architecture map.",
+          "notes": "Shows the core backend wiring."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend auth domain is composed from controllers, services, and repositories.",
+          "notes": "Critical for understanding auth responsibility split."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Lists the auth workflow endpoints and groups them into registration, login, 2FA, security, and MPIN routes.",
+          "notes": "Primary backend workflow surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes profile hydration and update endpoints separate from the auth workflow controller.",
+          "notes": "Important for profile screen integration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Provides the public health endpoint and marks the small public server surface.",
+          "notes": "Useful for operational checks."
+        }
+      ],
+      "createdAt": "2026-04-25T18:01:36.048Z",
+      "updatedAt": "2026-04-25T18:01:36.048Z"
+    },
+    {
+      "memoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "rootMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "parentMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774"
+      ],
+      "relatedMemoryIds": [
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Saved a deeper project map for WAH4P that focuses on navigation, feature boundaries, and service responsibilities. The repository presents a clear two-tier architecture: a NestJS backend that owns auth/security/business rules and a Flutter frontend that owns display, navigation, and device-scoped state. The frontend route tree now has a precise map from startup through onboarding, auth, dashboard, PHR, EHR-style records, appointments, calendar, notifications, profile, and legal screens. The backend API surface is also clearer: a public health check plus a broad auth/profile domain that covers registration, login, 2FA, MPIN, password reset, and profile hydration/update. This memory layer is intended to function as an app map, not just a summary.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Defines the Flutter app shell, theme, route entrypoint, and resume-time lock behavior, which are central to the app map.",
+          "notes": "Confirms where app-wide navigation and lifecycle control live."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Contains the full named route registry and screen-to-route mapping for the Flutter client.",
+          "notes": "This is the best source of truth for the app’s visible navigation tree."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists every canonical route constant used by the Flutter app.",
+          "notes": "Useful for maintaining route names and screen grouping."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows how the app waits for startup resolution and then redirects to the correct initial route.",
+          "notes": "Important for understanding the launch flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Implements startup routing decisions from auth, onboarding, and MPIN state.",
+          "notes": "This is the decision engine behind splash-to-app routing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the app’s background timing and unlock requirement policy.",
+          "notes": "Key to understanding resume/lock behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "Directory structure reveals the major presentation feature families that make up the client.",
+          "notes": "Confirms the app is organized by domain feature."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Defines backend module composition and global guards, which frame the server-side architecture map.",
+          "notes": "Shows the core backend wiring."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows how the backend auth domain is composed from controllers, services, and repositories.",
+          "notes": "Critical for understanding auth responsibility split."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Lists the auth workflow endpoints and groups them into registration, login, 2FA, security, and MPIN routes.",
+          "notes": "Primary backend workflow surface."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes profile hydration and update endpoints separate from the auth workflow controller.",
+          "notes": "Important for profile screen integration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Provides the public health endpoint and marks the small public server surface.",
+          "notes": "Useful for operational checks."
+        }
+      ],
+      "createdAt": "2026-04-25T18:01:36.070Z",
+      "updatedAt": "2026-04-25T18:01:36.070Z"
+    },
+    {
+      "memoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "rootMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "c9018996-4a4d-4631-9e98-d47983c3d0dd"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added a plain-English atlas for WAH4P so future work can read the project like a map. The repo is best understood in layers: a Flutter client that controls navigation and presentation, a NestJS backend that owns security and business rules, and Supabase/Postgres plus secure local storage for persistence. The most important user journeys now have an explicit flow: splash/startup -> onboarding or login -> dashboard or MPIN unlock -> feature areas like records, appointments, resupply, calendar, notifications, profile, and legal screens. This memory also clarifies which screens are static, which are route-driven, and which backend APIs support each major journey.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The app shell controls theme, startup gating, and resume-time locking, making it the top-level navigation anchor for the project map.",
+          "notes": "Central entry point for the Flutter client."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Defines the route decision logic for onboarding, login, dashboard, and MPIN unlock, which is essential to the launch map.",
+          "notes": "Startup flow source of truth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists the canonical route names used throughout the Flutter app.",
+          "notes": "Best place to understand route coverage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Maps route names to screens and shows transition style choices for each user flow.",
+          "notes": "Best source for the screen-to-route atlas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the transient gate screen that hands off to the resolved initial route during startup.",
+          "notes": "Launch UX and routing handoff."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the time-based unlock policy used when the app resumes from background.",
+          "notes": "Important for security and session behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "The feature directory structure reveals the major product areas and how the client is partitioned by domain.",
+          "notes": "Useful for understanding the app map by feature group."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend’s top-level composition, including global guards and core modules.",
+          "notes": "Server architecture anchor."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend auth domain composition across controllers, services, and repositories.",
+          "notes": "Primary auth subsystem map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes the auth workflow endpoints and groups them into clear account/security journeys.",
+          "notes": "API surface map for auth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Provides authenticated profile read/update endpoints separate from the workflow controller.",
+          "notes": "Profile API map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Shows the public health check route and the small public surface of the server.",
+          "notes": "Operational entry point."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines persistence rules, canonical entities, and the source-of-truth model used by the app.",
+          "notes": "Data/storage map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Tracks unfinished persistence and validation work across the product and shows which areas still need implementation.",
+          "notes": "Project readiness map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents screen inventory and route flow, though it is older and should be reconciled with the live code.",
+          "notes": "Secondary reference, not authoritative."
+        }
+      ],
+      "createdAt": "2026-04-26T02:29:57.876Z",
+      "updatedAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "memoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "rootMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "parentMemoryIds": [
+        "407f40ad-9974-45e2-aa87-6d447e0af941"
+      ],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "492b5000-e9dc-473d-9270-0de3900f3a60"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added a plain-English atlas for WAH4P so future work can read the project like a map. The repo is best understood in layers: a Flutter client that controls navigation and presentation, a NestJS backend that owns security and business rules, and Supabase/Postgres plus secure local storage for persistence. The most important user journeys now have an explicit flow: splash/startup -> onboarding or login -> dashboard or MPIN unlock -> feature areas like records, appointments, resupply, calendar, notifications, profile, and legal screens. This memory also clarifies which screens are static, which are route-driven, and which backend APIs support each major journey.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The app shell controls theme, startup gating, and resume-time locking, making it the top-level navigation anchor for the project map.",
+          "notes": "Central entry point for the Flutter client."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Defines the route decision logic for onboarding, login, dashboard, and MPIN unlock, which is essential to the launch map.",
+          "notes": "Startup flow source of truth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists the canonical route names used throughout the Flutter app.",
+          "notes": "Best place to understand route coverage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Maps route names to screens and shows transition style choices for each user flow.",
+          "notes": "Best source for the screen-to-route atlas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the transient gate screen that hands off to the resolved initial route during startup.",
+          "notes": "Launch UX and routing handoff."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the time-based unlock policy used when the app resumes from background.",
+          "notes": "Important for security and session behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "The feature directory structure reveals the major product areas and how the client is partitioned by domain.",
+          "notes": "Useful for understanding the app map by feature group."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend’s top-level composition, including global guards and core modules.",
+          "notes": "Server architecture anchor."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend auth domain composition across controllers, services, and repositories.",
+          "notes": "Primary auth subsystem map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes the auth workflow endpoints and groups them into clear account/security journeys.",
+          "notes": "API surface map for auth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Provides authenticated profile read/update endpoints separate from the workflow controller.",
+          "notes": "Profile API map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Shows the public health check route and the small public surface of the server.",
+          "notes": "Operational entry point."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines persistence rules, canonical entities, and the source-of-truth model used by the app.",
+          "notes": "Data/storage map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Tracks unfinished persistence and validation work across the product and shows which areas still need implementation.",
+          "notes": "Project readiness map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents screen inventory and route flow, though it is older and should be reconciled with the live code.",
+          "notes": "Secondary reference, not authoritative."
+        }
+      ],
+      "createdAt": "2026-04-26T02:29:57.880Z",
+      "updatedAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "memoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "rootMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "parentMemoryIds": [
+        "c9018996-4a4d-4631-9e98-d47983c3d0dd"
+      ],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added a plain-English atlas for WAH4P so future work can read the project like a map. The repo is best understood in layers: a Flutter client that controls navigation and presentation, a NestJS backend that owns security and business rules, and Supabase/Postgres plus secure local storage for persistence. The most important user journeys now have an explicit flow: splash/startup -> onboarding or login -> dashboard or MPIN unlock -> feature areas like records, appointments, resupply, calendar, notifications, profile, and legal screens. This memory also clarifies which screens are static, which are route-driven, and which backend APIs support each major journey.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The app shell controls theme, startup gating, and resume-time locking, making it the top-level navigation anchor for the project map.",
+          "notes": "Central entry point for the Flutter client."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Defines the route decision logic for onboarding, login, dashboard, and MPIN unlock, which is essential to the launch map.",
+          "notes": "Startup flow source of truth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_routes.dart",
+          "action": "inspected",
+          "reason": "Lists the canonical route names used throughout the Flutter app.",
+          "notes": "Best place to understand route coverage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Maps route names to screens and shows transition style choices for each user flow.",
+          "notes": "Best source for the screen-to-route atlas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the transient gate screen that hands off to the resolved initial route during startup.",
+          "notes": "Launch UX and routing handoff."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "inspected",
+          "reason": "Implements the time-based unlock policy used when the app resumes from background.",
+          "notes": "Important for security and session behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features",
+          "action": "inspected",
+          "reason": "The feature directory structure reveals the major product areas and how the client is partitioned by domain.",
+          "notes": "Useful for understanding the app map by feature group."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend’s top-level composition, including global guards and core modules.",
+          "notes": "Server architecture anchor."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "inspected",
+          "reason": "Shows the backend auth domain composition across controllers, services, and repositories.",
+          "notes": "Primary auth subsystem map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.controller.ts",
+          "action": "inspected",
+          "reason": "Exposes the auth workflow endpoints and groups them into clear account/security journeys.",
+          "notes": "API surface map for auth."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\profile.controller.ts",
+          "action": "inspected",
+          "reason": "Provides authenticated profile read/update endpoints separate from the workflow controller.",
+          "notes": "Profile API map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\health\\health.controller.ts",
+          "action": "inspected",
+          "reason": "Shows the public health check route and the small public surface of the server.",
+          "notes": "Operational entry point."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "inspected",
+          "reason": "Defines persistence rules, canonical entities, and the source-of-truth model used by the app.",
+          "notes": "Data/storage map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Tracks unfinished persistence and validation work across the product and shows which areas still need implementation.",
+          "notes": "Project readiness map."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Documents screen inventory and route flow, though it is older and should be reconciled with the live code.",
+          "notes": "Secondary reference, not authoritative."
+        }
+      ],
+      "createdAt": "2026-04-26T02:29:57.883Z",
+      "updatedAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "memoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "rootMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "407f40ad-9974-45e2-aa87-6d447e0af941",
+        "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+        "492b5000-e9dc-473d-9270-0de3900f3a60",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e"
+      ],
+      "childMemoryIds": [
+        "5b395404-6129-4a7a-b12a-023bd7fa3aa1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the Security Settings screen crash caused by calling ScaffoldMessenger.of(context) during initState-driven async hydration. The login redirect is now deferred with a post-frame callback, which keeps the cached preloaded Security screen behavior intact and avoids inherited-widget timing errors. Flutter analysis passed after the fix.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Changed the login redirect to run after the first frame so the screen no longer throws when initState-triggered async work calls ScaffoldMessenger too early.",
+          "notes": "The rest of the cache-first loading behavior remains intact."
+        }
+      ],
+      "createdAt": "2026-04-30T02:39:13.536Z",
+      "updatedAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "memoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "rootMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "parentMemoryIds": [
+        "f7381989-5f21-4868-aa6f-7044107de597"
+      ],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "407f40ad-9974-45e2-aa87-6d447e0af941",
+        "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+        "492b5000-e9dc-473d-9270-0de3900f3a60",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e"
+      ],
+      "childMemoryIds": [
+        "58416b08-d5fd-475c-9bde-9d87e5410398"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the Security Settings screen crash caused by calling ScaffoldMessenger.of(context) during initState-driven async hydration. The login redirect is now deferred with a post-frame callback, which keeps the cached preloaded Security screen behavior intact and avoids inherited-widget timing errors. Flutter analysis passed after the fix.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Changed the login redirect to run after the first frame so the screen no longer throws when initState-triggered async work calls ScaffoldMessenger too early.",
+          "notes": "The rest of the cache-first loading behavior remains intact."
+        }
+      ],
+      "createdAt": "2026-04-30T02:39:13.544Z",
+      "updatedAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "memoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "rootMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "parentMemoryIds": [
+        "5b395404-6129-4a7a-b12a-023bd7fa3aa1"
+      ],
+      "relatedMemoryIds": [
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "407f40ad-9974-45e2-aa87-6d447e0af941",
+        "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+        "492b5000-e9dc-473d-9270-0de3900f3a60",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the Security Settings screen crash caused by calling ScaffoldMessenger.of(context) during initState-driven async hydration. The login redirect is now deferred with a post-frame callback, which keeps the cached preloaded Security screen behavior intact and avoids inherited-widget timing errors. Flutter analysis passed after the fix.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Changed the login redirect to run after the first frame so the screen no longer throws when initState-triggered async work calls ScaffoldMessenger too early.",
+          "notes": "The rest of the cache-first loading behavior remains intact."
+        }
+      ],
+      "createdAt": "2026-04-30T02:39:13.552Z",
+      "updatedAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "memoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a"
+      ],
+      "sectionKind": "fact",
+      "summary": "Updated the profile personal information screen to visually align with the BMI screen's card-based layout and header spacing, while preserving the existing profile hydration and save/reset behavior. Also updated the widget test to reflect the new card sections and verified the feature with flutter test and flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Restyled the screen to match the BMI screen's layout and card treatment while preserving its profile edit behavior.",
+          "notes": "Added private header, summary card, and form card widgets inside the file."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget test to reflect the new card-based rendering and helper text on the personal information screen.",
+          "notes": "Kept the same functional assertions for title, fields, and action buttons."
+        }
+      ],
+      "createdAt": "2026-04-30T02:49:26.745Z",
+      "updatedAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "memoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [
+        "4bc9624d-c49e-4424-820d-f348922fe07a"
+      ],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd"
+      ],
+      "sectionKind": "decision",
+      "summary": "Updated the profile personal information screen to visually align with the BMI screen's card-based layout and header spacing, while preserving the existing profile hydration and save/reset behavior. Also updated the widget test to reflect the new card sections and verified the feature with flutter test and flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Restyled the screen to match the BMI screen's layout and card treatment while preserving its profile edit behavior.",
+          "notes": "Added private header, summary card, and form card widgets inside the file."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget test to reflect the new card-based rendering and helper text on the personal information screen.",
+          "notes": "Kept the same functional assertions for title, fields, and action buttons."
+        }
+      ],
+      "createdAt": "2026-04-30T02:49:26.771Z",
+      "updatedAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "memoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a"
+      ],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Updated the profile personal information screen to visually align with the BMI screen's card-based layout and header spacing, while preserving the existing profile hydration and save/reset behavior. Also updated the widget test to reflect the new card sections and verified the feature with flutter test and flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Restyled the screen to match the BMI screen's layout and card treatment while preserving its profile edit behavior.",
+          "notes": "Added private header, summary card, and form card widgets inside the file."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget test to reflect the new card-based rendering and helper text on the personal information screen.",
+          "notes": "Kept the same functional assertions for title, fields, and action buttons."
+        }
+      ],
+      "createdAt": "2026-04-30T02:49:26.798Z",
+      "updatedAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "memoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [
+        "4bc9624d-c49e-4424-820d-f348922fe07a"
+      ],
+      "relatedMemoryIds": [
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [
+        "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce"
+      ],
+      "sectionKind": "fact",
+      "summary": "Changed the profile personal information screen from a card-based layout to a flatter BMI-like page structure after the user clarified they wanted no card styling. The screen now uses a plain header, inline profile summary row, divider separation, and flat form sections while keeping the existing save/reset behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the card-like shells and replaced them with a flat header, summary row, divider, and form section.",
+          "notes": "Kept the behavior and compatibility parameters unchanged."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test description to reflect the flat layout while preserving the main content assertions.",
+          "notes": "No functional assertions were removed."
+        }
+      ],
+      "createdAt": "2026-04-30T02:52:20.659Z",
+      "updatedAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "memoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [
+        "2c28b06a-4a93-4ab4-9cef-caa50c64d86f"
+      ],
+      "relatedMemoryIds": [
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [
+        "5e58d0a9-b42f-41ee-92f8-4776ff12d08c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Changed the profile personal information screen from a card-based layout to a flatter BMI-like page structure after the user clarified they wanted no card styling. The screen now uses a plain header, inline profile summary row, divider separation, and flat form sections while keeping the existing save/reset behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the card-like shells and replaced them with a flat header, summary row, divider, and form section.",
+          "notes": "Kept the behavior and compatibility parameters unchanged."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test description to reflect the flat layout while preserving the main content assertions.",
+          "notes": "No functional assertions were removed."
+        }
+      ],
+      "createdAt": "2026-04-30T02:52:20.681Z",
+      "updatedAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "memoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "rootMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "parentMemoryIds": [
+        "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce"
+      ],
+      "relatedMemoryIds": [
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Changed the profile personal information screen from a card-based layout to a flatter BMI-like page structure after the user clarified they wanted no card styling. The screen now uses a plain header, inline profile summary row, divider separation, and flat form sections while keeping the existing save/reset behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the card-like shells and replaced them with a flat header, summary row, divider, and form section.",
+          "notes": "Kept the behavior and compatibility parameters unchanged."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test description to reflect the flat layout while preserving the main content assertions.",
+          "notes": "No functional assertions were removed."
+        }
+      ],
+      "createdAt": "2026-04-30T02:52:20.717Z",
+      "updatedAt": "2026-04-30T02:52:20.717Z"
+    }
+  ],
+  "edges": [
+    {
+      "fromMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T17:58:25.690Z"
+    },
+    {
+      "fromMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T17:58:25.717Z"
+    },
+    {
+      "fromMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T17:58:25.717Z"
+    },
+    {
+      "fromMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T17:58:25.743Z"
+    },
+    {
+      "fromMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.025Z"
+    },
+    {
+      "fromMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.025Z"
+    },
+    {
+      "fromMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.025Z"
+    },
+    {
+      "fromMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.025Z"
+    },
+    {
+      "fromMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.048Z"
+    },
+    {
+      "fromMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.048Z"
+    },
+    {
+      "fromMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.048Z"
+    },
+    {
+      "fromMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.048Z"
+    },
+    {
+      "fromMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.070Z"
+    },
+    {
+      "fromMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.070Z"
+    },
+    {
+      "fromMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-25T18:01:36.070Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "toMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.876Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "toMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.880Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-26T02:29:57.883Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "toMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.536Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "f7381989-5f21-4868-aa6f-7044107de597",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "toMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.544Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "5b395404-6129-4a7a-b12a-023bd7fa3aa1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "407f40ad-9974-45e2-aa87-6d447e0af941",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "c9018996-4a4d-4631-9e98-d47983c3d0dd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "492b5000-e9dc-473d-9270-0de3900f3a60",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "58416b08-d5fd-475c-9bde-9d87e5410398",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:39:13.552Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.745Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.771Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:49:26.798Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "toMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.659Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "toMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.681Z"
+    },
+    {
+      "fromMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "toMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "fromMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "fromMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "fromMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "fromMemoryId": "5e58d0a9-b42f-41ee-92f8-4776ff12d08c",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T02:52:20.717Z"
+    }
+  ],
+  "updatedAt": "2026-04-30T02:52:20.717Z"
+}

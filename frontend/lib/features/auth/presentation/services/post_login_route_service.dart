@@ -1,6 +1,8 @@
 import '../../../../app/app_routes.dart';
 import '../../data/auth_api_client.dart';
 import '../../data/mpin_local_store.dart';
+import '../../domain/auth_session.dart';
+import 'security_settings_status_cache_service.dart';
 
 class PostLoginRouteService {
   PostLoginRouteService._();
@@ -13,6 +15,10 @@ class PostLoginRouteService {
       final status = await AuthApiClient.instance.getSecuritySettingsStatus(
         accessToken: accessToken,
         deviceId: deviceId,
+      );
+      SecuritySettingsStatusCacheService.cacheStatus(
+        userId: AuthSession.userId ?? '',
+        status: status,
       );
 
       if (status.isMpinConfigured && status.isMpinDeviceRegistered) {

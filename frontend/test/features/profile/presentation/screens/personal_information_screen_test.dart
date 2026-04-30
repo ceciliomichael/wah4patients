@@ -10,7 +10,7 @@ void main() {
   });
 
   testWidgets(
-    'renders the profile personal information form without a card shell',
+    'renders the profile personal information screen with flat sections',
     (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(home: PersonalInformationScreen()),
@@ -19,6 +19,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Personal Information'), findsOneWidget);
+      expect(
+        find.text('Keep your name details up to date across the app.'),
+        findsOneWidget,
+      );
       expect(find.text('Edit name details'), findsOneWidget);
       expect(find.text('First name *'), findsOneWidget);
       expect(find.text('Last name *'), findsOneWidget);

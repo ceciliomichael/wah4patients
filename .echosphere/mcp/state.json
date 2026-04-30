@@ -1,0 +1,7 @@
+{
+  "servers": {
+    "openproject": {
+      "autoConnect": true
+    }
+  }
+}
