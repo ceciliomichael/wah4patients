@@ -1245,6 +1245,633 @@
       ],
       "createdAt": "2026-04-30T02:52:20.717Z",
       "updatedAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "memoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "rootMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "4bc9624d-c49e-4424-820d-f348922fe07a"
+      ],
+      "childMemoryIds": [
+        "54346d4c-d2d1-48a6-bf1d-cd49185eafff"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the first Personal Records persistence slice with separate Supabase tables for BMI, blood pressure, temperature, and medicine intake. Added a new SQL migration, updated typed database contracts, and aligned the schema documentation and backend README with the new tables. Verified the backend still builds successfully after the type updates.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\006_personal_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new persistent database schema for personal records with separate tables, RLS, and indexes.",
+          "notes": "Includes BMI, blood pressure, temperature, and medication intake tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds strongly typed Supabase table contracts for the new personal record tables so backend data access remains type-safe.",
+          "notes": "Includes explicit row, insert, and update shapes for each table."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "modified",
+          "reason": "Keeps the architecture document aligned with the implemented personal records schema and the new table-per-screen approach.",
+          "notes": "Updated the Personal Records section and BMI notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documents that the new personal records bootstrap script should be run alongside the auth/profile bootstrap script.",
+          "notes": "Helps keep setup instructions consistent with the new migration."
+        }
+      ],
+      "createdAt": "2026-04-30T03:38:07.936Z",
+      "updatedAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "memoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "rootMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "parentMemoryIds": [
+        "57553c58-c7d9-414e-833a-05669d034f2b"
+      ],
+      "relatedMemoryIds": [
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "4bc9624d-c49e-4424-820d-f348922fe07a"
+      ],
+      "childMemoryIds": [
+        "0af54ac0-5007-4f8c-b54b-39bf9940a40a"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the first Personal Records persistence slice with separate Supabase tables for BMI, blood pressure, temperature, and medicine intake. Added a new SQL migration, updated typed database contracts, and aligned the schema documentation and backend README with the new tables. Verified the backend still builds successfully after the type updates.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\006_personal_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new persistent database schema for personal records with separate tables, RLS, and indexes.",
+          "notes": "Includes BMI, blood pressure, temperature, and medication intake tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds strongly typed Supabase table contracts for the new personal record tables so backend data access remains type-safe.",
+          "notes": "Includes explicit row, insert, and update shapes for each table."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "modified",
+          "reason": "Keeps the architecture document aligned with the implemented personal records schema and the new table-per-screen approach.",
+          "notes": "Updated the Personal Records section and BMI notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documents that the new personal records bootstrap script should be run alongside the auth/profile bootstrap script.",
+          "notes": "Helps keep setup instructions consistent with the new migration."
+        }
+      ],
+      "createdAt": "2026-04-30T03:38:07.962Z",
+      "updatedAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "memoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "rootMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "parentMemoryIds": [
+        "54346d4c-d2d1-48a6-bf1d-cd49185eafff"
+      ],
+      "relatedMemoryIds": [
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "4bc9624d-c49e-4424-820d-f348922fe07a"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the first Personal Records persistence slice with separate Supabase tables for BMI, blood pressure, temperature, and medicine intake. Added a new SQL migration, updated typed database contracts, and aligned the schema documentation and backend README with the new tables. Verified the backend still builds successfully after the type updates.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\006_personal_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new persistent database schema for personal records with separate tables, RLS, and indexes.",
+          "notes": "Includes BMI, blood pressure, temperature, and medication intake tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds strongly typed Supabase table contracts for the new personal record tables so backend data access remains type-safe.",
+          "notes": "Includes explicit row, insert, and update shapes for each table."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\data-structure.md",
+          "action": "modified",
+          "reason": "Keeps the architecture document aligned with the implemented personal records schema and the new table-per-screen approach.",
+          "notes": "Updated the Personal Records section and BMI notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documents that the new personal records bootstrap script should be run alongside the auth/profile bootstrap script.",
+          "notes": "Helps keep setup instructions consistent with the new migration."
+        }
+      ],
+      "createdAt": "2026-04-30T03:38:07.986Z",
+      "updatedAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "memoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "rootMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "parentMemoryIds": [
+        "0af54ac0-5007-4f8c-b54b-39bf9940a40a"
+      ],
+      "relatedMemoryIds": [
+        "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+        "57553c58-c7d9-414e-833a-05669d034f2b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d"
+      ],
+      "sectionKind": "fact",
+      "summary": "Wired the Personal Records screens to the new Supabase-backed backend. Added a dedicated backend PHR module with typed read/create endpoints for BMI, blood pressure, temperature, and medication intake, then updated the Flutter BMI, blood pressure, temperature, and medicine screens to load and save through the API using the authenticated access token. Verified with backend build success and frontend flutter analyze success.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new PersonalRecordsModule so the backend exposes the PHR routes.",
+          "notes": "Imports now include the dedicated PHR module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "modified",
+          "reason": "Exported AuthSupportService so the new PHR module can reuse authenticated user resolution.",
+          "notes": "Keeps auth boundary shared without duplicating token parsing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.module.ts",
+          "action": "created",
+          "reason": "Introduced a dedicated module for PHR persistence and controllers.",
+          "notes": "Owns the new domain boundary."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.controller.ts",
+          "action": "created",
+          "reason": "Added typed /phr endpoints for list/create operations across all four record types.",
+          "notes": "Controller returns explicit promise types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.service.ts",
+          "action": "created",
+          "reason": "Added orchestration between auth resolution and repository mapping for PHR operations.",
+          "notes": "Handles per-user access and request normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.repository.ts",
+          "action": "created",
+          "reason": "Added typed Supabase read/write access for bmi_records, blood_pressure_records, temperature_records, and medication_intake_records.",
+          "notes": "Includes typed row mapping and insert helper."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.types.ts",
+          "action": "created",
+          "reason": "Defined backend response/input contracts for the new PHR endpoints.",
+          "notes": "Keeps API shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-bmi-record.dto.ts",
+          "action": "created",
+          "reason": "Validated BMI create payloads at the API boundary.",
+          "notes": "Uses class-validator with numeric coercion."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-blood-pressure-record.dto.ts",
+          "action": "created",
+          "reason": "Validated blood pressure create payloads at the API boundary.",
+          "notes": "Covers systolic/diastolic and optional fields."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-temperature-record.dto.ts",
+          "action": "created",
+          "reason": "Validated temperature create payloads at the API boundary.",
+          "notes": "Supports celsius and fahrenheit inputs."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-medication-intake-record.dto.ts",
+          "action": "created",
+          "reason": "Validated medication intake create payloads at the API boundary.",
+          "notes": "Includes ISO timestamps and status enum validation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "created",
+          "reason": "Added a typed HTTP client for the new PHR backend endpoints.",
+          "notes": "Includes response parsers for all four record types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Switched BMI history and create flow from local state to backend persistence.",
+          "notes": "Keeps the UI composition but loads/saves via the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\models\\body_mass_index_models.dart",
+          "action": "modified",
+          "reason": "Added mapping from backend BMI responses to the UI history model.",
+          "notes": "Preserves UI formatting while sourcing data from Supabase."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Switched blood pressure history and create flow from local state to backend persistence.",
+          "notes": "Added backend loading, save flow, and error states."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Switched temperature history and create flow from local state to backend persistence.",
+          "notes": "Uses normalized celsius from API for categorization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Switched medicine intake list and create flow from local state to backend persistence.",
+          "notes": "Loads backend records and persists new entries with structured notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\models\\medicine_intake_models.dart",
+          "action": "modified",
+          "reason": "Added parsing/encoding helpers to reconstruct medicine card fields from persisted records.",
+          "notes": "Structured notes preserve dosage, schedule, next dose, and freeform notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\domain\\medicine_status.dart",
+          "action": "modified",
+          "reason": "Added API status mapping helpers so UI statuses can be translated to backend values and back.",
+          "notes": "Keeps persisted status aligned with the UI."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and ensured the screen compiles with backend integration.",
+          "notes": "Also loads BMI history from the API on startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path, history classification helper placement, and backend integration compile issues.",
+          "notes": "Also replaced remaining local-session help text."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and completed backend persistence wiring.",
+          "notes": "Now loads and saves temperature records from the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "inspected",
+          "reason": "Confirmed the new PHR Supabase table typings already existed and matched the repository code.",
+          "notes": "No further changes required in this pass."
+        }
+      ],
+      "createdAt": "2026-04-30T15:56:24.636Z",
+      "updatedAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "memoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "rootMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "parentMemoryIds": [
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26"
+      ],
+      "relatedMemoryIds": [
+        "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+        "57553c58-c7d9-414e-833a-05669d034f2b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47"
+      ],
+      "sectionKind": "decision",
+      "summary": "Wired the Personal Records screens to the new Supabase-backed backend. Added a dedicated backend PHR module with typed read/create endpoints for BMI, blood pressure, temperature, and medication intake, then updated the Flutter BMI, blood pressure, temperature, and medicine screens to load and save through the API using the authenticated access token. Verified with backend build success and frontend flutter analyze success.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new PersonalRecordsModule so the backend exposes the PHR routes.",
+          "notes": "Imports now include the dedicated PHR module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "modified",
+          "reason": "Exported AuthSupportService so the new PHR module can reuse authenticated user resolution.",
+          "notes": "Keeps auth boundary shared without duplicating token parsing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.module.ts",
+          "action": "created",
+          "reason": "Introduced a dedicated module for PHR persistence and controllers.",
+          "notes": "Owns the new domain boundary."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.controller.ts",
+          "action": "created",
+          "reason": "Added typed /phr endpoints for list/create operations across all four record types.",
+          "notes": "Controller returns explicit promise types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.service.ts",
+          "action": "created",
+          "reason": "Added orchestration between auth resolution and repository mapping for PHR operations.",
+          "notes": "Handles per-user access and request normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.repository.ts",
+          "action": "created",
+          "reason": "Added typed Supabase read/write access for bmi_records, blood_pressure_records, temperature_records, and medication_intake_records.",
+          "notes": "Includes typed row mapping and insert helper."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.types.ts",
+          "action": "created",
+          "reason": "Defined backend response/input contracts for the new PHR endpoints.",
+          "notes": "Keeps API shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-bmi-record.dto.ts",
+          "action": "created",
+          "reason": "Validated BMI create payloads at the API boundary.",
+          "notes": "Uses class-validator with numeric coercion."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-blood-pressure-record.dto.ts",
+          "action": "created",
+          "reason": "Validated blood pressure create payloads at the API boundary.",
+          "notes": "Covers systolic/diastolic and optional fields."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-temperature-record.dto.ts",
+          "action": "created",
+          "reason": "Validated temperature create payloads at the API boundary.",
+          "notes": "Supports celsius and fahrenheit inputs."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-medication-intake-record.dto.ts",
+          "action": "created",
+          "reason": "Validated medication intake create payloads at the API boundary.",
+          "notes": "Includes ISO timestamps and status enum validation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "created",
+          "reason": "Added a typed HTTP client for the new PHR backend endpoints.",
+          "notes": "Includes response parsers for all four record types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Switched BMI history and create flow from local state to backend persistence.",
+          "notes": "Keeps the UI composition but loads/saves via the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\models\\body_mass_index_models.dart",
+          "action": "modified",
+          "reason": "Added mapping from backend BMI responses to the UI history model.",
+          "notes": "Preserves UI formatting while sourcing data from Supabase."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Switched blood pressure history and create flow from local state to backend persistence.",
+          "notes": "Added backend loading, save flow, and error states."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Switched temperature history and create flow from local state to backend persistence.",
+          "notes": "Uses normalized celsius from API for categorization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Switched medicine intake list and create flow from local state to backend persistence.",
+          "notes": "Loads backend records and persists new entries with structured notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\models\\medicine_intake_models.dart",
+          "action": "modified",
+          "reason": "Added parsing/encoding helpers to reconstruct medicine card fields from persisted records.",
+          "notes": "Structured notes preserve dosage, schedule, next dose, and freeform notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\domain\\medicine_status.dart",
+          "action": "modified",
+          "reason": "Added API status mapping helpers so UI statuses can be translated to backend values and back.",
+          "notes": "Keeps persisted status aligned with the UI."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and ensured the screen compiles with backend integration.",
+          "notes": "Also loads BMI history from the API on startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path, history classification helper placement, and backend integration compile issues.",
+          "notes": "Also replaced remaining local-session help text."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and completed backend persistence wiring.",
+          "notes": "Now loads and saves temperature records from the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "inspected",
+          "reason": "Confirmed the new PHR Supabase table typings already existed and matched the repository code.",
+          "notes": "No further changes required in this pass."
+        }
+      ],
+      "createdAt": "2026-04-30T15:56:24.664Z",
+      "updatedAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "memoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "rootMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "parentMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d"
+      ],
+      "relatedMemoryIds": [
+        "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+        "57553c58-c7d9-414e-833a-05669d034f2b",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Wired the Personal Records screens to the new Supabase-backed backend. Added a dedicated backend PHR module with typed read/create endpoints for BMI, blood pressure, temperature, and medication intake, then updated the Flutter BMI, blood pressure, temperature, and medicine screens to load and save through the API using the authenticated access token. Verified with backend build success and frontend flutter analyze success.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new PersonalRecordsModule so the backend exposes the PHR routes.",
+          "notes": "Imports now include the dedicated PHR module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\auth\\auth.module.ts",
+          "action": "modified",
+          "reason": "Exported AuthSupportService so the new PHR module can reuse authenticated user resolution.",
+          "notes": "Keeps auth boundary shared without duplicating token parsing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.module.ts",
+          "action": "created",
+          "reason": "Introduced a dedicated module for PHR persistence and controllers.",
+          "notes": "Owns the new domain boundary."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.controller.ts",
+          "action": "created",
+          "reason": "Added typed /phr endpoints for list/create operations across all four record types.",
+          "notes": "Controller returns explicit promise types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.service.ts",
+          "action": "created",
+          "reason": "Added orchestration between auth resolution and repository mapping for PHR operations.",
+          "notes": "Handles per-user access and request normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.repository.ts",
+          "action": "created",
+          "reason": "Added typed Supabase read/write access for bmi_records, blood_pressure_records, temperature_records, and medication_intake_records.",
+          "notes": "Includes typed row mapping and insert helper."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\personal-records.types.ts",
+          "action": "created",
+          "reason": "Defined backend response/input contracts for the new PHR endpoints.",
+          "notes": "Keeps API shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-bmi-record.dto.ts",
+          "action": "created",
+          "reason": "Validated BMI create payloads at the API boundary.",
+          "notes": "Uses class-validator with numeric coercion."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-blood-pressure-record.dto.ts",
+          "action": "created",
+          "reason": "Validated blood pressure create payloads at the API boundary.",
+          "notes": "Covers systolic/diastolic and optional fields."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-temperature-record.dto.ts",
+          "action": "created",
+          "reason": "Validated temperature create payloads at the API boundary.",
+          "notes": "Supports celsius and fahrenheit inputs."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\personal-records\\dto\\create-medication-intake-record.dto.ts",
+          "action": "created",
+          "reason": "Validated medication intake create payloads at the API boundary.",
+          "notes": "Includes ISO timestamps and status enum validation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "created",
+          "reason": "Added a typed HTTP client for the new PHR backend endpoints.",
+          "notes": "Includes response parsers for all four record types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Switched BMI history and create flow from local state to backend persistence.",
+          "notes": "Keeps the UI composition but loads/saves via the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\models\\body_mass_index_models.dart",
+          "action": "modified",
+          "reason": "Added mapping from backend BMI responses to the UI history model.",
+          "notes": "Preserves UI formatting while sourcing data from Supabase."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Switched blood pressure history and create flow from local state to backend persistence.",
+          "notes": "Added backend loading, save flow, and error states."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Switched temperature history and create flow from local state to backend persistence.",
+          "notes": "Uses normalized celsius from API for categorization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Switched medicine intake list and create flow from local state to backend persistence.",
+          "notes": "Loads backend records and persists new entries with structured notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\models\\medicine_intake_models.dart",
+          "action": "modified",
+          "reason": "Added parsing/encoding helpers to reconstruct medicine card fields from persisted records.",
+          "notes": "Structured notes preserve dosage, schedule, next dose, and freeform notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\domain\\medicine_status.dart",
+          "action": "modified",
+          "reason": "Added API status mapping helpers so UI statuses can be translated to backend values and back.",
+          "notes": "Keeps persisted status aligned with the UI."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and ensured the screen compiles with backend integration.",
+          "notes": "Also loads BMI history from the API on startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path, history classification helper placement, and backend integration compile issues.",
+          "notes": "Also replaced remaining local-session help text."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Fixed auth import path and completed backend persistence wiring.",
+          "notes": "Now loads and saves temperature records from the API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "inspected",
+          "reason": "Confirmed the new PHR Supabase table typings already existed and matched the repository code.",
+          "notes": "No further changes required in this pass."
+        }
+      ],
+      "createdAt": "2026-04-30T15:56:24.694Z",
+      "updatedAt": "2026-04-30T15:56:24.694Z"
     }
   ],
   "edges": [
@@ -1870,7 +2497,259 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-04-30T02:52:20.717Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "toMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.936Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "toMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.962Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "229a82a6-45ea-41cd-8c1a-2aa116eaf64b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T03:38:07.986Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.636Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.664Z"
+    },
+    {
+      "fromMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "fromMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "toMemoryId": "54346d4c-d2d1-48a6-bf1d-cd49185eafff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "fromMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "toMemoryId": "57553c58-c7d9-414e-833a-05669d034f2b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "fromMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "fromMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-04-30T15:56:24.694Z"
     }
   ],
-  "updatedAt": "2026-04-30T02:52:20.717Z"
+  "updatedAt": "2026-04-30T15:56:24.696Z"
 }

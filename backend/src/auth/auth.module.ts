@@ -40,5 +40,6 @@ import { UserMpinRepository } from './user-mpin.repository';
     UserMpinRepository,
     UserMpinDeviceRepository,
   ],
+  exports: [AuthSupportService],
 })
 export class AuthModule {}

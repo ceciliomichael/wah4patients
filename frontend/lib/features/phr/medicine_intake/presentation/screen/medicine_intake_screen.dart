@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
+import '../../../../auth/domain/auth_session.dart';
+import '../../../data/personal_records_api_client.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../domain/medicine_status.dart';
@@ -25,44 +29,15 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
   MedicineStatus? _selectedStatus;
   final Set<String> _expandedMedicineIds = <String>{};
 
-  final List<MedicineIntakeEntry> _medicines = <MedicineIntakeEntry>[
-    const MedicineIntakeEntry(
-      id: 'amlodipine',
-      name: 'Amlodipine',
-      dosage: '5 mg tablet',
-      schedule: 'Once daily after breakfast',
-      nextDose: 'Today, 8:00 AM',
-      notes: 'Take with water and keep a consistent schedule.',
-      status: MedicineStatus.active,
-    ),
-    const MedicineIntakeEntry(
-      id: 'metformin',
-      name: 'Metformin',
-      dosage: '500 mg tablet',
-      schedule: 'Twice daily with meals',
-      nextDose: 'Today, 7:00 PM',
-      notes: 'Usually taken after meals to reduce stomach upset.',
-      status: MedicineStatus.active,
-    ),
-    const MedicineIntakeEntry(
-      id: 'atorvastatin',
-      name: 'Atorvastatin',
-      dosage: '20 mg tablet',
-      schedule: 'Once nightly',
-      nextDose: 'Tonight, 9:00 PM',
-      notes: 'Best taken in the evening for a steady routine.',
-      status: MedicineStatus.paused,
-    ),
-    const MedicineIntakeEntry(
-      id: 'multivitamin',
-      name: 'Multivitamin',
-      dosage: '1 capsule',
-      schedule: 'Daily with breakfast',
-      nextDose: 'Tomorrow, 8:00 AM',
-      notes: 'Use this as a simple daily supplement reminder.',
-      status: MedicineStatus.completed,
-    ),
-  ];
+  final List<MedicineIntakeEntry> _medicines = <MedicineIntakeEntry>[];
+  bool _isLoadingHistory = true;
+  String? _historyError;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_loadMedicines());
+  }
 
   @override
   void dispose() {
@@ -78,7 +53,7 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
         messages: const <String>[
           'Search or filter the list to find a medicine quickly.',
           'Tap a medicine card to expand its details and schedule notes.',
-          'Use Add Medicine to create a new local record for the session.',
+          'Use Add Medicine to create a new database-backed intake record.',
         ],
         icons: const <IconData>[
           Icons.search_outlined,
@@ -88,6 +63,50 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
         onClose: () => Navigator.of(context).pop(),
       ),
     );
+  }
+
+  Future<void> _loadMedicines() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = 'Please sign in again to load medicine records.';
+        _isLoadingHistory = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoadingHistory = true;
+      _historyError = null;
+    });
+
+    try {
+      final response = await PersonalRecordsApiClient.instance
+          .getMedicationIntakeRecords(accessToken: accessToken);
+      final medicines = response.records
+          .map(MedicineIntakeEntry.fromRecord)
+          .toList(growable: false);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _medicines
+          ..clear()
+          ..addAll(medicines);
+        _isLoadingHistory = false;
+      });
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = error.message;
+        _isLoadingHistory = false;
+      });
+    }
   }
 
   void _showSnackBar(String message) {
@@ -141,22 +160,37 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
       return;
     }
 
-    setState(() {
-      _medicines.insert(
-        0,
-        MedicineIntakeEntry(
-          id: DateTime.now().microsecondsSinceEpoch.toString(),
-          name: result.name,
-          dosage: result.dosage,
-          schedule: result.schedule,
-          nextDose: result.nextDose,
-          notes: result.notes,
-          status: result.status,
-        ),
-      );
-    });
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _showSnackBar('Please sign in again to save medicine records.');
+      return;
+    }
 
-    _showSnackBar('Medicine added locally for this session.');
+    final now = DateTime.now();
+    try {
+      final response = await PersonalRecordsApiClient.instance
+          .createMedicationIntakeRecord(
+        accessToken: accessToken,
+        medicationNameSnapshot: result.name,
+        scheduledAt: now,
+        takenAt: result.status == MedicineStatus.completed ? now : null,
+        status: result.status.apiValue,
+        notes: encodeMedicineNotes(result),
+      );
+      final entry = MedicineIntakeEntry.fromRecord(response);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _medicines.insert(0, entry);
+      });
+
+      _showSnackBar('Medicine saved to the database.');
+    } on PersonalRecordsApiException catch (error) {
+      _showSnackBar(error.message);
+    }
   }
 
   @override
@@ -211,7 +245,27 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
                   ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: _filteredMedicines.isEmpty
+                    child: _isLoadingHistory
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          )
+                        : _historyError != null
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: Text(
+                                _historyError!,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.textSecondary),
+                              ),
+                            ),
+                          )
+                        : _filteredMedicines.isEmpty
                         ? MedicineIntakeEmptyState(
                             hasFilters:
                                 _searchQuery.isNotEmpty ||

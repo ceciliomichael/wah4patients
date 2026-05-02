@@ -201,13 +201,14 @@ This screen group covers self-tracked patient measurements.
 
 | What to store | Suggested data |
 | --- | --- |
-| Height | `observations` record, unit in cm or m |
-| Weight | `observations` record, unit in kg |
+| Height | Stored on the BMI record as a canonical numeric measurement |
+| Weight | Stored on the BMI record as a canonical numeric measurement |
+| Measurement system | Metric or imperial, so the source input remains explicit |
 | BMI value | Derived from weight and height, or stored as a computed snapshot |
 | Notes | Optional free text |
 
 **Best practice**
-- Store **height and weight** as the source values.
+- Store **height and weight** on the BMI record together with the measurement system.
 - Compute BMI for display and reporting.
 - If BMI is entered manually, store both the manual value and the source measurements when available.
 
@@ -244,9 +245,15 @@ This screen group covers self-tracked patient measurements.
 | Notes | Side effects or comments |
 
 **Recommended tables**
-- `observations` for generic physical measurements
-- `medication_adherence` for intake tracking
-- optionally separate specialized tables for blood pressure and temperature if reporting becomes complex
+- `bmi_records` for BMI history
+- `blood_pressure_records` for blood pressure readings
+- `temperature_records` for temperature readings
+- `medication_intake_records` for medication intake tracking
+
+**Notes**
+- Keep each screen on its own table so validation, indexing, and history queries stay simple.
+- Use a dashboard/read-model layer later if you want a combined timeline.
+- Store BMI as a record of source measurements plus the computed or manually entered BMI value.
 
 ---
 

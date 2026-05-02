@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/constants/app_border_radii.dart';
@@ -6,6 +8,8 @@ import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../../../auth/domain/auth_session.dart';
+import '../../../data/personal_records_api_client.dart';
 
 class BloodPressureScreen extends StatefulWidget {
   const BloodPressureScreen({super.key});
@@ -19,33 +23,14 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   final TextEditingController _diastolicController = TextEditingController();
 
   _BloodPressureHistoryEntry? _latestEntry;
-
-  final List<_BloodPressureHistoryEntry> _history =
-      <_BloodPressureHistoryEntry>[
-        _BloodPressureHistoryEntry(
-          recordedAt: DateTime.now().subtract(const Duration(days: 1)),
-          systolic: 118,
-          diastolic: 78,
-          category: 'Normal',
-        ),
-        _BloodPressureHistoryEntry(
-          recordedAt: DateTime.now().subtract(const Duration(days: 4)),
-          systolic: 124,
-          diastolic: 82,
-          category: 'Elevated',
-        ),
-        _BloodPressureHistoryEntry(
-          recordedAt: DateTime.now().subtract(const Duration(days: 9)),
-          systolic: 136,
-          diastolic: 88,
-          category: 'Stage 1 Hypertension',
-        ),
-      ];
+  final List<_BloodPressureHistoryEntry> _history = <_BloodPressureHistoryEntry>[];
+  bool _isLoadingHistory = true;
+  String? _historyError;
 
   @override
   void initState() {
     super.initState();
-    _latestEntry = _history.first;
+    unawaited(_loadHistory());
   }
 
   @override
@@ -62,7 +47,7 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         title: 'Blood Pressure Help',
         messages: const <String>[
           'Enter your systolic and diastolic readings, then review the category below.',
-          'The screen stores readings locally for the current session only.',
+          'Your readings are saved to the database and loaded back into history.',
           'Use the history tab to compare recent measurements at a glance.',
         ],
         icons: const <IconData>[
@@ -75,26 +60,55 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     );
   }
 
+  Future<void> _loadHistory() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = 'Please sign in again to load blood pressure records.';
+        _isLoadingHistory = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoadingHistory = true;
+      _historyError = null;
+    });
+
+    try {
+      final response = await PersonalRecordsApiClient.instance
+          .getBloodPressureRecords(accessToken: accessToken);
+      final history = response.records
+          .map(_BloodPressureHistoryEntry.fromRecord)
+          .toList(growable: false);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _history
+          ..clear()
+          ..addAll(history);
+        _latestEntry = _history.isEmpty ? null : _history.first;
+        _isLoadingHistory = false;
+      });
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = error.message;
+        _isLoadingHistory = false;
+      });
+    }
+  }
+
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message), backgroundColor: AppColors.primary),
     );
-  }
-
-  String _classify(int systolic, int diastolic) {
-    if (systolic >= 180 || diastolic >= 120) {
-      return 'Hypertensive Crisis';
-    }
-    if (systolic >= 140 || diastolic >= 90) {
-      return 'Stage 2 Hypertension';
-    }
-    if (systolic >= 130 || diastolic >= 80) {
-      return 'Stage 1 Hypertension';
-    }
-    if (systolic >= 120 && diastolic < 80) {
-      return 'Elevated';
-    }
-    return 'Normal';
   }
 
   Color _categoryColor(String category) {
@@ -114,7 +128,7 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     return '$day/$month/${dateTime.year}';
   }
 
-  void _saveReading() {
+  Future<void> _saveReading() async {
     final systolic = int.tryParse(_systolicController.text.trim());
     final diastolic = int.tryParse(_diastolicController.text.trim());
 
@@ -126,19 +140,36 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
       return;
     }
 
-    final entry = _BloodPressureHistoryEntry(
-      recordedAt: DateTime.now(),
-      systolic: systolic,
-      diastolic: diastolic,
-      category: _classify(systolic, diastolic),
-    );
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      _showSnackBar('Please sign in again to save blood pressure records.');
+      return;
+    }
 
-    setState(() {
-      _latestEntry = entry;
-      _history.insert(0, entry);
-    });
+    try {
+      final response = await PersonalRecordsApiClient.instance
+          .createBloodPressureRecord(
+        accessToken: accessToken,
+        systolicMmHg: systolic,
+        diastolicMmHg: diastolic,
+      );
+      final entry = _BloodPressureHistoryEntry.fromRecord(response);
 
-    _showSnackBar('Blood pressure entry saved locally for this session.');
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _latestEntry = entry;
+        _history.insert(0, entry);
+        _systolicController.clear();
+        _diastolicController.clear();
+      });
+
+      _showSnackBar('Blood pressure entry saved to the database.');
+    } on PersonalRecordsApiException catch (error) {
+      _showSnackBar(error.message);
+    }
   }
 
   @override
@@ -260,7 +291,7 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            'Readings are stored locally in this session so you can compare recent values immediately.',
+            'Readings are saved to the database so you can compare recent values immediately.',
             textAlign: TextAlign.center,
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary,
@@ -403,6 +434,38 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   }
 
   Widget _buildHistoryTab() {
+    if (_isLoadingHistory) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary),
+      );
+    }
+
+    if (_historyError != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            _historyError!,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (_history.isEmpty) {
+      return Center(
+        child: Text(
+          'No blood pressure readings saved yet.',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      );
+    }
+
     return ListView.separated(
       padding: const EdgeInsets.only(bottom: 24),
       itemCount: _history.length,
@@ -521,4 +584,31 @@ class _BloodPressureHistoryEntry {
   final int systolic;
   final int diastolic;
   final String category;
+
+  factory _BloodPressureHistoryEntry.fromRecord(
+    BloodPressureRecordResponse record,
+  ) {
+    return _BloodPressureHistoryEntry(
+      recordedAt: record.recordedAt,
+      systolic: record.systolicMmHg,
+      diastolic: record.diastolicMmHg,
+      category: classifyBloodPressure(record.systolicMmHg, record.diastolicMmHg),
+    );
+  }
+}
+
+String classifyBloodPressure(int systolic, int diastolic) {
+  if (systolic >= 180 || diastolic >= 120) {
+    return 'Hypertensive Crisis';
+  }
+  if (systolic >= 140 || diastolic >= 90) {
+    return 'Stage 2 Hypertension';
+  }
+  if (systolic >= 130 || diastolic >= 80) {
+    return 'Stage 1 Hypertension';
+  }
+  if (systolic >= 120 && diastolic < 80) {
+    return 'Elevated';
+  }
+  return 'Normal';
 }

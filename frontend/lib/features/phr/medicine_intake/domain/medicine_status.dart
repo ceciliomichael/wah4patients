@@ -28,4 +28,19 @@ extension MedicineStatusX on MedicineStatus {
     MedicineStatus.paused => AppColors.tertiary,
     MedicineStatus.completed => AppColors.textSecondary,
   };
+
+  String get apiValue => switch (this) {
+    MedicineStatus.active => 'scheduled',
+    MedicineStatus.paused => 'delayed',
+    MedicineStatus.completed => 'taken',
+  };
+}
+
+MedicineStatus medicineStatusFromApi(String value) {
+  return switch (value) {
+    'taken' => MedicineStatus.completed,
+    'scheduled' => MedicineStatus.active,
+    'delayed' || 'missed' || 'skipped' => MedicineStatus.paused,
+    _ => MedicineStatus.active,
+  };
 }

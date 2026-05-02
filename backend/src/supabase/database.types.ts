@@ -245,6 +245,227 @@ export interface Database {
           },
         ];
       };
+      bmi_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          weight_kg: number;
+          height_cm: number;
+          bmi_value: number;
+          manual_bmi_value: number | null;
+          bmi_source: 'computed' | 'manual';
+          measurement_system: 'metric' | 'imperial';
+          notes: string | null;
+          recorded_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          weight_kg: number;
+          height_cm: number;
+          bmi_value: number;
+          manual_bmi_value?: number | null;
+          bmi_source?: 'computed' | 'manual';
+          measurement_system: 'metric' | 'imperial';
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          weight_kg?: number;
+          height_cm?: number;
+          bmi_value?: number;
+          manual_bmi_value?: number | null;
+          bmi_source?: 'computed' | 'manual';
+          measurement_system?: 'metric' | 'imperial';
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'bmi_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      blood_pressure_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          systolic_mm_hg: number;
+          diastolic_mm_hg: number;
+          pulse_rate: number | null;
+          measurement_position:
+            | 'sitting'
+            | 'standing'
+            | 'lying'
+            | 'other'
+            | null;
+          measurement_method: string | null;
+          notes: string | null;
+          recorded_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          systolic_mm_hg: number;
+          diastolic_mm_hg: number;
+          pulse_rate?: number | null;
+          measurement_position?:
+            | 'sitting'
+            | 'standing'
+            | 'lying'
+            | 'other'
+            | null;
+          measurement_method?: string | null;
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          systolic_mm_hg?: number;
+          diastolic_mm_hg?: number;
+          pulse_rate?: number | null;
+          measurement_position?:
+            | 'sitting'
+            | 'standing'
+            | 'lying'
+            | 'other'
+            | null;
+          measurement_method?: string | null;
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'blood_pressure_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      temperature_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          temperature_value: number;
+          temperature_unit: 'celsius' | 'fahrenheit';
+          normalized_celsius: number;
+          measurement_method: string | null;
+          notes: string | null;
+          recorded_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          temperature_value: number;
+          temperature_unit: 'celsius' | 'fahrenheit';
+          normalized_celsius: number;
+          measurement_method?: string | null;
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          temperature_value?: number;
+          temperature_unit?: 'celsius' | 'fahrenheit';
+          normalized_celsius?: number;
+          measurement_method?: string | null;
+          notes?: string | null;
+          recorded_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'temperature_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      medication_intake_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          prescription_id: string | null;
+          medication_reference: string | null;
+          medication_name_snapshot: string;
+          scheduled_at: string;
+          taken_at: string | null;
+          status: 'scheduled' | 'taken' | 'missed' | 'delayed' | 'skipped';
+          quantity_value: number | null;
+          quantity_unit: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          prescription_id?: string | null;
+          medication_reference?: string | null;
+          medication_name_snapshot: string;
+          scheduled_at: string;
+          taken_at?: string | null;
+          status?: 'scheduled' | 'taken' | 'missed' | 'delayed' | 'skipped';
+          quantity_value?: number | null;
+          quantity_unit?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          prescription_id?: string | null;
+          medication_reference?: string | null;
+          medication_name_snapshot?: string;
+          scheduled_at?: string;
+          taken_at?: string | null;
+          status?: 'scheduled' | 'taken' | 'missed' | 'delayed' | 'skipped';
+          quantity_value?: number | null;
+          quantity_unit?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'medication_intake_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

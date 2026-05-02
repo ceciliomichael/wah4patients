@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
+import '../../../../auth/domain/auth_session.dart';
+import '../../../data/personal_records_api_client.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../models/body_mass_index_models.dart';
 import '../utils/body_mass_index_calculations.dart';
@@ -27,38 +31,9 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   BmiGender _selectedGender = BmiGender.female;
   int _age = 28;
 
-  final List<BodyMassIndexHistoryEntry> _history = <BodyMassIndexHistoryEntry>[
-    BodyMassIndexHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 1)),
-      weight: 60,
-      height: 163,
-      bmi: 22.6,
-      category: 'Normal',
-      unitSystem: BmiUnitSystem.metric,
-      gender: BmiGender.female,
-      age: 28,
-    ),
-    BodyMassIndexHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 5)),
-      weight: 68,
-      height: 170,
-      bmi: 23.5,
-      category: 'Normal',
-      unitSystem: BmiUnitSystem.metric,
-      gender: BmiGender.other,
-      age: 34,
-    ),
-    BodyMassIndexHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 11)),
-      weight: 135,
-      height: 67,
-      bmi: 21.1,
-      category: 'Normal',
-      unitSystem: BmiUnitSystem.imperial,
-      gender: BmiGender.male,
-      age: 31,
-    ),
-  ];
+  final List<BodyMassIndexHistoryEntry> _history = <BodyMassIndexHistoryEntry>[];
+  bool _isLoadingHistory = true;
+  String? _historyError;
 
   BodyMassIndexHistoryEntry? get _latestEntry =>
       _history.isEmpty ? null : _history.first;
@@ -66,6 +41,12 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   bool get _hasTodayEntry {
     final latestEntry = _latestEntry;
     return latestEntry != null && isSameDay(latestEntry.recordedAt, DateTime.now());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_loadHistory());
   }
 
   @override
@@ -82,7 +63,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
         title: 'BMI Help',
         messages: const <String>[
           'Switch between metric and imperial units before entering your values.',
-          'Add your age and gender to keep the record organized.',
+          'Your readings are saved to the database and loaded back into history.',
           'Use the history tab to review recent BMI entries on this screen.',
         ],
         icons: const <IconData>[
@@ -93,6 +74,51 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
         onClose: () => Navigator.of(context).pop(),
       ),
     );
+  }
+
+  Future<void> _loadHistory() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = 'Please sign in again to load BMI records.';
+        _isLoadingHistory = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoadingHistory = true;
+      _historyError = null;
+    });
+
+    try {
+      final response = await PersonalRecordsApiClient.instance.getBmiRecords(
+        accessToken: accessToken,
+      );
+      final history = response.records
+          .map(BodyMassIndexHistoryEntry.fromRecord)
+          .toList(growable: false);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _history
+          ..clear()
+          ..addAll(history);
+        _isLoadingHistory = false;
+      });
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = error.message;
+        _isLoadingHistory = false;
+      });
+    }
   }
 
   void _toggleUnitSystem(BmiUnitSystem nextSystem) {
@@ -123,7 +149,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
     });
   }
 
-  void _calculateBmi() {
+  Future<void> _calculateBmi() async {
     final weight = double.tryParse(_weightController.text.trim());
     final height = double.tryParse(_heightController.text.trim());
 
@@ -137,30 +163,50 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
       return;
     }
 
-    final bmiValue = double.parse(
-      calculateBmi(
-        weight: weight,
-        height: height,
-        unitSystem: _unitSystem,
-      ).toStringAsFixed(1),
-    );
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please sign in again to save BMI records.'),
+          backgroundColor: AppColors.primary,
+        ),
+      );
+      return;
+    }
 
-    final entry = BodyMassIndexHistoryEntry(
-      recordedAt: DateTime.now(),
-      weight: weight,
-      height: height,
-      bmi: bmiValue,
-      category: bmiCategoryForValue(bmiValue),
-      unitSystem: _unitSystem,
-      gender: _selectedGender,
-      age: _age,
-    );
+    try {
+      final response = await PersonalRecordsApiClient.instance.createBmiRecord(
+        accessToken: accessToken,
+        weightValue: weight,
+        heightValue: height,
+        measurementSystem: _unitSystem == BmiUnitSystem.metric
+            ? 'metric'
+            : 'imperial',
+      );
+      final entry = BodyMassIndexHistoryEntry.fromRecord(response);
 
-    setState(() {
-      _history.insert(0, entry);
-    });
+      if (!mounted) {
+        return;
+      }
 
-    _showResultDialog(entry);
+      setState(() {
+        _history.insert(0, entry);
+        _weightController.clear();
+        _heightController.clear();
+      });
+
+      _showResultDialog(entry);
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message),
+          backgroundColor: AppColors.primary,
+        ),
+      );
+    }
   }
 
   void _showResultDialog(BodyMassIndexHistoryEntry entry) {
@@ -243,6 +289,27 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   }
 
   Widget _buildHistoryTab() {
+    if (_isLoadingHistory) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary),
+      );
+    }
+
+    if (_historyError != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            _historyError!,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      );
+    }
+
     if (_history.isEmpty) {
       return const BodyMassIndexHistoryEmptyState();
     }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/constants/app_border_radii.dart';
@@ -6,6 +8,8 @@ import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../../../auth/domain/auth_session.dart';
+import '../../../data/personal_records_api_client.dart';
 
 enum TemperatureUnitSystem { celsius, fahrenheit }
 
@@ -34,31 +38,14 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
   TemperatureUnitSystem _unitSystem = TemperatureUnitSystem.celsius;
   _TemperatureHistoryEntry? _latestEntry;
 
-  final List<_TemperatureHistoryEntry> _history = <_TemperatureHistoryEntry>[
-    _TemperatureHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 1)),
-      temperature: 36.6,
-      unitSystem: TemperatureUnitSystem.celsius,
-      category: 'Normal',
-    ),
-    _TemperatureHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 4)),
-      temperature: 37.8,
-      unitSystem: TemperatureUnitSystem.celsius,
-      category: 'Elevated',
-    ),
-    _TemperatureHistoryEntry(
-      recordedAt: DateTime.now().subtract(const Duration(days: 8)),
-      temperature: 99.1,
-      unitSystem: TemperatureUnitSystem.fahrenheit,
-      category: 'Normal',
-    ),
-  ];
+  final List<_TemperatureHistoryEntry> _history = <_TemperatureHistoryEntry>[];
+  bool _isLoadingHistory = true;
+  String? _historyError;
 
   @override
   void initState() {
     super.initState();
-    _latestEntry = _history.first;
+    unawaited(_loadHistory());
   }
 
   @override
@@ -74,7 +61,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
         title: 'Body Temperature Help',
         messages: const <String>[
           'Choose the unit you want to enter, then type your temperature reading.',
-          'The screen converts values locally so the history remains easy to scan.',
+          'Temperature readings are saved to the database and loaded into history.',
           'Use the history tab to compare recent values and categories.',
         ],
         icons: const <IconData>[
@@ -85,6 +72,52 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
         onClose: () => Navigator.of(context).pop(),
       ),
     );
+  }
+
+  Future<void> _loadHistory() async {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = 'Please sign in again to load temperature records.';
+        _isLoadingHistory = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoadingHistory = true;
+      _historyError = null;
+    });
+
+    try {
+      final response = await PersonalRecordsApiClient.instance.getTemperatureRecords(
+        accessToken: accessToken,
+      );
+      final history = response.records
+          .map(_TemperatureHistoryEntry.fromRecord)
+          .toList(growable: false);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _history
+          ..clear()
+          ..addAll(history);
+        _latestEntry = _history.isEmpty ? null : _history.first;
+        _isLoadingHistory = false;
+      });
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _historyError = error.message;
+        _isLoadingHistory = false;
+      });
+    }
   }
 
   double _toCelsius(double value) {
@@ -109,19 +142,6 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     return '$day/$month/${dateTime.year}';
   }
 
-  String _categorize(double celsius) {
-    if (celsius < 36.0) {
-      return 'Low';
-    }
-    if (celsius < 37.3) {
-      return 'Normal';
-    }
-    if (celsius < 38.0) {
-      return 'Elevated';
-    }
-    return 'Fever';
-  }
-
   void _toggleUnitSystem(TemperatureUnitSystem value) {
     if (_unitSystem == value) {
       return;
@@ -132,24 +152,53 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     });
   }
 
-  void _saveTemperature() {
+  Future<void> _saveTemperature() async {
     final temperature = double.tryParse(_temperatureController.text.trim());
     if (temperature == null || temperature <= 0) {
       return;
     }
 
-    final entry = _TemperatureHistoryEntry(
-      recordedAt: DateTime.now(),
-      temperature: double.parse(temperature.toStringAsFixed(1)),
-      unitSystem: _unitSystem,
-      category: _categorize(_toCelsius(temperature)),
-    );
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please sign in again to save temperature records.'),
+          backgroundColor: AppColors.primary,
+        ),
+      );
+      return;
+    }
 
-    setState(() {
-      _latestEntry = entry;
-      _history.insert(0, entry);
-      _temperatureController.clear();
-    });
+    try {
+      final response = await PersonalRecordsApiClient.instance.createTemperatureRecord(
+        accessToken: accessToken,
+        temperatureValue: double.parse(temperature.toStringAsFixed(1)),
+        temperatureUnit: _unitSystem == TemperatureUnitSystem.celsius
+            ? 'celsius'
+            : 'fahrenheit',
+      );
+      final entry = _TemperatureHistoryEntry.fromRecord(response);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _latestEntry = entry;
+        _history.insert(0, entry);
+        _temperatureController.clear();
+      });
+    } on PersonalRecordsApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message), backgroundColor: AppColors.primary),
+      );
+    }
   }
 
   @override
@@ -348,6 +397,38 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
   }
 
   Widget _buildHistoryTab() {
+    if (_isLoadingHistory) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary),
+      );
+    }
+
+    if (_historyError != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            _historyError!,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (_history.isEmpty) {
+      return Center(
+        child: Text(
+          'No temperature records saved yet.',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      );
+    }
+
     return ListView.separated(
       padding: const EdgeInsets.only(bottom: 24),
       itemCount: _history.length,
@@ -460,6 +541,31 @@ class _TemperatureHistoryEntry {
   final double temperature;
   final TemperatureUnitSystem unitSystem;
   final String category;
+
+  factory _TemperatureHistoryEntry.fromRecord(TemperatureRecordResponse record) {
+    final unitSystem = record.temperatureUnit == 'fahrenheit'
+        ? TemperatureUnitSystem.fahrenheit
+        : TemperatureUnitSystem.celsius;
+    return _TemperatureHistoryEntry(
+      recordedAt: record.recordedAt,
+      temperature: record.temperatureValue,
+      unitSystem: unitSystem,
+      category: _categorizeTemperature(record.normalizedCelsius),
+    );
+  }
+}
+
+String _categorizeTemperature(double celsius) {
+  if (celsius < 36.0) {
+    return 'Low';
+  }
+  if (celsius < 37.3) {
+    return 'Normal';
+  }
+  if (celsius < 38.0) {
+    return 'Elevated';
+  }
+  return 'Fever';
 }
 
 class TemperatureUnitToggle extends StatelessWidget {
