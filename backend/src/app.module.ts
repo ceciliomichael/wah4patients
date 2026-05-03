@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { envValidationSchema } from './common/config/env.validation';
 import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { HealthModule } from './health/health.module';
+import { HealthRecordsModule } from './health-records/health-records.module';
 import { PersonalRecordsModule } from './personal-records/personal-records.module';
 
 @Module({
@@ -24,6 +25,7 @@ import { PersonalRecordsModule } from './personal-records/personal-records.modul
     HealthModule,
     AuthModule,
     PersonalRecordsModule,
+    HealthRecordsModule,
   ],
   providers: [
     {

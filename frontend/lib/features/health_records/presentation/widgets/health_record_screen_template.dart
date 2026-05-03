@@ -9,9 +9,18 @@ import 'health_record_list_item.dart';
 import 'health_record_search_filter_bar.dart';
 
 class HealthRecordScreenTemplate extends StatefulWidget {
-  const HealthRecordScreenTemplate({super.key, required this.content});
+  const HealthRecordScreenTemplate({
+    super.key,
+    required this.content,
+    this.isLoading = false,
+    this.loadErrorMessage,
+    this.onRetry,
+  });
 
   final HealthRecordScreenContent content;
+  final bool isLoading;
+  final String? loadErrorMessage;
+  final VoidCallback? onRetry;
 
   @override
   State<HealthRecordScreenTemplate> createState() =>
@@ -125,30 +134,56 @@ class _HealthRecordScreenTemplateState
                 },
               ),
               const SizedBox(height: 16),
-              Expanded(
-                child: entries.isEmpty
-                    ? _buildEmptyState()
-                    : ListView.separated(
-                        padding: const EdgeInsets.only(bottom: 24),
-                        itemCount: entries.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 12),
-                        itemBuilder: (context, index) {
-                          final entry = entries[index];
-                          final isExpanded = _expandedEntryIds.contains(
-                            entry.id,
-                          );
-                          return HealthRecordListItem(
-                            entry: entry,
-                            isExpanded: isExpanded,
-                            onTap: () => _toggleExpanded(entry.id),
-                          );
-                        },
-                      ),
-              ),
+              Expanded(child: _buildRecordContent(entries)),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildRecordContent(List<HealthRecordEntry> entries) {
+    if (widget.isLoading && entries.isEmpty) {
+      return _buildQuietLoadingState();
+    }
+
+    final loadErrorMessage = widget.loadErrorMessage;
+    if (loadErrorMessage != null && entries.isEmpty) {
+      return _buildInlineErrorState(loadErrorMessage);
+    }
+
+    if (entries.isEmpty) {
+      return _buildEmptyState();
+    }
+
+    return Stack(
+      children: [
+        ListView.separated(
+          padding: const EdgeInsets.only(bottom: 24),
+          itemCount: entries.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final entry = entries[index];
+            final isExpanded = _expandedEntryIds.contains(entry.id);
+            return HealthRecordListItem(
+              entry: entry,
+              isExpanded: isExpanded,
+              onTap: () => _toggleExpanded(entry.id),
+            );
+          },
+        ),
+        if (widget.isLoading)
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: LinearProgressIndicator(
+              minHeight: 2,
+              color: AppColors.primary,
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+      ],
     );
   }
 
@@ -187,6 +222,119 @@ class _HealthRecordScreenTemplateState
             textAlign: TextAlign.center,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildQuietLoadingState() {
+    return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 24),
+      itemCount: 3,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceVariant,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildPlaceholderBar(widthFactor: 0.62),
+                        const SizedBox(height: 8),
+                        _buildPlaceholderBar(widthFactor: 0.86),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              _buildPlaceholderBar(widthFactor: 0.48),
+              const SizedBox(height: 10),
+              _buildPlaceholderBar(widthFactor: 0.72),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPlaceholderBar({required double widthFactor}) {
+    return FractionallySizedBox(
+      widthFactor: widthFactor,
+      alignment: Alignment.centerLeft,
+      child: Container(
+        height: 12,
+        decoration: BoxDecoration(
+          color: AppColors.surfaceVariant,
+          borderRadius: BorderRadius.circular(999),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInlineErrorState(String message) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.cloud_off_outlined,
+              color: AppColors.textSecondary,
+              size: 42,
+            ),
+            const SizedBox(height: 14),
+            Text(
+              'Unable to load health records',
+              style: AppTextStyles.titleLarge.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              message,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            if (widget.onRetry != null) ...[
+              const SizedBox(height: 18),
+              SizedBox(
+                height: 46,
+                child: FilledButton(
+                  onPressed: widget.onRetry,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.textOnPrimary,
+                  ),
+                  child: const Text('Retry'),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

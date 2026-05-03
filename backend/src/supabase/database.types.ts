@@ -1,3 +1,11 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
 export interface Database {
   public: {
     Tables: {
@@ -459,6 +467,266 @@ export interface Database {
         Relationships: [
           {
             foreignKeyName: 'medication_intake_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      medical_history_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string;
+          subtitle: string;
+          summary_label: string;
+          summary_value: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key: string;
+          accent_color_key: string;
+          icon_key: string;
+          details_json: Json;
+          recorded_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title: string;
+          subtitle?: string;
+          summary_label: string;
+          summary_value?: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string;
+          subtitle?: string;
+          summary_label?: string;
+          summary_value?: string;
+          filter_value?: string;
+          status_label?: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'medical_history_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      immunization_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string;
+          subtitle: string;
+          summary_label: string;
+          summary_value: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key: string;
+          accent_color_key: string;
+          icon_key: string;
+          details_json: Json;
+          recorded_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title: string;
+          subtitle?: string;
+          summary_label: string;
+          summary_value?: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string;
+          subtitle?: string;
+          summary_label?: string;
+          summary_value?: string;
+          filter_value?: string;
+          status_label?: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'immunization_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      medical_consultation_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string;
+          subtitle: string;
+          summary_label: string;
+          summary_value: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key: string;
+          accent_color_key: string;
+          icon_key: string;
+          details_json: Json;
+          recorded_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title: string;
+          subtitle?: string;
+          summary_label: string;
+          summary_value?: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string;
+          subtitle?: string;
+          summary_label?: string;
+          summary_value?: string;
+          filter_value?: string;
+          status_label?: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'medical_consultation_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      laboratory_result_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string;
+          subtitle: string;
+          summary_label: string;
+          summary_value: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key: string;
+          accent_color_key: string;
+          icon_key: string;
+          details_json: Json;
+          recorded_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title: string;
+          subtitle?: string;
+          summary_label: string;
+          summary_value?: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string;
+          subtitle?: string;
+          summary_label?: string;
+          summary_value?: string;
+          filter_value?: string;
+          status_label?: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'laboratory_result_records_profile_id_fkey';
             columns: ['profile_id'];
             isOneToOne: false;
             referencedRelation: 'users';

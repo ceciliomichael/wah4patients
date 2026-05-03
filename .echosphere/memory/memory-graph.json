@@ -1872,6 +1872,937 @@
       ],
       "createdAt": "2026-04-30T15:56:24.694Z",
       "updatedAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "memoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "rootMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [
+        "c400691c-de7f-4f66-a934-15c2a6697925"
+      ],
+      "sectionKind": "fact",
+      "summary": "Reviewed the frontend Health Records screens and the existing Personal Records architecture to plan a future local persistence layer for Health Records. The current Health Records feature is still presentation-driven with hardcoded entry data in the screen files, while Personal Records already has a dedicated typed data/repository pattern. The recommended approach is to introduce a separate local health-records repository and domain model layer so the UI can read from a single source of truth now and later support creation without reworking the screens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen routes into the Health Records feature and shows the current user-facing hub that should remain presentation-only.",
+          "notes": "Reviewed navigation and help copy."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/personal_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen is the closest architectural reference for the Personal Records feature and its feature-entry pattern.",
+          "notes": "Reviewed the route targets used for personal records."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/models/health_record_models.dart",
+          "action": "inspected",
+          "reason": "This file defines the shared record entry and detail shapes that any local repository will need to feed.",
+          "notes": "Contains the core presentation models."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "This widget owns search, filtering, and expansion behavior and should stay separate from storage concerns.",
+          "notes": "It is the primary screen composition layer."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/phr/data/personal_records_api_client.dart",
+          "action": "inspected",
+          "reason": "This typed API client provides the strongest existing precedent for how record data should be modeled and loaded in a dedicated layer.",
+          "notes": "Used as the architecture comparison point."
+        }
+      ],
+      "createdAt": "2026-05-02T16:19:23.866Z",
+      "updatedAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "memoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "rootMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "parentMemoryIds": [
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [
+        "319b2594-76d0-4f9a-8e0b-14c49475e8f6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Reviewed the frontend Health Records screens and the existing Personal Records architecture to plan a future local persistence layer for Health Records. The current Health Records feature is still presentation-driven with hardcoded entry data in the screen files, while Personal Records already has a dedicated typed data/repository pattern. The recommended approach is to introduce a separate local health-records repository and domain model layer so the UI can read from a single source of truth now and later support creation without reworking the screens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen routes into the Health Records feature and shows the current user-facing hub that should remain presentation-only.",
+          "notes": "Reviewed navigation and help copy."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/personal_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen is the closest architectural reference for the Personal Records feature and its feature-entry pattern.",
+          "notes": "Reviewed the route targets used for personal records."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/models/health_record_models.dart",
+          "action": "inspected",
+          "reason": "This file defines the shared record entry and detail shapes that any local repository will need to feed.",
+          "notes": "Contains the core presentation models."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "This widget owns search, filtering, and expansion behavior and should stay separate from storage concerns.",
+          "notes": "It is the primary screen composition layer."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/phr/data/personal_records_api_client.dart",
+          "action": "inspected",
+          "reason": "This typed API client provides the strongest existing precedent for how record data should be modeled and loaded in a dedicated layer.",
+          "notes": "Used as the architecture comparison point."
+        }
+      ],
+      "createdAt": "2026-05-02T16:19:23.896Z",
+      "updatedAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "memoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "rootMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "parentMemoryIds": [
+        "c400691c-de7f-4f66-a934-15c2a6697925"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+        "690a2798-e922-4c10-8e50-259c56db4082"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Reviewed the frontend Health Records screens and the existing Personal Records architecture to plan a future local persistence layer for Health Records. The current Health Records feature is still presentation-driven with hardcoded entry data in the screen files, while Personal Records already has a dedicated typed data/repository pattern. The recommended approach is to introduce a separate local health-records repository and domain model layer so the UI can read from a single source of truth now and later support creation without reworking the screens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen routes into the Health Records feature and shows the current user-facing hub that should remain presentation-only.",
+          "notes": "Reviewed navigation and help copy."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/personal_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen is the closest architectural reference for the Personal Records feature and its feature-entry pattern.",
+          "notes": "Reviewed the route targets used for personal records."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/models/health_record_models.dart",
+          "action": "inspected",
+          "reason": "This file defines the shared record entry and detail shapes that any local repository will need to feed.",
+          "notes": "Contains the core presentation models."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "This widget owns search, filtering, and expansion behavior and should stay separate from storage concerns.",
+          "notes": "It is the primary screen composition layer."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "inspected",
+          "reason": "This screen currently embeds hardcoded health record entries and is a primary candidate for repository-backed data.",
+          "notes": "Reviewed its static record list."
+        },
+        {
+          "path": "frontend/lib/features/phr/data/personal_records_api_client.dart",
+          "action": "inspected",
+          "reason": "This typed API client provides the strongest existing precedent for how record data should be modeled and loaded in a dedicated layer.",
+          "notes": "Used as the architecture comparison point."
+        }
+      ],
+      "createdAt": "2026-05-02T16:19:23.927Z",
+      "updatedAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "memoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "rootMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "parentMemoryIds": [
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented read-only Supabase-backed Health Records storage integration. Added SQL schema for a single health_records table designed for manual Supabase inserts and future backend create endpoints, added backend database typings and a read-only NestJS HealthRecords module, and refactored Flutter Health Records screens to load authenticated records from the backend without adding any create/receive endpoints. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new Supabase Health Records table, constraints, indexes, trigger, and RLS policies for manual storage and future backend integration.",
+          "notes": "Must be applied to Supabase before live reads can return seeded data."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Database metadata for the health_records table and a Json type used by details_json.",
+          "notes": "Keeps backend Supabase reads type-safe."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines Health Records backend response contracts, section key validation, tone types, and details_json parsing.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Implements read-only Supabase querying and row-to-response mapping for Health Records.",
+          "notes": "Orders by display_order ascending then recorded_at descending."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns auth-token user resolution and section-key validation before delegating reads to the repository.",
+          "notes": "Uses existing AuthSupportService."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Provides the GET /health-records endpoint with query-based section selection.",
+          "notes": "No receiving/create endpoint was added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Registers the Health Records controller, service, repository, AuthModule, and SupabaseModule.",
+          "notes": "Dedicated module preserves domain separation."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Imports and registers HealthRecordsModule in the NestJS application.",
+          "notes": "Keeps endpoint active in the backend app."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for read-only Health Records list requests using existing backend config and bearer-token auth.",
+          "notes": "Handles timeout/backend errors and response parsing."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects to existing HealthRecordEntry presentation models, including tone and icon key mapping.",
+          "notes": "Keeps API parsing separate from widget rendering."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/health_record_section_screen.dart",
+          "action": "created",
+          "reason": "Shared stateful screen that loads records for a section and composes HealthRecordScreenTemplate with loading/error/retry states.",
+          "notes": "Prevents duplicated API loading logic across the four section screens."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "Adds reusable loading, error, and retry presentation states while preserving existing search/filter/list behavior.",
+          "notes": "Template remains presentation-only."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_history.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key immunization_records.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_consultations.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key laboratory_results.",
+          "notes": "Existing labels/help/filter options preserved."
+        }
+      ],
+      "createdAt": "2026-05-02T16:29:27.632Z",
+      "updatedAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "memoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "rootMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "parentMemoryIds": [
+        "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [
+        "3e36fe52-0a41-46f9-9925-d25f3d7a609d"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented read-only Supabase-backed Health Records storage integration. Added SQL schema for a single health_records table designed for manual Supabase inserts and future backend create endpoints, added backend database typings and a read-only NestJS HealthRecords module, and refactored Flutter Health Records screens to load authenticated records from the backend without adding any create/receive endpoints. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new Supabase Health Records table, constraints, indexes, trigger, and RLS policies for manual storage and future backend integration.",
+          "notes": "Must be applied to Supabase before live reads can return seeded data."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Database metadata for the health_records table and a Json type used by details_json.",
+          "notes": "Keeps backend Supabase reads type-safe."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines Health Records backend response contracts, section key validation, tone types, and details_json parsing.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Implements read-only Supabase querying and row-to-response mapping for Health Records.",
+          "notes": "Orders by display_order ascending then recorded_at descending."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns auth-token user resolution and section-key validation before delegating reads to the repository.",
+          "notes": "Uses existing AuthSupportService."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Provides the GET /health-records endpoint with query-based section selection.",
+          "notes": "No receiving/create endpoint was added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Registers the Health Records controller, service, repository, AuthModule, and SupabaseModule.",
+          "notes": "Dedicated module preserves domain separation."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Imports and registers HealthRecordsModule in the NestJS application.",
+          "notes": "Keeps endpoint active in the backend app."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for read-only Health Records list requests using existing backend config and bearer-token auth.",
+          "notes": "Handles timeout/backend errors and response parsing."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects to existing HealthRecordEntry presentation models, including tone and icon key mapping.",
+          "notes": "Keeps API parsing separate from widget rendering."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/health_record_section_screen.dart",
+          "action": "created",
+          "reason": "Shared stateful screen that loads records for a section and composes HealthRecordScreenTemplate with loading/error/retry states.",
+          "notes": "Prevents duplicated API loading logic across the four section screens."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "Adds reusable loading, error, and retry presentation states while preserving existing search/filter/list behavior.",
+          "notes": "Template remains presentation-only."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_history.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key immunization_records.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_consultations.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key laboratory_results.",
+          "notes": "Existing labels/help/filter options preserved."
+        }
+      ],
+      "createdAt": "2026-05-02T16:29:27.660Z",
+      "updatedAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "memoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "rootMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "parentMemoryIds": [
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented read-only Supabase-backed Health Records storage integration. Added SQL schema for a single health_records table designed for manual Supabase inserts and future backend create endpoints, added backend database typings and a read-only NestJS HealthRecords module, and refactored Flutter Health Records screens to load authenticated records from the backend without adding any create/receive endpoints. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the new Supabase Health Records table, constraints, indexes, trigger, and RLS policies for manual storage and future backend integration.",
+          "notes": "Must be applied to Supabase before live reads can return seeded data."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Database metadata for the health_records table and a Json type used by details_json.",
+          "notes": "Keeps backend Supabase reads type-safe."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines Health Records backend response contracts, section key validation, tone types, and details_json parsing.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Implements read-only Supabase querying and row-to-response mapping for Health Records.",
+          "notes": "Orders by display_order ascending then recorded_at descending."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns auth-token user resolution and section-key validation before delegating reads to the repository.",
+          "notes": "Uses existing AuthSupportService."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Provides the GET /health-records endpoint with query-based section selection.",
+          "notes": "No receiving/create endpoint was added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Registers the Health Records controller, service, repository, AuthModule, and SupabaseModule.",
+          "notes": "Dedicated module preserves domain separation."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Imports and registers HealthRecordsModule in the NestJS application.",
+          "notes": "Keeps endpoint active in the backend app."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for read-only Health Records list requests using existing backend config and bearer-token auth.",
+          "notes": "Handles timeout/backend errors and response parsing."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects to existing HealthRecordEntry presentation models, including tone and icon key mapping.",
+          "notes": "Keeps API parsing separate from widget rendering."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/health_record_section_screen.dart",
+          "action": "created",
+          "reason": "Shared stateful screen that loads records for a section and composes HealthRecordScreenTemplate with loading/error/retry states.",
+          "notes": "Prevents duplicated API loading logic across the four section screens."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "Adds reusable loading, error, and retry presentation states while preserving existing search/filter/list behavior.",
+          "notes": "Template remains presentation-only."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_history.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key immunization_records.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key medical_consultations.",
+          "notes": "Existing labels/help/filter options preserved."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Refactored from hardcoded record entries to a thin section configuration using section_key laboratory_results.",
+          "notes": "Existing labels/help/filter options preserved."
+        }
+      ],
+      "createdAt": "2026-05-02T16:29:27.686Z",
+      "updatedAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "memoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "rootMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "parentMemoryIds": [
+        "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274"
+      ],
+      "relatedMemoryIds": [
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+        "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47"
+      ],
+      "childMemoryIds": [
+        "46849e74-4dec-45bf-b219-87ca1b4d9696"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented read-only Supabase-backed Health Records integration with one dedicated table per Health Records screen/category. Added SQL schema for medical_history_records, immunization_records, medical_consultation_records, and laboratory_result_records; added typed backend read-only module/endpoints; added Flutter API client, mapper, and data-loading wrapper; converted Health Records screens from embedded static entries to authenticated backend-loaded records. No create/receive endpoints were added, matching the user's request to handle creation later. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the four dedicated Health Records Supabase tables, indexes, updated_at triggers, and select-own RLS policies.",
+          "notes": "Must be applied manually to Supabase."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Supabase table definitions for the four new Health Records tables and a Json helper type.",
+          "notes": "Keeps backend repository access type-safe."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new HealthRecordsModule in the NestJS application module.",
+          "notes": "Needed for the read endpoints to be available."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines the backend Health Records response contracts, table-name union, section union, and row shape.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Provides read-only Supabase access and maps table rows plus details_json into typed Health Records responses.",
+          "notes": "Validates details_json by accepting only label/value string entries."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns authenticated user resolution and maps sections to the correct dedicated table.",
+          "notes": "Keeps auth and table routing out of the controller."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Adds authenticated read-only GET endpoints for each Health Records screen/category.",
+          "notes": "No POST endpoints were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Composes AuthModule, SupabaseModule, repository, service, and controller for the Health Records backend feature.",
+          "notes": "Follows Personal Records module separation."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for authenticated read-only Health Records backend calls.",
+          "notes": "Uses existing backend base URL/API key config and bearer token pattern."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects into existing HealthRecordEntry presentation models.",
+          "notes": "Keeps color/icon key translation out of screen widgets."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "created",
+          "reason": "Adds the reusable data-loading boundary for Health Records screens while preserving the presentation template.",
+          "notes": "Handles loading, retryable error state, and authenticated token lookup."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        }
+      ],
+      "createdAt": "2026-05-02T17:00:26.666Z",
+      "updatedAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "memoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "rootMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "parentMemoryIds": [
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83"
+      ],
+      "relatedMemoryIds": [
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+        "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47"
+      ],
+      "childMemoryIds": [
+        "885eabb7-4847-426e-bb87-a3090e7a4df2"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented read-only Supabase-backed Health Records integration with one dedicated table per Health Records screen/category. Added SQL schema for medical_history_records, immunization_records, medical_consultation_records, and laboratory_result_records; added typed backend read-only module/endpoints; added Flutter API client, mapper, and data-loading wrapper; converted Health Records screens from embedded static entries to authenticated backend-loaded records. No create/receive endpoints were added, matching the user's request to handle creation later. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the four dedicated Health Records Supabase tables, indexes, updated_at triggers, and select-own RLS policies.",
+          "notes": "Must be applied manually to Supabase."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Supabase table definitions for the four new Health Records tables and a Json helper type.",
+          "notes": "Keeps backend repository access type-safe."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new HealthRecordsModule in the NestJS application module.",
+          "notes": "Needed for the read endpoints to be available."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines the backend Health Records response contracts, table-name union, section union, and row shape.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Provides read-only Supabase access and maps table rows plus details_json into typed Health Records responses.",
+          "notes": "Validates details_json by accepting only label/value string entries."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns authenticated user resolution and maps sections to the correct dedicated table.",
+          "notes": "Keeps auth and table routing out of the controller."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Adds authenticated read-only GET endpoints for each Health Records screen/category.",
+          "notes": "No POST endpoints were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Composes AuthModule, SupabaseModule, repository, service, and controller for the Health Records backend feature.",
+          "notes": "Follows Personal Records module separation."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for authenticated read-only Health Records backend calls.",
+          "notes": "Uses existing backend base URL/API key config and bearer token pattern."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects into existing HealthRecordEntry presentation models.",
+          "notes": "Keeps color/icon key translation out of screen widgets."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "created",
+          "reason": "Adds the reusable data-loading boundary for Health Records screens while preserving the presentation template.",
+          "notes": "Handles loading, retryable error state, and authenticated token lookup."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        }
+      ],
+      "createdAt": "2026-05-02T17:00:26.696Z",
+      "updatedAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "memoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "rootMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "parentMemoryIds": [
+        "46849e74-4dec-45bf-b219-87ca1b4d9696"
+      ],
+      "relatedMemoryIds": [
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+        "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented read-only Supabase-backed Health Records integration with one dedicated table per Health Records screen/category. Added SQL schema for medical_history_records, immunization_records, medical_consultation_records, and laboratory_result_records; added typed backend read-only module/endpoints; added Flutter API client, mapper, and data-loading wrapper; converted Health Records screens from embedded static entries to authenticated backend-loaded records. No create/receive endpoints were added, matching the user's request to handle creation later. Validation passed with backend npm run build and frontend flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "created",
+          "reason": "Defines the four dedicated Health Records Supabase tables, indexes, updated_at triggers, and select-own RLS policies.",
+          "notes": "Must be applied manually to Supabase."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Adds typed Supabase table definitions for the four new Health Records tables and a Json helper type.",
+          "notes": "Keeps backend repository access type-safe."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new HealthRecordsModule in the NestJS application module.",
+          "notes": "Needed for the read endpoints to be available."
+        },
+        {
+          "path": "backend/src/health-records/health-records.types.ts",
+          "action": "created",
+          "reason": "Defines the backend Health Records response contracts, table-name union, section union, and row shape.",
+          "notes": "No create input types were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.repository.ts",
+          "action": "created",
+          "reason": "Provides read-only Supabase access and maps table rows plus details_json into typed Health Records responses.",
+          "notes": "Validates details_json by accepting only label/value string entries."
+        },
+        {
+          "path": "backend/src/health-records/health-records.service.ts",
+          "action": "created",
+          "reason": "Owns authenticated user resolution and maps sections to the correct dedicated table.",
+          "notes": "Keeps auth and table routing out of the controller."
+        },
+        {
+          "path": "backend/src/health-records/health-records.controller.ts",
+          "action": "created",
+          "reason": "Adds authenticated read-only GET endpoints for each Health Records screen/category.",
+          "notes": "No POST endpoints were added."
+        },
+        {
+          "path": "backend/src/health-records/health-records.module.ts",
+          "action": "created",
+          "reason": "Composes AuthModule, SupabaseModule, repository, service, and controller for the Health Records backend feature.",
+          "notes": "Follows Personal Records module separation."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_api_client.dart",
+          "action": "created",
+          "reason": "Adds a typed Flutter API client for authenticated read-only Health Records backend calls.",
+          "notes": "Uses existing backend base URL/API key config and bearer token pattern."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/mappers/health_record_entry_mapper.dart",
+          "action": "created",
+          "reason": "Maps backend HealthRecordResponse objects into existing HealthRecordEntry presentation models.",
+          "notes": "Keeps color/icon key translation out of screen widgets."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "created",
+          "reason": "Adds the reusable data-loading boundary for Health Records screens while preserving the presentation template.",
+          "notes": "Handles loading, retryable error state, and authenticated token lookup."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_history_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/immunization_records_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/laboratory_results_screen.dart",
+          "action": "modified",
+          "reason": "Converted from hardcoded entries to repository/API-backed HealthRecordDataScreen composition.",
+          "notes": "Keeps labels, filters, help copy, and empty copy."
+        }
+      ],
+      "createdAt": "2026-05-02T17:00:26.726Z",
+      "updatedAt": "2026-05-02T17:00:26.726Z"
     }
   ],
   "edges": [
@@ -2749,7 +3680,378 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-04-30T15:56:24.694Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "toMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.866Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "toMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.896Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "c400691c-de7f-4f66-a934-15c2a6697925",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "0af54ac0-5007-4f8c-b54b-39bf9940a40a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:19:23.927Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.632Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "toMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.660Z"
+    },
+    {
+      "fromMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "fromMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "fromMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "fromMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "toMemoryId": "319b2594-76d0-4f9a-8e0b-14c49475e8f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "fromMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T16:29:27.686Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "5f72c3e3-f4ca-4a60-a8bf-0d54a4c37274",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "toMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.666Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "toMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.696Z"
+    },
+    {
+      "fromMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "toMemoryId": "46849e74-4dec-45bf-b219-87ca1b4d9696",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "fromMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "fromMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "toMemoryId": "3e36fe52-0a41-46f9-9925-d25f3d7a609d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "fromMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "fromMemoryId": "885eabb7-4847-426e-bb87-a3090e7a4df2",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-02T17:00:26.726Z"
     }
   ],
-  "updatedAt": "2026-04-30T15:56:24.696Z"
+  "updatedAt": "2026-05-02T17:00:26.728Z"
 }
