@@ -10,6 +10,7 @@ Secure NestJS API for WAH for Patients registration and login flow, backed by Su
 - Account creation and login through Supabase Auth
 - SQL bootstrap script for OTP + profile tables (`../sqls/001_auth_setup.sql`)
 - SQL bootstrap script for Personal Records tables (`../sqls/006_personal_records_setup.sql`)
+- SQL bootstrap script for Appointment History tables (`../sqls/009_appointment_history_setup.sql`)
 
 ## Setup
 
@@ -30,6 +31,7 @@ cp .env.example .env
 ```text
 ../sqls/001_auth_setup.sql
 ../sqls/006_personal_records_setup.sql
+../sqls/009_appointment_history_setup.sql
 ```
 
 4. Start backend:

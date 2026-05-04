@@ -38,6 +38,7 @@ class AppRoutes {
       '/dashboard/appointments/onsite-consultation';
   static const String teleconsultation =
       '/dashboard/appointments/teleconsultation';
+  static const String appointmentHistory = '/dashboard/appointments/history';
   static const String medicationResupply = '/dashboard/medication-resupply';
   static const String medicationResupplyRequest =
       '/dashboard/medication-resupply/request';

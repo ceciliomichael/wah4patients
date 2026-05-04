@@ -24,7 +24,7 @@ class HealthRecordsScreen extends StatelessWidget {
         accentColor: AppColors.secondary,
       ),
       const HubActionData(
-        title: 'Medical Consultations',
+        title: 'Consultation History',
         description: 'Open consultation summaries and visit notes.',
         icon: Icons.medical_services_outlined,
         accentColor: AppColors.tertiary,
@@ -52,7 +52,7 @@ class HealthRecordsScreen extends StatelessWidget {
         final String? routeName = switch (action.title) {
           'Medical History' => AppRoutes.medicalHistory,
           'Immunization Records' => AppRoutes.immunizationRecords,
-          'Medical Consultations' => AppRoutes.medicalConsultations,
+          'Consultation History' => AppRoutes.medicalConsultations,
           'Laboratory Results' => AppRoutes.laboratoryResults,
           _ => null,
         };

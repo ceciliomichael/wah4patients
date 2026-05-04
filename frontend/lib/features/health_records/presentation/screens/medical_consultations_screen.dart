@@ -8,7 +8,7 @@ class MedicalConsultationsScreen extends StatelessWidget {
   const MedicalConsultationsScreen({super.key});
 
   static const HealthRecordScreenContent _content = HealthRecordScreenContent(
-    title: 'Medical Consultations',
+    title: 'Consultation History',
     searchHint: 'Search consultations',
     filterOptions: <String>[
       'All',
@@ -16,11 +16,11 @@ class MedicalConsultationsScreen extends StatelessWidget {
       'Onsite',
       'Follow-up',
     ],
-    helpTitle: 'Medical Consultations Help',
+    helpTitle: 'Consultation History Help',
     helpMessages: <String>[
       'Search consultations by reason, provider, or location.',
       'Use the type filter to narrow the consultation list.',
-      'Tap any consultation to review its summary details.',
+      'Tap any consultation to review its stored summary and notes.',
     ],
     emptyTitle: 'No matching consultations',
     emptyMessage: 'Try a different search term or consultation type.',

@@ -474,6 +474,118 @@ export interface Database {
           },
         ];
       };
+      medication_resupply_history_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          medication_name: string;
+          dosage: string;
+          status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+          note: string;
+          requested_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          medication_name: string;
+          dosage?: string;
+          status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+          note?: string;
+          requested_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          medication_name?: string;
+          dosage?: string;
+          status?: 'pending' | 'approved' | 'rejected' | 'cancelled';
+          note?: string;
+          requested_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'medication_resupply_history_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      appointment_history_records: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string;
+          subtitle: string;
+          summary_label: string;
+          summary_value: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key: string;
+          accent_color_key: string;
+          icon_key: string;
+          details_json: Json;
+          recorded_at: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title: string;
+          subtitle?: string;
+          summary_label: string;
+          summary_value?: string;
+          filter_value: string;
+          status_label: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string;
+          subtitle?: string;
+          summary_label?: string;
+          summary_value?: string;
+          filter_value?: string;
+          status_label?: string;
+          status_color_key?: string;
+          accent_color_key?: string;
+          icon_key?: string;
+          details_json?: Json;
+          recorded_at?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointment_history_records_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       medical_history_records: {
         Row: {
           id: string;

@@ -19,12 +19,12 @@ extension AppointmentBookingModeX on AppointmentBookingMode {
     AppointmentBookingMode.onsite => const <String>[
       'Select the consultation type that best matches your visit.',
       'Choose a date and time slot, then confirm clinic details.',
-      'This flow is frontend-only and keeps the booking preview local.',
+      'Review the full booking on a dedicated screen before you confirm.',
     ],
     AppointmentBookingMode.teleconsultation => const <String>[
       'Select the remote consultation type that fits your concern.',
       'Choose a date and time slot, then confirm teleconsult details.',
-      'This flow is frontend-only and keeps the booking preview local.',
+      'Review the full booking on a dedicated screen before you confirm.',
     ],
   };
 
@@ -51,6 +51,11 @@ extension AppointmentBookingModeX on AppointmentBookingMode {
   String get confirmationLabel => switch (this) {
     AppointmentBookingMode.onsite => 'Confirm Onsite Booking',
     AppointmentBookingMode.teleconsultation => 'Confirm Teleconsultation',
+  };
+
+  String get reviewTitle => switch (this) {
+    AppointmentBookingMode.onsite => 'Review Onsite Consultation',
+    AppointmentBookingMode.teleconsultation => 'Review Teleconsultation',
   };
 }
 
@@ -102,6 +107,30 @@ class AppointmentBookingContent {
   final List<AppointmentTypeOption> typeOptions;
   final List<AppointmentLocationOption> locationOptions;
   final List<String> providerOptions;
+}
+
+class AppointmentBookingSummary {
+  const AppointmentBookingSummary({
+    required this.mode,
+    required this.consultationType,
+    required this.date,
+    required this.timeSlot,
+    required this.location,
+    required this.provider,
+    required this.reason,
+    required this.notes,
+    required this.teleReady,
+  });
+
+  final AppointmentBookingMode mode;
+  final AppointmentTypeOption consultationType;
+  final DateTime date;
+  final String timeSlot;
+  final String location;
+  final String provider;
+  final String reason;
+  final String notes;
+  final bool teleReady;
 }
 
 const List<String> mockAppointmentTimeSlots = <String>[

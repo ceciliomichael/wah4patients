@@ -27,6 +27,20 @@ extension ResupplyRequestStatusX on ResupplyRequestStatus {
   };
 
   Color get tint => color.withValues(alpha: 0.12);
+
+  static ResupplyRequestStatus fromApiValue(String value) {
+    switch (value.trim().toLowerCase()) {
+      case 'approved':
+        return ResupplyRequestStatus.approved;
+      case 'rejected':
+        return ResupplyRequestStatus.rejected;
+      case 'cancelled':
+        return ResupplyRequestStatus.cancelled;
+      case 'pending':
+      default:
+        return ResupplyRequestStatus.pending;
+    }
+  }
 }
 
 class ResupplyPrescriptionOption {
@@ -63,6 +77,72 @@ class ResupplyHistoryEntry {
   final String note;
 }
 
+class ResupplyHistoryScreenContent {
+  const ResupplyHistoryScreenContent({
+    required this.title,
+    required this.searchHint,
+    required this.filterOptions,
+    required this.helpTitle,
+    required this.helpMessages,
+    required this.emptyTitle,
+    required this.emptyMessage,
+    required this.entries,
+  });
+
+  final String title;
+  final String searchHint;
+  final List<String> filterOptions;
+  final String helpTitle;
+  final List<String> helpMessages;
+  final String emptyTitle;
+  final String emptyMessage;
+  final List<ResupplyHistoryEntry> entries;
+
+  ResupplyHistoryScreenContent copyWith({
+    String? title,
+    String? searchHint,
+    List<String>? filterOptions,
+    String? helpTitle,
+    List<String>? helpMessages,
+    String? emptyTitle,
+    String? emptyMessage,
+    List<ResupplyHistoryEntry>? entries,
+  }) {
+    return ResupplyHistoryScreenContent(
+      title: title ?? this.title,
+      searchHint: searchHint ?? this.searchHint,
+      filterOptions: filterOptions ?? this.filterOptions,
+      helpTitle: helpTitle ?? this.helpTitle,
+      helpMessages: helpMessages ?? this.helpMessages,
+      emptyTitle: emptyTitle ?? this.emptyTitle,
+      emptyMessage: emptyMessage ?? this.emptyMessage,
+      entries: entries ?? this.entries,
+    );
+  }
+}
+
+const ResupplyHistoryScreenContent resupplyHistoryScreenContentShell =
+    ResupplyHistoryScreenContent(
+      title: 'Prescription History',
+      searchHint: 'Search prescriptions',
+      filterOptions: <String>[
+        'All',
+        'Pending',
+        'Approved',
+        'Rejected',
+        'Cancelled',
+      ],
+      helpTitle: 'Prescription History Help',
+      helpMessages: <String>[
+        'Search by medicine name or note text.',
+        'Use the status filter to narrow down the history list.',
+        'Tap any card to expand its notes inline.',
+      ],
+      emptyTitle: 'No matching requests',
+      emptyMessage: 'Try a different search term or status filter.',
+      entries: <ResupplyHistoryEntry>[],
+    );
+
 const List<ResupplyPrescriptionOption> mockResupplyPrescriptionOptions =
     <ResupplyPrescriptionOption>[
       ResupplyPrescriptionOption(
@@ -85,41 +165,5 @@ const List<ResupplyPrescriptionOption> mockResupplyPrescriptionOptions =
         dosage: '500 mg tablet',
         frequency: 'Twice daily',
         icon: Icons.tablet_outlined,
-      ),
-    ];
-
-const List<ResupplyHistoryEntry> mockResupplyHistoryEntries =
-    <ResupplyHistoryEntry>[
-      ResupplyHistoryEntry(
-        id: 'r-001',
-        medicationName: 'Amlodipine',
-        dosage: '5 mg tablet',
-        requestDate: 'March 18, 2026',
-        status: ResupplyRequestStatus.approved,
-        note: 'Requested for the next weekly refill window.',
-      ),
-      ResupplyHistoryEntry(
-        id: 'r-002',
-        medicationName: 'Atorvastatin',
-        dosage: '20 mg tablet',
-        requestDate: 'March 11, 2026',
-        status: ResupplyRequestStatus.pending,
-        note: 'Waiting for review from the assigned clinic.',
-      ),
-      ResupplyHistoryEntry(
-        id: 'r-003',
-        medicationName: 'Metformin',
-        dosage: '500 mg tablet',
-        requestDate: 'February 27, 2026',
-        status: ResupplyRequestStatus.rejected,
-        note: 'Needs updated prescription details before approval.',
-      ),
-      ResupplyHistoryEntry(
-        id: 'r-004',
-        medicationName: 'Losartan',
-        dosage: '50 mg tablet',
-        requestDate: 'February 14, 2026',
-        status: ResupplyRequestStatus.cancelled,
-        note: 'Request cancelled after dosage change.',
       ),
     ];

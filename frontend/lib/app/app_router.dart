@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../features/appointments/presentation/screens/onsite_consultation_screen.dart';
+import '../features/appointments/presentation/screens/appointment_history_screen.dart';
 import '../features/appointments/presentation/screens/teleconsultation_screen.dart';
 import '../features/auth/domain/models/auth_api_models.dart';
 import '../features/auth/presentation/screens/auth_preview_screen.dart';
@@ -258,6 +259,11 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
       return _buildSlideRoute(
         settings: settings,
         builder: (_) => const TeleconsultationScreen(),
+      );
+    case AppRoutes.appointmentHistory:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) => const AppointmentHistoryScreen(),
       );
     case AppRoutes.medicationResupply:
       return _buildSlideRoute(

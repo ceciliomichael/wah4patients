@@ -2803,6 +2803,508 @@
       ],
       "createdAt": "2026-05-02T17:00:26.726Z",
       "updatedAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "memoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "rootMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8"
+      ],
+      "childMemoryIds": [
+        "1030569d-8d34-4a64-953b-d0a1ff76bff8"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the Medication Resupply history screen as a backend-backed, non-blocking loader patterned after the Health Records UX. Added a dedicated SQL migration, backend Nest module, frontend API client, data-loading wrapper, template, and mapper. Removed the mock history list from the medication resupply model and kept the request screen unchanged. Verified with backend build and Flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\008_medication_resupply_setup.sql",
+          "action": "created",
+          "reason": "Defines the new backend table, policy, trigger, and indexes for medication resupply history data.",
+          "notes": "New migration added to support the history screen backend load."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.controller.ts",
+          "action": "created",
+          "reason": "Exposes the read endpoint used by the frontend history loader.",
+          "notes": "Matches the feature-module pattern used by Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.service.ts",
+          "action": "created",
+          "reason": "Handles auth validation and coordinates backend access for the history endpoint.",
+          "notes": "Thin orchestration layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.repository.ts",
+          "action": "created",
+          "reason": "Reads medication resupply history rows from Supabase and maps them to typed API responses.",
+          "notes": "Uses the generated database types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.types.ts",
+          "action": "created",
+          "reason": "Defines the backend response and row-shape contracts for medication resupply history.",
+          "notes": "Kept strictly typed and minimal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.module.ts",
+          "action": "created",
+          "reason": "Registers the new feature module with auth and Supabase dependencies.",
+          "notes": "Added to AppModule afterward."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new medication resupply backend module so the endpoint is available at runtime.",
+          "notes": "Imported MedicationResupplyModule."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds the new medication_resupply_history_records table to the generated Supabase typing contract.",
+          "notes": "Required for backend type safety."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "created",
+          "reason": "Provides the authenticated frontend client for loading prescription history from the backend.",
+          "notes": "Uses the same env/auth pattern as Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\mappers\\medication_resupply_history_mapper.dart",
+          "action": "created",
+          "reason": "Converts backend history responses into UI entries and formats the date for display.",
+          "notes": "Keeps data formatting out of the screen layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_data_screen.dart",
+          "action": "created",
+          "reason": "Owns async loading, retry handling, and the immediate shell render for the history screen.",
+          "notes": "Mirrors the Health Records data wrapper pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_screen_template.dart",
+          "action": "created",
+          "reason": "Handles the history UI presentation, including non-blocking loading, inline errors, search/filtering, and expansion.",
+          "notes": "Preserves the existing card/list interaction pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\screens\\medication_resupply_history_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the route screen to a thin composition layer that delegates to the data-loading widget.",
+          "notes": "No business logic remains in the entrypoint."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\models\\medication_resupply_models.dart",
+          "action": "modified",
+          "reason": "Removed the mock history list and added the shell content model used by the loader/template flow.",
+          "notes": "Preserves prescription option mock data for the request form."
+        }
+      ],
+      "createdAt": "2026-05-03T09:33:26.439Z",
+      "updatedAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "memoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "rootMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "parentMemoryIds": [
+        "b806bd40-7cd2-4f03-9ce3-17985be73ab7"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8"
+      ],
+      "childMemoryIds": [
+        "9862cb7c-4275-435c-9160-2ae0dfeedde2"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the Medication Resupply history screen as a backend-backed, non-blocking loader patterned after the Health Records UX. Added a dedicated SQL migration, backend Nest module, frontend API client, data-loading wrapper, template, and mapper. Removed the mock history list from the medication resupply model and kept the request screen unchanged. Verified with backend build and Flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\008_medication_resupply_setup.sql",
+          "action": "created",
+          "reason": "Defines the new backend table, policy, trigger, and indexes for medication resupply history data.",
+          "notes": "New migration added to support the history screen backend load."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.controller.ts",
+          "action": "created",
+          "reason": "Exposes the read endpoint used by the frontend history loader.",
+          "notes": "Matches the feature-module pattern used by Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.service.ts",
+          "action": "created",
+          "reason": "Handles auth validation and coordinates backend access for the history endpoint.",
+          "notes": "Thin orchestration layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.repository.ts",
+          "action": "created",
+          "reason": "Reads medication resupply history rows from Supabase and maps them to typed API responses.",
+          "notes": "Uses the generated database types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.types.ts",
+          "action": "created",
+          "reason": "Defines the backend response and row-shape contracts for medication resupply history.",
+          "notes": "Kept strictly typed and minimal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.module.ts",
+          "action": "created",
+          "reason": "Registers the new feature module with auth and Supabase dependencies.",
+          "notes": "Added to AppModule afterward."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new medication resupply backend module so the endpoint is available at runtime.",
+          "notes": "Imported MedicationResupplyModule."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds the new medication_resupply_history_records table to the generated Supabase typing contract.",
+          "notes": "Required for backend type safety."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "created",
+          "reason": "Provides the authenticated frontend client for loading prescription history from the backend.",
+          "notes": "Uses the same env/auth pattern as Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\mappers\\medication_resupply_history_mapper.dart",
+          "action": "created",
+          "reason": "Converts backend history responses into UI entries and formats the date for display.",
+          "notes": "Keeps data formatting out of the screen layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_data_screen.dart",
+          "action": "created",
+          "reason": "Owns async loading, retry handling, and the immediate shell render for the history screen.",
+          "notes": "Mirrors the Health Records data wrapper pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_screen_template.dart",
+          "action": "created",
+          "reason": "Handles the history UI presentation, including non-blocking loading, inline errors, search/filtering, and expansion.",
+          "notes": "Preserves the existing card/list interaction pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\screens\\medication_resupply_history_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the route screen to a thin composition layer that delegates to the data-loading widget.",
+          "notes": "No business logic remains in the entrypoint."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\models\\medication_resupply_models.dart",
+          "action": "modified",
+          "reason": "Removed the mock history list and added the shell content model used by the loader/template flow.",
+          "notes": "Preserves prescription option mock data for the request form."
+        }
+      ],
+      "createdAt": "2026-05-03T09:33:26.453Z",
+      "updatedAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "memoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "rootMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "parentMemoryIds": [
+        "1030569d-8d34-4a64-953b-d0a1ff76bff8"
+      ],
+      "relatedMemoryIds": [
+        "ce413956-cbb7-4e99-b761-015844a9227d",
+        "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+        "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "5309f66a-5f0f-4b8e-8c39-a583179d65b8"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the Medication Resupply history screen as a backend-backed, non-blocking loader patterned after the Health Records UX. Added a dedicated SQL migration, backend Nest module, frontend API client, data-loading wrapper, template, and mapper. Removed the mock history list from the medication resupply model and kept the request screen unchanged. Verified with backend build and Flutter analyze.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\008_medication_resupply_setup.sql",
+          "action": "created",
+          "reason": "Defines the new backend table, policy, trigger, and indexes for medication resupply history data.",
+          "notes": "New migration added to support the history screen backend load."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.controller.ts",
+          "action": "created",
+          "reason": "Exposes the read endpoint used by the frontend history loader.",
+          "notes": "Matches the feature-module pattern used by Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.service.ts",
+          "action": "created",
+          "reason": "Handles auth validation and coordinates backend access for the history endpoint.",
+          "notes": "Thin orchestration layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.repository.ts",
+          "action": "created",
+          "reason": "Reads medication resupply history rows from Supabase and maps them to typed API responses.",
+          "notes": "Uses the generated database types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.types.ts",
+          "action": "created",
+          "reason": "Defines the backend response and row-shape contracts for medication resupply history.",
+          "notes": "Kept strictly typed and minimal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\medication-resupply\\medication-resupply.module.ts",
+          "action": "created",
+          "reason": "Registers the new feature module with auth and Supabase dependencies.",
+          "notes": "Added to AppModule afterward."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Registers the new medication resupply backend module so the endpoint is available at runtime.",
+          "notes": "Imported MedicationResupplyModule."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Adds the new medication_resupply_history_records table to the generated Supabase typing contract.",
+          "notes": "Required for backend type safety."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "created",
+          "reason": "Provides the authenticated frontend client for loading prescription history from the backend.",
+          "notes": "Uses the same env/auth pattern as Health Records."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\mappers\\medication_resupply_history_mapper.dart",
+          "action": "created",
+          "reason": "Converts backend history responses into UI entries and formats the date for display.",
+          "notes": "Keeps data formatting out of the screen layer."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_data_screen.dart",
+          "action": "created",
+          "reason": "Owns async loading, retry handling, and the immediate shell render for the history screen.",
+          "notes": "Mirrors the Health Records data wrapper pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\widgets\\medication_resupply_history_screen_template.dart",
+          "action": "created",
+          "reason": "Handles the history UI presentation, including non-blocking loading, inline errors, search/filtering, and expansion.",
+          "notes": "Preserves the existing card/list interaction pattern."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\screens\\medication_resupply_history_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the route screen to a thin composition layer that delegates to the data-loading widget.",
+          "notes": "No business logic remains in the entrypoint."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\presentation\\models\\medication_resupply_models.dart",
+          "action": "modified",
+          "reason": "Removed the mock history list and added the shell content model used by the loader/template flow.",
+          "notes": "Preserves prescription option mock data for the request form."
+        }
+      ],
+      "createdAt": "2026-05-03T09:33:26.462Z",
+      "updatedAt": "2026-05-03T09:33:26.462Z"
+    },
+    {
+      "memoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "rootMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+        "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+        "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [
+        "28214480-b157-41f7-8e15-b451576dd5df"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the appointments structure update in the frontend. The booking flow now ends with a dedicated review screen instead of a confirmation modal, and the appointments/health-records hubs now expose consultation history as a first-class destination. The consultation history screen reuses the existing health-records backend-backed flow and is relabeled for clearer UX.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Added booking summary data and updated mode copy to support the dedicated review screen and clearer step guidance.",
+          "notes": "Also introduced review-title copy for the review screen header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Changed the final step to push a dedicated review screen, removed the confirmation modal, and kept the shared booking flow intact.",
+          "notes": "The screen remains the shared shell for onsite and teleconsultation flows."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "created",
+          "reason": "Added the dedicated full-screen confirmation/review step for appointment bookings.",
+          "notes": "Returns a boolean result back to the booking flow on confirmation."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Added consultation history as a hub action so the appointments page exposes booking and history paths.",
+          "notes": "Routes the new action to the existing consultation history backend-backed screen."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "modified",
+          "reason": "Renamed the consultations tile to consultation history for clearer terminology in the health-records hub.",
+          "notes": "Still uses the same medical consultations route constant."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Relabeled the consultations screen as consultation history and updated its help copy to match the new UX.",
+          "notes": "Still uses HealthRecordSection.consultations, so it remains backend-backed."
+        }
+      ],
+      "createdAt": "2026-05-04T02:44:42.983Z",
+      "updatedAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "memoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "rootMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "parentMemoryIds": [
+        "e5edd768-3057-4fa7-bb31-b498f4cde25f"
+      ],
+      "relatedMemoryIds": [
+        "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+        "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+        "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [
+        "977b7250-0d89-40aa-aaa4-d32cf562b666"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the appointments structure update in the frontend. The booking flow now ends with a dedicated review screen instead of a confirmation modal, and the appointments/health-records hubs now expose consultation history as a first-class destination. The consultation history screen reuses the existing health-records backend-backed flow and is relabeled for clearer UX.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Added booking summary data and updated mode copy to support the dedicated review screen and clearer step guidance.",
+          "notes": "Also introduced review-title copy for the review screen header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Changed the final step to push a dedicated review screen, removed the confirmation modal, and kept the shared booking flow intact.",
+          "notes": "The screen remains the shared shell for onsite and teleconsultation flows."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "created",
+          "reason": "Added the dedicated full-screen confirmation/review step for appointment bookings.",
+          "notes": "Returns a boolean result back to the booking flow on confirmation."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Added consultation history as a hub action so the appointments page exposes booking and history paths.",
+          "notes": "Routes the new action to the existing consultation history backend-backed screen."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "modified",
+          "reason": "Renamed the consultations tile to consultation history for clearer terminology in the health-records hub.",
+          "notes": "Still uses the same medical consultations route constant."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Relabeled the consultations screen as consultation history and updated its help copy to match the new UX.",
+          "notes": "Still uses HealthRecordSection.consultations, so it remains backend-backed."
+        }
+      ],
+      "createdAt": "2026-05-04T02:44:42.989Z",
+      "updatedAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "memoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "rootMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "parentMemoryIds": [
+        "28214480-b157-41f7-8e15-b451576dd5df"
+      ],
+      "relatedMemoryIds": [
+        "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+        "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+        "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+        "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+        "d2a2b916-35c5-4521-97c6-74694f042985"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the appointments structure update in the frontend. The booking flow now ends with a dedicated review screen instead of a confirmation modal, and the appointments/health-records hubs now expose consultation history as a first-class destination. The consultation history screen reuses the existing health-records backend-backed flow and is relabeled for clearer UX.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Added booking summary data and updated mode copy to support the dedicated review screen and clearer step guidance.",
+          "notes": "Also introduced review-title copy for the review screen header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Changed the final step to push a dedicated review screen, removed the confirmation modal, and kept the shared booking flow intact.",
+          "notes": "The screen remains the shared shell for onsite and teleconsultation flows."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "created",
+          "reason": "Added the dedicated full-screen confirmation/review step for appointment bookings.",
+          "notes": "Returns a boolean result back to the booking flow on confirmation."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Added consultation history as a hub action so the appointments page exposes booking and history paths.",
+          "notes": "Routes the new action to the existing consultation history backend-backed screen."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/health_records_screen.dart",
+          "action": "modified",
+          "reason": "Renamed the consultations tile to consultation history for clearer terminology in the health-records hub.",
+          "notes": "Still uses the same medical consultations route constant."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/screens/medical_consultations_screen.dart",
+          "action": "modified",
+          "reason": "Relabeled the consultations screen as consultation history and updated its help copy to match the new UX.",
+          "notes": "Still uses HealthRecordSection.consultations, so it remains backend-backed."
+        }
+      ],
+      "createdAt": "2026-05-04T02:44:42.995Z",
+      "updatedAt": "2026-05-04T02:44:42.995Z"
     }
   ],
   "edges": [
@@ -4051,7 +4553,273 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-02T17:00:26.726Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "toMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.439Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "toMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.453Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "ce413956-cbb7-4e99-b761-015844a9227d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "a6c5ddce-5b9f-4eb2-9a30-31b43730dc26",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "b9b6de3d-5a2d-421e-9e01-db2d5839ee47",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "toMemoryId": "5309f66a-5f0f-4b8e-8c39-a583179d65b8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-03T09:33:26.463Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "toMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.983Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "e5edd768-3057-4fa7-bb31-b498f4cde25f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "toMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.989Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "28214480-b157-41f7-8e15-b451576dd5df",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "1030569d-8d34-4a64-953b-d0a1ff76bff8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "b806bd40-7cd2-4f03-9ce3-17985be73ab7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "9862cb7c-4275-435c-9160-2ae0dfeedde2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "ee89c6c6-b4ef-4ed6-8792-6e335f743d83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "977b7250-0d89-40aa-aaa4-d32cf562b666",
+      "toMemoryId": "d2a2b916-35c5-4521-97c6-74694f042985",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-04T02:44:42.995Z"
     }
   ],
-  "updatedAt": "2026-05-02T17:00:26.728Z"
+  "updatedAt": "2026-05-04T02:44:42.996Z"
 }

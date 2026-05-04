@@ -23,6 +23,12 @@ class AppointmentsScreen extends StatelessWidget {
         icon: Icons.video_call_outlined,
         accentColor: AppColors.secondary,
       ),
+      const HubActionData(
+        title: 'Consultation History',
+        description: 'Review past appointments and stored consultation details.',
+        icon: Icons.history_outlined,
+        accentColor: AppColors.tertiary,
+      ),
     ];
 
     return FeatureHubScreen(
@@ -33,13 +39,14 @@ class AppointmentsScreen extends StatelessWidget {
       helpTitle: 'Appointments Help',
       helpMessages: const <String>[
         'Open either booking path to follow the same three-step appointment flow.',
-        'The screens keep everything local and do not create backend records yet.',
-        'Onsite and teleconsultation each keep their own details step.',
+        'Use consultation history to review previous bookings and their stored details.',
+        'The screens keep everything local and do not create backend bookings yet.',
       ],
       onActionTap: (action) {
         final String? routeName = switch (action.title) {
           'Onsite Consultation' => AppRoutes.onsiteConsultation,
           'Teleconsultation' => AppRoutes.teleconsultation,
+          'Consultation History' => AppRoutes.appointmentHistory,
           _ => null,
         };
 

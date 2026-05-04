@@ -1,13 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../models/appointment_booking_models.dart';
+import 'appointment_review_screen.dart';
 import '../widgets/appointment_details_step.dart';
 import '../widgets/appointment_schedule_step.dart';
 import '../widgets/appointment_step_header.dart';
@@ -104,19 +105,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
         }
         break;
       case 2:
-        final reason = _reasonController.text.trim();
-        if (_selectedLocation == null ||
-            _selectedProvider == null ||
-            reason.isEmpty) {
-          _showSnackBar('Complete the required booking details.');
-          return;
-        }
-        if (widget.content.mode == AppointmentBookingMode.teleconsultation &&
-            !_teleReady) {
-          _showSnackBar('Confirm remote consultation readiness first.');
-          return;
-        }
-        _showConfirmationDialog();
+        unawaited(_openReviewScreen());
         return;
     }
 
@@ -125,131 +114,57 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     });
   }
 
-  void _showConfirmationDialog() {
-    final type = widget.content.typeOptions[_selectedTypeIndex!];
-    final date = _dateOptions[_selectedDateIndex!];
+  Future<void> _openReviewScreen() async {
+    final reason = _reasonController.text.trim();
+    final notes = _notesController.text.trim();
+    final selectedType = _selectedTypeIndex;
+    final selectedDate = _selectedDateIndex;
+    final selectedTimeSlot = _selectedTimeSlot;
+    final selectedLocation = _selectedLocation;
+    final selectedProvider = _selectedProvider;
 
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) {
-        return Dialog(
-          backgroundColor: AppColors.surface,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.extraLarge,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        color: widget.content.mode.accentColor.withValues(
-                          alpha: 0.12,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        widget.content.mode.icon,
-                        color: widget.content.mode.accentColor,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        widget.content.mode.confirmationLabel,
-                        style: AppTextStyles.headlineSmall.copyWith(
-                          color: widget.content.mode.accentColor,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                _buildSummaryRow('Type', type.title),
-                const SizedBox(height: 8),
-                _buildSummaryRow('Date', _formatDate(date)),
-                const SizedBox(height: 8),
-                _buildSummaryRow('Time', _selectedTimeSlot!),
-                const SizedBox(height: 8),
-                _buildSummaryRow(
-                  widget.content.mode.locationLabel,
-                  _selectedLocation!,
-                ),
-                const SizedBox(height: 8),
-                _buildSummaryRow('Provider', _selectedProvider!),
-                const SizedBox(height: 8),
-                _buildSummaryRow('Reason', _reasonController.text.trim()),
-                if (_notesController.text.trim().isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  _buildSummaryRow('Notes', _notesController.text.trim()),
-                ],
-                const SizedBox(height: 20),
-                PrimaryButtonWidget(
-                  text: 'Done',
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop();
-                    _showSnackBar(
-                      '${widget.content.mode.title} saved locally for this session.',
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+    if (selectedType == null) {
+      _showSnackBar('Select a consultation type first.');
+      return;
+    }
+    if (selectedDate == null || selectedTimeSlot == null) {
+      _showSnackBar('Choose both a date and a time slot.');
+      return;
+    }
+    if (selectedLocation == null || selectedProvider == null || reason.isEmpty) {
+      _showSnackBar('Complete the required booking details.');
+      return;
+    }
+    if (widget.content.mode == AppointmentBookingMode.teleconsultation &&
+        !_teleReady) {
+      _showSnackBar('Confirm remote consultation readiness first.');
+      return;
+    }
+
+    final summary = AppointmentBookingSummary(
+      mode: widget.content.mode,
+      consultationType: widget.content.typeOptions[selectedType],
+      date: _dateOptions[selectedDate],
+      timeSlot: selectedTimeSlot,
+      location: selectedLocation,
+      provider: selectedProvider,
+      reason: reason,
+      notes: notes,
+      teleReady: _teleReady,
     );
-  }
 
-  String _formatDate(DateTime date) {
-    const months = <String>[
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return '${months[date.month - 1]} ${date.day}, ${date.year}';
-  }
-
-  Widget _buildSummaryRow(String label, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 90,
-          child: Text(
-            label,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: AppTextStyles.bodyLarge.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
+    final confirmed = await Navigator.of(context).push<bool>(
+      MaterialPageRoute<bool>(
+        builder: (_) => AppointmentReviewScreen(summary: summary),
+      ),
     );
+
+    if (!mounted || confirmed != true) {
+      return;
+    }
+
+    _showSnackBar('${widget.content.mode.title} saved locally for this session.');
+    Navigator.of(context).pop();
   }
 
   @override
