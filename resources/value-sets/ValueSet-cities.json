@@ -1,0 +1,641 @@
+{
+  "resourceType": "ValueSet",
+  "id": "cities",
+  "language": "en",
+  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/cities",
+  "version": "1Q-2026",
+  "name": "Cities",
+  "title": "Cities",
+  "status": "active",
+  "experimental": false,
+  "date": "2026-03-31",
+  "publisher": "Wireless Access for Health (WAH)",
+  "contact": [
+    {
+      "name": "Wireless Access for Health (WAH)",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://wah.ph"
+        }
+      ]
+    }
+  ],
+  "description": "All city-level codes from the Philippine Standard Geographic Code (PSGC) published by the Philippine Statistics Authority (PSA).",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "PH",
+          "display": "Philippines"
+        }
+      ]
+    }
+  ],
+  "compose": {
+    "include": [
+      {
+        "system": "https://psa.gov.ph/classification/psgc",
+        "concept": [
+          {
+            "code": "1380100000",
+            "display": "City of Caloocan"
+          },
+          {
+            "code": "1380200000",
+            "display": "City of Las Piñas"
+          },
+          {
+            "code": "1380300000",
+            "display": "City of Makati"
+          },
+          {
+            "code": "1380400000",
+            "display": "City of Malabon"
+          },
+          {
+            "code": "1380500000",
+            "display": "City of Mandaluyong"
+          },
+          {
+            "code": "1380600000",
+            "display": "City of Manila"
+          },
+          {
+            "code": "1380700000",
+            "display": "City of Marikina"
+          },
+          {
+            "code": "1380800000",
+            "display": "City of Muntinlupa"
+          },
+          {
+            "code": "1380900000",
+            "display": "City of Navotas"
+          },
+          {
+            "code": "1381000000",
+            "display": "City of Parañaque"
+          },
+          {
+            "code": "1381100000",
+            "display": "Pasay City"
+          },
+          {
+            "code": "1381200000",
+            "display": "City of Pasig"
+          },
+          {
+            "code": "1381300000",
+            "display": "Quezon City"
+          },
+          {
+            "code": "1381400000",
+            "display": "City of San Juan"
+          },
+          {
+            "code": "1381500000",
+            "display": "City of Taguig"
+          },
+          {
+            "code": "1381600000",
+            "display": "City of Valenzuela"
+          },
+          {
+            "code": "1403213000",
+            "display": "City of Tabuk"
+          },
+          {
+            "code": "1430300000",
+            "display": "City of Baguio"
+          },
+          {
+            "code": "0102805000",
+            "display": "City of Batac"
+          },
+          {
+            "code": "0102812000",
+            "display": "City of Laoag"
+          },
+          {
+            "code": "0102906000",
+            "display": "City of Candon"
+          },
+          {
+            "code": "0102934000",
+            "display": "City of Vigan"
+          },
+          {
+            "code": "0103314000",
+            "display": "City of San Fernando"
+          },
+          {
+            "code": "0105503000",
+            "display": "City of Alaminos"
+          },
+          {
+            "code": "0105518000",
+            "display": "City of Dagupan"
+          },
+          {
+            "code": "0105532000",
+            "display": "City of San Carlos"
+          },
+          {
+            "code": "0105546000",
+            "display": "City of Urdaneta"
+          },
+          {
+            "code": "0201529000",
+            "display": "Tuguegarao City"
+          },
+          {
+            "code": "0203108000",
+            "display": "City of Cauayan"
+          },
+          {
+            "code": "0203114000",
+            "display": "City of Ilagan"
+          },
+          {
+            "code": "0203135000",
+            "display": "City of Santiago"
+          },
+          {
+            "code": "0300803000",
+            "display": "City of Balanga"
+          },
+          {
+            "code": "0301403000",
+            "display": "City of Baliwag"
+          },
+          {
+            "code": "0301410000",
+            "display": "City of Malolos"
+          },
+          {
+            "code": "0301412000",
+            "display": "City of Meycauayan"
+          },
+          {
+            "code": "0301420000",
+            "display": "City of San Jose Del Monte"
+          },
+          {
+            "code": "0304903000",
+            "display": "City of Cabanatuan"
+          },
+          {
+            "code": "0304908000",
+            "display": "City of Gapan"
+          },
+          {
+            "code": "0304917000",
+            "display": "Science City of Muñoz"
+          },
+          {
+            "code": "0304919000",
+            "display": "City of Palayan"
+          },
+          {
+            "code": "0304926000",
+            "display": "San Jose City"
+          },
+          {
+            "code": "0305409000",
+            "display": "Mabalacat City"
+          },
+          {
+            "code": "0305416000",
+            "display": "City of San Fernando"
+          },
+          {
+            "code": "0306916000",
+            "display": "City of Tarlac"
+          },
+          {
+            "code": "0330100000",
+            "display": "City of Angeles"
+          },
+          {
+            "code": "0331400000",
+            "display": "City of Olongapo"
+          },
+          {
+            "code": "0401005000",
+            "display": "Batangas City"
+          },
+          {
+            "code": "0401007000",
+            "display": "City of Calaca"
+          },
+          {
+            "code": "0401014000",
+            "display": "City of Lipa"
+          },
+          {
+            "code": "0401028000",
+            "display": "City of Sto. Tomas"
+          },
+          {
+            "code": "0401031000",
+            "display": "City of Tanauan"
+          },
+          {
+            "code": "0402103000",
+            "display": "City of Bacoor"
+          },
+          {
+            "code": "0402104000",
+            "display": "City of Carmona"
+          },
+          {
+            "code": "0402105000",
+            "display": "City of Cavite"
+          },
+          {
+            "code": "0402106000",
+            "display": "City of Dasmariñas"
+          },
+          {
+            "code": "0402108000",
+            "display": "City of General Trias"
+          },
+          {
+            "code": "0402109000",
+            "display": "City of Imus"
+          },
+          {
+            "code": "0402119000",
+            "display": "City of Tagaytay"
+          },
+          {
+            "code": "0402122000",
+            "display": "City of Trece Martires"
+          },
+          {
+            "code": "0403403000",
+            "display": "City of Biñan"
+          },
+          {
+            "code": "0403404000",
+            "display": "City of Cabuyao"
+          },
+          {
+            "code": "0403405000",
+            "display": "City of Calamba"
+          },
+          {
+            "code": "0403424000",
+            "display": "City of San Pablo"
+          },
+          {
+            "code": "0403425000",
+            "display": "City of San Pedro"
+          },
+          {
+            "code": "0403428000",
+            "display": "City of Santa Rosa"
+          },
+          {
+            "code": "0405647000",
+            "display": "City of Tayabas"
+          },
+          {
+            "code": "0405802000",
+            "display": "City of Antipolo"
+          },
+          {
+            "code": "0431200000",
+            "display": "City of Lucena"
+          },
+          {
+            "code": "1705205000",
+            "display": "City of Calapan"
+          },
+          {
+            "code": "1731500000",
+            "display": "City of Puerto Princesa"
+          },
+          {
+            "code": "0500506000",
+            "display": "City of Legazpi"
+          },
+          {
+            "code": "0500508000",
+            "display": "City of Ligao"
+          },
+          {
+            "code": "0500517000",
+            "display": "City of Tabaco"
+          },
+          {
+            "code": "0501716000",
+            "display": "City of Iriga"
+          },
+          {
+            "code": "0501724000",
+            "display": "City of Naga"
+          },
+          {
+            "code": "0504111000",
+            "display": "City of Masbate"
+          },
+          {
+            "code": "0506216000",
+            "display": "City of Sorsogon"
+          },
+          {
+            "code": "0601914000",
+            "display": "City of Roxas"
+          },
+          {
+            "code": "0603035000",
+            "display": "City of Passi"
+          },
+          {
+            "code": "0631000000",
+            "display": "City of Iloilo"
+          },
+          {
+            "code": "1804502000",
+            "display": "City of Bago"
+          },
+          {
+            "code": "1804504000",
+            "display": "City of Cadiz"
+          },
+          {
+            "code": "1804509000",
+            "display": "City of Escalante"
+          },
+          {
+            "code": "1804510000",
+            "display": "City of Himamaylan"
+          },
+          {
+            "code": "1804515000",
+            "display": "City of Kabankalan"
+          },
+          {
+            "code": "1804516000",
+            "display": "City of La Carlota"
+          },
+          {
+            "code": "1804523000",
+            "display": "City of Sagay"
+          },
+          {
+            "code": "1804524000",
+            "display": "City of San Carlos"
+          },
+          {
+            "code": "1804526000",
+            "display": "City of Silay"
+          },
+          {
+            "code": "1804527000",
+            "display": "City of Sipalay"
+          },
+          {
+            "code": "1804528000",
+            "display": "City of Talisay"
+          },
+          {
+            "code": "1804531000",
+            "display": "City of Victorias"
+          },
+          {
+            "code": "1804604000",
+            "display": "City of Bais"
+          },
+          {
+            "code": "1804606000",
+            "display": "City of Bayawan"
+          },
+          {
+            "code": "1804608000",
+            "display": "City of Canlaon"
+          },
+          {
+            "code": "1804610000",
+            "display": "City of Dumaguete"
+          },
+          {
+            "code": "1804611000",
+            "display": "City of Guihulngan"
+          },
+          {
+            "code": "1804621000",
+            "display": "City of Tanjay"
+          },
+          {
+            "code": "1830200000",
+            "display": "City of Bacolod"
+          },
+          {
+            "code": "0701242000",
+            "display": "City of Tagbilaran"
+          },
+          {
+            "code": "0702211000",
+            "display": "City of Bogo"
+          },
+          {
+            "code": "0702214000",
+            "display": "City of Carcar"
+          },
+          {
+            "code": "0702223000",
+            "display": "Danao City"
+          },
+          {
+            "code": "0702234000",
+            "display": "City of Naga"
+          },
+          {
+            "code": "0702250000",
+            "display": "City of Talisay"
+          },
+          {
+            "code": "0702251000",
+            "display": "City of Toledo"
+          },
+          {
+            "code": "0730600000",
+            "display": "City of Cebu"
+          },
+          {
+            "code": "0731100000",
+            "display": "City of Lapu-Lapu"
+          },
+          {
+            "code": "0731300000",
+            "display": "City of Mandaue"
+          },
+          {
+            "code": "0802604000",
+            "display": "City of Borongan"
+          },
+          {
+            "code": "0803708000",
+            "display": "City of Baybay"
+          },
+          {
+            "code": "0803738000",
+            "display": "Ormoc City"
+          },
+          {
+            "code": "0806003000",
+            "display": "City of Calbayog"
+          },
+          {
+            "code": "0806005000",
+            "display": "City of Catbalogan"
+          },
+          {
+            "code": "0806407000",
+            "display": "City of Maasin"
+          },
+          {
+            "code": "0831600000",
+            "display": "City of Tacloban"
+          },
+          {
+            "code": "0907201000",
+            "display": "City of Dapitan"
+          },
+          {
+            "code": "0907202000",
+            "display": "City of Dipolog"
+          },
+          {
+            "code": "0907322000",
+            "display": "City of Pagadian"
+          },
+          {
+            "code": "0990101000",
+            "display": "City of Isabela"
+          },
+          {
+            "code": "0931700000",
+            "display": "City of Zamboanga"
+          },
+          {
+            "code": "1001312000",
+            "display": "City of Malaybalay"
+          },
+          {
+            "code": "1001321000",
+            "display": "City of Valencia"
+          },
+          {
+            "code": "1004209000",
+            "display": "City of Oroquieta"
+          },
+          {
+            "code": "1004210000",
+            "display": "City of Ozamiz"
+          },
+          {
+            "code": "1004215000",
+            "display": "City of Tangub"
+          },
+          {
+            "code": "1004307000",
+            "display": "City of El Salvador"
+          },
+          {
+            "code": "1004308000",
+            "display": "City of Gingoog"
+          },
+          {
+            "code": "1030500000",
+            "display": "City of Cagayan De Oro"
+          },
+          {
+            "code": "1030900000",
+            "display": "City of Iligan"
+          },
+          {
+            "code": "1102315000",
+            "display": "City of Panabo"
+          },
+          {
+            "code": "1102317000",
+            "display": "Island Garden City of Samal"
+          },
+          {
+            "code": "1102319000",
+            "display": "City of Tagum"
+          },
+          {
+            "code": "1102403000",
+            "display": "City of Digos"
+          },
+          {
+            "code": "1102509000",
+            "display": "City of Mati"
+          },
+          {
+            "code": "1130700000",
+            "display": "City of Davao"
+          },
+          {
+            "code": "1204704000",
+            "display": "City of Kidapawan"
+          },
+          {
+            "code": "1206306000",
+            "display": "City of Koronadal"
+          },
+          {
+            "code": "1206511000",
+            "display": "City of Tacurong"
+          },
+          {
+            "code": "1230800000",
+            "display": "City of General Santos"
+          },
+          {
+            "code": "1600203000",
+            "display": "City of Cabadbaran"
+          },
+          {
+            "code": "1600301000",
+            "display": "City of Bayugan"
+          },
+          {
+            "code": "1606724000",
+            "display": "City of Surigao"
+          },
+          {
+            "code": "1606803000",
+            "display": "City of Bislig"
+          },
+          {
+            "code": "1606819000",
+            "display": "City of Tandag"
+          },
+          {
+            "code": "1630400000",
+            "display": "City of Butuan"
+          },
+          {
+            "code": "1900702000",
+            "display": "City of Lamitan"
+          },
+          {
+            "code": "1903617000",
+            "display": "City of Marawi"
+          },
+          {
+            "code": "1908703000",
+            "display": "City of Cotabato"
+          }
+        ]
+      }
+    ]
+  }
+}

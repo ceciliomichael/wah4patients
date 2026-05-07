@@ -3305,6 +3305,289 @@
       ],
       "createdAt": "2026-05-04T02:44:42.995Z",
       "updatedAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "memoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde"
+      ],
+      "sectionKind": "fact",
+      "summary": "Created and then recreated backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration plan. The user requested a concise OpenProject-ready backlog with fewer epics while retaining epics, features, numbered user stories, story points, and tasks.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "Recreated the project backlog with fewer epics and concise user stories for OpenProject planning.",
+          "notes": "Final version contains 4 epics, 28 numbered user stories, story points, and task lists."
+        }
+      ],
+      "createdAt": "2026-05-05T15:44:43.351Z",
+      "updatedAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "memoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "9df833ce-47de-4860-9305-f80b48227c0e"
+      ],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [
+        "44e048c4-b532-4954-9625-b5e015b3ecd9"
+      ],
+      "sectionKind": "decision",
+      "summary": "Created and then recreated backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration plan. The user requested a concise OpenProject-ready backlog with fewer epics while retaining epics, features, numbered user stories, story points, and tasks.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "Recreated the project backlog with fewer epics and concise user stories for OpenProject planning.",
+          "notes": "Final version contains 4 epics, 28 numbered user stories, story points, and task lists."
+        }
+      ],
+      "createdAt": "2026-05-05T15:44:43.385Z",
+      "updatedAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "memoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde"
+      ],
+      "relatedMemoryIds": [
+        "d748504b-2b87-41ed-aff2-060e0bccd774",
+        "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+        "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Created and then recreated backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration plan. The user requested a concise OpenProject-ready backlog with fewer epics while retaining epics, features, numbered user stories, story points, and tasks.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "Recreated the project backlog with fewer epics and concise user stories for OpenProject planning.",
+          "notes": "Final version contains 4 epics, 28 numbered user stories, story points, and task lists."
+        }
+      ],
+      "createdAt": "2026-05-05T15:44:43.417Z",
+      "updatedAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "memoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "9df833ce-47de-4860-9305-f80b48227c0e"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "d6282b56-1e6a-44c4-a0e5-8a210209720c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Simplified the WAH4PC/PH Core integration backlog into an OpenProject-friendly structure with exactly 2 epics and 10 user stories. The backlog still covers patient profile completion, PH Core Patient/resource mapping, provider discovery, WAH4PC gateway client, webhooks, transaction tracking, and received-record routing.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "This is the OpenProject-ready backlog document requested by the user.",
+          "notes": "The file now has 2 epics, 10 user stories, story points, tasks, env requirements, and a story point summary."
+        }
+      ],
+      "createdAt": "2026-05-05T15:46:41.099Z",
+      "updatedAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "memoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "40295d35-9a4f-4cfe-8e7e-a984d7779f1b"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [
+        "3e40127f-067c-4f0a-92a2-e8cecd3901ec"
+      ],
+      "sectionKind": "decision",
+      "summary": "Simplified the WAH4PC/PH Core integration backlog into an OpenProject-friendly structure with exactly 2 epics and 10 user stories. The backlog still covers patient profile completion, PH Core Patient/resource mapping, provider discovery, WAH4PC gateway client, webhooks, transaction tracking, and received-record routing.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "This is the OpenProject-ready backlog document requested by the user.",
+          "notes": "The file now has 2 epics, 10 user stories, story points, tasks, env requirements, and a story point summary."
+        }
+      ],
+      "createdAt": "2026-05-05T15:46:41.142Z",
+      "updatedAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "memoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "d6282b56-1e6a-44c4-a0e5-8a210209720c"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9",
+        "690a2798-e922-4c10-8e50-259c56db4082",
+        "100991ea-3c8e-4adc-b1c0-9df2c31794af"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Simplified the WAH4PC/PH Core integration backlog into an OpenProject-friendly structure with exactly 2 epics and 10 user stories. The backlog still covers patient profile completion, PH Core Patient/resource mapping, provider discovery, WAH4PC gateway client, webhooks, transaction tracking, and received-record routing.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "modified",
+          "reason": "This is the OpenProject-ready backlog document requested by the user.",
+          "notes": "The file now has 2 epics, 10 user stories, story points, tasks, env requirements, and a story point summary."
+        }
+      ],
+      "createdAt": "2026-05-05T15:46:41.168Z",
+      "updatedAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "memoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "9df833ce-47de-4860-9305-f80b48227c0e"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+        "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9"
+      ],
+      "childMemoryIds": [
+        "cfc168fe-7e89-465a-b9f9-2722f3fac1b5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Created a new expanded planning document max-backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration. This detailed backlog keeps backlog.md unchanged and provides a max-level plan with 7 epics, 34 numbered user stories, story points, tasks, environment requirements, resource mapping summary, story point totals, and rollout notes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\max-backlog.md",
+          "action": "created",
+          "reason": "This file is the detailed maximum backlog requested by the user for the PH Core and WAH4PC integration plan.",
+          "notes": "Created with 7 epics, 34 user stories, story points, tasks, environment requirements, mapping summary, and rollout notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "The existing simplified backlog context was referenced to keep max-backlog.md as a companion rather than overwriting it.",
+          "notes": "No changes were made to backlog.md during max-backlog.md creation."
+        }
+      ],
+      "createdAt": "2026-05-05T15:49:46.361Z",
+      "updatedAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "memoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+        "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9"
+      ],
+      "childMemoryIds": [
+        "13394ab2-57be-443e-b99a-0f449ca9875a"
+      ],
+      "sectionKind": "decision",
+      "summary": "Created a new expanded planning document max-backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration. This detailed backlog keeps backlog.md unchanged and provides a max-level plan with 7 epics, 34 numbered user stories, story points, tasks, environment requirements, resource mapping summary, story point totals, and rollout notes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\max-backlog.md",
+          "action": "created",
+          "reason": "This file is the detailed maximum backlog requested by the user for the PH Core and WAH4PC integration plan.",
+          "notes": "Created with 7 epics, 34 user stories, story points, tasks, environment requirements, mapping summary, and rollout notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "The existing simplified backlog context was referenced to keep max-backlog.md as a companion rather than overwriting it.",
+          "notes": "No changes were made to backlog.md during max-backlog.md creation."
+        }
+      ],
+      "createdAt": "2026-05-05T15:49:46.395Z",
+      "updatedAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "memoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "rootMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "parentMemoryIds": [
+        "cfc168fe-7e89-465a-b9f9-2722f3fac1b5"
+      ],
+      "relatedMemoryIds": [
+        "a15c0b10-113e-4931-8010-11a3d28d7fde",
+        "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+        "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+        "44e048c4-b532-4954-9625-b5e015b3ecd9"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Created a new expanded planning document max-backlog.md for the PH Core Patient Profile plus WAH4PC Sync Integration. This detailed backlog keeps backlog.md unchanged and provides a max-level plan with 7 epics, 34 numbered user stories, story points, tasks, environment requirements, resource mapping summary, story point totals, and rollout notes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\max-backlog.md",
+          "action": "created",
+          "reason": "This file is the detailed maximum backlog requested by the user for the PH Core and WAH4PC integration plan.",
+          "notes": "Created with 7 epics, 34 user stories, story points, tasks, environment requirements, mapping summary, and rollout notes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "The existing simplified backlog context was referenced to keep max-backlog.md as a companion rather than overwriting it.",
+          "notes": "No changes were made to backlog.md during max-backlog.md creation."
+        }
+      ],
+      "createdAt": "2026-05-05T15:49:46.427Z",
+      "updatedAt": "2026-05-05T15:49:46.427Z"
     }
   ],
   "edges": [
@@ -4819,7 +5102,378 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-04T02:44:42.995Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.351Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.385Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "d748504b-2b87-41ed-aff2-060e0bccd774",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "28e5ec75-60b3-4d4d-bb27-788373a9b78e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "toMemoryId": "bc806279-ccf7-4ab3-a6e4-e2ef7f698c83",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:44:43.417Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "toMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.099Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "toMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.142Z"
+    },
+    {
+      "fromMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "toMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "fromMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "fromMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "fromMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "toMemoryId": "690a2798-e922-4c10-8e50-259c56db4082",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "fromMemoryId": "3e40127f-067c-4f0a-92a2-e8cecd3901ec",
+      "toMemoryId": "100991ea-3c8e-4adc-b1c0-9df2c31794af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:46:41.168Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "9df833ce-47de-4860-9305-f80b48227c0e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "toMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.361Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "ebe8a0ef-19ee-48a2-ae64-9702cb3bca72",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "toMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.395Z"
+    },
+    {
+      "fromMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "toMemoryId": "cfc168fe-7e89-465a-b9f9-2722f3fac1b5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "fromMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "toMemoryId": "a15c0b10-113e-4931-8010-11a3d28d7fde",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "fromMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "toMemoryId": "d6282b56-1e6a-44c4-a0e5-8a210209720c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "fromMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "toMemoryId": "40295d35-9a4f-4cfe-8e7e-a984d7779f1b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "fromMemoryId": "13394ab2-57be-443e-b99a-0f449ca9875a",
+      "toMemoryId": "44e048c4-b532-4954-9625-b5e015b3ecd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-05T15:49:46.427Z"
     }
   ],
-  "updatedAt": "2026-05-04T02:44:42.996Z"
+  "updatedAt": "2026-05-05T15:49:46.429Z"
 }

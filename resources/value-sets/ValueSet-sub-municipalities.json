@@ -1,0 +1,101 @@
+{
+  "resourceType": "ValueSet",
+  "id": "sub-municipalities",
+  "language": "en",
+  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/sub-municipalities",
+  "version": "1Q-2026",
+  "name": "SubMunicipalities",
+  "title": "Sub-Municipalities",
+  "status": "active",
+  "experimental": false,
+  "date": "2026-03-31",
+  "publisher": "Wireless Access for Health (WAH)",
+  "contact": [
+    {
+      "name": "Wireless Access for Health (WAH)",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://wah.ph"
+        }
+      ]
+    }
+  ],
+  "description": "All sub-municipality-level codes from the Philippine Standard Geographic Code (PSGC) published by the Philippine Statistics Authority (PSA).",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "PH",
+          "display": "Philippines"
+        }
+      ]
+    }
+  ],
+  "compose": {
+    "include": [
+      {
+        "system": "https://psa.gov.ph/classification/psgc",
+        "concept": [
+          {
+            "code": "1380601000",
+            "display": "Tondo I/II"
+          },
+          {
+            "code": "1380602000",
+            "display": "Binondo"
+          },
+          {
+            "code": "1380603000",
+            "display": "Quiapo"
+          },
+          {
+            "code": "1380604000",
+            "display": "San Nicolas"
+          },
+          {
+            "code": "1380605000",
+            "display": "Santa Cruz"
+          },
+          {
+            "code": "1380606000",
+            "display": "Sampaloc"
+          },
+          {
+            "code": "1380607000",
+            "display": "San Miguel"
+          },
+          {
+            "code": "1380608000",
+            "display": "Ermita"
+          },
+          {
+            "code": "1380609000",
+            "display": "Intramuros"
+          },
+          {
+            "code": "1380610000",
+            "display": "Malate"
+          },
+          {
+            "code": "1380611000",
+            "display": "Paco"
+          },
+          {
+            "code": "1380612000",
+            "display": "Pandacan"
+          },
+          {
+            "code": "1380613000",
+            "display": "Port Area"
+          },
+          {
+            "code": "1380614000",
+            "display": "Santa Ana"
+          }
+        ]
+      }
+    ]
+  }
+}
