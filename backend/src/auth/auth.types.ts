@@ -45,6 +45,27 @@ export interface PatientProfileResponse {
   givenNames: string[];
   familyName: string;
   displayName: string;
+  birthDate: string;
+  gender: string;
+  phoneNumber: string;
+  communicationLanguage: string;
+  philHealthId: string;
+  philSysId: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  country: string;
+  maritalStatus: string;
+  nationality: string;
+  religion: string;
+  occupation: string;
+  genderIdentity: string;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  isComplete: boolean;
+  missingFields: string[];
 }
 
 export interface PasswordResetTokenPayload {

@@ -76,7 +76,7 @@ class AuthApiClient {
 
   Future<ProfileResult> updateMyProfile({
     required String accessToken,
-    required RegistrationProfileDraft profile,
+    required PatientProfileDraft profile,
   }) async {
     final response = await _patch(
       path: '/profile/me',
@@ -85,6 +85,25 @@ class AuthApiClient {
         'secondName': profile.secondName,
         'middleName': profile.middleName,
         'lastName': profile.lastName,
+        'birthDate': profile.birthDate,
+        'gender': profile.gender,
+        'phoneNumber': profile.phoneNumber,
+        'communicationLanguage': profile.communicationLanguage,
+        'philHealthId': profile.philHealthId,
+        'philSysId': profile.philSysId,
+        'addressLine1': profile.addressLine1,
+        'addressLine2': profile.addressLine2,
+        'city': profile.city,
+        'province': profile.province,
+        'postalCode': profile.postalCode,
+        'country': profile.country,
+        'maritalStatus': profile.maritalStatus,
+        'nationality': profile.nationality,
+        'religion': profile.religion,
+        'occupation': profile.occupation,
+        'genderIdentity': profile.genderIdentity,
+        'emergencyContactName': profile.emergencyContactName,
+        'emergencyContactPhone': profile.emergencyContactPhone,
       },
       bearerToken: accessToken,
     );

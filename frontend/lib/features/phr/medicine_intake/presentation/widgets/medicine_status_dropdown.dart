@@ -1,13 +1,12 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_border_radii.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/widgets/feature/app_bottom_sheet_widget.dart';
 import '../../domain/medicine_status.dart';
 
-class MedicineStatusDropdown extends StatefulWidget {
+class MedicineStatusDropdown extends StatelessWidget {
   const MedicineStatusDropdown({
     super.key,
     required this.value,
@@ -17,20 +16,7 @@ class MedicineStatusDropdown extends StatefulWidget {
   final MedicineStatus? value;
   final ValueChanged<MedicineStatus?> onChanged;
 
-  @override
-  State<MedicineStatusDropdown> createState() => _MedicineStatusDropdownState();
-}
-
-class _MedicineStatusDropdownState extends State<MedicineStatusDropdown> {
-  static const double _triggerSize = 56.0;
-  static const double _menuItemHeight = 54.0;
-  static const double _screenMargin = 16.0;
-  static const double _menuGap = 8.0;
-
-  final GlobalKey _buttonKey = GlobalKey();
-  OverlayEntry? _overlayEntry;
-
-  String _menuLabelFor(MedicineStatus? status) {
+  String _labelFor(MedicineStatus? status) {
     return status?.menuLabel ?? 'All Status';
   }
 
@@ -38,167 +24,96 @@ class _MedicineStatusDropdownState extends State<MedicineStatusDropdown> {
     return status?.icon ?? Icons.filter_list;
   }
 
-  double _measureTextWidth(BuildContext context, String text, TextStyle style) {
-    final textScaler = MediaQuery.textScalerOf(context);
-    final painter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: TextDirection.ltr,
-      textScaler: textScaler,
-      maxLines: 1,
-    )..layout();
-    return painter.width;
-  }
-
-  bool get _isOpen => _overlayEntry != null;
-
-  void _closeMenu() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void _toggleMenu() {
-    if (_isOpen) {
-      _closeMenu();
-      return;
-    }
-
-    final renderBox =
-        _buttonKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null) {
-      return;
-    }
-
-    final overlay = Overlay.of(context);
-    final screenSize = MediaQuery.sizeOf(context);
-    final buttonOffset = renderBox.localToGlobal(Offset.zero);
-    final buttonRect = buttonOffset & renderBox.size;
-
-    final menuLabelStyle = AppTextStyles.labelLarge.copyWith(
-      fontWeight: FontWeight.w600,
-    );
-    final menuLabels = <MedicineStatus?>[null, ...MedicineStatus.values];
-    final longestMenuLabel = menuLabels
-        .map(_menuLabelFor)
-        .map((label) => _measureTextWidth(context, label, menuLabelStyle))
-        .fold<double>(0, math.max);
-
-    final maxAllowedWidth = math.max(
-      0.0,
-      screenSize.width - (_screenMargin * 2),
-    );
-    final menuWidth = math.min(
-      maxAllowedWidth,
-      longestMenuLabel + 14 + 18 + 10 + 14 + 14,
-    );
-    final menuHeight = menuLabels.length * _menuItemHeight;
-
-    final openAbove =
-        buttonRect.bottom + _menuGap + menuHeight >
-            screenSize.height - _screenMargin &&
-        buttonRect.top - _menuGap - menuHeight >= _screenMargin;
-
-    final top = openAbove
-        ? buttonRect.top - _menuGap - menuHeight
-        : buttonRect.bottom + _menuGap;
-
-    final left = (buttonRect.right - menuWidth)
-        .clamp(_screenMargin, screenSize.width - menuWidth - _screenMargin)
-        .toDouble();
-    final clampedTop = top
-        .clamp(
-          _screenMargin,
-          math.max(
-            _screenMargin,
-            screenSize.height - menuHeight - _screenMargin,
-          ),
-        )
-        .toDouble();
-
-    final overlayEntry = OverlayEntry(
-      builder: (context) {
-        return GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: _closeMenu,
-          child: Stack(
+  Future<void> _openPicker(BuildContext context) async {
+    final selected = await showModalBottomSheet<MedicineStatus?>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      builder: (sheetContext) {
+        return AppBottomSheetWidget(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Positioned(
-                left: left,
-                top: clampedTop,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    width: menuWidth,
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: AppRadii.large,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withValues(alpha: 0.12),
-                          blurRadius: 18,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: AppRadii.large,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: menuLabels.map((status) {
-                          final isSelected = status == widget.value;
-                          final itemColor = isSelected
-                              ? AppColors.primary
-                              : AppColors.textPrimary;
+              Text(
+                'Filter by status',
+                style: AppTextStyles.titleMedium.copyWith(
+                  color: AppColors.textPrimary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Choose a medicine status to narrow the list.',
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 320),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: MedicineStatus.values.length + 1,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    final status = index == 0
+                        ? null
+                        : MedicineStatus.values[index - 1];
+                    final isSelected = status == value;
 
-                          return Material(
-                            color: isSelected
-                                ? AppColors.primary.withValues(alpha: 0.09)
-                                : AppColors.surface,
-                            child: InkWell(
-                              onTap: () {
-                                widget.onChanged(status);
-                                _closeMenu();
-                              },
-                              child: SizedBox(
-                                height: _menuItemHeight,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        _iconFor(status),
-                                        size: 18,
-                                        color: isSelected
-                                            ? AppColors.primary
-                                            : AppColors.textSecondary,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          _menuLabelFor(status),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyles.labelLarge
-                                              .copyWith(
-                                                color: itemColor,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
+                    return Material(
+                      color: isSelected
+                          ? AppColors.surfaceVariant
+                          : AppColors.surface,
+                      borderRadius: AppRadii.large,
+                      child: InkWell(
+                        onTap: () => Navigator.of(sheetContext).pop(status),
+                        borderRadius: AppRadii.large,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: AppRadii.large,
+                            border: Border.all(
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : AppColors.border,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                _iconFor(status),
+                                size: 20,
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : AppColors.textSecondary,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  _labelFor(status),
+                                  style: AppTextStyles.labelLarge.copyWith(
+                                    color: AppColors.textPrimary,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                              if (isSelected)
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: AppColors.primary,
+                                  size: 20,
+                                ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -207,32 +122,21 @@ class _MedicineStatusDropdownState extends State<MedicineStatusDropdown> {
       },
     );
 
-    overlay.insert(overlayEntry);
-    setState(() {
-      _overlayEntry = overlayEntry;
-    });
-  }
-
-  @override
-  void dispose() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-    super.dispose();
+    onChanged(selected);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = widget.value != null;
+    final isSelected = value != null;
 
     return SizedBox(
-      key: _buttonKey,
-      width: _triggerSize,
-      height: _triggerSize,
+      width: 56,
+      height: 56,
       child: Material(
         color: AppColors.surface,
         borderRadius: AppRadii.large,
         child: InkWell(
-          onTap: _toggleMenu,
+          onTap: () => _openPicker(context),
           borderRadius: AppRadii.large,
           child: Container(
             decoration: BoxDecoration(
@@ -243,8 +147,8 @@ class _MedicineStatusDropdownState extends State<MedicineStatusDropdown> {
             ),
             child: Center(
               child: Icon(
-                Icons.filter_list,
-                color: isSelected ? AppColors.secondary : AppColors.primary,
+                _iconFor(value),
+                color: isSelected ? AppColors.primary : AppColors.textPrimary,
                 size: 22,
               ),
             ),

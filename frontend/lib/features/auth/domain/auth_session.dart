@@ -17,8 +17,7 @@ class AuthSession {
   static String? _tokenType;
   static String? _userId;
   static String? _userEmail;
-  static List<String> _givenNames = <String>[];
-  static String _familyName = '';
+  static UserProfileSummary _profile = UserProfileSummary.empty();
 
   static String? get accessToken => _accessToken;
   static String? get refreshToken => _refreshToken;
@@ -26,14 +25,17 @@ class AuthSession {
   static String? get tokenType => _tokenType;
   static String? get userId => _userId;
   static String? get userEmail => _userEmail;
-  static List<String> get givenNames => List.unmodifiable(_givenNames);
-  static String get familyName => _familyName;
-  static String get displayName =>
-      _composeDisplayName(_givenNames, _familyName);
+  static List<String> get givenNames => List.unmodifiable(_profile.givenNames);
+  static String get familyName => _profile.familyName;
+  static String get displayName => _profile.displayName;
   static String get shortDisplayName =>
-      _composeShortDisplayName(_givenNames, _familyName);
+      _composeShortDisplayName(_profile.givenNames, _profile.familyName);
   static String get greetingName =>
-      _composeGreetingName(_givenNames, _familyName);
+      _composeGreetingName(_profile.givenNames, _profile.familyName);
+  static UserProfileSummary get profile => _profile;
+  static bool get isPatientProfileComplete => _profile.isComplete;
+  static List<String> get missingPatientProfileFields =>
+      List.unmodifiable(_profile.missingFields);
   static bool get isAuthenticated =>
       (_accessToken?.trim().isNotEmpty ?? false) &&
       (_userId?.trim().isNotEmpty ?? false);
@@ -52,8 +54,7 @@ class AuthSession {
     _tokenType = storedSession.tokenType.trim();
     _userId = storedSession.userId.trim();
     _userEmail = storedSession.userEmail.trim();
-    _givenNames = storedSession.givenNames;
-    _familyName = storedSession.familyName.trim();
+    _profile = storedSession.profile;
     _notifyChanged();
   }
 
@@ -106,14 +107,12 @@ class AuthSession {
     _tokenType = result.tokenType.trim();
     _userId = result.userId.trim();
     _userEmail = result.userEmail.trim();
-    _givenNames = result.profile.givenNames;
-    _familyName = result.profile.familyName.trim();
+    _profile = result.profile;
     _notifyChanged();
   }
 
   static void setProfile(UserProfileSummary profile) {
-    _givenNames = profile.givenNames;
-    _familyName = profile.familyName.trim();
+    _profile = profile;
     _notifyChanged();
 
     unawaited(AuthLocalStore.updateProfile(profile));
@@ -126,25 +125,10 @@ class AuthSession {
     _tokenType = null;
     _userId = null;
     _userEmail = null;
-    _givenNames = <String>[];
-    _familyName = '';
+    _profile = UserProfileSummary.empty();
     _notifyChanged();
 
     unawaited(AuthLocalStore.clearSession());
-  }
-
-  static String _composeDisplayName(
-    List<String> givenNames,
-    String familyName,
-  ) {
-    final parts = <String>[
-      ...givenNames
-          .map((value) => value.trim())
-          .where((value) => value.isNotEmpty),
-      familyName.trim(),
-    ].where((value) => value.isNotEmpty).toList(growable: false);
-
-    return parts.join(' ');
   }
 
   static String _composeGreetingName(

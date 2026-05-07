@@ -44,6 +44,33 @@ import { compare } from 'bcryptjs';
 import { UserMpinDeviceRepository } from './user-mpin-device.repository';
 import { UserMpinRepository } from './user-mpin.repository';
 
+const EMPTY_PATIENT_PROFILE_RESPONSE: PatientProfileResponse = {
+  givenNames: [],
+  familyName: '',
+  displayName: '',
+  birthDate: '',
+  gender: '',
+  phoneNumber: '',
+  communicationLanguage: '',
+  philHealthId: '',
+  philSysId: '',
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  province: '',
+  postalCode: '',
+  country: '',
+  maritalStatus: '',
+  nationality: '',
+  religion: '',
+  occupation: '',
+  genderIdentity: '',
+  emergencyContactName: '',
+  emergencyContactPhone: '',
+  isComplete: false,
+  missingFields: [],
+};
+
 @Injectable()
 export class LoginAuthService {
   private readonly logger = new Logger(LoginAuthService.name);
@@ -675,11 +702,7 @@ export class LoginAuthService {
         userId,
         email,
       });
-      return {
-        givenNames: [],
-        familyName: '',
-        displayName: '',
-      };
+      return EMPTY_PATIENT_PROFILE_RESPONSE;
     }
   }
 }

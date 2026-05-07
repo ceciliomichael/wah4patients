@@ -1,3 +1,3 @@
-import { ProfileNameDto } from './profile-name.dto';
+import { PatientProfileDto } from './patient-profile.dto';
 
-export class UpdateProfileDto extends ProfileNameDto {}
+export class UpdateProfileDto extends PatientProfileDto {}

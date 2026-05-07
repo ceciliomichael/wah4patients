@@ -10,6 +10,8 @@ class AuthLocalStore {
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
   static const String _sessionKey = 'auth.session';
   static const String _onboardingCompletedKey = 'app.onboarding.completed';
+  static const String _profilePromptDismissedKey =
+      'app.profile-completion-prompt.dismissed';
 
   static Future<void> saveSession(LoginResult result) async {
     final payload = <String, dynamic>{
@@ -19,8 +21,7 @@ class AuthLocalStore {
       'tokenType': result.tokenType.trim(),
       'userId': result.userId.trim(),
       'userEmail': result.userEmail.trim(),
-      'givenNames': result.profile.givenNames,
-      'familyName': result.profile.familyName.trim(),
+      'profile': result.profile.toJson(),
       'savedAt': DateTime.now().toUtc().toIso8601String(),
     };
 
@@ -53,8 +54,7 @@ class AuthLocalStore {
 
     await saveRawSession(
       currentSession.copyWith(
-        givenNames: profile.givenNames,
-        familyName: profile.familyName.trim(),
+        profile: profile,
       ),
     );
   }
@@ -67,8 +67,7 @@ class AuthLocalStore {
       'tokenType': session.tokenType.trim(),
       'userId': session.userId.trim(),
       'userEmail': session.userEmail.trim(),
-      'givenNames': session.givenNames,
-      'familyName': session.familyName.trim(),
+      'profile': session.profile.toJson(),
       'savedAt': session.savedAt.toUtc().toIso8601String(),
     };
 
@@ -94,6 +93,22 @@ class AuthLocalStore {
   static Future<void> clearOnboardingCompleted() {
     return _storage.delete(key: _onboardingCompletedKey);
   }
+
+  static Future<bool> isProfileCompletionPromptDismissed() async {
+    final rawValue = await _storage.read(key: _profilePromptDismissedKey);
+    return rawValue == 'true';
+  }
+
+  static Future<void> setProfileCompletionPromptDismissed(bool dismissed) {
+    return _storage.write(
+      key: _profilePromptDismissedKey,
+      value: dismissed ? 'true' : 'false',
+    );
+  }
+
+  static Future<void> clearProfileCompletionPromptDismissed() {
+    return _storage.delete(key: _profilePromptDismissedKey);
+  }
 }
 
 class AuthSessionData {
@@ -104,8 +119,7 @@ class AuthSessionData {
     required this.tokenType,
     required this.userId,
     required this.userEmail,
-    required this.givenNames,
-    required this.familyName,
+    required this.profile,
     required this.savedAt,
   });
 
@@ -115,8 +129,7 @@ class AuthSessionData {
   final String tokenType;
   final String userId;
   final String userEmail;
-  final List<String> givenNames;
-  final String familyName;
+  final UserProfileSummary profile;
   final DateTime savedAt;
 
   bool get isExpired {
@@ -135,8 +148,7 @@ class AuthSessionData {
     String? tokenType,
     String? userId,
     String? userEmail,
-    List<String>? givenNames,
-    String? familyName,
+    UserProfileSummary? profile,
     DateTime? savedAt,
   }) {
     return AuthSessionData(
@@ -146,8 +158,7 @@ class AuthSessionData {
       tokenType: tokenType ?? this.tokenType,
       userId: userId ?? this.userId,
       userEmail: userEmail ?? this.userEmail,
-      givenNames: givenNames ?? this.givenNames,
-      familyName: familyName ?? this.familyName,
+      profile: profile ?? this.profile,
       savedAt: savedAt ?? this.savedAt,
     );
   }
@@ -163,19 +174,15 @@ class AuthSessionData {
       tokenType: tokenType,
       userId: userId,
       userEmail: userEmail,
-      profile: UserProfileSummary(
-        givenNames: givenNames,
-        familyName: familyName,
-        displayName: '',
-      ),
+      profile: profile,
     );
   }
 
   factory AuthSessionData.fromJson(Map<String, dynamic> json) {
-    final givenNamesValue = json['givenNames'];
-    final givenNames = givenNamesValue is List
-        ? givenNamesValue.whereType<String>().toList(growable: false)
-        : <String>[];
+    final profileValue = json['profile'];
+    final profileMap = profileValue is Map<String, dynamic>
+        ? profileValue
+        : <String, dynamic>{};
 
     final savedAtValue = json['savedAt'];
     final savedAt = savedAtValue is String
@@ -193,8 +200,7 @@ class AuthSessionData {
       tokenType: _readString(json['tokenType']),
       userId: _readString(json['userId']),
       userEmail: _readString(json['userEmail']),
-      givenNames: givenNames,
-      familyName: _readString(json['familyName']),
+      profile: UserProfileSummary.fromJson(profileMap),
       savedAt: savedAt,
     );
   }

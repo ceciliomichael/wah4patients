@@ -224,6 +224,7 @@ export interface Database {
           email: string;
           given_names: string[];
           family_name: string;
+          patient_profile: Json;
           created_at: string;
           updated_at: string;
         };
@@ -232,6 +233,7 @@ export interface Database {
           email: string;
           given_names?: string[];
           family_name?: string;
+          patient_profile?: Json;
           created_at?: string;
           updated_at?: string;
         };
@@ -240,6 +242,7 @@ export interface Database {
           email?: string;
           given_names?: string[];
           family_name?: string;
+          patient_profile?: Json;
           created_at?: string;
           updated_at?: string;
         };

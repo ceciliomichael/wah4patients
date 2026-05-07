@@ -5,6 +5,7 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
+import '../../../../../core/widgets/ui/inputs/bottom_sheet_select_form_field.dart';
 import '../../domain/medicine_status.dart';
 import '../models/medicine_intake_models.dart';
 
@@ -131,13 +132,14 @@ class _MedicineIntakeAddDialogState extends State<MedicineIntakeAddDialog> {
               maxLines: 3,
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<MedicineStatus>(
-              initialValue: _status,
-              items: MedicineStatus.values
+            BottomSheetSelectFormField<MedicineStatus>(
+              value: _status,
+              options: MedicineStatus.values
                   .map(
-                    (status) => DropdownMenuItem<MedicineStatus>(
+                    (status) => BottomSheetSelectOption<MedicineStatus>(
                       value: status,
-                      child: Text(status.label),
+                      label: status.label,
+                      icon: status.icon,
                     ),
                   )
                   .toList(),
@@ -149,10 +151,9 @@ class _MedicineIntakeAddDialogState extends State<MedicineIntakeAddDialog> {
                   _status = value;
                 });
               },
-              decoration: const InputDecoration(
-                labelText: 'Status',
-                prefixIcon: Icon(Icons.flag_outlined),
-              ),
+              label: 'Status',
+              hintText: 'Select status',
+              icon: Icons.flag_outlined,
             ),
             const SizedBox(height: 16),
             Row(

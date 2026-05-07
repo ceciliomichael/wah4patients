@@ -6,8 +6,10 @@ import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
+import '../../../auth/data/auth_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
+import '../../../profile/presentation/widgets/profile_completion_prompt_dialog.dart';
 import '../../domain/dashboard_models.dart';
 import '../widgets/dashboard_alerts_tab.dart';
 import '../widgets/dashboard_calendar_tab.dart';
@@ -25,6 +27,8 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentTab = 0;
+  bool _profilePromptChecked = false;
+  bool _profilePromptVisible = false;
 
   static const List<DashboardServiceCardData>
   _services = <DashboardServiceCardData>[
@@ -96,6 +100,54 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return _tips[index];
   }
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _maybeShowProfileCompletionPrompt();
+    });
+  }
+
+  Future<void> _maybeShowProfileCompletionPrompt() async {
+    if (_profilePromptChecked || !mounted) {
+      return;
+    }
+
+    _profilePromptChecked = true;
+    final dismissed =
+        await AuthLocalStore.isProfileCompletionPromptDismissed();
+    if (!mounted || dismissed || AuthSession.isPatientProfileComplete) {
+      return;
+    }
+
+    _profilePromptVisible = true;
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (dialogContext) {
+        return ProfileCompletionPromptDialog(
+          onCompleteProfile: () {
+            Navigator.of(dialogContext).pop();
+            Navigator.of(context).pushNamed(AppRoutes.personalInformation);
+          },
+          onSkipForNow: () async {
+            await AuthLocalStore.setProfileCompletionPromptDismissed(true);
+            if (Navigator.of(dialogContext).canPop()) {
+              Navigator.of(dialogContext).pop();
+            }
+          },
+          onClose: () {
+            Navigator.of(dialogContext).pop();
+          },
+        );
+      },
+    );
+
+    if (mounted) {
+      _profilePromptVisible = false;
+    }
+  }
+
   void _showHelp() {
     showDialog<void>(
       context: context,
@@ -139,6 +191,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return ValueListenableBuilder<int>(
       valueListenable: AuthSession.notifier,
       builder: (context, _, __) {
+        if (!_profilePromptChecked && !_profilePromptVisible) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _maybeShowProfileCompletionPrompt();
+          });
+        }
+
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             isTablet ? 32 : 20,
