@@ -21,6 +21,9 @@ void main() {
 
       expect(find.text('Personal Information'), findsWidgets);
       expect(find.text('Profile completion first'), findsNothing);
+      expect(find.text('Sync records locked'), findsOneWidget);
+      expect(find.text('Required profile details'), findsOneWidget);
+      expect(find.text('PhilHealth ID or PhilSys ID'), findsOneWidget);
       expect(find.text('Identity'), findsOneWidget);
       expect(find.text('Identifiers'), findsOneWidget);
       expect(find.text('Address'), findsOneWidget);
@@ -29,6 +32,10 @@ void main() {
       expect(find.text('Sync records'), findsOneWidget);
       expect(find.text('Save Changes'), findsOneWidget);
       expect(find.text('Reset'), findsOneWidget);
+      final syncButton = tester.widget<OutlinedButton>(
+        find.widgetWithText(OutlinedButton, 'Sync records'),
+      );
+      expect(syncButton.onPressed, isNull);
       final resetButton = tester.widget<ElevatedButton>(
         find.widgetWithText(ElevatedButton, 'Reset'),
       );
@@ -45,7 +52,8 @@ void main() {
       expect(find.text('Birth date *'), findsOneWidget);
       expect(find.text('Gender *'), findsOneWidget);
       expect(find.text('Phone number *'), findsOneWidget);
-      expect(find.text('PhilHealth ID *'), findsOneWidget);
+      expect(find.text('PhilHealth ID'), findsOneWidget);
+      expect(find.text('PhilSys ID'), findsOneWidget);
       expect(find.text('Address line 1 *'), findsOneWidget);
       expect(find.text('City / municipality *'), findsOneWidget);
       expect(find.text('Province *'), findsOneWidget);

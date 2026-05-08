@@ -1,6 +1,6 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { SupabaseService } from "../supabase/supabase.service";
-import { PasswordResetOtpRecord, PasswordResetOtpUpsert } from "./auth.types";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { SupabaseService } from '../supabase/supabase.service';
+import { PasswordResetOtpRecord, PasswordResetOtpUpsert } from './auth.types';
 
 interface PasswordResetOtpRow {
   email: string;
@@ -26,16 +26,16 @@ export class PasswordResetOtpRepository {
 
   async findByEmail(email: string): Promise<PasswordResetOtpRecord | null> {
     const { data, error } = await this.supabaseService.adminClient
-      .from("password_reset_otps")
+      .from('password_reset_otps')
       .select(
-        "email, code_hash, expires_at, failed_attempts, last_sent_at, verified_at",
+        'email, code_hash, expires_at, failed_attempts, last_sent_at, verified_at',
       )
-      .eq("email", email)
+      .eq('email', email)
       .maybeSingle();
 
     if (error !== null) {
       throw new InternalServerErrorException(
-        "Unable to read password reset OTP record",
+        'Unable to read password reset OTP record',
       );
     }
 
@@ -58,12 +58,12 @@ export class PasswordResetOtpRepository {
     };
 
     const { error } = await this.supabaseService.adminClient
-      .from("password_reset_otps")
-      .upsert(payload, { onConflict: "email" });
+      .from('password_reset_otps')
+      .upsert(payload, { onConflict: 'email' });
 
     if (error !== null) {
       throw new InternalServerErrorException(
-        "Unable to store password reset OTP record",
+        'Unable to store password reset OTP record',
       );
     }
   }
@@ -73,39 +73,39 @@ export class PasswordResetOtpRepository {
     failedAttempts: number,
   ): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("password_reset_otps")
+      .from('password_reset_otps')
       .update({ failed_attempts: failedAttempts })
-      .eq("email", email);
+      .eq('email', email);
 
     if (error !== null) {
       throw new InternalServerErrorException(
-        "Unable to update password reset OTP attempts",
+        'Unable to update password reset OTP attempts',
       );
     }
   }
 
   async markVerified(email: string, verifiedAt: string): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("password_reset_otps")
+      .from('password_reset_otps')
       .update({ verified_at: verifiedAt, failed_attempts: 0 })
-      .eq("email", email);
+      .eq('email', email);
 
     if (error !== null) {
       throw new InternalServerErrorException(
-        "Unable to update password reset OTP verification status",
+        'Unable to update password reset OTP verification status',
       );
     }
   }
 
   async deleteByEmail(email: string): Promise<void> {
     const { error } = await this.supabaseService.adminClient
-      .from("password_reset_otps")
+      .from('password_reset_otps')
       .delete()
-      .eq("email", email);
+      .eq('email', email);
 
     if (error !== null) {
       throw new InternalServerErrorException(
-        "Unable to remove password reset OTP record",
+        'Unable to remove password reset OTP record',
       );
     }
   }

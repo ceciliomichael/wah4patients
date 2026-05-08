@@ -53,7 +53,10 @@ export class PersonalRecordsRepository {
       height_cm: input.heightValue,
       bmi_value: this.calculateBmi(input.weightValue, input.heightValue),
       manual_bmi_value: input.manualBmiValue ?? null,
-      bmi_source: input.manualBmiValue === undefined || input.manualBmiValue === null ? 'computed' : 'manual',
+      bmi_source:
+        input.manualBmiValue === undefined || input.manualBmiValue === null
+          ? 'computed'
+          : 'manual',
       measurement_system: input.measurementSystem,
       notes: this.normalizeNullableText(input.notes),
       recorded_at: new Date().toISOString(),
@@ -97,9 +100,8 @@ export class PersonalRecordsRepository {
       BloodPressureRecordRow,
       BloodPressureRecordInsert,
       BloodPressureRecordResponse
-    >('blood_pressure_records',
-      payload,
-      (row) => this.toBloodPressureResponse(row),
+    >('blood_pressure_records', payload, (row) =>
+      this.toBloodPressureResponse(row),
     );
   }
 
@@ -136,10 +138,7 @@ export class PersonalRecordsRepository {
       TemperatureRecordRow,
       TemperatureRecordInsert,
       TemperatureRecordResponse
-    >('temperature_records',
-      payload,
-      (row) => this.toTemperatureResponse(row),
-    );
+    >('temperature_records', payload, (row) => this.toTemperatureResponse(row));
   }
 
   async listMedicationIntakeRecords(
@@ -161,7 +160,9 @@ export class PersonalRecordsRepository {
     const payload: MedicationIntakeRecordInsert = {
       profile_id: profileId,
       prescription_id: this.normalizeNullableText(input.prescriptionId),
-      medication_reference: this.normalizeNullableText(input.medicationReference),
+      medication_reference: this.normalizeNullableText(
+        input.medicationReference,
+      ),
       medication_name_snapshot: input.medicationNameSnapshot,
       scheduled_at: input.scheduledAt,
       taken_at: input.takenAt ?? null,
@@ -175,13 +176,18 @@ export class PersonalRecordsRepository {
       MedicationIntakeRecordRow,
       MedicationIntakeRecordInsert,
       MedicationIntakeRecordResponse
-    >('medication_intake_records',
-      payload,
-      (row) => this.toMedicationIntakeResponse(row),
+    >('medication_intake_records', payload, (row) =>
+      this.toMedicationIntakeResponse(row),
     );
   }
 
-  private async listRows<RowType extends { profile_id: string; created_at: string; recorded_at?: string }>(
+  private async listRows<
+    RowType extends {
+      profile_id: string;
+      created_at: string;
+      recorded_at?: string;
+    },
+  >(
     tableName:
       | 'bmi_records'
       | 'blood_pressure_records'
@@ -189,7 +195,8 @@ export class PersonalRecordsRepository {
       | 'medication_intake_records',
     profileId: string,
   ): Promise<RowType[]> {
-    const orderColumn = tableName === 'medication_intake_records' ? 'created_at' : 'recorded_at';
+    const orderColumn =
+      tableName === 'medication_intake_records' ? 'created_at' : 'recorded_at';
     const { data, error } = await this.supabaseService.adminClient
       .from(tableName)
       .select('*')
@@ -306,7 +313,9 @@ export class PersonalRecordsRepository {
     };
   }
 
-  private normalizeNullableText(value: string | null | undefined): string | null {
+  private normalizeNullableText(
+    value: string | null | undefined,
+  ): string | null {
     const normalized = value?.trim() ?? '';
     return normalized.length > 0 ? normalized : null;
   }

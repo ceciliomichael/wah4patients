@@ -285,8 +285,9 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Gender',
               hintText: 'Select gender',
               icon: Icons.wc_outlined,
-              validator: (value) =>
-                  value == null || value.trim().isEmpty ? 'Select gender' : null,
+              validator: (value) => value == null || value.trim().isEmpty
+                  ? 'Select gender'
+                  : null,
               showRequiredIndicator: true,
             ),
           ),
@@ -315,7 +316,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
           const SizedBox(height: 20),
           _SectionHeader(
             title: 'Identifiers',
-            description: 'Store the patient identifiers hospitals can use to match records.',
+            description:
+                'Add at least one identifier so sync records can be enabled later.',
           ),
           const SizedBox(height: 16),
           _buildTwoColumnRow(
@@ -324,24 +326,23 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'PhilHealth ID',
               hintText: 'Enter PhilHealth ID',
               icon: Icons.credit_card_outlined,
-              validator: _requiredValidator,
+              validator: _optionalValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
             ),
             second: _ProfileTextField(
               controller: _philSysIdController,
               label: 'PhilSys ID',
               hintText: 'Enter PhilSys ID',
               icon: Icons.perm_identity_outlined,
-              validator: _requiredValidator,
+              validator: _optionalValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
             ),
           ),
           const SizedBox(height: 20),
           _SectionHeader(
             title: 'Address',
-            description: 'Add the current mailing address used for patient matching.',
+            description:
+                'Add the current mailing address used for patient matching.',
           ),
           const SizedBox(height: 16),
           _ProfileTextField(
@@ -407,7 +408,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
           const SizedBox(height: 20),
           _SectionHeader(
             title: 'Optional details',
-            description: 'These help later sync and profile matching, but they can be updated anytime.',
+            description:
+                'These help later sync and profile matching, but they can be updated anytime.',
           ),
           const SizedBox(height: 16),
           _buildTwoColumnRow(
@@ -477,8 +479,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
             textInputAction: TextInputAction.done,
           ),
           const SizedBox(height: 24),
-          if (widget.isSubmitting)
-            const LinearProgressIndicator(minHeight: 3),
+          if (widget.isSubmitting) const LinearProgressIndicator(minHeight: 3),
           const SizedBox(height: 20),
           if (MediaQuery.sizeOf(context).width >= 720)
             Row(
@@ -530,21 +531,12 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
     );
   }
 
-  Widget _buildTwoColumnRow({
-    required Widget first,
-    required Widget second,
-  }) {
+  Widget _buildTwoColumnRow({required Widget first, required Widget second}) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 560;
         if (!isWide) {
-          return Column(
-            children: [
-              first,
-              const SizedBox(height: 16),
-              second,
-            ],
-          );
+          return Column(children: [first, const SizedBox(height: 16), second]);
         }
 
         return Row(
@@ -561,10 +553,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    required this.description,
-  });
+  const _SectionHeader({required this.title, required this.description});
 
   final String title;
   final String description;
@@ -623,7 +612,9 @@ class _ProfileTextField extends StatelessWidget {
       textInputAction: textInputAction,
       style: AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimary),
       decoration: InputDecoration(
-        label: showRequiredIndicator ? _RequiredLabel(label: label) : Text(label),
+        label: showRequiredIndicator
+            ? _RequiredLabel(label: label)
+            : Text(label),
         hintText: hintText,
         prefixIcon: Icon(icon, color: AppColors.textSecondary),
       ),
@@ -678,15 +669,15 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonStyle = ElevatedButton.styleFrom(
       backgroundColor: isPrimary ? AppColors.primary : AppColors.surface,
-      foregroundColor: isPrimary ? AppColors.textOnPrimary : AppColors.textPrimary,
+      foregroundColor: isPrimary
+          ? AppColors.textOnPrimary
+          : AppColors.textPrimary,
       elevation: 0,
       side: isPrimary
           ? BorderSide.none
           : const BorderSide(color: AppColors.border),
       minimumSize: const Size.fromHeight(48),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.medium,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.medium),
     );
 
     final buttonChild = Row(

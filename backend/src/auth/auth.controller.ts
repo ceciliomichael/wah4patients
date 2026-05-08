@@ -126,9 +126,7 @@ export class AuthController {
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   @Throttle({ default: { ttl: 60_000, limit: 10 } })
-  refreshSession(
-    @Body() dto: RefreshSessionDto,
-  ): Promise<LoginResponse> {
+  refreshSession(@Body() dto: RefreshSessionDto): Promise<LoginResponse> {
     return this.authService.refreshSession(dto);
   }
 

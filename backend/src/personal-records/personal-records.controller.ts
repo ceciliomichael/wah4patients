@@ -18,7 +18,9 @@ import { PersonalRecordsService } from './personal-records.service';
 
 @Controller('phr')
 export class PersonalRecordsController {
-  constructor(private readonly personalRecordsService: PersonalRecordsService) {}
+  constructor(
+    private readonly personalRecordsService: PersonalRecordsService,
+  ) {}
 
   @Get('bmi-records')
   @Throttle({ default: { ttl: 60_000, limit: 30 } })
@@ -34,7 +36,10 @@ export class PersonalRecordsController {
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: CreateBmiRecordDto,
   ): Promise<BmiRecordResponse> {
-    return this.personalRecordsService.createBmiRecord(authorizationHeader, dto);
+    return this.personalRecordsService.createBmiRecord(
+      authorizationHeader,
+      dto,
+    );
   }
 
   @Get('blood-pressure-records')

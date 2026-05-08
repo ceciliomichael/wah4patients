@@ -9,6 +9,7 @@ import '../../../auth/data/auth_api_client.dart';
 import '../../../auth/data/auth_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
 import '../../../auth/domain/models/auth_api_models.dart';
+import '../../domain/profile_sync_readiness.dart';
 import '../widgets/patient_profile_form_widget.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
@@ -80,9 +81,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
     } finally {
       if (mounted) {
         setState(() {
@@ -110,6 +111,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     final content = ValueListenableBuilder<int>(
       valueListenable: AuthSession.notifier,
       builder: (context, _, __) {
+        final readiness = evaluateProfileSyncReadiness(AuthSession.profile);
+
         return Scaffold(
           backgroundColor: AppColors.background,
           body: SingleChildScrollView(
@@ -140,8 +143,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    _SyncReadinessCard(readiness: readiness),
+                    const SizedBox(height: 20),
                     _SyncRecordsButton(
-                      onPressed: _showSyncPlaceholder,
+                      onPressed: readiness.isReady ? _showSyncComingSoon : null,
                     ),
                     const SizedBox(height: 20),
                     PatientProfileFormWidget(
@@ -182,10 +187,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return initials.join();
   }
 
-  void _showSyncPlaceholder() {
+  void _showSyncComingSoon() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Sync with WAH facilities will be available later.'),
+        content: Text('Sync records integration will be available next.'),
       ),
     );
   }
@@ -227,6 +232,99 @@ class _ProfileHeader extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SyncReadinessCard extends StatelessWidget {
+  const _SyncReadinessCard({required this.readiness});
+
+  final ProfileSyncReadiness readiness;
+
+  @override
+  Widget build(BuildContext context) {
+    final isReady = readiness.isReady;
+    final title = isReady ? 'Ready for sync records' : 'Sync records locked';
+    final description = isReady
+        ? 'Your profile has the minimum details needed for interoperability sync.'
+        : 'Complete the missing profile details below to unlock sync records.';
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadii.large,
+        border: Border.all(color: AppColors.border),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceVariant,
+                  borderRadius: AppRadii.medium,
+                  border: Border.all(color: AppColors.border),
+                ),
+                child: Icon(
+                  isReady ? Icons.verified_outlined : Icons.info_outline,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.titleLarge.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      description,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (readiness.missingRequirements.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: readiness.missingRequirements
+                  .map((requirement) => _RequirementChip(label: requirement))
+                  .toList(growable: false),
+            ),
+          ] else ...[
+            const SizedBox(height: 14),
+            Text(
+              'No additional fields are blocking sync records.',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -305,10 +403,35 @@ class _ProfileSummaryRow extends StatelessWidget {
   }
 }
 
+class _RequirementChip extends StatelessWidget {
+  const _RequirementChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceVariant,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.labelMedium.copyWith(
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
 class _SyncRecordsButton extends StatelessWidget {
   const _SyncRecordsButton({required this.onPressed});
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -321,9 +444,7 @@ class _SyncRecordsButton extends StatelessWidget {
         minimumSize: const Size.fromHeight(48),
         foregroundColor: AppColors.textPrimary,
         side: const BorderSide(color: AppColors.border),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.medium,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.medium),
       ),
     );
   }

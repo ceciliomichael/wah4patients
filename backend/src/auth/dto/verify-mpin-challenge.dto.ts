@@ -1,4 +1,10 @@
-import { IsString, Length, Matches, MaxLength, MinLength } from "class-validator";
+import {
+  IsString,
+  Length,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class VerifyMpinChallengeDto {
   @IsString()

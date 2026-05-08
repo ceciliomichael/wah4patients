@@ -175,7 +175,9 @@ export class PersonalRecordsService {
     );
   }
 
-  private normalizeNullableText(value: string | null | undefined): string | null {
+  private normalizeNullableText(
+    value: string | null | undefined,
+  ): string | null {
     const normalized = value?.trim() ?? '';
     return normalized.length > 0 ? normalized : null;
   }

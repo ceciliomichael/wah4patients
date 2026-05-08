@@ -51,7 +51,9 @@ export class HealthRecordsRepository {
     return { records: rows.map((row) => this.toHealthRecordResponse(row)) };
   }
 
-  private toHealthRecordResponse(row: HealthRecordRowShape): HealthRecordResponse {
+  private toHealthRecordResponse(
+    row: HealthRecordRowShape,
+  ): HealthRecordResponse {
     return {
       id: row.id,
       profileId: row.profile_id,

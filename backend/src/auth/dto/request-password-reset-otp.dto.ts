@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MaxLength } from "class-validator";
+import { IsEmail, IsString, MaxLength } from 'class-validator';
 
 export class RequestPasswordResetOtpDto {
   @IsString()

@@ -6,22 +6,22 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { MailerService } from "../mailer/mailer.service";
-import { SupabaseService } from "../supabase/supabase.service";
-import { AuthSettingsService } from "./auth-settings.service";
-import { AuthSupportService } from "./auth-support.service";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '../mailer/mailer.service';
+import { SupabaseService } from '../supabase/supabase.service';
+import { AuthSettingsService } from './auth-settings.service';
+import { AuthSupportService } from './auth-support.service';
 import {
   CompletePasswordResetResponse,
   PasswordResetTokenPayload,
   RequestPasswordResetOtpResponse,
   VerifyPasswordResetOtpResponse,
-} from "./auth.types";
-import { CompletePasswordResetDto } from "./dto/complete-password-reset.dto";
-import { RequestPasswordResetOtpDto } from "./dto/request-password-reset-otp.dto";
-import { VerifyPasswordResetOtpDto } from "./dto/verify-password-reset-otp.dto";
-import { PasswordResetOtpRepository } from "./password-reset-otp.repository";
+} from './auth.types';
+import { CompletePasswordResetDto } from './dto/complete-password-reset.dto';
+import { RequestPasswordResetOtpDto } from './dto/request-password-reset-otp.dto';
+import { VerifyPasswordResetOtpDto } from './dto/verify-password-reset-otp.dto';
+import { PasswordResetOtpRepository } from './password-reset-otp.repository';
 
 @Injectable()
 export class PasswordResetAuthService {
@@ -50,7 +50,7 @@ export class PasswordResetAuthService {
       }
 
       return {
-        message: "If an account exists, a password reset code has been sent",
+        message: 'If an account exists, a password reset code has been sent',
         cooldownSeconds: this.settings.otpResendCooldownSeconds,
       };
     }
@@ -102,7 +102,7 @@ export class PasswordResetAuthService {
     }
 
     return {
-      message: "If an account exists, a password reset code has been sent",
+      message: 'If an account exists, a password reset code has been sent',
       cooldownSeconds: this.settings.otpResendCooldownSeconds,
     };
   }
@@ -116,21 +116,21 @@ export class PasswordResetAuthService {
 
     if (record === null) {
       throw new BadRequestException(
-        "Verification code request not found for this email",
+        'Verification code request not found for this email',
       );
     }
 
     if (new Date(record.expiresAt) <= new Date()) {
       await this.passwordResetOtpRepository.deleteByEmail(normalizedEmail);
       throw new BadRequestException(
-        "Verification code expired, please request a new code",
+        'Verification code expired, please request a new code',
       );
     }
 
     if (record.failedAttempts >= this.settings.otpMaxAttempts) {
       await this.passwordResetOtpRepository.deleteByEmail(normalizedEmail);
       throw new UnauthorizedException(
-        "Maximum verification attempts reached, request a new code",
+        'Maximum verification attempts reached, request a new code',
       );
     }
 
@@ -147,11 +147,11 @@ export class PasswordResetAuthService {
 
       if (updatedAttempts >= this.settings.otpMaxAttempts) {
         throw new UnauthorizedException(
-          "Maximum verification attempts reached, request a new code",
+          'Maximum verification attempts reached, request a new code',
         );
       }
 
-      throw new UnauthorizedException("Invalid verification code");
+      throw new UnauthorizedException('Invalid verification code');
     }
 
     const verifiedAt = new Date().toISOString();
@@ -163,8 +163,8 @@ export class PasswordResetAuthService {
     const passwordResetToken = await this.jwtService.signAsync(
       {
         sub: normalizedEmail,
-        purpose: "password-reset",
-      } satisfies Omit<PasswordResetTokenPayload, "iat" | "exp">,
+        purpose: 'password-reset',
+      } satisfies Omit<PasswordResetTokenPayload, 'iat' | 'exp'>,
       {
         secret: this.settings.passwordResetTokenSecret,
         expiresIn: `${this.settings.passwordResetTokenTtlSeconds}s`,
@@ -172,7 +172,7 @@ export class PasswordResetAuthService {
     );
 
     return {
-      message: "Email verified successfully",
+      message: 'Email verified successfully',
       passwordResetToken,
       expiresInSeconds: this.settings.passwordResetTokenTtlSeconds,
     };
@@ -186,7 +186,7 @@ export class PasswordResetAuthService {
 
     if (!this.support.isPasswordStrong(password)) {
       throw new BadRequestException(
-        "Password must include uppercase, lowercase, and at least one number",
+        'Password must include uppercase, lowercase, and at least one number',
       );
     }
 
@@ -195,7 +195,7 @@ export class PasswordResetAuthService {
     );
 
     if (tokenPayload.sub !== normalizedEmail) {
-      throw new UnauthorizedException("Password reset token email mismatch");
+      throw new UnauthorizedException('Password reset token email mismatch');
     }
 
     const otpRecord =
@@ -206,13 +206,13 @@ export class PasswordResetAuthService {
       new Date(otpRecord.expiresAt) <= new Date()
     ) {
       throw new BadRequestException(
-        "Email verification is required before resetting a password",
+        'Email verification is required before resetting a password',
       );
     }
 
     const userId = await this.support.findProfileIdByEmail(normalizedEmail);
     if (userId === null) {
-      throw new BadGatewayException("Unable to reset password");
+      throw new BadGatewayException('Unable to reset password');
     }
 
     const { error } =
@@ -221,7 +221,7 @@ export class PasswordResetAuthService {
       });
 
     if (error !== null) {
-      this.logger.error("Failed to reset Supabase auth user password", {
+      this.logger.error('Failed to reset Supabase auth user password', {
         email: normalizedEmail,
         message: error.message,
       });
@@ -229,14 +229,14 @@ export class PasswordResetAuthService {
       throw new BadGatewayException(
         error.message.trim().length > 0
           ? `Failed to reset password: ${error.message}`
-          : "Failed to reset password",
+          : 'Failed to reset password',
       );
     }
 
     await this.passwordResetOtpRepository.deleteByEmail(normalizedEmail);
 
     return {
-      message: "Password updated successfully",
+      message: 'Password updated successfully',
     };
   }
 }

@@ -1,9 +1,9 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 export const envValidationSchema = Joi.object({
   NODE_ENV: Joi.string()
-    .valid("development", "test", "production")
-    .default("development"),
+    .valid('development', 'test', 'production')
+    .default('development'),
   PORT: Joi.number().integer().min(1).max(65535).default(3000),
   FRONTEND_ORIGIN: Joi.string().trim().required(),
   BACKEND_API_KEY: Joi.string().trim().min(24).required(),
@@ -46,7 +46,7 @@ export const envValidationSchema = Joi.object({
     .min(60)
     .max(1200)
     .default(300),
-  TOTP_ISSUER: Joi.string().trim().min(2).max(64).default("WAH4P"),
+  TOTP_ISSUER: Joi.string().trim().min(2).max(64).default('WAH4P'),
   TOTP_RECOVERY_CODES_COUNT: Joi.number().integer().min(6).max(20).default(8),
   TOTP_SECRET_ENCRYPTION_KEY: Joi.string().trim().min(32).required(),
   MPIN_MAX_FAILED_ATTEMPTS: Joi.number().integer().min(3).max(10).default(5),
