@@ -676,23 +676,18 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonStyle = isPrimary
-        ? ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            foregroundColor: AppColors.textOnPrimary,
-            minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.medium,
-            ),
-          )
-        : OutlinedButton.styleFrom(
-            foregroundColor: AppColors.textPrimary,
-            side: const BorderSide(color: AppColors.border),
-            minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.medium,
-            ),
-          );
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: isPrimary ? AppColors.primary : AppColors.surface,
+      foregroundColor: isPrimary ? AppColors.textOnPrimary : AppColors.textPrimary,
+      elevation: 0,
+      side: isPrimary
+          ? BorderSide.none
+          : const BorderSide(color: AppColors.border),
+      minimumSize: const Size.fromHeight(48),
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.medium,
+      ),
+    );
 
     final buttonChild = Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -710,15 +705,7 @@ class _ActionButton extends StatelessWidget {
       ],
     );
 
-    if (isPrimary) {
-      return ElevatedButton(
-        onPressed: onPressed,
-        style: buttonStyle,
-        child: buttonChild,
-      );
-    }
-
-    return OutlinedButton(
+    return ElevatedButton(
       onPressed: onPressed,
       style: buttonStyle,
       child: buttonChild,

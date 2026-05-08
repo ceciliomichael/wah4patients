@@ -3588,6 +3588,113 @@
       ],
       "createdAt": "2026-05-05T15:49:46.427Z",
       "updatedAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "memoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "rootMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4bc9624d-c49e-4424-820d-f348922fe07a",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+        "2c28b06a-4a93-4ab4-9cef-caa50c64d86f"
+      ],
+      "childMemoryIds": [
+        "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Updated the Personal Information screen so the Reset action now renders as a white elevated button with dark text and a light border, while preserving the Save Changes action styling and form behavior. Added a targeted widget test assertion to verify the Reset button surface and text colors. Cleaned up accidental unrelated edits so the diff stayed limited to the button style change and its test coverage.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the local action-button styling so the Reset action renders as a white button while keeping the rest of the form behavior intact.",
+          "notes": "Kept the change localized to the non-primary button style in _ActionButton."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that verifies the Reset button renders with a white background and dark foreground color.",
+          "notes": "This ensures the visual change is covered by a targeted widget test."
+        }
+      ],
+      "createdAt": "2026-05-07T17:41:11.755Z",
+      "updatedAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "memoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "rootMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "parentMemoryIds": [
+        "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82"
+      ],
+      "relatedMemoryIds": [
+        "4bc9624d-c49e-4424-820d-f348922fe07a",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+        "2c28b06a-4a93-4ab4-9cef-caa50c64d86f"
+      ],
+      "childMemoryIds": [
+        "371110a2-0361-4858-bdab-8a19dbc75b75"
+      ],
+      "sectionKind": "decision",
+      "summary": "Updated the Personal Information screen so the Reset action now renders as a white elevated button with dark text and a light border, while preserving the Save Changes action styling and form behavior. Added a targeted widget test assertion to verify the Reset button surface and text colors. Cleaned up accidental unrelated edits so the diff stayed limited to the button style change and its test coverage.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the local action-button styling so the Reset action renders as a white button while keeping the rest of the form behavior intact.",
+          "notes": "Kept the change localized to the non-primary button style in _ActionButton."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that verifies the Reset button renders with a white background and dark foreground color.",
+          "notes": "This ensures the visual change is covered by a targeted widget test."
+        }
+      ],
+      "createdAt": "2026-05-07T17:41:11.785Z",
+      "updatedAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "memoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "rootMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "parentMemoryIds": [
+        "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6"
+      ],
+      "relatedMemoryIds": [
+        "4bc9624d-c49e-4424-820d-f348922fe07a",
+        "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+        "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+        "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+        "2c28b06a-4a93-4ab4-9cef-caa50c64d86f"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Updated the Personal Information screen so the Reset action now renders as a white elevated button with dark text and a light border, while preserving the Save Changes action styling and form behavior. Added a targeted widget test assertion to verify the Reset button surface and text colors. Cleaned up accidental unrelated edits so the diff stayed limited to the button style change and its test coverage.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the local action-button styling so the Reset action renders as a white button while keeping the rest of the form behavior intact.",
+          "notes": "Kept the change localized to the non-primary button style in _ActionButton."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that verifies the Reset button renders with a white background and dark foreground color.",
+          "notes": "This ensures the visual change is covered by a targeted widget test."
+        }
+      ],
+      "createdAt": "2026-05-07T17:41:11.816Z",
+      "updatedAt": "2026-05-07T17:41:11.816Z"
     }
   ],
   "edges": [
@@ -5473,7 +5580,140 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-05T15:49:46.427Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "toMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.755Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "53d8260f-d4f5-4d1d-9307-b5ceeb1a2a82",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "toMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.785Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "6a1a76d7-1ae3-4b67-bf42-2f4c087a4cc6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "4bc9624d-c49e-4424-820d-f348922fe07a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "54b00ffc-6364-48b0-ae29-0b7f131fec6a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "f155eeb8-c1b3-46f1-91f7-e3245f73e9bd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "e053ba56-6cf1-4be2-b6c4-d10b7230e9ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
+    },
+    {
+      "fromMemoryId": "371110a2-0361-4858-bdab-8a19dbc75b75",
+      "toMemoryId": "2c28b06a-4a93-4ab4-9cef-caa50c64d86f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-07T17:41:11.816Z"
     }
   ],
-  "updatedAt": "2026-05-05T15:49:46.429Z"
+  "updatedAt": "2026-05-07T17:41:11.819Z"
 }

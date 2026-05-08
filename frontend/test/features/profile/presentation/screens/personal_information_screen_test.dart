@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:frontend/core/constants/app_colors.dart';
 import 'package:frontend/features/auth/domain/auth_session.dart';
 import 'package:frontend/features/profile/presentation/screens/personal_information_screen.dart';
 
@@ -28,6 +29,17 @@ void main() {
       expect(find.text('Sync records'), findsOneWidget);
       expect(find.text('Save Changes'), findsOneWidget);
       expect(find.text('Reset'), findsOneWidget);
+      final resetButton = tester.widget<ElevatedButton>(
+        find.widgetWithText(ElevatedButton, 'Reset'),
+      );
+      expect(
+        resetButton.style?.backgroundColor?.resolve(<MaterialState>{}),
+        AppColors.surface,
+      );
+      expect(
+        resetButton.style?.foregroundColor?.resolve(<MaterialState>{}),
+        AppColors.textPrimary,
+      );
       expect(find.text('First name *'), findsOneWidget);
       expect(find.text('Last name *'), findsOneWidget);
       expect(find.text('Birth date *'), findsOneWidget);
