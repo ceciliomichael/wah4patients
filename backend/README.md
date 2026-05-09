@@ -8,6 +8,7 @@ Secure NestJS API for WAH for Patients registration and login flow, backed by Su
 - Rate limiting with `@nestjs/throttler`
 - OTP registration flow via Resend email delivery
 - Account creation and login through Supabase Auth
+- WAH4PC interoperability proxy for provider discovery and sync-readiness checks
 - SQL bootstrap script for OTP + profile tables (`../sqls/001_auth_setup.sql`)
 - SQL bootstrap script for Personal Records tables (`../sqls/006_personal_records_setup.sql`)
 - SQL bootstrap script for Appointment History tables (`../sqls/009_appointment_history_setup.sql`)
@@ -34,7 +35,15 @@ cp .env.example .env
 ../sqls/009_appointment_history_setup.sql
 ```
 
-4. Start backend:
+4. Configure the WAH4PC gateway env vars:
+
+```text
+WAH4PC_GATEWAY_URL=https://wah4pc.echosphere.cfd
+WAH4PC_API_KEY=...
+WAH4PC_PROVIDER_ID=...
+```
+
+5. Start backend:
 
 ```bash
 npm run start:dev
@@ -52,6 +61,11 @@ All endpoints below require `x-api-key` header except `/health`.
 - `POST /api/v1/auth/register/verify-otp`
 - `POST /api/v1/auth/register/complete`
 - `POST /api/v1/auth/login`
+
+## Interoperability Endpoints
+
+- `GET /api/v1/interoperability/providers`
+- `POST /api/v1/interoperability/sync/prepare`
 
 ## Testing and Build
 

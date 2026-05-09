@@ -146,7 +146,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     _SyncReadinessCard(readiness: readiness),
                     const SizedBox(height: 20),
                     _SyncRecordsButton(
-                      onPressed: readiness.isReady ? _showSyncComingSoon : null,
+                      onPressed: readiness.isReady ? _openSyncWizard : null,
                     ),
                     const SizedBox(height: 20),
                     PatientProfileFormWidget(
@@ -187,10 +187,18 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return initials.join();
   }
 
-  void _showSyncComingSoon() {
+  Future<void> _openSyncWizard() async {
+    final completed = await Navigator.of(
+      context,
+    ).pushNamed(AppRoutes.syncRecords);
+
+    if (!mounted || completed != true) {
+      return;
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Sync records integration will be available next.'),
+        content: Text('Sync request prepared. Gateway submission comes next.'),
       ),
     );
   }

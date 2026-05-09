@@ -51,6 +51,19 @@ void main() {
     expect(readiness.missingRequirements, isEmpty);
   });
 
+  test('marks profile ready when only PhilSys ID exists', () {
+    final readiness = evaluateProfileSyncReadiness(
+      buildProfile(
+        isComplete: true,
+        missingFields: const <String>[],
+        philSysId: '1234-1234567-1',
+      ),
+    );
+
+    expect(readiness.isReady, isTrue);
+    expect(readiness.missingRequirements, isEmpty);
+  });
+
   test('requires at least one identifier for sync readiness', () {
     final readiness = evaluateProfileSyncReadiness(
       buildProfile(isComplete: true, missingFields: const <String>[]),

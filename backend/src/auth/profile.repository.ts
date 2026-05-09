@@ -191,8 +191,9 @@ function getMissingProfileFields(
   if (profile.communicationLanguage.trim().length === 0) {
     missing.push('communicationLanguage');
   }
-  if (profile.philHealthId.trim().length === 0) missing.push('philHealthId');
-  if (profile.philSysId.trim().length === 0) missing.push('philSysId');
+  const hasIdentifier =
+    profile.philHealthId.trim().length > 0 || profile.philSysId.trim().length > 0;
+  if (!hasIdentifier) missing.push('PhilHealth ID or PhilSys ID');
   if (profile.addressLine1.trim().length === 0) missing.push('addressLine1');
   if (profile.city.trim().length === 0) missing.push('city');
   if (profile.province.trim().length === 0) missing.push('province');

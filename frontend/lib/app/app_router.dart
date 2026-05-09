@@ -37,6 +37,7 @@ import '../features/onboarding/presentation/screens/onboarding_screen_1.dart';
 import '../features/onboarding/presentation/screens/onboarding_screen_2.dart';
 import '../features/onboarding/presentation/screens/onboarding_screen_3.dart';
 import '../features/onboarding/presentation/screens/onboarding_screen_4.dart';
+import '../features/interoperability/presentation/screens/sync_records_wizard_screen.dart';
 import '../features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart';
 import '../features/phr/blood_pressure/presentation/screen/blood_pressure_screen.dart';
 import '../features/phr/medicine_intake/presentation/screen/medicine_intake_screen.dart';
@@ -355,6 +356,11 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
       return _buildSlideRoute(
         settings: settings,
         builder: (_) => const PersonalInformationScreen(),
+      );
+    case AppRoutes.syncRecords:
+      return _buildSlideRoute(
+        settings: settings,
+        builder: (_) => SyncRecordsWizardScreen(),
       );
     case AppRoutes.aboutUs:
       return _buildSlideRoute(

@@ -17,6 +17,10 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   afterAll(async () => {
     if (app !== undefined) {
       await app.close();
@@ -36,5 +40,97 @@ describe('AppController (e2e)', () => {
 
   it('/api/v1/auth/login (POST) requires x-api-key', () => {
     return request(app.getHttpServer()).post('/api/v1/auth/login').expect(401);
+  });
+
+  it('/api/v1/interoperability/providers (GET)', async () => {
+    jest.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          data: [
+            {
+              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+              name: 'WAH for Clinics',
+              type: 'clinic',
+              facility_code: 'WAH4C',
+              location: 'Tarlac City',
+              isActive: true,
+            },
+          ],
+        }),
+        {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        },
+      ) as Response,
+    );
+
+    await request(app.getHttpServer())
+      .get('/api/v1/interoperability/providers')
+      .set('x-api-key', 'test-api-key-12345678901234567890')
+      .expect(200)
+      .expect((response) => {
+        expect(response.body).toEqual({
+          source: 'wah4pc',
+          providers: [
+            {
+              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+              name: 'WAH for Clinics',
+              type: 'clinic',
+              facilityCode: 'WAH4C',
+              location: 'Tarlac City',
+              isActive: true,
+            },
+          ],
+        });
+      });
+  });
+
+  it('/api/v1/interoperability/sync/prepare (POST)', async () => {
+    jest.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          data: [
+            {
+              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+              name: 'WAH for Clinics',
+              type: 'clinic',
+              facility_code: 'WAH4C',
+              location: 'Tarlac City',
+              isActive: true,
+            },
+          ],
+        }),
+        {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        },
+      ) as Response,
+    );
+
+    await request(app.getHttpServer())
+      .post('/api/v1/interoperability/sync/prepare')
+      .set('x-api-key', 'test-api-key-12345678901234567890')
+      .send({
+        providerId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+        identifierSystem: 'http://philhealth.gov.ph',
+        identifierValue: '12-345678901-2',
+      })
+      .expect(200)
+      .expect((response) => {
+        expect(response.body.requesterId).toBe(
+          '550e8400-e29b-41d4-a716-446655440000',
+        );
+        expect(response.body.targetProvider.id).toBe(
+          '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+        );
+        expect(response.body.patientIdentifiers).toEqual([
+          {
+            system: 'http://philhealth.gov.ph',
+            value: '12-345678901-2',
+          },
+        ]);
+      });
   });
 });

@@ -4266,6 +4266,1202 @@
       ],
       "createdAt": "2026-05-08T08:57:58.629Z",
       "updatedAt": "2026-05-08T08:57:58.629Z"
+    },
+    {
+      "memoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "rootMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "parentMemoryIds": [
+        "73d6d753-4159-4ae5-8a47-1418dddfb698"
+      ],
+      "relatedMemoryIds": [
+        "8a77f755-39b9-4645-a596-8e499b09d5f4",
+        "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "067efcd3-e988-4d11-95c6-457039b52404"
+      ],
+      "childMemoryIds": [
+        "f70f0e93-4bf0-49a0-b503-faa9f613af50"
+      ],
+      "sectionKind": "fact",
+      "summary": "Reviewed the interoperability rollout docs and backlog to shape Phase 2. The intended implementation boundary is a new sync wizard started from Personal Information, with identifier selection and provider selection handled as separate steps. Provider discovery and readiness validation should live in a dedicated interoperability module rather than inside the profile screen. The backlog item for Phase 2 was updated to reflect this narrowed scope.",
+      "affectedFiles": [
+        {
+          "path": "max-backlog.md",
+          "action": "inspected",
+          "reason": "Used to confirm the phase 2 scope and align the implementation boundary with the rollout plan.",
+          "notes": "Top-level interoperability backlog and phase breakdown."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway callback and provider matching expectations for the sync flow.",
+          "notes": "Explains webhook and provider integration requirements."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway provider discovery and FHIR request endpoints that phase 2 must respect.",
+          "notes": "Provides endpoint and payload guidance."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Used to verify how a new interoperability module would be registered in the backend application.",
+          "notes": "Shows current Nest module composition."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Used to verify how new gateway-related environment variables should be validated.",
+          "notes": "Current env schema does not yet include gateway variables."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Used to see how the current sync button is wired and where the new route should be introduced.",
+          "notes": "Current screen still contains the Phase 1 readiness card and placeholder sync action."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Used to confirm there is an existing bottom-sheet select control that can be reused for identifier/provider selection.",
+          "notes": "Good fit for wizard step selection."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Used as a pattern reference for multi-step screen orchestration in Flutter.",
+          "notes": "Useful for the proposed wizard screen structure."
+        }
+      ],
+      "createdAt": "2026-05-08T17:30:30.416Z",
+      "updatedAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "memoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "rootMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "parentMemoryIds": [
+        "16f19721-7473-492b-aa9e-cbc4d423f7e0"
+      ],
+      "relatedMemoryIds": [
+        "8a77f755-39b9-4645-a596-8e499b09d5f4",
+        "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "067efcd3-e988-4d11-95c6-457039b52404"
+      ],
+      "childMemoryIds": [
+        "77376c75-0c7b-4510-91d5-01ae3882b50a"
+      ],
+      "sectionKind": "decision",
+      "summary": "Reviewed the interoperability rollout docs and backlog to shape Phase 2. The intended implementation boundary is a new sync wizard started from Personal Information, with identifier selection and provider selection handled as separate steps. Provider discovery and readiness validation should live in a dedicated interoperability module rather than inside the profile screen. The backlog item for Phase 2 was updated to reflect this narrowed scope.",
+      "affectedFiles": [
+        {
+          "path": "max-backlog.md",
+          "action": "inspected",
+          "reason": "Used to confirm the phase 2 scope and align the implementation boundary with the rollout plan.",
+          "notes": "Top-level interoperability backlog and phase breakdown."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway callback and provider matching expectations for the sync flow.",
+          "notes": "Explains webhook and provider integration requirements."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway provider discovery and FHIR request endpoints that phase 2 must respect.",
+          "notes": "Provides endpoint and payload guidance."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Used to verify how a new interoperability module would be registered in the backend application.",
+          "notes": "Shows current Nest module composition."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Used to verify how new gateway-related environment variables should be validated.",
+          "notes": "Current env schema does not yet include gateway variables."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Used to see how the current sync button is wired and where the new route should be introduced.",
+          "notes": "Current screen still contains the Phase 1 readiness card and placeholder sync action."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Used to confirm there is an existing bottom-sheet select control that can be reused for identifier/provider selection.",
+          "notes": "Good fit for wizard step selection."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Used as a pattern reference for multi-step screen orchestration in Flutter.",
+          "notes": "Useful for the proposed wizard screen structure."
+        }
+      ],
+      "createdAt": "2026-05-08T17:30:30.444Z",
+      "updatedAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "memoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "rootMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "parentMemoryIds": [
+        "f70f0e93-4bf0-49a0-b503-faa9f613af50"
+      ],
+      "relatedMemoryIds": [
+        "8a77f755-39b9-4645-a596-8e499b09d5f4",
+        "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "067efcd3-e988-4d11-95c6-457039b52404"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Reviewed the interoperability rollout docs and backlog to shape Phase 2. The intended implementation boundary is a new sync wizard started from Personal Information, with identifier selection and provider selection handled as separate steps. Provider discovery and readiness validation should live in a dedicated interoperability module rather than inside the profile screen. The backlog item for Phase 2 was updated to reflect this narrowed scope.",
+      "affectedFiles": [
+        {
+          "path": "max-backlog.md",
+          "action": "inspected",
+          "reason": "Used to confirm the phase 2 scope and align the implementation boundary with the rollout plan.",
+          "notes": "Top-level interoperability backlog and phase breakdown."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway callback and provider matching expectations for the sync flow.",
+          "notes": "Explains webhook and provider integration requirements."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to confirm the gateway provider discovery and FHIR request endpoints that phase 2 must respect.",
+          "notes": "Provides endpoint and payload guidance."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Used to verify how a new interoperability module would be registered in the backend application.",
+          "notes": "Shows current Nest module composition."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Used to verify how new gateway-related environment variables should be validated.",
+          "notes": "Current env schema does not yet include gateway variables."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Used to see how the current sync button is wired and where the new route should be introduced.",
+          "notes": "Current screen still contains the Phase 1 readiness card and placeholder sync action."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Used to confirm there is an existing bottom-sheet select control that can be reused for identifier/provider selection.",
+          "notes": "Good fit for wizard step selection."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Used as a pattern reference for multi-step screen orchestration in Flutter.",
+          "notes": "Useful for the proposed wizard screen structure."
+        }
+      ],
+      "createdAt": "2026-05-08T17:30:30.476Z",
+      "updatedAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "memoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "rootMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "parentMemoryIds": [
+        "77376c75-0c7b-4510-91d5-01ae3882b50a"
+      ],
+      "relatedMemoryIds": [
+        "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+        "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "8a77f755-39b9-4645-a596-8e499b09d5f4"
+      ],
+      "childMemoryIds": [
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented Phase 2 of the interoperability rollout across backend and Flutter. The backend now exposes a WAH4PC-backed interoperability proxy for provider discovery and sync-request preparation, with env validation and e2e coverage. The Flutter app now launches a dedicated sync wizard from the Personal Information screen, uses bottom-sheet selection for identifier/provider choice, and reuses the existing profile readiness rules to gate entry. Tests for the new interoperability models, wizard flow, and profile-to-wizard navigation all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new interoperability integration module with the Nest application so provider discovery endpoints are available.",
+          "notes": "Added IntegrationModule import and module registration."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Added required gateway environment variables to startup validation for the backend proxy.",
+          "notes": "Now validates WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated Nest module to encapsulate interoperability gateway concerns.",
+          "notes": "Contains the new integration controller and service."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "created",
+          "reason": "Exposes provider discovery and sync-preparation endpoints for the frontend.",
+          "notes": "Routes live under /api/v1/interoperability."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "created",
+          "reason": "Implements gateway fetch, provider sanitization, and sync-request preparation logic.",
+          "notes": "Uses the real WAH4PC gateway URL and validates provider selection."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "created",
+          "reason": "Defines the typed gateway provider and sync-preparation response contracts used by the new integration layer.",
+          "notes": "Keeps request and response shapes explicit."
+        },
+        {
+          "path": "backend/src/integration/dto/prepare-sync-request.dto.ts",
+          "action": "created",
+          "reason": "Validates inbound sync preparation requests at the backend boundary.",
+          "notes": "Uses class-validator for provider and identifier fields."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "created",
+          "reason": "Covers provider normalization, request prep, inactive-provider rejection, and connectivity failure behavior.",
+          "notes": "Uses mocked fetch responses."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added end-to-end coverage for the new interoperability provider and sync-preparation routes.",
+          "notes": "Verifies the route wiring under the global API prefix."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Injected WAH4PC env values so backend tests can bootstrap the new integration module.",
+          "notes": "Includes gateway URL, API key, and provider ID."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documented the gateway environment variables required by the new backend proxy.",
+          "notes": "Added WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the interoperability endpoints and gateway configuration needed to run the backend.",
+          "notes": "Adds setup step for the gateway env vars."
+        },
+        {
+          "path": "frontend/lib/app/app_routes.dart",
+          "action": "modified",
+          "reason": "Added a dedicated route constant for the sync wizard screen.",
+          "notes": "Enables profile-to-wizard navigation."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Registered the sync wizard route so the UI can navigate to the new workflow.",
+          "notes": "Uses a slide transition like other profile flows."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Changed the sync action from a placeholder to navigation into the dedicated sync wizard route.",
+          "notes": "Still keeps Phase 1 readiness gating and profile editing separate."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "created",
+          "reason": "Introduced typed sync identifier, provider, and request-preview models for the new wizard flow.",
+          "notes": "Includes PhilHealth and PhilSys identifier URIs."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "created",
+          "reason": "Added the frontend client for backend interoperability discovery and sync-preparation calls.",
+          "notes": "Uses the existing backend API base and x-api-key header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "created",
+          "reason": "Implements the new step-based sync wizard screen used by the sync button.",
+          "notes": "Loads providers, manages step state, and prepares the request."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_wizard_step_header.dart",
+          "action": "created",
+          "reason": "Provides a reusable step-header presentation component for the sync wizard.",
+          "notes": "Keeps wizard chrome separate from orchestration."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_identifier_step.dart",
+          "action": "created",
+          "reason": "Handles identifier selection in the sync wizard using bottom-sheet controls.",
+          "notes": "Only shows identifiers already present in the profile."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "created",
+          "reason": "Handles provider loading, error states, and selection in the sync wizard.",
+          "notes": "Uses backend provider discovery results."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "created",
+          "reason": "Shows the final request summary before backend preparation.",
+          "notes": "Separates review UX from data-fetching logic."
+        },
+        {
+          "path": "frontend/test/flutter_test_config.dart",
+          "action": "created",
+          "reason": "Mocks flutter_secure_storage channels globally so widget tests can run without a missing plugin exception.",
+          "notes": "Supports AuthSession.clear() and other storage-backed test setup."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "created",
+          "reason": "Verifies identifier-option building and empty-identifier handling for the new interoperability models.",
+          "notes": "Covers PhilHealth and PhilSys mapping."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "created",
+          "reason": "Covers the sync wizard step flow and request-preparation path.",
+          "notes": "Uses a fake interoperability client and scrolls the final action into view."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated profile-screen expectations and added navigation coverage into the new sync wizard.",
+          "notes": "Confirms the sync button now opens the wizard."
+        }
+      ],
+      "createdAt": "2026-05-08T18:36:42.502Z",
+      "updatedAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "memoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "rootMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "parentMemoryIds": [
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce"
+      ],
+      "relatedMemoryIds": [
+        "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+        "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "8a77f755-39b9-4645-a596-8e499b09d5f4"
+      ],
+      "childMemoryIds": [
+        "2e836e1d-cc17-41f1-a941-01577c606ce7"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented Phase 2 of the interoperability rollout across backend and Flutter. The backend now exposes a WAH4PC-backed interoperability proxy for provider discovery and sync-request preparation, with env validation and e2e coverage. The Flutter app now launches a dedicated sync wizard from the Personal Information screen, uses bottom-sheet selection for identifier/provider choice, and reuses the existing profile readiness rules to gate entry. Tests for the new interoperability models, wizard flow, and profile-to-wizard navigation all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new interoperability integration module with the Nest application so provider discovery endpoints are available.",
+          "notes": "Added IntegrationModule import and module registration."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Added required gateway environment variables to startup validation for the backend proxy.",
+          "notes": "Now validates WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated Nest module to encapsulate interoperability gateway concerns.",
+          "notes": "Contains the new integration controller and service."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "created",
+          "reason": "Exposes provider discovery and sync-preparation endpoints for the frontend.",
+          "notes": "Routes live under /api/v1/interoperability."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "created",
+          "reason": "Implements gateway fetch, provider sanitization, and sync-request preparation logic.",
+          "notes": "Uses the real WAH4PC gateway URL and validates provider selection."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "created",
+          "reason": "Defines the typed gateway provider and sync-preparation response contracts used by the new integration layer.",
+          "notes": "Keeps request and response shapes explicit."
+        },
+        {
+          "path": "backend/src/integration/dto/prepare-sync-request.dto.ts",
+          "action": "created",
+          "reason": "Validates inbound sync preparation requests at the backend boundary.",
+          "notes": "Uses class-validator for provider and identifier fields."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "created",
+          "reason": "Covers provider normalization, request prep, inactive-provider rejection, and connectivity failure behavior.",
+          "notes": "Uses mocked fetch responses."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added end-to-end coverage for the new interoperability provider and sync-preparation routes.",
+          "notes": "Verifies the route wiring under the global API prefix."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Injected WAH4PC env values so backend tests can bootstrap the new integration module.",
+          "notes": "Includes gateway URL, API key, and provider ID."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documented the gateway environment variables required by the new backend proxy.",
+          "notes": "Added WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the interoperability endpoints and gateway configuration needed to run the backend.",
+          "notes": "Adds setup step for the gateway env vars."
+        },
+        {
+          "path": "frontend/lib/app/app_routes.dart",
+          "action": "modified",
+          "reason": "Added a dedicated route constant for the sync wizard screen.",
+          "notes": "Enables profile-to-wizard navigation."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Registered the sync wizard route so the UI can navigate to the new workflow.",
+          "notes": "Uses a slide transition like other profile flows."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Changed the sync action from a placeholder to navigation into the dedicated sync wizard route.",
+          "notes": "Still keeps Phase 1 readiness gating and profile editing separate."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "created",
+          "reason": "Introduced typed sync identifier, provider, and request-preview models for the new wizard flow.",
+          "notes": "Includes PhilHealth and PhilSys identifier URIs."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "created",
+          "reason": "Added the frontend client for backend interoperability discovery and sync-preparation calls.",
+          "notes": "Uses the existing backend API base and x-api-key header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "created",
+          "reason": "Implements the new step-based sync wizard screen used by the sync button.",
+          "notes": "Loads providers, manages step state, and prepares the request."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_wizard_step_header.dart",
+          "action": "created",
+          "reason": "Provides a reusable step-header presentation component for the sync wizard.",
+          "notes": "Keeps wizard chrome separate from orchestration."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_identifier_step.dart",
+          "action": "created",
+          "reason": "Handles identifier selection in the sync wizard using bottom-sheet controls.",
+          "notes": "Only shows identifiers already present in the profile."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "created",
+          "reason": "Handles provider loading, error states, and selection in the sync wizard.",
+          "notes": "Uses backend provider discovery results."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "created",
+          "reason": "Shows the final request summary before backend preparation.",
+          "notes": "Separates review UX from data-fetching logic."
+        },
+        {
+          "path": "frontend/test/flutter_test_config.dart",
+          "action": "created",
+          "reason": "Mocks flutter_secure_storage channels globally so widget tests can run without a missing plugin exception.",
+          "notes": "Supports AuthSession.clear() and other storage-backed test setup."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "created",
+          "reason": "Verifies identifier-option building and empty-identifier handling for the new interoperability models.",
+          "notes": "Covers PhilHealth and PhilSys mapping."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "created",
+          "reason": "Covers the sync wizard step flow and request-preparation path.",
+          "notes": "Uses a fake interoperability client and scrolls the final action into view."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated profile-screen expectations and added navigation coverage into the new sync wizard.",
+          "notes": "Confirms the sync button now opens the wizard."
+        }
+      ],
+      "createdAt": "2026-05-08T18:36:42.542Z",
+      "updatedAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "memoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "rootMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "parentMemoryIds": [
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6"
+      ],
+      "relatedMemoryIds": [
+        "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+        "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "8a77f755-39b9-4645-a596-8e499b09d5f4"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented Phase 2 of the interoperability rollout across backend and Flutter. The backend now exposes a WAH4PC-backed interoperability proxy for provider discovery and sync-request preparation, with env validation and e2e coverage. The Flutter app now launches a dedicated sync wizard from the Personal Information screen, uses bottom-sheet selection for identifier/provider choice, and reuses the existing profile readiness rules to gate entry. Tests for the new interoperability models, wizard flow, and profile-to-wizard navigation all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Registered the new interoperability integration module with the Nest application so provider discovery endpoints are available.",
+          "notes": "Added IntegrationModule import and module registration."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Added required gateway environment variables to startup validation for the backend proxy.",
+          "notes": "Now validates WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated Nest module to encapsulate interoperability gateway concerns.",
+          "notes": "Contains the new integration controller and service."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "created",
+          "reason": "Exposes provider discovery and sync-preparation endpoints for the frontend.",
+          "notes": "Routes live under /api/v1/interoperability."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "created",
+          "reason": "Implements gateway fetch, provider sanitization, and sync-request preparation logic.",
+          "notes": "Uses the real WAH4PC gateway URL and validates provider selection."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "created",
+          "reason": "Defines the typed gateway provider and sync-preparation response contracts used by the new integration layer.",
+          "notes": "Keeps request and response shapes explicit."
+        },
+        {
+          "path": "backend/src/integration/dto/prepare-sync-request.dto.ts",
+          "action": "created",
+          "reason": "Validates inbound sync preparation requests at the backend boundary.",
+          "notes": "Uses class-validator for provider and identifier fields."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "created",
+          "reason": "Covers provider normalization, request prep, inactive-provider rejection, and connectivity failure behavior.",
+          "notes": "Uses mocked fetch responses."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added end-to-end coverage for the new interoperability provider and sync-preparation routes.",
+          "notes": "Verifies the route wiring under the global API prefix."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Injected WAH4PC env values so backend tests can bootstrap the new integration module.",
+          "notes": "Includes gateway URL, API key, and provider ID."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documented the gateway environment variables required by the new backend proxy.",
+          "notes": "Added WAH4PC_GATEWAY_URL, WAH4PC_API_KEY, and WAH4PC_PROVIDER_ID."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the interoperability endpoints and gateway configuration needed to run the backend.",
+          "notes": "Adds setup step for the gateway env vars."
+        },
+        {
+          "path": "frontend/lib/app/app_routes.dart",
+          "action": "modified",
+          "reason": "Added a dedicated route constant for the sync wizard screen.",
+          "notes": "Enables profile-to-wizard navigation."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Registered the sync wizard route so the UI can navigate to the new workflow.",
+          "notes": "Uses a slide transition like other profile flows."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Changed the sync action from a placeholder to navigation into the dedicated sync wizard route.",
+          "notes": "Still keeps Phase 1 readiness gating and profile editing separate."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "created",
+          "reason": "Introduced typed sync identifier, provider, and request-preview models for the new wizard flow.",
+          "notes": "Includes PhilHealth and PhilSys identifier URIs."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "created",
+          "reason": "Added the frontend client for backend interoperability discovery and sync-preparation calls.",
+          "notes": "Uses the existing backend API base and x-api-key header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "created",
+          "reason": "Implements the new step-based sync wizard screen used by the sync button.",
+          "notes": "Loads providers, manages step state, and prepares the request."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_wizard_step_header.dart",
+          "action": "created",
+          "reason": "Provides a reusable step-header presentation component for the sync wizard.",
+          "notes": "Keeps wizard chrome separate from orchestration."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_identifier_step.dart",
+          "action": "created",
+          "reason": "Handles identifier selection in the sync wizard using bottom-sheet controls.",
+          "notes": "Only shows identifiers already present in the profile."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "created",
+          "reason": "Handles provider loading, error states, and selection in the sync wizard.",
+          "notes": "Uses backend provider discovery results."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "created",
+          "reason": "Shows the final request summary before backend preparation.",
+          "notes": "Separates review UX from data-fetching logic."
+        },
+        {
+          "path": "frontend/test/flutter_test_config.dart",
+          "action": "created",
+          "reason": "Mocks flutter_secure_storage channels globally so widget tests can run without a missing plugin exception.",
+          "notes": "Supports AuthSession.clear() and other storage-backed test setup."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "created",
+          "reason": "Verifies identifier-option building and empty-identifier handling for the new interoperability models.",
+          "notes": "Covers PhilHealth and PhilSys mapping."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "created",
+          "reason": "Covers the sync wizard step flow and request-preparation path.",
+          "notes": "Uses a fake interoperability client and scrolls the final action into view."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated profile-screen expectations and added navigation coverage into the new sync wizard.",
+          "notes": "Confirms the sync button now opens the wizard."
+        }
+      ],
+      "createdAt": "2026-05-08T18:36:42.583Z",
+      "updatedAt": "2026-05-08T18:36:42.583Z"
+    },
+    {
+      "memoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "rootMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "parentMemoryIds": [
+        "1f2b56c8-fd0a-4953-b194-9190bd440b61"
+      ],
+      "relatedMemoryIds": [
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "6db5469c-8604-4289-a678-88e64c753a9f",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "5f2d1d2a-ce94-4799-8bed-40316fc6a580"
+      ],
+      "childMemoryIds": [
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented field-format validation for the Personal Information profile flow on both frontend and backend. The frontend profile form now validates text-like fields, phone numbers, postal code, and PhilHealth/PhilSys IDs before save. The backend DTOs now enforce matching rules for names, phone numbers, postal code, and identifier formats while still allowing either PhilHealth or PhilSys to satisfy the identifier requirement. Focused backend and Flutter tests passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added frontend form validators for text, numeric, identifier, and postal code fields in the Personal Information screen.",
+          "notes": "Kept save flow unchanged and only changed validation behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Added backend name format validation so profile name fields reject digits and malformed text.",
+          "notes": "Applies to first, second, middle, and last name fields."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend format validation for phone numbers, postal code, PhilHealth ID, and PhilSys ID.",
+          "notes": "Still allows either identifier to satisfy profile completeness."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "created",
+          "reason": "Added backend DTO tests that verify valid single-identifier profiles and reject missing identifiers.",
+          "notes": "Covers PhilHealth-only and PhilSys-only cases."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Updated profile completeness logic to treat PhilHealth or PhilSys as sufficient and preserve readable missing-field messaging.",
+          "notes": "Keeps frontend readiness aligned with backend save behavior."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "created",
+          "reason": "Added repository response tests to confirm either identifier makes the profile complete and both missing remains invalid.",
+          "notes": "Also verifies missing requirement label."
+        }
+      ],
+      "createdAt": "2026-05-09T16:15:43.588Z",
+      "updatedAt": "2026-05-09T16:15:43.588Z"
+    },
+    {
+      "memoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "rootMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "parentMemoryIds": [
+        "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b"
+      ],
+      "relatedMemoryIds": [
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "6db5469c-8604-4289-a678-88e64c753a9f",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "5f2d1d2a-ce94-4799-8bed-40316fc6a580"
+      ],
+      "childMemoryIds": [
+        "d050c015-038d-44e8-9b03-0b57ff018c68"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented field-format validation for the Personal Information profile flow on both frontend and backend. The frontend profile form now validates text-like fields, phone numbers, postal code, and PhilHealth/PhilSys IDs before save. The backend DTOs now enforce matching rules for names, phone numbers, postal code, and identifier formats while still allowing either PhilHealth or PhilSys to satisfy the identifier requirement. Focused backend and Flutter tests passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added frontend form validators for text, numeric, identifier, and postal code fields in the Personal Information screen.",
+          "notes": "Kept save flow unchanged and only changed validation behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Added backend name format validation so profile name fields reject digits and malformed text.",
+          "notes": "Applies to first, second, middle, and last name fields."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend format validation for phone numbers, postal code, PhilHealth ID, and PhilSys ID.",
+          "notes": "Still allows either identifier to satisfy profile completeness."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "created",
+          "reason": "Added backend DTO tests that verify valid single-identifier profiles and reject missing identifiers.",
+          "notes": "Covers PhilHealth-only and PhilSys-only cases."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Updated profile completeness logic to treat PhilHealth or PhilSys as sufficient and preserve readable missing-field messaging.",
+          "notes": "Keeps frontend readiness aligned with backend save behavior."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "created",
+          "reason": "Added repository response tests to confirm either identifier makes the profile complete and both missing remains invalid.",
+          "notes": "Also verifies missing requirement label."
+        }
+      ],
+      "createdAt": "2026-05-09T16:15:43.634Z",
+      "updatedAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "memoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "rootMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "parentMemoryIds": [
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f"
+      ],
+      "relatedMemoryIds": [
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "6db5469c-8604-4289-a678-88e64c753a9f",
+        "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+        "5f2d1d2a-ce94-4799-8bed-40316fc6a580"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented field-format validation for the Personal Information profile flow on both frontend and backend. The frontend profile form now validates text-like fields, phone numbers, postal code, and PhilHealth/PhilSys IDs before save. The backend DTOs now enforce matching rules for names, phone numbers, postal code, and identifier formats while still allowing either PhilHealth or PhilSys to satisfy the identifier requirement. Focused backend and Flutter tests passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added frontend form validators for text, numeric, identifier, and postal code fields in the Personal Information screen.",
+          "notes": "Kept save flow unchanged and only changed validation behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Added backend name format validation so profile name fields reject digits and malformed text.",
+          "notes": "Applies to first, second, middle, and last name fields."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend format validation for phone numbers, postal code, PhilHealth ID, and PhilSys ID.",
+          "notes": "Still allows either identifier to satisfy profile completeness."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "created",
+          "reason": "Added backend DTO tests that verify valid single-identifier profiles and reject missing identifiers.",
+          "notes": "Covers PhilHealth-only and PhilSys-only cases."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Updated profile completeness logic to treat PhilHealth or PhilSys as sufficient and preserve readable missing-field messaging.",
+          "notes": "Keeps frontend readiness aligned with backend save behavior."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "created",
+          "reason": "Added repository response tests to confirm either identifier makes the profile complete and both missing remains invalid.",
+          "notes": "Also verifies missing requirement label."
+        }
+      ],
+      "createdAt": "2026-05-09T16:15:43.679Z",
+      "updatedAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "memoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "rootMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "parentMemoryIds": [
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f"
+      ],
+      "relatedMemoryIds": [
+        "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+        "d050c015-038d-44e8-9b03-0b57ff018c68",
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "1f2b56c8-fd0a-4953-b194-9190bd440b61"
+      ],
+      "childMemoryIds": [
+        "f5ac752c-c2cf-40d4-af21-542d59689a07"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented stricter field-type validation for the Personal Information flow. The frontend profile form now rejects digits in text fields and letters in numeric fields through validators, and the backend DTOs enforce the same rules for names, communication language, city/province/country, optional personal detail text fields, phone numbers, postal code, PhilHealth/PhilSys IDs, and emergency contact phone. Address lines remain mixed alphanumeric for practical street-address support. Focused backend DTO tests and the Flutter Personal Information screen test passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added and tightened validators for text-only and numeric-only profile fields in the Personal Information form.",
+          "notes": "Address fields use a separate mixed alphanumeric rule."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added coverage that validates the form rejects digits in text fields and letters in phone-number fields.",
+          "notes": "The test now uses FormState.validate() directly for stability."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Retains strict name validation so name fields reject digits and malformed text.",
+          "notes": "Already part of the profile validation boundary."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend regex constraints for text-only and numeric-only profile fields to match the frontend behavior.",
+          "notes": "Includes communication language, city/province/country, identifiers, postal code, and emergency contact phone."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "modified",
+          "reason": "Added backend DTO test coverage for rejecting digits in text fields and letters in numeric fields.",
+          "notes": "Confirms the authoritative API-side enforcement."
+        }
+      ],
+      "createdAt": "2026-05-09T16:24:17.391Z",
+      "updatedAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "memoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "rootMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "parentMemoryIds": [
+        "8b79508b-cbf5-423f-b425-d635f9928ffa"
+      ],
+      "relatedMemoryIds": [
+        "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+        "d050c015-038d-44e8-9b03-0b57ff018c68",
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "1f2b56c8-fd0a-4953-b194-9190bd440b61"
+      ],
+      "childMemoryIds": [
+        "517d0a41-f7b3-4913-b841-3edba4e52446"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented stricter field-type validation for the Personal Information flow. The frontend profile form now rejects digits in text fields and letters in numeric fields through validators, and the backend DTOs enforce the same rules for names, communication language, city/province/country, optional personal detail text fields, phone numbers, postal code, PhilHealth/PhilSys IDs, and emergency contact phone. Address lines remain mixed alphanumeric for practical street-address support. Focused backend DTO tests and the Flutter Personal Information screen test passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added and tightened validators for text-only and numeric-only profile fields in the Personal Information form.",
+          "notes": "Address fields use a separate mixed alphanumeric rule."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added coverage that validates the form rejects digits in text fields and letters in phone-number fields.",
+          "notes": "The test now uses FormState.validate() directly for stability."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Retains strict name validation so name fields reject digits and malformed text.",
+          "notes": "Already part of the profile validation boundary."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend regex constraints for text-only and numeric-only profile fields to match the frontend behavior.",
+          "notes": "Includes communication language, city/province/country, identifiers, postal code, and emergency contact phone."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "modified",
+          "reason": "Added backend DTO test coverage for rejecting digits in text fields and letters in numeric fields.",
+          "notes": "Confirms the authoritative API-side enforcement."
+        }
+      ],
+      "createdAt": "2026-05-09T16:24:17.433Z",
+      "updatedAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "memoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "rootMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "parentMemoryIds": [
+        "f5ac752c-c2cf-40d4-af21-542d59689a07"
+      ],
+      "relatedMemoryIds": [
+        "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+        "d050c015-038d-44e8-9b03-0b57ff018c68",
+        "067efcd3-e988-4d11-95c6-457039b52404",
+        "1f2b56c8-fd0a-4953-b194-9190bd440b61"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented stricter field-type validation for the Personal Information flow. The frontend profile form now rejects digits in text fields and letters in numeric fields through validators, and the backend DTOs enforce the same rules for names, communication language, city/province/country, optional personal detail text fields, phone numbers, postal code, PhilHealth/PhilSys IDs, and emergency contact phone. Address lines remain mixed alphanumeric for practical street-address support. Focused backend DTO tests and the Flutter Personal Information screen test passed, and the Kanban card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added and tightened validators for text-only and numeric-only profile fields in the Personal Information form.",
+          "notes": "Address fields use a separate mixed alphanumeric rule."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added coverage that validates the form rejects digits in text fields and letters in phone-number fields.",
+          "notes": "The test now uses FormState.validate() directly for stability."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Retains strict name validation so name fields reject digits and malformed text.",
+          "notes": "Already part of the profile validation boundary."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.ts",
+          "action": "modified",
+          "reason": "Added backend regex constraints for text-only and numeric-only profile fields to match the frontend behavior.",
+          "notes": "Includes communication language, city/province/country, identifiers, postal code, and emergency contact phone."
+        },
+        {
+          "path": "backend/src/auth/dto/patient-profile.dto.spec.ts",
+          "action": "modified",
+          "reason": "Added backend DTO test coverage for rejecting digits in text fields and letters in numeric fields.",
+          "notes": "Confirms the authoritative API-side enforcement."
+        }
+      ],
+      "createdAt": "2026-05-09T16:24:17.474Z",
+      "updatedAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "memoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "rootMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "parentMemoryIds": [
+        "517d0a41-f7b3-4913-b841-3edba4e52446"
+      ],
+      "relatedMemoryIds": [
+        "f5ac752c-c2cf-40d4-af21-542d59689a07",
+        "8b79508b-cbf5-423f-b425-d635f9928ffa",
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+        "d050c015-038d-44e8-9b03-0b57ff018c68"
+      ],
+      "childMemoryIds": [
+        "8e9328c7-3452-4760-b616-5f6eb049bf88"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added typing-time input restrictions to the Personal Information form so invalid characters are blocked as the user types. Name-like fields now reject digits, phone fields reject letters, postal code accepts digits only, identifier fields accept digits/hyphens, and address fields allow practical alphanumeric address characters. A focused widget test was added to prove the blocking behavior, and the existing personal-information screen test still passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added input formatter support and field-specific typing restrictions to prevent invalid characters from being entered in the Personal Information form.",
+          "notes": "Also added helper formatter functions for names, phone numbers, identifiers, addresses, and birth date."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "created",
+          "reason": "Added a focused widget test that verifies invalid characters are blocked as the user types into multiple profile fields.",
+          "notes": "Test covers first name, phone number, PhilHealth ID, and postal code."
+        }
+      ],
+      "createdAt": "2026-05-09T16:33:41.195Z",
+      "updatedAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "memoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "rootMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "parentMemoryIds": [
+        "c0449f4f-7f09-44eb-a049-0b9299373d3e"
+      ],
+      "relatedMemoryIds": [
+        "f5ac752c-c2cf-40d4-af21-542d59689a07",
+        "8b79508b-cbf5-423f-b425-d635f9928ffa",
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+        "d050c015-038d-44e8-9b03-0b57ff018c68"
+      ],
+      "childMemoryIds": [
+        "84740fc1-e96a-427d-a5f7-612672844334"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added typing-time input restrictions to the Personal Information form so invalid characters are blocked as the user types. Name-like fields now reject digits, phone fields reject letters, postal code accepts digits only, identifier fields accept digits/hyphens, and address fields allow practical alphanumeric address characters. A focused widget test was added to prove the blocking behavior, and the existing personal-information screen test still passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added input formatter support and field-specific typing restrictions to prevent invalid characters from being entered in the Personal Information form.",
+          "notes": "Also added helper formatter functions for names, phone numbers, identifiers, addresses, and birth date."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "created",
+          "reason": "Added a focused widget test that verifies invalid characters are blocked as the user types into multiple profile fields.",
+          "notes": "Test covers first name, phone number, PhilHealth ID, and postal code."
+        }
+      ],
+      "createdAt": "2026-05-09T16:33:41.232Z",
+      "updatedAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "memoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "rootMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "parentMemoryIds": [
+        "8e9328c7-3452-4760-b616-5f6eb049bf88"
+      ],
+      "relatedMemoryIds": [
+        "f5ac752c-c2cf-40d4-af21-542d59689a07",
+        "8b79508b-cbf5-423f-b425-d635f9928ffa",
+        "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+        "d050c015-038d-44e8-9b03-0b57ff018c68"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added typing-time input restrictions to the Personal Information form so invalid characters are blocked as the user types. Name-like fields now reject digits, phone fields reject letters, postal code accepts digits only, identifier fields accept digits/hyphens, and address fields allow practical alphanumeric address characters. A focused widget test was added to prove the blocking behavior, and the existing personal-information screen test still passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added input formatter support and field-specific typing restrictions to prevent invalid characters from being entered in the Personal Information form.",
+          "notes": "Also added helper formatter functions for names, phone numbers, identifiers, addresses, and birth date."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "created",
+          "reason": "Added a focused widget test that verifies invalid characters are blocked as the user types into multiple profile fields.",
+          "notes": "Test covers first name, phone number, PhilHealth ID, and postal code."
+        }
+      ],
+      "createdAt": "2026-05-09T16:33:41.269Z",
+      "updatedAt": "2026-05-09T16:33:41.269Z"
     }
   ],
   "edges": [
@@ -6655,7 +7851,602 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-08T08:57:58.629Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "toMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.416Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "toMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.444Z"
+    },
+    {
+      "fromMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "toMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "fromMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "fromMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "toMemoryId": "ad7b1e22-250e-4ddf-b279-de4b8b8367d0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "fromMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "fromMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T17:30:30.476Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "77376c75-0c7b-4510-91d5-01ae3882b50a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.502Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "toMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.542Z"
+    },
+    {
+      "fromMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.584Z"
+    },
+    {
+      "fromMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "toMemoryId": "16f19721-7473-492b-aa9e-cbc4d423f7e0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.584Z"
+    },
+    {
+      "fromMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "toMemoryId": "f70f0e93-4bf0-49a0-b503-faa9f613af50",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.584Z"
+    },
+    {
+      "fromMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.584Z"
+    },
+    {
+      "fromMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "toMemoryId": "8a77f755-39b9-4645-a596-8e499b09d5f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-08T18:36:42.584Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "5f2d1d2a-ce94-4799-8bed-40316fc6a580",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.589Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "5f2d1d2a-ce94-4799-8bed-40316fc6a580",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.634Z"
+    },
+    {
+      "fromMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "fromMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "fromMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "fromMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "toMemoryId": "b3948647-47e9-4b4d-bb2c-4d35c61bfddb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "fromMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "toMemoryId": "5f2d1d2a-ce94-4799-8bed-40316fc6a580",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:15:43.679Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "toMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.391Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "toMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.433Z"
+    },
+    {
+      "fromMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "toMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "fromMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "toMemoryId": "6bb2ed1b-7e74-4c10-92f3-d70ea2bdf98b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "fromMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "fromMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "toMemoryId": "067efcd3-e988-4d11-95c6-457039b52404",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "fromMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "toMemoryId": "1f2b56c8-fd0a-4953-b194-9190bd440b61",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:24:17.474Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "517d0a41-f7b3-4913-b841-3edba4e52446",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "toMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.195Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "c0449f4f-7f09-44eb-a049-0b9299373d3e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "toMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.232Z"
+    },
+    {
+      "fromMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "toMemoryId": "8e9328c7-3452-4760-b616-5f6eb049bf88",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "fromMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "toMemoryId": "f5ac752c-c2cf-40d4-af21-542d59689a07",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "fromMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "toMemoryId": "8b79508b-cbf5-423f-b425-d635f9928ffa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "fromMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "toMemoryId": "591a52d7-77ee-4d5a-ac9e-6968557cb90f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "fromMemoryId": "84740fc1-e96a-427d-a5f7-612672844334",
+      "toMemoryId": "d050c015-038d-44e8-9b03-0b57ff018c68",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-09T16:33:41.269Z"
     }
   ],
-  "updatedAt": "2026-05-08T08:57:58.632Z"
+  "updatedAt": "2026-05-09T16:33:41.273Z"
 }

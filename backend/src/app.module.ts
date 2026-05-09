@@ -8,6 +8,7 @@ import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { AppointmentHistoryModule } from './appointment-history/appointment-history.module';
 import { HealthModule } from './health/health.module';
 import { HealthRecordsModule } from './health-records/health-records.module';
+import { IntegrationModule } from './integration/integration.module';
 import { MedicationResupplyModule } from './medication-resupply/medication-resupply.module';
 import { PersonalRecordsModule } from './personal-records/personal-records.module';
 
@@ -29,6 +30,7 @@ import { PersonalRecordsModule } from './personal-records/personal-records.modul
     AppointmentHistoryModule,
     PersonalRecordsModule,
     HealthRecordsModule,
+    IntegrationModule,
     MedicationResupplyModule,
   ],
   providers: [

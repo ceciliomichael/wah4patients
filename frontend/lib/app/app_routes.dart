@@ -56,4 +56,5 @@ class AppRoutes {
   static const String aboutUs = '/profile/about-us';
   static const String aboutApp = '/profile/about-app';
   static const String privacyStatement = '/legal/privacy-statement';
+  static const String syncRecords = '/profile/sync-records';
 }
