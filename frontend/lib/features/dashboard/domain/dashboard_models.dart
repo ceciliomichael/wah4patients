@@ -21,7 +21,8 @@ class DashboardMetricData {
     required this.unit,
     required this.icon,
     required this.accentColor,
-    required this.trendPoints,
+    required this.hasData,
+    required this.entryCount,
   });
 
   final String label;
@@ -29,7 +30,8 @@ class DashboardMetricData {
   final String unit;
   final IconData icon;
   final Color accentColor;
-  final List<double> trendPoints;
+  final bool hasData;
+  final int entryCount;
 }
 
 class HubActionData {

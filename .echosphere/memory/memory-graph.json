@@ -5462,6 +5462,984 @@
       ],
       "createdAt": "2026-05-09T16:33:41.269Z",
       "updatedAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "memoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+        "2e836e1d-cc17-41f1-a941-01577c606ce7",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "6db5469c-8604-4289-a678-88e64c753a9f"
+      ],
+      "childMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented real-data wiring for the dashboard Weekly Health Report. The dashboard now loads BMI, blood pressure, and temperature records from the personal-record APIs, derives the visible report metrics in a shared dashboard helper, and renders them through the existing dashboard cards without changing the broader dashboard flow. Added focused unit coverage for the weekly summary calculation and verified the dashboard test slice passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Replaced hardcoded weekly metric data with a live FutureBuilder-backed report sourced from the new dashboard health report service.",
+          "notes": "Added a loading state and kept the surrounding dashboard composition intact."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_weekly_health_report.dart",
+          "action": "created",
+          "reason": "Provides the pure weekly summary calculation that converts BMI, blood pressure, and temperature records into dashboard metric cards.",
+          "notes": "Handles weekly filtering, fallback to older records, and empty-state placeholder values."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/dashboard_weekly_health_report_service.dart",
+          "action": "created",
+          "reason": "Loads the personal-record datasets using the existing API client and feeds them into the dashboard weekly summary helper.",
+          "notes": "Returns placeholder metrics when the user is not authenticated or a fetch fails, so the dashboard remains stable."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/dashboard_weekly_health_report_test.dart",
+          "action": "created",
+          "reason": "Covers the live-data summary calculation logic for recent data, fallback behavior, and empty-state output.",
+          "notes": "Provides focused verification without needing a full dashboard widget pump."
+        }
+      ],
+      "createdAt": "2026-05-10T13:41:50.396Z",
+      "updatedAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "memoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138"
+      ],
+      "relatedMemoryIds": [
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+        "2e836e1d-cc17-41f1-a941-01577c606ce7",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "6db5469c-8604-4289-a678-88e64c753a9f"
+      ],
+      "childMemoryIds": [
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented real-data wiring for the dashboard Weekly Health Report. The dashboard now loads BMI, blood pressure, and temperature records from the personal-record APIs, derives the visible report metrics in a shared dashboard helper, and renders them through the existing dashboard cards without changing the broader dashboard flow. Added focused unit coverage for the weekly summary calculation and verified the dashboard test slice passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Replaced hardcoded weekly metric data with a live FutureBuilder-backed report sourced from the new dashboard health report service.",
+          "notes": "Added a loading state and kept the surrounding dashboard composition intact."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_weekly_health_report.dart",
+          "action": "created",
+          "reason": "Provides the pure weekly summary calculation that converts BMI, blood pressure, and temperature records into dashboard metric cards.",
+          "notes": "Handles weekly filtering, fallback to older records, and empty-state placeholder values."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/dashboard_weekly_health_report_service.dart",
+          "action": "created",
+          "reason": "Loads the personal-record datasets using the existing API client and feeds them into the dashboard weekly summary helper.",
+          "notes": "Returns placeholder metrics when the user is not authenticated or a fetch fails, so the dashboard remains stable."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/dashboard_weekly_health_report_test.dart",
+          "action": "created",
+          "reason": "Covers the live-data summary calculation logic for recent data, fallback behavior, and empty-state output.",
+          "notes": "Provides focused verification without needing a full dashboard widget pump."
+        }
+      ],
+      "createdAt": "2026-05-10T13:41:50.503Z",
+      "updatedAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "memoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "relatedMemoryIds": [
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+        "2e836e1d-cc17-41f1-a941-01577c606ce7",
+        "73d6d753-4159-4ae5-8a47-1418dddfb698",
+        "6db5469c-8604-4289-a678-88e64c753a9f"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented real-data wiring for the dashboard Weekly Health Report. The dashboard now loads BMI, blood pressure, and temperature records from the personal-record APIs, derives the visible report metrics in a shared dashboard helper, and renders them through the existing dashboard cards without changing the broader dashboard flow. Added focused unit coverage for the weekly summary calculation and verified the dashboard test slice passes.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Replaced hardcoded weekly metric data with a live FutureBuilder-backed report sourced from the new dashboard health report service.",
+          "notes": "Added a loading state and kept the surrounding dashboard composition intact."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_weekly_health_report.dart",
+          "action": "created",
+          "reason": "Provides the pure weekly summary calculation that converts BMI, blood pressure, and temperature records into dashboard metric cards.",
+          "notes": "Handles weekly filtering, fallback to older records, and empty-state placeholder values."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/dashboard_weekly_health_report_service.dart",
+          "action": "created",
+          "reason": "Loads the personal-record datasets using the existing API client and feeds them into the dashboard weekly summary helper.",
+          "notes": "Returns placeholder metrics when the user is not authenticated or a fetch fails, so the dashboard remains stable."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/dashboard_weekly_health_report_test.dart",
+          "action": "created",
+          "reason": "Covers the live-data summary calculation logic for recent data, fallback behavior, and empty-state output.",
+          "notes": "Provides focused verification without needing a full dashboard widget pump."
+        }
+      ],
+      "createdAt": "2026-05-10T13:41:50.604Z",
+      "updatedAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "memoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce"
+      ],
+      "childMemoryIds": [
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the blank Weekly Health Report graph on the dashboard. The root cause was the sparkline painter in DashboardMetricCard returning early when a metric had only one trend point, which is common for real users with sparse recent BMI, blood pressure, or temperature data. The painter now renders a visible single-point marker, and a focused widget test covers the single-point case. The dashboard dashboard test slice passes again.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "This file contains the sparkline painter that was skipping rendering for single-point datasets; it now draws a visible marker for sparse real-world data.",
+          "notes": "The rest of the dashboard card layout was left unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Adds focused regression coverage for the single-point graph rendering case on the dashboard metric card.",
+          "notes": "Verifies the widget builds cleanly with a one-point trend set."
+        }
+      ],
+      "createdAt": "2026-05-10T13:47:09.437Z",
+      "updatedAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "memoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [
+        "79215e32-8c28-44d5-b5be-1a820192aa6d"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce"
+      ],
+      "childMemoryIds": [
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the blank Weekly Health Report graph on the dashboard. The root cause was the sparkline painter in DashboardMetricCard returning early when a metric had only one trend point, which is common for real users with sparse recent BMI, blood pressure, or temperature data. The painter now renders a visible single-point marker, and a focused widget test covers the single-point case. The dashboard dashboard test slice passes again.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "This file contains the sparkline painter that was skipping rendering for single-point datasets; it now draws a visible marker for sparse real-world data.",
+          "notes": "The rest of the dashboard card layout was left unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Adds focused regression coverage for the single-point graph rendering case on the dashboard metric card.",
+          "notes": "Verifies the widget builds cleanly with a one-point trend set."
+        }
+      ],
+      "createdAt": "2026-05-10T13:47:09.523Z",
+      "updatedAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "memoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+        "1c1babbd-f664-4155-a1ba-4c719bc85dce"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the blank Weekly Health Report graph on the dashboard. The root cause was the sparkline painter in DashboardMetricCard returning early when a metric had only one trend point, which is common for real users with sparse recent BMI, blood pressure, or temperature data. The painter now renders a visible single-point marker, and a focused widget test covers the single-point case. The dashboard dashboard test slice passes again.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "This file contains the sparkline painter that was skipping rendering for single-point datasets; it now draws a visible marker for sparse real-world data.",
+          "notes": "The rest of the dashboard card layout was left unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Adds focused regression coverage for the single-point graph rendering case on the dashboard metric card.",
+          "notes": "Verifies the widget builds cleanly with a one-point trend set."
+        }
+      ],
+      "createdAt": "2026-05-10T13:47:09.605Z",
+      "updatedAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "memoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [
+        "79215e32-8c28-44d5-b5be-1a820192aa6d"
+      ],
+      "relatedMemoryIds": [
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "02fea1ff-b611-43c4-b6cf-9c1549e7cec7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Refined the dashboard Weekly Health Report sparkline after the initial single-point fix. The one-point rendering now draws a short flat line with a centered marker instead of only a dot, so the graph reads like an actual chart while still accurately representing sparse data. The dashboard test slice passes after the update.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Adjusted the single-point sparkline branch to render a short flat line with a marker instead of only a centered dot.",
+          "notes": "The multi-point sparkline path remains unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Provides regression coverage for the dashboard metric card after the sparkline visualization change.",
+          "notes": "The test still verifies the card builds cleanly with sparse trend data."
+        }
+      ],
+      "createdAt": "2026-05-10T13:48:19.215Z",
+      "updatedAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "memoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [
+        "7927e132-079b-4628-8e2a-70b9873cc7db"
+      ],
+      "relatedMemoryIds": [
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "a7906e3e-0e3b-44a8-a526-88249aca6bac"
+      ],
+      "sectionKind": "decision",
+      "summary": "Refined the dashboard Weekly Health Report sparkline after the initial single-point fix. The one-point rendering now draws a short flat line with a centered marker instead of only a dot, so the graph reads like an actual chart while still accurately representing sparse data. The dashboard test slice passes after the update.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Adjusted the single-point sparkline branch to render a short flat line with a marker instead of only a centered dot.",
+          "notes": "The multi-point sparkline path remains unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Provides regression coverage for the dashboard metric card after the sparkline visualization change.",
+          "notes": "The test still verifies the card builds cleanly with sparse trend data."
+        }
+      ],
+      "createdAt": "2026-05-10T13:48:19.299Z",
+      "updatedAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "memoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "rootMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "parentMemoryIds": [
+        "02fea1ff-b611-43c4-b6cf-9c1549e7cec7"
+      ],
+      "relatedMemoryIds": [
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Refined the dashboard Weekly Health Report sparkline after the initial single-point fix. The one-point rendering now draws a short flat line with a centered marker instead of only a dot, so the graph reads like an actual chart while still accurately representing sparse data. The dashboard test slice passes after the update.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Adjusted the single-point sparkline branch to render a short flat line with a marker instead of only a centered dot.",
+          "notes": "The multi-point sparkline path remains unchanged."
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Provides regression coverage for the dashboard metric card after the sparkline visualization change.",
+          "notes": "The test still verifies the card builds cleanly with sparse trend data."
+        }
+      ],
+      "createdAt": "2026-05-10T13:48:19.381Z",
+      "updatedAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "memoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138"
+      ],
+      "relatedMemoryIds": [
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7"
+      ],
+      "childMemoryIds": [
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented real-data Weekly Health Report wiring for the dashboard while preserving the existing DashboardMetricCard graph design. Added a domain calculator for weekly BMI, blood pressure, and temperature summaries/trend points, a repository adapter over the personal records API client, dashboard state loading tied to AuthSession token changes, and focused calculator tests.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard home tab now loads weekly health report metrics from real personal record data and maps them into the unchanged metric card design.",
+          "notes": "Also fixed an analyzer async BuildContext lint in the existing profile prompt skip handler."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "created",
+          "reason": "Owns weekly health report calculation, filtering, latest-value formatting, and trend point aggregation for BMI, blood pressure, and temperature.",
+          "notes": "Uses explicit domain reading and summary types; no UI or API dependency."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/weekly_health_report_repository.dart",
+          "action": "created",
+          "reason": "Maps PersonalRecordsApiClient BMI, blood pressure, and temperature responses into the dashboard weekly report domain calculator.",
+          "notes": "Keeps backend API access separate from dashboard presentation."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "created",
+          "reason": "Verifies weekly report calculation behavior for latest values, daily averages, weekly filtering, and empty summaries.",
+          "notes": "Targeted test coverage for the new domain logic."
+        }
+      ],
+      "createdAt": "2026-05-10T13:59:28.213Z",
+      "updatedAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "memoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "relatedMemoryIds": [
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7"
+      ],
+      "childMemoryIds": [
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented real-data Weekly Health Report wiring for the dashboard while preserving the existing DashboardMetricCard graph design. Added a domain calculator for weekly BMI, blood pressure, and temperature summaries/trend points, a repository adapter over the personal records API client, dashboard state loading tied to AuthSession token changes, and focused calculator tests.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard home tab now loads weekly health report metrics from real personal record data and maps them into the unchanged metric card design.",
+          "notes": "Also fixed an analyzer async BuildContext lint in the existing profile prompt skip handler."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "created",
+          "reason": "Owns weekly health report calculation, filtering, latest-value formatting, and trend point aggregation for BMI, blood pressure, and temperature.",
+          "notes": "Uses explicit domain reading and summary types; no UI or API dependency."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/weekly_health_report_repository.dart",
+          "action": "created",
+          "reason": "Maps PersonalRecordsApiClient BMI, blood pressure, and temperature responses into the dashboard weekly report domain calculator.",
+          "notes": "Keeps backend API access separate from dashboard presentation."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "created",
+          "reason": "Verifies weekly report calculation behavior for latest values, daily averages, weekly filtering, and empty summaries.",
+          "notes": "Targeted test coverage for the new domain logic."
+        }
+      ],
+      "createdAt": "2026-05-10T13:59:28.310Z",
+      "updatedAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "memoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "relatedMemoryIds": [
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+        "8db8cb06-f2ba-4306-8484-5ec129daa1a7"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented real-data Weekly Health Report wiring for the dashboard while preserving the existing DashboardMetricCard graph design. Added a domain calculator for weekly BMI, blood pressure, and temperature summaries/trend points, a repository adapter over the personal records API client, dashboard state loading tied to AuthSession token changes, and focused calculator tests.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard home tab now loads weekly health report metrics from real personal record data and maps them into the unchanged metric card design.",
+          "notes": "Also fixed an analyzer async BuildContext lint in the existing profile prompt skip handler."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "created",
+          "reason": "Owns weekly health report calculation, filtering, latest-value formatting, and trend point aggregation for BMI, blood pressure, and temperature.",
+          "notes": "Uses explicit domain reading and summary types; no UI or API dependency."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/data/weekly_health_report_repository.dart",
+          "action": "created",
+          "reason": "Maps PersonalRecordsApiClient BMI, blood pressure, and temperature responses into the dashboard weekly report domain calculator.",
+          "notes": "Keeps backend API access separate from dashboard presentation."
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "created",
+          "reason": "Verifies weekly report calculation behavior for latest values, daily averages, weekly filtering, and empty summaries.",
+          "notes": "Targeted test coverage for the new domain logic."
+        }
+      ],
+      "createdAt": "2026-05-10T13:59:28.396Z",
+      "updatedAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "memoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "rootMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "parentMemoryIds": [
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "relatedMemoryIds": [
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "069724db-1570-44b3-a684-9a38f7afa9b5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added a dedicated empty-state view for the dashboard Weekly Health Report cards when there are no readings in the current 7-day window. The dashboard now marks report metrics with an explicit hasData flag, and the metric card switches to a no-data presentation while preserving the same card shell and style. Added targeted widget and domain tests, and all checks passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Extended the dashboard metric contract with a hasData flag so the card can switch between data and empty presentation states.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly summaries now expose whether any data exists in the week, enabling the empty-state view without changing calculation rules.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Mapped the weekly health report summaries into DashboardMetricData including the new hasData flag.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added the dedicated empty-state weekly report card UI while preserving the existing design language and data-state rendering.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Verifies the empty-state presentation when a weekly report card has no data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing weekly calculation behavior still passes after adding the empty-state presentation branch.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:05:22.320Z",
+      "updatedAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "memoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "rootMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "parentMemoryIds": [
+        "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00"
+      ],
+      "relatedMemoryIds": [
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added a dedicated empty-state view for the dashboard Weekly Health Report cards when there are no readings in the current 7-day window. The dashboard now marks report metrics with an explicit hasData flag, and the metric card switches to a no-data presentation while preserving the same card shell and style. Added targeted widget and domain tests, and all checks passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Extended the dashboard metric contract with a hasData flag so the card can switch between data and empty presentation states.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly summaries now expose whether any data exists in the week, enabling the empty-state view without changing calculation rules.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Mapped the weekly health report summaries into DashboardMetricData including the new hasData flag.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added the dedicated empty-state weekly report card UI while preserving the existing design language and data-state rendering.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Verifies the empty-state presentation when a weekly report card has no data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing weekly calculation behavior still passes after adding the empty-state presentation branch.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:05:22.410Z",
+      "updatedAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "memoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "rootMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "parentMemoryIds": [
+        "069724db-1570-44b3-a684-9a38f7afa9b5"
+      ],
+      "relatedMemoryIds": [
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added a dedicated empty-state view for the dashboard Weekly Health Report cards when there are no readings in the current 7-day window. The dashboard now marks report metrics with an explicit hasData flag, and the metric card switches to a no-data presentation while preserving the same card shell and style. Added targeted widget and domain tests, and all checks passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Extended the dashboard metric contract with a hasData flag so the card can switch between data and empty presentation states.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly summaries now expose whether any data exists in the week, enabling the empty-state view without changing calculation rules.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Mapped the weekly health report summaries into DashboardMetricData including the new hasData flag.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added the dedicated empty-state weekly report card UI while preserving the existing design language and data-state rendering.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "created",
+          "reason": "Verifies the empty-state presentation when a weekly report card has no data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing weekly calculation behavior still passes after adding the empty-state presentation branch.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:05:22.498Z",
+      "updatedAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "memoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "rootMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "parentMemoryIds": [
+        "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00"
+      ],
+      "relatedMemoryIds": [
+        "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "fb039eb2-7acd-486e-a7e2-d04cc742c5bc"
+      ],
+      "sectionKind": "fact",
+      "summary": "Replaced the dashboard Weekly Health Report graph with a simpler static summary card. The metric card now shows a compact latest-value view with a weekly tag and entry count, and switches to a short empty state when the week has no records. Removed graph-specific trend-point usage from the dashboard metric contract and weekly report calculation, and updated tests accordingly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Dashboard metric contract now supports the static summary presentation via hasData and entryCount.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly health summaries now expose entry counts and empty-state status without graph-oriented trend data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now maps the weekly report summaries into the simplified metric card data contract.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Replaced the graph card with a static summary layout and simplified empty state.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "modified",
+          "reason": "Updated weekly report tests to validate entry counts and latest values instead of trend points.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "modified",
+          "reason": "Updated widget tests to validate the static summary and simplified empty-state presentation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:10:28.155Z",
+      "updatedAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "memoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "rootMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "parentMemoryIds": [
+        "64608d29-be7a-485d-be6d-1c4e4833752f"
+      ],
+      "relatedMemoryIds": [
+        "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "64b63973-5363-4ef7-97c1-d387ffb43780"
+      ],
+      "sectionKind": "decision",
+      "summary": "Replaced the dashboard Weekly Health Report graph with a simpler static summary card. The metric card now shows a compact latest-value view with a weekly tag and entry count, and switches to a short empty state when the week has no records. Removed graph-specific trend-point usage from the dashboard metric contract and weekly report calculation, and updated tests accordingly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Dashboard metric contract now supports the static summary presentation via hasData and entryCount.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly health summaries now expose entry counts and empty-state status without graph-oriented trend data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now maps the weekly report summaries into the simplified metric card data contract.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Replaced the graph card with a static summary layout and simplified empty state.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "modified",
+          "reason": "Updated weekly report tests to validate entry counts and latest values instead of trend points.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "modified",
+          "reason": "Updated widget tests to validate the static summary and simplified empty-state presentation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:10:28.268Z",
+      "updatedAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "memoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "rootMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "parentMemoryIds": [
+        "fb039eb2-7acd-486e-a7e2-d04cc742c5bc"
+      ],
+      "relatedMemoryIds": [
+        "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Replaced the dashboard Weekly Health Report graph with a simpler static summary card. The metric card now shows a compact latest-value view with a weekly tag and entry count, and switches to a short empty state when the week has no records. Removed graph-specific trend-point usage from the dashboard metric contract and weekly report calculation, and updated tests accordingly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/domain/dashboard_models.dart",
+          "action": "modified",
+          "reason": "Dashboard metric contract now supports the static summary presentation via hasData and entryCount.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/domain/weekly_health_report_calculator.dart",
+          "action": "modified",
+          "reason": "Weekly health summaries now expose entry counts and empty-state status without graph-oriented trend data.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now maps the weekly report summaries into the simplified metric card data contract.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Replaced the graph card with a static summary layout and simplified empty state.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/domain/weekly_health_report_calculator_test.dart",
+          "action": "modified",
+          "reason": "Updated weekly report tests to validate entry counts and latest values instead of trend points.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/test/features/dashboard/presentation/widgets/dashboard_metric_card_test.dart",
+          "action": "modified",
+          "reason": "Updated widget tests to validate the static summary and simplified empty-state presentation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-10T14:10:28.354Z",
+      "updatedAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "memoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "rootMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "parentMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [
+        "419b04fb-994e-4b0f-bb68-2d3838b73617"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented clickable dashboard weekly metric cards and improved BMI startup behavior so the screen no longer flashes the add form before determining whether today's BMI already exists. DashboardMetricCard is now tappable via an optional callback, and DashboardScreen maps BMI, blood pressure, and temperature cards to their existing AppRoutes. BodyMassIndexScreen now sorts loaded history newest-first and renders a loading indicator while history loads, so the add tab immediately becomes the today's-summary state when a record for today is present.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added tap support so the weekly metric cards can behave as navigable targets while keeping the widget reusable and presentation-focused.",
+          "notes": "Wrapped the existing card body in Material + InkWell and exposed onTap."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Wired the weekly health metric cards to route to the correct personal-record screens without changing route constants or moving navigation into shared components.",
+          "notes": "Added a small route-mapping helper and passed onTap callbacks into DashboardMetricCard."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Prevented the BMI screen from showing the add form before history is loaded and made the latest-entry detection resilient to API ordering.",
+          "notes": "Added loading UI for the add tab and sorted fetched history newest-first before setting state."
+        }
+      ],
+      "createdAt": "2026-05-10T14:22:22.816Z",
+      "updatedAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "memoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "rootMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "parentMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [
+        "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented clickable dashboard weekly metric cards and improved BMI startup behavior so the screen no longer flashes the add form before determining whether today's BMI already exists. DashboardMetricCard is now tappable via an optional callback, and DashboardScreen maps BMI, blood pressure, and temperature cards to their existing AppRoutes. BodyMassIndexScreen now sorts loaded history newest-first and renders a loading indicator while history loads, so the add tab immediately becomes the today's-summary state when a record for today is present.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added tap support so the weekly metric cards can behave as navigable targets while keeping the widget reusable and presentation-focused.",
+          "notes": "Wrapped the existing card body in Material + InkWell and exposed onTap."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Wired the weekly health metric cards to route to the correct personal-record screens without changing route constants or moving navigation into shared components.",
+          "notes": "Added a small route-mapping helper and passed onTap callbacks into DashboardMetricCard."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Prevented the BMI screen from showing the add form before history is loaded and made the latest-entry detection resilient to API ordering.",
+          "notes": "Added loading UI for the add tab and sorted fetched history newest-first before setting state."
+        }
+      ],
+      "createdAt": "2026-05-10T14:22:22.905Z",
+      "updatedAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "memoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "rootMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "parentMemoryIds": [
+        "419b04fb-994e-4b0f-bb68-2d3838b73617"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented clickable dashboard weekly metric cards and improved BMI startup behavior so the screen no longer flashes the add form before determining whether today's BMI already exists. DashboardMetricCard is now tappable via an optional callback, and DashboardScreen maps BMI, blood pressure, and temperature cards to their existing AppRoutes. BodyMassIndexScreen now sorts loaded history newest-first and renders a loading indicator while history loads, so the add tab immediately becomes the today's-summary state when a record for today is present.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/widgets/dashboard_metric_card.dart",
+          "action": "modified",
+          "reason": "Added tap support so the weekly metric cards can behave as navigable targets while keeping the widget reusable and presentation-focused.",
+          "notes": "Wrapped the existing card body in Material + InkWell and exposed onTap."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Wired the weekly health metric cards to route to the correct personal-record screens without changing route constants or moving navigation into shared components.",
+          "notes": "Added a small route-mapping helper and passed onTap callbacks into DashboardMetricCard."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Prevented the BMI screen from showing the add form before history is loaded and made the latest-entry detection resilient to API ordering.",
+          "notes": "Added loading UI for the add tab and sorted fetched history newest-first before setting state."
+        }
+      ],
+      "createdAt": "2026-05-10T14:22:22.989Z",
+      "updatedAt": "2026-05-10T14:22:22.989Z"
     }
   ],
   "edges": [
@@ -8446,7 +9424,868 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-09T16:33:41.269Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.396Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.503Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "2e836e1d-cc17-41f1-a941-01577c606ce7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "73d6d753-4159-4ae5-8a47-1418dddfb698",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "toMemoryId": "6db5469c-8604-4289-a678-88e64c753a9f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:41:50.604Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.437Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.523Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "8225ce2b-cbcb-419b-add6-e2d3f9d9a1c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "toMemoryId": "1c1babbd-f664-4155-a1ba-4c719bc85dce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:47:09.605Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "79215e32-8c28-44d5-b5be-1a820192aa6d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "toMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.215Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "7927e132-079b-4628-8e2a-70b9873cc7db",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "toMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.299Z"
+    },
+    {
+      "fromMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "toMemoryId": "02fea1ff-b611-43c4-b6cf-9c1549e7cec7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "fromMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "fromMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "fromMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "fromMemoryId": "a7906e3e-0e3b-44a8-a526-88249aca6bac",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:48:19.381Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.213Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.310Z"
+    },
+    {
+      "fromMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "fromMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "fromMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "fromMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "toMemoryId": "1d6c39b5-aa56-4082-90f7-b9a4a9027de0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "fromMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "toMemoryId": "8db8cb06-f2ba-4306-8484-5ec129daa1a7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T13:59:28.396Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.320Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "toMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.410Z"
+    },
+    {
+      "fromMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "fromMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "fromMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "fromMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "fromMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:05:22.498Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "e46d6f9a-4af2-4082-b0e5-9f487cd4bf00",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "toMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.155Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "64608d29-be7a-485d-be6d-1c4e4833752f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "toMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.268Z"
+    },
+    {
+      "fromMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "toMemoryId": "fb039eb2-7acd-486e-a7e2-d04cc742c5bc",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "fromMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "toMemoryId": "6a84fe44-2bab-468a-b3f0-aaa0ed62dcaa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "fromMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "fromMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "fromMemoryId": "64b63973-5363-4ef7-97c1-d387ffb43780",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:10:28.354Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.816Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "toMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.905Z"
+    },
+    {
+      "fromMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "fromMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "fromMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "fromMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "fromMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T14:22:22.989Z"
     }
   ],
-  "updatedAt": "2026-05-09T16:33:41.273Z"
+  "updatedAt": "2026-05-10T14:22:22.992Z"
 }

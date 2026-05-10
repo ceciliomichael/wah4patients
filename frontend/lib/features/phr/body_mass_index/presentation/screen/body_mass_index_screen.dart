@@ -100,7 +100,8 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
       );
       final history = response.records
           .map(BodyMassIndexHistoryEntry.fromRecord)
-          .toList(growable: false);
+          .toList()
+        ..sort((left, right) => right.recordedAt.compareTo(left.recordedAt));
       if (!mounted) {
         return;
       }
@@ -261,6 +262,12 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   }
 
   Widget _buildAddRecordTab() {
+    if (_isLoadingHistory) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary),
+      );
+    }
+
     final latestEntry = _latestEntry;
 
     if (_hasTodayEntry && latestEntry != null) {

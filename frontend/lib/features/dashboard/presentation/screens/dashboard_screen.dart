@@ -8,9 +8,12 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../auth/data/auth_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
+import '../../../phr/data/personal_records_api_client.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
 import '../../../profile/presentation/widgets/profile_completion_prompt_dialog.dart';
+import '../../data/weekly_health_report_repository.dart';
 import '../../domain/dashboard_models.dart';
+import '../../domain/weekly_health_report_calculator.dart';
 import '../widgets/dashboard_alerts_tab.dart';
 import '../widgets/dashboard_calendar_tab.dart';
 import '../widgets/dashboard_bottom_nav.dart';
@@ -19,7 +22,12 @@ import '../widgets/dashboard_metric_card.dart';
 import '../widgets/dashboard_service_card.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({
+    super.key,
+    WeeklyHealthReportRepository? weeklyHealthReportRepository,
+  }) : _weeklyHealthReportRepository = weeklyHealthReportRepository;
+
+  final WeeklyHealthReportRepository? _weeklyHealthReportRepository;
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -29,6 +37,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _currentTab = 0;
   bool _profilePromptChecked = false;
   bool _profilePromptVisible = false;
+  late final WeeklyHealthReportRepository _weeklyHealthReportRepository =
+      widget._weeklyHealthReportRepository ?? WeeklyHealthReportRepository();
+  List<DashboardMetricData> _healthReportMetrics = _buildHealthReportMetrics(
+    WeeklyHealthReport.empty(),
+  );
+  String? _loadedHealthReportToken;
 
   static const List<DashboardServiceCardData>
   _services = <DashboardServiceCardData>[
@@ -61,32 +75,48 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ),
   ];
 
-  static const List<DashboardMetricData> _metrics = <DashboardMetricData>[
-    DashboardMetricData(
-      label: 'BMI',
-      value: '23.5',
-      unit: 'kg/m²',
-      icon: Icons.monitor_weight_outlined,
-      accentColor: AppColors.primary,
-      trendPoints: <double>[23.1, 23.2, 23.3, 23.5, 23.4],
-    ),
-    DashboardMetricData(
-      label: 'Blood Pressure',
-      value: '120/80',
-      unit: 'mmHg',
-      icon: Icons.favorite_outline,
-      accentColor: AppColors.secondary,
-      trendPoints: <double>[119, 120, 121, 120, 120],
-    ),
-    DashboardMetricData(
-      label: 'Temperature',
-      value: '36.6',
-      unit: '°C',
-      icon: Icons.thermostat_outlined,
-      accentColor: AppColors.tertiary,
-      trendPoints: <double>[36.5, 36.5, 36.6, 36.6, 36.7],
-    ),
-  ];
+  static List<DashboardMetricData> _buildHealthReportMetrics(
+    WeeklyHealthReport report,
+  ) {
+    return <DashboardMetricData>[
+      DashboardMetricData(
+        label: 'BMI',
+        value: report.bmi.value,
+        unit: report.bmi.unit,
+        icon: Icons.monitor_weight_outlined,
+        accentColor: AppColors.primary,
+        hasData: report.bmi.hasData,
+        entryCount: report.bmi.entryCount,
+      ),
+      DashboardMetricData(
+        label: 'Blood Pressure',
+        value: report.bloodPressure.value,
+        unit: report.bloodPressure.unit,
+        icon: Icons.favorite_outline,
+        accentColor: AppColors.secondary,
+        hasData: report.bloodPressure.hasData,
+        entryCount: report.bloodPressure.entryCount,
+      ),
+      DashboardMetricData(
+        label: 'Temperature',
+        value: report.temperature.value,
+        unit: report.temperature.unit,
+        icon: Icons.thermostat_outlined,
+        accentColor: AppColors.tertiary,
+        hasData: report.temperature.hasData,
+        entryCount: report.temperature.entryCount,
+      ),
+    ];
+  }
+
+  String? _metricRouteForLabel(String label) {
+    return switch (label) {
+      'BMI' => AppRoutes.bodyMassIndex,
+      'Blood Pressure' => AppRoutes.bloodPressure,
+      'Temperature' => AppRoutes.temperature,
+      _ => null,
+    };
+  }
 
   static const List<String> _tips = <String>[
     'Stay hydrated throughout the day to support energy and focus.',
@@ -103,8 +133,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    AuthSession.notifier.addListener(_syncWeeklyHealthReportWithSession);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _syncWeeklyHealthReportWithSession();
       _maybeShowProfileCompletionPrompt();
+    });
+  }
+
+  @override
+  void dispose() {
+    AuthSession.notifier.removeListener(_syncWeeklyHealthReportWithSession);
+    super.dispose();
+  }
+
+  void _syncWeeklyHealthReportWithSession() {
+    final token = AuthSession.accessToken?.trim() ?? '';
+    if (_loadedHealthReportToken == token) {
+      return;
+    }
+
+    _loadWeeklyHealthReport(token);
+  }
+
+  Future<void> _loadWeeklyHealthReport(String accessToken) async {
+    _loadedHealthReportToken = accessToken;
+
+    if (accessToken.isEmpty) {
+      _applyHealthReportIfCurrent(accessToken, WeeklyHealthReport.empty());
+      return;
+    }
+
+    try {
+      final report = await _weeklyHealthReportRepository.loadWeeklyHealthReport(
+        accessToken: accessToken,
+      );
+      _applyHealthReportIfCurrent(accessToken, report);
+    } on PersonalRecordsApiException {
+      _applyHealthReportIfCurrent(accessToken, WeeklyHealthReport.empty());
+    } on FormatException {
+      _applyHealthReportIfCurrent(accessToken, WeeklyHealthReport.empty());
+    } on Object {
+      _applyHealthReportIfCurrent(accessToken, WeeklyHealthReport.empty());
+    }
+  }
+
+  void _applyHealthReportIfCurrent(
+    String accessToken,
+    WeeklyHealthReport report,
+  ) {
+    if (!mounted || _loadedHealthReportToken != accessToken) {
+      return;
+    }
+
+    setState(() {
+      _healthReportMetrics = _buildHealthReportMetrics(report);
     });
   }
 
@@ -114,8 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     _profilePromptChecked = true;
-    final dismissed =
-        await AuthLocalStore.isProfileCompletionPromptDismissed();
+    final dismissed = await AuthLocalStore.isProfileCompletionPromptDismissed();
     if (!mounted || dismissed || AuthSession.isPatientProfileComplete) {
       return;
     }
@@ -131,9 +212,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Navigator.of(context).pushNamed(AppRoutes.personalInformation);
           },
           onSkipForNow: () async {
+            final navigator = Navigator.of(dialogContext);
             await AuthLocalStore.setProfileCompletionPromptDismissed(true);
-            if (Navigator.of(dialogContext).canPop()) {
-              Navigator.of(dialogContext).pop();
+            if (navigator.canPop()) {
+              navigator.pop();
             }
           },
           onClose: () {
@@ -296,10 +378,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-              ..._metrics.map(
+              ..._healthReportMetrics.map(
                 (metric) => Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child: DashboardMetricCard(data: metric),
+                  child: DashboardMetricCard(
+                    data: metric,
+                    onTap: () {
+                      final routeName = _metricRouteForLabel(metric.label);
+                      if (routeName == null) {
+                        return;
+                      }
+
+                      Navigator.of(context).pushNamed(routeName);
+                    },
+                  ),
                 ),
               ),
             ],
