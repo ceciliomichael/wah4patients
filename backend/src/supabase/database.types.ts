@@ -256,6 +256,44 @@ export interface Database {
           },
         ];
       };
+      patient_identifiers: {
+        Row: {
+          id: string;
+          profile_id: string;
+          identifier_system: string;
+          identifier_value: string;
+          verified_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          identifier_system: string;
+          identifier_value: string;
+          verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          identifier_system?: string;
+          identifier_value?: string;
+          verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_identifiers_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       bmi_records: {
         Row: {
           id: string;

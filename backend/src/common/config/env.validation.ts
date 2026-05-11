@@ -10,6 +10,7 @@ export const envValidationSchema = Joi.object({
   WAH4PC_GATEWAY_URL: Joi.string().uri().required(),
   WAH4PC_API_KEY: Joi.string().trim().min(12).required(),
   WAH4PC_PROVIDER_ID: Joi.string().uuid().required(),
+  WAH4PC_GATEWAY_AUTH_KEY: Joi.string().trim().min(12).required(),
   SUPABASE_URL: Joi.string().uri().required(),
   SUPABASE_PUBLISHABLE_KEY: Joi.string().trim().min(20),
   SUPABASE_SECRET_KEY: Joi.string().trim().min(20),

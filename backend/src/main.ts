@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
@@ -9,7 +9,13 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.use(helmet());
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api/v1', {
+    exclude: [
+      { path: 'fhir/process-query', method: RequestMethod.POST },
+      { path: 'fhir/receive-results', method: RequestMethod.POST },
+      { path: 'fhir/receive-push', method: RequestMethod.POST },
+    ],
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

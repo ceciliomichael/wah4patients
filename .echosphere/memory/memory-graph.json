@@ -6440,6 +6440,650 @@
       ],
       "createdAt": "2026-05-10T14:22:22.989Z",
       "updatedAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "memoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "rootMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the first-pass inbound WAH4PC/FHIR sync flow for wah4patients. The backend now has a dedicated fhir-sync module for provider-facing webhooks and practitioner discovery, routes are excluded from the global /api/v1 prefix where needed, patient identifier matching is backed by a new Supabase table, and inbound resources are normalized into the existing internal clinical tables instead of storing raw payloads. Validation and tests passed after the changes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imported the new fhir-sync module so the webhook and sync routes are available in the NestJS app.",
+          "notes": "Keeps the new concern isolated in its own module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Excluded the provider webhook paths from the global api/v1 prefix so the routes match the gateway documentation.",
+          "notes": "Preserves existing API prefix for the rest of the backend."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Added and required gateway auth configuration for inbound webhook security and practitioner endpoint configuration.",
+          "notes": "The auth secret is now enforced at startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documented the new WAH4PC gateway auth secret and practitioner list endpoint variables.",
+          "notes": "Helps local setup match the new webhook flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documented the new patient identifier SQL bootstrap and the provider-facing webhook routes/env vars.",
+          "notes": "Keeps setup instructions aligned with the implementation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated module to keep inbound provider/webhook responsibilities separate from outbound interoperability code.",
+          "notes": "Registers the controllers, guard, repository, and service."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.controller.ts",
+          "action": "created",
+          "reason": "Created the gateway-facing controller entrypoints for practitioner listing and webhook callbacks.",
+          "notes": "Keeps the HTTP layer thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\gateway-auth.guard.ts",
+          "action": "created",
+          "reason": "Created a dedicated auth guard for validating inbound X-Gateway-Auth headers.",
+          "notes": "Uses constant-time comparison."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "created",
+          "reason": "Created the orchestration layer for processing inbound query/results/push payloads and sending gateway callbacks.",
+          "notes": "Contains the main receive-and-map flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "created",
+          "reason": "Created the data-access layer for patient identifier lookup, profile updates, and normalized record inserts.",
+          "notes": "Uses Supabase admin client and existing tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "created",
+          "reason": "Created the FHIR-to-internal mapping helpers for Patient, Immunization, Encounter, Observation, Condition, Procedure, and MedicationRequest.",
+          "notes": "Transforms payloads into the current app-facing record shapes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "created",
+          "reason": "Created explicit FHIR sync and gateway payload types for the new module.",
+          "notes": "Includes resource types, webhook request shapes, and patient profile patch types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Added the patient_identifiers table typing so the new repository can compile with typed Supabase access.",
+          "notes": "Keeps insert/update/read shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\010_patient_identifiers_setup.sql",
+          "action": "created",
+          "reason": "Added the SQL bootstrap for the new patient_identifiers table used to match inbound resources to profiles.",
+          "notes": "Includes indexes, RLS, and updated-at trigger."
+        }
+      ],
+      "createdAt": "2026-05-10T18:43:48.993Z",
+      "updatedAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "memoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "rootMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "parentMemoryIds": [
+        "da1f41cd-88c4-4ca1-888c-763459169672"
+      ],
+      "relatedMemoryIds": [
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the first-pass inbound WAH4PC/FHIR sync flow for wah4patients. The backend now has a dedicated fhir-sync module for provider-facing webhooks and practitioner discovery, routes are excluded from the global /api/v1 prefix where needed, patient identifier matching is backed by a new Supabase table, and inbound resources are normalized into the existing internal clinical tables instead of storing raw payloads. Validation and tests passed after the changes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imported the new fhir-sync module so the webhook and sync routes are available in the NestJS app.",
+          "notes": "Keeps the new concern isolated in its own module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Excluded the provider webhook paths from the global api/v1 prefix so the routes match the gateway documentation.",
+          "notes": "Preserves existing API prefix for the rest of the backend."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Added and required gateway auth configuration for inbound webhook security and practitioner endpoint configuration.",
+          "notes": "The auth secret is now enforced at startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documented the new WAH4PC gateway auth secret and practitioner list endpoint variables.",
+          "notes": "Helps local setup match the new webhook flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documented the new patient identifier SQL bootstrap and the provider-facing webhook routes/env vars.",
+          "notes": "Keeps setup instructions aligned with the implementation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated module to keep inbound provider/webhook responsibilities separate from outbound interoperability code.",
+          "notes": "Registers the controllers, guard, repository, and service."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.controller.ts",
+          "action": "created",
+          "reason": "Created the gateway-facing controller entrypoints for practitioner listing and webhook callbacks.",
+          "notes": "Keeps the HTTP layer thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\gateway-auth.guard.ts",
+          "action": "created",
+          "reason": "Created a dedicated auth guard for validating inbound X-Gateway-Auth headers.",
+          "notes": "Uses constant-time comparison."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "created",
+          "reason": "Created the orchestration layer for processing inbound query/results/push payloads and sending gateway callbacks.",
+          "notes": "Contains the main receive-and-map flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "created",
+          "reason": "Created the data-access layer for patient identifier lookup, profile updates, and normalized record inserts.",
+          "notes": "Uses Supabase admin client and existing tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "created",
+          "reason": "Created the FHIR-to-internal mapping helpers for Patient, Immunization, Encounter, Observation, Condition, Procedure, and MedicationRequest.",
+          "notes": "Transforms payloads into the current app-facing record shapes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "created",
+          "reason": "Created explicit FHIR sync and gateway payload types for the new module.",
+          "notes": "Includes resource types, webhook request shapes, and patient profile patch types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Added the patient_identifiers table typing so the new repository can compile with typed Supabase access.",
+          "notes": "Keeps insert/update/read shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\010_patient_identifiers_setup.sql",
+          "action": "created",
+          "reason": "Added the SQL bootstrap for the new patient_identifiers table used to match inbound resources to profiles.",
+          "notes": "Includes indexes, RLS, and updated-at trigger."
+        }
+      ],
+      "createdAt": "2026-05-10T18:43:49.170Z",
+      "updatedAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "memoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "rootMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "parentMemoryIds": [
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "relatedMemoryIds": [
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the first-pass inbound WAH4PC/FHIR sync flow for wah4patients. The backend now has a dedicated fhir-sync module for provider-facing webhooks and practitioner discovery, routes are excluded from the global /api/v1 prefix where needed, patient identifier matching is backed by a new Supabase table, and inbound resources are normalized into the existing internal clinical tables instead of storing raw payloads. Validation and tests passed after the changes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imported the new fhir-sync module so the webhook and sync routes are available in the NestJS app.",
+          "notes": "Keeps the new concern isolated in its own module."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Excluded the provider webhook paths from the global api/v1 prefix so the routes match the gateway documentation.",
+          "notes": "Preserves existing API prefix for the rest of the backend."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Added and required gateway auth configuration for inbound webhook security and practitioner endpoint configuration.",
+          "notes": "The auth secret is now enforced at startup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documented the new WAH4PC gateway auth secret and practitioner list endpoint variables.",
+          "notes": "Helps local setup match the new webhook flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\README.md",
+          "action": "modified",
+          "reason": "Documented the new patient identifier SQL bootstrap and the provider-facing webhook routes/env vars.",
+          "notes": "Keeps setup instructions aligned with the implementation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "created",
+          "reason": "Created a dedicated module to keep inbound provider/webhook responsibilities separate from outbound interoperability code.",
+          "notes": "Registers the controllers, guard, repository, and service."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.controller.ts",
+          "action": "created",
+          "reason": "Created the gateway-facing controller entrypoints for practitioner listing and webhook callbacks.",
+          "notes": "Keeps the HTTP layer thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\gateway-auth.guard.ts",
+          "action": "created",
+          "reason": "Created a dedicated auth guard for validating inbound X-Gateway-Auth headers.",
+          "notes": "Uses constant-time comparison."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "created",
+          "reason": "Created the orchestration layer for processing inbound query/results/push payloads and sending gateway callbacks.",
+          "notes": "Contains the main receive-and-map flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "created",
+          "reason": "Created the data-access layer for patient identifier lookup, profile updates, and normalized record inserts.",
+          "notes": "Uses Supabase admin client and existing tables."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "created",
+          "reason": "Created the FHIR-to-internal mapping helpers for Patient, Immunization, Encounter, Observation, Condition, Procedure, and MedicationRequest.",
+          "notes": "Transforms payloads into the current app-facing record shapes."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "created",
+          "reason": "Created explicit FHIR sync and gateway payload types for the new module.",
+          "notes": "Includes resource types, webhook request shapes, and patient profile patch types."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Added the patient_identifiers table typing so the new repository can compile with typed Supabase access.",
+          "notes": "Keeps insert/update/read shapes explicit."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\010_patient_identifiers_setup.sql",
+          "action": "created",
+          "reason": "Added the SQL bootstrap for the new patient_identifiers table used to match inbound resources to profiles.",
+          "notes": "Includes indexes, RLS, and updated-at trigger."
+        }
+      ],
+      "createdAt": "2026-05-10T18:43:49.336Z",
+      "updatedAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "memoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "06173730-4807-44c9-999c-3059d3617c34",
+      "rootMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "parentMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97"
+      ],
+      "relatedMemoryIds": [
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the previously exposed practitioner directory endpoint from the backend FHIR sync integration because the app is patient-facing. The inbound webhook handlers and patient-matching flow remain intact, and the backend still builds and tests successfully after the cleanup.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Removed the practitioner directory controller and its GET /api/fhir/practitioners endpoint while preserving the webhook controller.",
+          "notes": "This is the primary route cleanup."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Updated the module controller registration so only the webhook controller is wired into NestJS.",
+          "notes": "Prevents the removed controller from being instantiated."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Deleted the unused getPractitioners method and the now-unneeded practitioner directory type import.",
+          "notes": "Keeps service responsibilities focused on webhook processing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Removed practitioner directory response and record types that were only used by the removed endpoint.",
+          "notes": "Reduces public contract surface area."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the global-prefix exclusion for the deleted practitioner route.",
+          "notes": "Route exclusion list now matches the remaining webhook endpoints only."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete WAH4PC_PRACTITIONER_LIST_ENDPOINT validation entry.",
+          "notes": "Environment schema no longer advertises the removed endpoint."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Removed the sample practitioner endpoint env var so the template matches the codebase.",
+          "notes": "Avoids confusion for future setup."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Removed the practitioner endpoint from backend interoperability documentation so the documented endpoints match the implementation.",
+          "notes": "README now lists only the webhook routes."
+        }
+      ],
+      "createdAt": "2026-05-11T02:13:55.469Z",
+      "updatedAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "memoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "06173730-4807-44c9-999c-3059d3617c34",
+      "rootMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "parentMemoryIds": [
+        "06173730-4807-44c9-999c-3059d3617c34"
+      ],
+      "relatedMemoryIds": [
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [
+        "1504a6a1-2272-4dd2-a798-ddc609e8b478"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the previously exposed practitioner directory endpoint from the backend FHIR sync integration because the app is patient-facing. The inbound webhook handlers and patient-matching flow remain intact, and the backend still builds and tests successfully after the cleanup.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Removed the practitioner directory controller and its GET /api/fhir/practitioners endpoint while preserving the webhook controller.",
+          "notes": "This is the primary route cleanup."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Updated the module controller registration so only the webhook controller is wired into NestJS.",
+          "notes": "Prevents the removed controller from being instantiated."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Deleted the unused getPractitioners method and the now-unneeded practitioner directory type import.",
+          "notes": "Keeps service responsibilities focused on webhook processing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Removed practitioner directory response and record types that were only used by the removed endpoint.",
+          "notes": "Reduces public contract surface area."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the global-prefix exclusion for the deleted practitioner route.",
+          "notes": "Route exclusion list now matches the remaining webhook endpoints only."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete WAH4PC_PRACTITIONER_LIST_ENDPOINT validation entry.",
+          "notes": "Environment schema no longer advertises the removed endpoint."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Removed the sample practitioner endpoint env var so the template matches the codebase.",
+          "notes": "Avoids confusion for future setup."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Removed the practitioner endpoint from backend interoperability documentation so the documented endpoints match the implementation.",
+          "notes": "README now lists only the webhook routes."
+        }
+      ],
+      "createdAt": "2026-05-11T02:13:55.575Z",
+      "updatedAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "memoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "06173730-4807-44c9-999c-3059d3617c34",
+      "rootMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "parentMemoryIds": [
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "relatedMemoryIds": [
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the previously exposed practitioner directory endpoint from the backend FHIR sync integration because the app is patient-facing. The inbound webhook handlers and patient-matching flow remain intact, and the backend still builds and tests successfully after the cleanup.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Removed the practitioner directory controller and its GET /api/fhir/practitioners endpoint while preserving the webhook controller.",
+          "notes": "This is the primary route cleanup."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Updated the module controller registration so only the webhook controller is wired into NestJS.",
+          "notes": "Prevents the removed controller from being instantiated."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Deleted the unused getPractitioners method and the now-unneeded practitioner directory type import.",
+          "notes": "Keeps service responsibilities focused on webhook processing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Removed practitioner directory response and record types that were only used by the removed endpoint.",
+          "notes": "Reduces public contract surface area."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the global-prefix exclusion for the deleted practitioner route.",
+          "notes": "Route exclusion list now matches the remaining webhook endpoints only."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete WAH4PC_PRACTITIONER_LIST_ENDPOINT validation entry.",
+          "notes": "Environment schema no longer advertises the removed endpoint."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Removed the sample practitioner endpoint env var so the template matches the codebase.",
+          "notes": "Avoids confusion for future setup."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Removed the practitioner endpoint from backend interoperability documentation so the documented endpoints match the implementation.",
+          "notes": "README now lists only the webhook routes."
+        }
+      ],
+      "createdAt": "2026-05-11T02:13:55.682Z",
+      "updatedAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "memoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "rootMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "childMemoryIds": [
+        "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the Nest startup failure in FhirSyncModule by importing SupabaseModule, which exports SupabaseService for the FhirSyncRepository dependency. The earlier practitioner endpoint removal remained intact, and the backend build/tests still pass after the injection fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported SupabaseModule so the FhirSyncRepository constructor can resolve SupabaseService in NestJS DI.",
+          "notes": "This is the direct fix for the runtime exception."
+        },
+        {
+          "path": "backend/src/supabase/supabase.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed this module exports SupabaseService, making it the correct import target for FhirSyncModule.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T02:19:22.324Z",
+      "updatedAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "memoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "rootMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "parentMemoryIds": [
+        "b60976a2-bd24-468b-bd29-5ed4a48bfd4d"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "childMemoryIds": [
+        "4a68793d-abd9-4af1-82a2-60082e30a831"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the Nest startup failure in FhirSyncModule by importing SupabaseModule, which exports SupabaseService for the FhirSyncRepository dependency. The earlier practitioner endpoint removal remained intact, and the backend build/tests still pass after the injection fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported SupabaseModule so the FhirSyncRepository constructor can resolve SupabaseService in NestJS DI.",
+          "notes": "This is the direct fix for the runtime exception."
+        },
+        {
+          "path": "backend/src/supabase/supabase.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed this module exports SupabaseService, making it the correct import target for FhirSyncModule.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T02:19:22.401Z",
+      "updatedAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "memoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "rootMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "parentMemoryIds": [
+        "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the Nest startup failure in FhirSyncModule by importing SupabaseModule, which exports SupabaseService for the FhirSyncRepository dependency. The earlier practitioner endpoint removal remained intact, and the backend build/tests still pass after the injection fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported SupabaseModule so the FhirSyncRepository constructor can resolve SupabaseService in NestJS DI.",
+          "notes": "This is the direct fix for the runtime exception."
+        },
+        {
+          "path": "backend/src/supabase/supabase.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed this module exports SupabaseService, making it the correct import target for FhirSyncModule.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T02:19:22.480Z",
+      "updatedAt": "2026-05-11T02:19:22.480Z"
     }
   ],
   "edges": [
@@ -10285,7 +10929,392 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-10T14:22:22.989Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:48.993Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.170Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-10T18:43:49.336Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.469Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "toMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.575Z"
+    },
+    {
+      "fromMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "fromMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "fromMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "fromMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "fromMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:13:55.682Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "toMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.324Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "b60976a2-bd24-468b-bd29-5ed4a48bfd4d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "toMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.401Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "0b9b8ef5-4dbe-4b52-a5de-23d9d7165e65",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "4a68793d-abd9-4af1-82a2-60082e30a831",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T02:19:22.480Z"
     }
   ],
-  "updatedAt": "2026-05-10T14:22:22.992Z"
+  "updatedAt": "2026-05-11T02:19:22.482Z"
 }
