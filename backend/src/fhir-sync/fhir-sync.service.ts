@@ -5,10 +5,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-  buildInternalRecordInsert,
   buildOperationOutcome,
   buildSuccessProcessQueryData,
-  extractBundlePatient,
   extractBundleResources,
   extractIdentifiersFromPatient,
   extractIdentifiersFromUnknownResource,
@@ -26,6 +24,8 @@ import {
   NormalizedIdentifier,
 } from './fhir-sync.types';
 import { FhirSyncRepository } from './fhir-sync.repository';
+import { parseInboundResource, isParsedPatientResource } from './parsers/fhir-parser.registry';
+import { ParsedClinicalResource } from './parsers/fhir-parser.types';
 
 @Injectable()
 export class FhirSyncService {
@@ -82,31 +82,39 @@ export class FhirSyncService {
     }
 
     const bundle = this.extractBundle(request.data);
-    const patientResource = extractBundlePatient(bundle);
-    const patientIdentifiers = patientResource === null ? [] : extractIdentifiersFromPatient(patientResource);
+    const parsedResources = extractBundleResources(bundle).map((resource) =>
+      parseInboundResource(resource),
+    );
+    const patientResource = parsedResources.find(isParsedPatientResource);
+    const patientIdentifiers =
+      patientResource === undefined
+        ? parsedResources.flatMap((resource) =>
+            extractIdentifiersFromUnknownResource(resource.resource),
+          )
+        : extractIdentifiersFromPatient(patientResource.resource);
     const profileId = await this.repository.findProfileIdByIdentifiers(patientIdentifiers);
 
     if (profileId === null) {
       throw new BadRequestException('Unable to match the received result to a patient profile.');
     }
 
-    if (patientResource !== null) {
-      await this.repository.updateProfile(profileId, mapPatientResourceToRecordPatch(patientResource));
-      await this.repository.upsertPatientIdentifiers(profileId, patientIdentifiers);
+    if (patientResource !== undefined) {
+      await this.repository.updateProfile(
+        profileId,
+        mapPatientResourceToRecordPatch(patientResource.resource),
+      );
+      await this.repository.upsertPatientIdentifiers(
+        profileId,
+        extractIdentifiersFromPatient(patientResource.resource),
+      );
     }
 
-    const resources = extractBundleResources(bundle);
-    for (const resource of resources) {
-      const resourceType = this.readResourceType(resource);
-      if (resourceType === null) {
+    for (const parsedResource of parsedResources) {
+      if (isParsedPatientResource(parsedResource)) {
         continue;
       }
 
-      if (resourceType === 'Patient') {
-        continue;
-      }
-
-      await this.persistInboundResource(profileId, resourceType, resource);
+      await this.persistParsedInboundResource(profileId, parsedResource);
     }
 
     return { message: 'Data received successfully' };
@@ -114,42 +122,44 @@ export class FhirSyncService {
 
   async receivePush(payload: unknown): Promise<FhirSyncAcknowledgement> {
     const request = this.parseReceivePushRequest(payload);
-    const resourceType = request.resourceType;
-    const resource = this.ensureRecord(request.resource);
+    const parsedResource = parseInboundResource(request.resource);
 
-    const identifiers = extractIdentifiersFromUnknownResource(resource);
+    const identifiers = extractIdentifiersFromUnknownResource(parsedResource.resource);
     const profileId = await this.repository.findProfileIdByIdentifiers(identifiers);
     if (profileId === null) {
       throw new BadRequestException('Unable to match the pushed resource to a patient profile.');
     }
 
-    if (resourceType === 'Patient' && this.isPatientResource(resource)) {
-      await this.repository.updateProfile(profileId, mapPatientResourceToRecordPatch(resource));
-      await this.repository.upsertPatientIdentifiers(profileId, extractIdentifiersFromPatient(resource));
+    if (isParsedPatientResource(parsedResource)) {
+      await this.repository.updateProfile(
+        profileId,
+        mapPatientResourceToRecordPatch(parsedResource.resource),
+      );
+      await this.repository.upsertPatientIdentifiers(
+        profileId,
+        extractIdentifiersFromPatient(parsedResource.resource),
+      );
       return { message: 'Data received successfully' };
     }
 
-    const normalizedResourceType = this.readResourceType(resource) ?? resourceType;
-    await this.persistInboundResource(profileId, normalizedResourceType, resource);
+    await this.persistParsedInboundResource(profileId, parsedResource);
     return { message: 'Data received successfully' };
   }
 
-  private async persistInboundResource(
+  private async persistParsedInboundResource(
     profileId: string,
-    resourceType: GatewayResourceType,
-    resource: Record<string, unknown>,
+    parsedResource: ParsedClinicalResource,
   ): Promise<void> {
-    const record = buildInternalRecordInsert(resourceType, resource);
-    if (record === null) {
+    if ('medicationName' in parsedResource.insert) {
+      await this.repository.insertMedicationResupplyRecord(profileId, parsedResource.insert);
       return;
     }
 
-    if ('medicationName' in record) {
-      await this.repository.insertMedicationResupplyRecord(profileId, record);
-      return;
-    }
-
-    await this.repository.insertClinicalRecord(resourceType, profileId, record);
+    await this.repository.insertClinicalRecord(
+      parsedResource.resourceType,
+      profileId,
+      parsedResource.insert,
+    );
   }
 
   private async sendGatewayCallback(
@@ -264,7 +274,11 @@ export class FhirSyncService {
     const transactionId = this.readRequiredString(payload['transactionId'], 'transactionId');
     const senderId = this.readRequiredString(payload['senderId'], 'senderId');
     const resourceType = this.readResourceType(payload['resourceType']);
-    const resource = this.ensureRecord(payload['resource']);
+    if (!this.isRecord(payload['resource'])) {
+      throw new BadRequestException('Expected an object payload.');
+    }
+
+    const resource = payload['resource'];
 
     return {
       transactionId,
@@ -353,18 +367,6 @@ export class FhirSyncService {
     } catch {
       throw new BadRequestException(`Invalid URL for ${fieldName}`);
     }
-  }
-
-  private ensureRecord(value: unknown): Record<string, unknown> {
-    if (!this.isRecord(value)) {
-      throw new BadRequestException('Expected an object payload.');
-    }
-
-    return value;
-  }
-
-  private isPatientResource(value: unknown): value is FhirPatientResource {
-    return this.isRecord(value) && value['resourceType'] === 'Patient';
   }
 
   private readProfileField(profileValue: unknown, fieldName: string): string | undefined {

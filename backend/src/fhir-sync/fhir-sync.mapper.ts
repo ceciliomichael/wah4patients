@@ -575,6 +575,10 @@ function readPeriodStart(value: unknown): string {
 }
 
 function readCodeableConceptText(value: unknown, fallback: string): string {
+  if (Array.isArray(value) && value.length > 0) {
+    return readCodeableConceptText(value[0], fallback);
+  }
+
   if (!isRecord(value)) {
     return fallback;
   }
@@ -607,6 +611,10 @@ function readCodeableConceptText(value: unknown, fallback: string): string {
 }
 
 function readCodeableConceptDisplay(value: unknown): string {
+  if (Array.isArray(value) && value.length > 0) {
+    return readCodeableConceptDisplay(value[0]);
+  }
+
   if (!isRecord(value)) {
     return '';
   }

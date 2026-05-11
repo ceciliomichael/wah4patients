@@ -7084,6 +7084,1398 @@
       ],
       "createdAt": "2026-05-11T02:19:22.480Z",
       "updatedAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "memoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "rootMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "06173730-4807-44c9-999c-3059d3617c34"
+      ],
+      "childMemoryIds": [
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the real outbound interoperability sync submission flow. The backend now sends sync requests to the gateway's /api/v1/fhir/request/{resourceType} endpoint using the configured requester provider ID, selected target provider, and patient identifier, then returns the submitted transaction details. The sync prepare endpoint now responds with HTTP 202 and the tests (unit, build, and e2e) all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Implemented the outbound gateway request submission flow, response parsing, and reusable request helpers for sync preparation.",
+          "notes": "This is the core behavior change."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added request submission and transaction response types so the sync flow can return a typed gateway transaction.",
+          "notes": "Keeps the contract explicit and stable."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed sync prepare to return HTTP 202 Accepted, matching the semantics of a request submission.",
+          "notes": "Aligns the endpoint status with asynchronous processing."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit tests to verify the gateway request POST and the returned transaction details.",
+          "notes": "Covers the new outbound request behavior."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated e2e coverage for the 202 response and transaction payload on sync prepare.",
+          "notes": "Confirms the app-level contract matches the new flow."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available build, unit test, and e2e test scripts before running validation.",
+          "notes": "No changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T09:44:37.178Z",
+      "updatedAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "memoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "rootMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "parentMemoryIds": [
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "06173730-4807-44c9-999c-3059d3617c34"
+      ],
+      "childMemoryIds": [
+        "3afab245-375e-4d82-87c2-68ac77ac8b19"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the real outbound interoperability sync submission flow. The backend now sends sync requests to the gateway's /api/v1/fhir/request/{resourceType} endpoint using the configured requester provider ID, selected target provider, and patient identifier, then returns the submitted transaction details. The sync prepare endpoint now responds with HTTP 202 and the tests (unit, build, and e2e) all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Implemented the outbound gateway request submission flow, response parsing, and reusable request helpers for sync preparation.",
+          "notes": "This is the core behavior change."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added request submission and transaction response types so the sync flow can return a typed gateway transaction.",
+          "notes": "Keeps the contract explicit and stable."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed sync prepare to return HTTP 202 Accepted, matching the semantics of a request submission.",
+          "notes": "Aligns the endpoint status with asynchronous processing."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit tests to verify the gateway request POST and the returned transaction details.",
+          "notes": "Covers the new outbound request behavior."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated e2e coverage for the 202 response and transaction payload on sync prepare.",
+          "notes": "Confirms the app-level contract matches the new flow."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available build, unit test, and e2e test scripts before running validation.",
+          "notes": "No changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T09:44:37.295Z",
+      "updatedAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "memoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "rootMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "parentMemoryIds": [
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "06173730-4807-44c9-999c-3059d3617c34"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the real outbound interoperability sync submission flow. The backend now sends sync requests to the gateway's /api/v1/fhir/request/{resourceType} endpoint using the configured requester provider ID, selected target provider, and patient identifier, then returns the submitted transaction details. The sync prepare endpoint now responds with HTTP 202 and the tests (unit, build, and e2e) all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Implemented the outbound gateway request submission flow, response parsing, and reusable request helpers for sync preparation.",
+          "notes": "This is the core behavior change."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added request submission and transaction response types so the sync flow can return a typed gateway transaction.",
+          "notes": "Keeps the contract explicit and stable."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed sync prepare to return HTTP 202 Accepted, matching the semantics of a request submission.",
+          "notes": "Aligns the endpoint status with asynchronous processing."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit tests to verify the gateway request POST and the returned transaction details.",
+          "notes": "Covers the new outbound request behavior."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated e2e coverage for the 202 response and transaction payload on sync prepare.",
+          "notes": "Confirms the app-level contract matches the new flow."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available build, unit test, and e2e test scripts before running validation.",
+          "notes": "No changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T09:44:37.406Z",
+      "updatedAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "memoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "919f5899-de28-4294-9738-b611c74d868c",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19"
+      ],
+      "childMemoryIds": [
+        "fd68781d-1e36-4583-9c0e-e539c0e78773"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added fixture-driven FHIR sync mapping coverage using PH Core example resources so we can validate the inbound mapping without live providers. The new backend service spec feeds patient + resource bundles into receiveResults for immunization, encounter, condition, procedure, and observation examples, and the Encounter mapper was improved to read PH Core array-shaped type/reasonCode fields correctly. Backend build, unit tests, and e2e tests all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added the fixture-driven service tests that feed PH Core bundle payloads into receiveResults for direct mapping validation.",
+          "notes": "Covers multiple resource families without requiring live providers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Adjusted Encounter mapping so PH Core array-shaped fields are parsed correctly from the example resources.",
+          "notes": "This was required for the encounter fixture to match the PH Core example payload."
+        },
+        {
+          "path": "resources/examples/ph-core/Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core patient fixture source for bundle assembly and identifier matching in tests.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Immunization-immunization-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core immunization fixture to validate vaccine record mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Encounter-encounter-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core consultation-history fixture to validate encounter mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Condition-condition-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history condition fixture to validate diagnosis mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Procedure-procedure-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history procedure fixture to validate procedure mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Observation-observation-bp-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core laboratory-result fixture to validate observation mapping.",
+          "notes": "No code changes required."
+        }
+      ],
+      "createdAt": "2026-05-11T10:20:53.516Z",
+      "updatedAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "memoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "919f5899-de28-4294-9738-b611c74d868c",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [
+        "919f5899-de28-4294-9738-b611c74d868c"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19"
+      ],
+      "childMemoryIds": [
+        "7c65db09-3f2c-40d4-a326-607b906127c6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added fixture-driven FHIR sync mapping coverage using PH Core example resources so we can validate the inbound mapping without live providers. The new backend service spec feeds patient + resource bundles into receiveResults for immunization, encounter, condition, procedure, and observation examples, and the Encounter mapper was improved to read PH Core array-shaped type/reasonCode fields correctly. Backend build, unit tests, and e2e tests all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added the fixture-driven service tests that feed PH Core bundle payloads into receiveResults for direct mapping validation.",
+          "notes": "Covers multiple resource families without requiring live providers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Adjusted Encounter mapping so PH Core array-shaped fields are parsed correctly from the example resources.",
+          "notes": "This was required for the encounter fixture to match the PH Core example payload."
+        },
+        {
+          "path": "resources/examples/ph-core/Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core patient fixture source for bundle assembly and identifier matching in tests.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Immunization-immunization-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core immunization fixture to validate vaccine record mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Encounter-encounter-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core consultation-history fixture to validate encounter mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Condition-condition-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history condition fixture to validate diagnosis mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Procedure-procedure-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history procedure fixture to validate procedure mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Observation-observation-bp-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core laboratory-result fixture to validate observation mapping.",
+          "notes": "No code changes required."
+        }
+      ],
+      "createdAt": "2026-05-11T10:20:53.635Z",
+      "updatedAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "memoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "919f5899-de28-4294-9738-b611c74d868c",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [
+        "fd68781d-1e36-4583-9c0e-e539c0e78773"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added fixture-driven FHIR sync mapping coverage using PH Core example resources so we can validate the inbound mapping without live providers. The new backend service spec feeds patient + resource bundles into receiveResults for immunization, encounter, condition, procedure, and observation examples, and the Encounter mapper was improved to read PH Core array-shaped type/reasonCode fields correctly. Backend build, unit tests, and e2e tests all pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added the fixture-driven service tests that feed PH Core bundle payloads into receiveResults for direct mapping validation.",
+          "notes": "Covers multiple resource families without requiring live providers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Adjusted Encounter mapping so PH Core array-shaped fields are parsed correctly from the example resources.",
+          "notes": "This was required for the encounter fixture to match the PH Core example payload."
+        },
+        {
+          "path": "resources/examples/ph-core/Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core patient fixture source for bundle assembly and identifier matching in tests.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Immunization-immunization-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core immunization fixture to validate vaccine record mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Encounter-encounter-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core consultation-history fixture to validate encounter mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Condition-condition-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history condition fixture to validate diagnosis mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Procedure-procedure-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core medical-history procedure fixture to validate procedure mapping.",
+          "notes": "No code changes required."
+        },
+        {
+          "path": "resources/examples/ph-core/Observation-observation-bp-example.json",
+          "action": "inspected",
+          "reason": "Used as the canonical PH Core laboratory-result fixture to validate observation mapping.",
+          "notes": "No code changes required."
+        }
+      ],
+      "createdAt": "2026-05-11T10:20:53.747Z",
+      "updatedAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "memoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97"
+      ],
+      "childMemoryIds": [
+        "e458f1d1-bc66-4001-8e53-5e386f86b171"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added a real backend smoke script for the full inbound FHIR receive flow. The new backend/scripts/fhir-receive-smoke.ts seeds a temporary patient identifier for an existing dev profile, posts PH Core example bundles into /fhir/receive-results, verifies the profile row plus the immunization, consultation, medical-history, and laboratory-result tables were updated in Supabase, and then restores the profile and removes the temporary identifier. A new npm script and README section explain how to run it. Build, unit tests, and e2e tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/scripts/fhir-receive-smoke.ts",
+          "action": "created",
+          "reason": "New end-to-end smoke script that posts PH Core fixture bundles into the backend and verifies the resulting Supabase writes.",
+          "notes": "Seeds a temporary identifier, posts four resource-family payloads, checks table writes, and restores profile fields afterward."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "modified",
+          "reason": "Added the smoke:fhir-receive npm script so the new smoke flow can be run consistently from the backend package.",
+          "notes": "Uses ts-node with tsconfig-paths for the script entrypoint."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the smoke flow command and the required environment variables for running the end-to-end receive test.",
+          "notes": "Also notes that the script restores the profile and removes the temporary identifier."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the receive-results path and identifier/profile update behavior that the smoke script needs to exercise.",
+          "notes": "No code changes were required for this step."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Verified the profiles, patient_identifiers, and FHIR-derived record table shapes so the smoke script can query and restore data safely.",
+          "notes": "No code changes were required for this step."
+        }
+      ],
+      "createdAt": "2026-05-11T10:38:39.168Z",
+      "updatedAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "memoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [
+        "c50d177a-d798-4606-85cf-d83b91943523"
+      ],
+      "relatedMemoryIds": [
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97"
+      ],
+      "childMemoryIds": [
+        "1c252072-c48e-4899-801a-d583158eb2f0"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added a real backend smoke script for the full inbound FHIR receive flow. The new backend/scripts/fhir-receive-smoke.ts seeds a temporary patient identifier for an existing dev profile, posts PH Core example bundles into /fhir/receive-results, verifies the profile row plus the immunization, consultation, medical-history, and laboratory-result tables were updated in Supabase, and then restores the profile and removes the temporary identifier. A new npm script and README section explain how to run it. Build, unit tests, and e2e tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/scripts/fhir-receive-smoke.ts",
+          "action": "created",
+          "reason": "New end-to-end smoke script that posts PH Core fixture bundles into the backend and verifies the resulting Supabase writes.",
+          "notes": "Seeds a temporary identifier, posts four resource-family payloads, checks table writes, and restores profile fields afterward."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "modified",
+          "reason": "Added the smoke:fhir-receive npm script so the new smoke flow can be run consistently from the backend package.",
+          "notes": "Uses ts-node with tsconfig-paths for the script entrypoint."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the smoke flow command and the required environment variables for running the end-to-end receive test.",
+          "notes": "Also notes that the script restores the profile and removes the temporary identifier."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the receive-results path and identifier/profile update behavior that the smoke script needs to exercise.",
+          "notes": "No code changes were required for this step."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Verified the profiles, patient_identifiers, and FHIR-derived record table shapes so the smoke script can query and restore data safely.",
+          "notes": "No code changes were required for this step."
+        }
+      ],
+      "createdAt": "2026-05-11T10:38:39.273Z",
+      "updatedAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "memoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [
+        "e458f1d1-bc66-4001-8e53-5e386f86b171"
+      ],
+      "relatedMemoryIds": [
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added a real backend smoke script for the full inbound FHIR receive flow. The new backend/scripts/fhir-receive-smoke.ts seeds a temporary patient identifier for an existing dev profile, posts PH Core example bundles into /fhir/receive-results, verifies the profile row plus the immunization, consultation, medical-history, and laboratory-result tables were updated in Supabase, and then restores the profile and removes the temporary identifier. A new npm script and README section explain how to run it. Build, unit tests, and e2e tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "backend/scripts/fhir-receive-smoke.ts",
+          "action": "created",
+          "reason": "New end-to-end smoke script that posts PH Core fixture bundles into the backend and verifies the resulting Supabase writes.",
+          "notes": "Seeds a temporary identifier, posts four resource-family payloads, checks table writes, and restores profile fields afterward."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "modified",
+          "reason": "Added the smoke:fhir-receive npm script so the new smoke flow can be run consistently from the backend package.",
+          "notes": "Uses ts-node with tsconfig-paths for the script entrypoint."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented the smoke flow command and the required environment variables for running the end-to-end receive test.",
+          "notes": "Also notes that the script restores the profile and removes the temporary identifier."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the receive-results path and identifier/profile update behavior that the smoke script needs to exercise.",
+          "notes": "No code changes were required for this step."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Verified the profiles, patient_identifiers, and FHIR-derived record table shapes so the smoke script can query and restore data safely.",
+          "notes": "No code changes were required for this step."
+        }
+      ],
+      "createdAt": "2026-05-11T10:38:39.377Z",
+      "updatedAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "memoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [
+        "c50d177a-d798-4606-85cf-d83b91943523"
+      ],
+      "relatedMemoryIds": [
+        "1c252072-c48e-4899-801a-d583158eb2f0",
+        "e458f1d1-bc66-4001-8e53-5e386f86b171",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added a runnable PowerShell seeder script that posts PH Core example FHIR bundles into the backend inbound webhook flow so resources can be mapped and persisted in Supabase during local testing. The script uses the requested PhilHealth identifier value 231321123 in the inbound bundle and can optionally bootstrap a matching profile/identifier row when given a backend access token plus Supabase service-role credentials.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Standalone PowerShell seed script that posts PH Core example bundles into the backend inbound webhook endpoint and optionally bootstraps the matching patient identifier row.",
+          "notes": "This is the main deliverable for local seeding."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented how to run the new PowerShell seeding script and which parameters are needed for a full local seed.",
+          "notes": "Provides operator-facing instructions."
+        }
+      ],
+      "createdAt": "2026-05-11T10:54:51.582Z",
+      "updatedAt": "2026-05-11T10:54:51.582Z"
+    },
+    {
+      "memoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [
+        "c31938d9-1623-4420-ab36-7b76e98160df"
+      ],
+      "relatedMemoryIds": [
+        "1c252072-c48e-4899-801a-d583158eb2f0",
+        "e458f1d1-bc66-4001-8e53-5e386f86b171",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added a runnable PowerShell seeder script that posts PH Core example FHIR bundles into the backend inbound webhook flow so resources can be mapped and persisted in Supabase during local testing. The script uses the requested PhilHealth identifier value 231321123 in the inbound bundle and can optionally bootstrap a matching profile/identifier row when given a backend access token plus Supabase service-role credentials.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Standalone PowerShell seed script that posts PH Core example bundles into the backend inbound webhook endpoint and optionally bootstraps the matching patient identifier row.",
+          "notes": "This is the main deliverable for local seeding."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented how to run the new PowerShell seeding script and which parameters are needed for a full local seed.",
+          "notes": "Provides operator-facing instructions."
+        }
+      ],
+      "createdAt": "2026-05-11T10:54:51.662Z",
+      "updatedAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "memoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "rootMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "parentMemoryIds": [
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf"
+      ],
+      "relatedMemoryIds": [
+        "1c252072-c48e-4899-801a-d583158eb2f0",
+        "e458f1d1-bc66-4001-8e53-5e386f86b171",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added a runnable PowerShell seeder script that posts PH Core example FHIR bundles into the backend inbound webhook flow so resources can be mapped and persisted in Supabase during local testing. The script uses the requested PhilHealth identifier value 231321123 in the inbound bundle and can optionally bootstrap a matching profile/identifier row when given a backend access token plus Supabase service-role credentials.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Standalone PowerShell seed script that posts PH Core example bundles into the backend inbound webhook endpoint and optionally bootstraps the matching patient identifier row.",
+          "notes": "This is the main deliverable for local seeding."
+        },
+        {
+          "path": "backend/README.md",
+          "action": "modified",
+          "reason": "Documented how to run the new PowerShell seeding script and which parameters are needed for a full local seed.",
+          "notes": "Provides operator-facing instructions."
+        }
+      ],
+      "createdAt": "2026-05-11T10:54:51.742Z",
+      "updatedAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "memoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "rootMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "parentMemoryIds": [
+        "c31938d9-1623-4420-ab36-7b76e98160df"
+      ],
+      "relatedMemoryIds": [
+        "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+        "c50d177a-d798-4606-85cf-d83b91943523",
+        "1c252072-c48e-4899-801a-d583158eb2f0"
+      ],
+      "childMemoryIds": [
+        "71333614-a29c-4e8e-a6db-157bfce5b0ed"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added a runnable PowerShell seed script at scripts/seed-fhir-sync.ps1 that reads backend/.env, creates a temporary Supabase auth user/profile for a PhilHealth identifier, seeds the identifier mapping, and posts PH Core example bundles into /fhir/receive-results so the internal FHIR tables can be populated locally. The script defaults to identifier 231321123 and covers immunization, consultation history, medical history, and laboratory result bundles, then reads back the latest Supabase rows for confirmation.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Added a runnable PowerShell script that seeds Supabase and posts PH Core bundles to the backend inbound FHIR endpoint.",
+          "notes": "This is the primary deliverable for manual local seeding."
+        },
+        {
+          "path": "backend/.env",
+          "action": "inspected",
+          "reason": "Used the configured Supabase, backend, and gateway auth values to make the script target the real local/backend environment correctly.",
+          "notes": "Secrets were not echoed back in the response."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Confirmed the endpoint path for receive-results that the script must call.",
+          "notes": "No code changes were needed."
+        },
+        {
+          "path": "backend/src/fhir-sync/gateway-auth.guard.ts",
+          "action": "inspected",
+          "reason": "Confirmed the script must send X-Gateway-Auth when calling the inbound endpoint.",
+          "notes": "No code changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-11T11:12:28.311Z",
+      "updatedAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "memoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "rootMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "parentMemoryIds": [
+        "a98723e2-71ee-4beb-837b-49a56fdc5a8a"
+      ],
+      "relatedMemoryIds": [
+        "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+        "c50d177a-d798-4606-85cf-d83b91943523",
+        "1c252072-c48e-4899-801a-d583158eb2f0"
+      ],
+      "childMemoryIds": [
+        "47aed6ca-b06c-476c-85b2-2816ad4c8e32"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added a runnable PowerShell seed script at scripts/seed-fhir-sync.ps1 that reads backend/.env, creates a temporary Supabase auth user/profile for a PhilHealth identifier, seeds the identifier mapping, and posts PH Core example bundles into /fhir/receive-results so the internal FHIR tables can be populated locally. The script defaults to identifier 231321123 and covers immunization, consultation history, medical history, and laboratory result bundles, then reads back the latest Supabase rows for confirmation.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Added a runnable PowerShell script that seeds Supabase and posts PH Core bundles to the backend inbound FHIR endpoint.",
+          "notes": "This is the primary deliverable for manual local seeding."
+        },
+        {
+          "path": "backend/.env",
+          "action": "inspected",
+          "reason": "Used the configured Supabase, backend, and gateway auth values to make the script target the real local/backend environment correctly.",
+          "notes": "Secrets were not echoed back in the response."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Confirmed the endpoint path for receive-results that the script must call.",
+          "notes": "No code changes were needed."
+        },
+        {
+          "path": "backend/src/fhir-sync/gateway-auth.guard.ts",
+          "action": "inspected",
+          "reason": "Confirmed the script must send X-Gateway-Auth when calling the inbound endpoint.",
+          "notes": "No code changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-11T11:12:28.406Z",
+      "updatedAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "memoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "rootMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "parentMemoryIds": [
+        "71333614-a29c-4e8e-a6db-157bfce5b0ed"
+      ],
+      "relatedMemoryIds": [
+        "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+        "c50d177a-d798-4606-85cf-d83b91943523",
+        "1c252072-c48e-4899-801a-d583158eb2f0"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added a runnable PowerShell seed script at scripts/seed-fhir-sync.ps1 that reads backend/.env, creates a temporary Supabase auth user/profile for a PhilHealth identifier, seeds the identifier mapping, and posts PH Core example bundles into /fhir/receive-results so the internal FHIR tables can be populated locally. The script defaults to identifier 231321123 and covers immunization, consultation history, medical history, and laboratory result bundles, then reads back the latest Supabase rows for confirmation.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "created",
+          "reason": "Added a runnable PowerShell script that seeds Supabase and posts PH Core bundles to the backend inbound FHIR endpoint.",
+          "notes": "This is the primary deliverable for manual local seeding."
+        },
+        {
+          "path": "backend/.env",
+          "action": "inspected",
+          "reason": "Used the configured Supabase, backend, and gateway auth values to make the script target the real local/backend environment correctly.",
+          "notes": "Secrets were not echoed back in the response."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Confirmed the endpoint path for receive-results that the script must call.",
+          "notes": "No code changes were needed."
+        },
+        {
+          "path": "backend/src/fhir-sync/gateway-auth.guard.ts",
+          "action": "inspected",
+          "reason": "Confirmed the script must send X-Gateway-Auth when calling the inbound endpoint.",
+          "notes": "No code changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-11T11:12:28.504Z",
+      "updatedAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "memoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "rootMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "parentMemoryIds": [
+        "a98723e2-71ee-4beb-837b-49a56fdc5a8a"
+      ],
+      "relatedMemoryIds": [
+        "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+        "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+        "c31938d9-1623-4420-ab36-7b76e98160df",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf"
+      ],
+      "childMemoryIds": [
+        "153c050e-9571-486c-b969-46045fd7cbfd"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the PowerShell FHIR seed script so it no longer fails on duplicate profile primary keys. The seed flow now treats the profile created by the auth trigger as an upsert target and also upserts patient_identifiers, making reruns idempotent after partial attempts. The script still seeds PH Core example bundles into /fhir/receive-results for immunization, consultation history, medical history, and laboratory results.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "modified",
+          "reason": "Changed the seed flow to upsert profile and patient identifier rows instead of inserting them directly.",
+          "notes": "This is the direct fix for the duplicate key error."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the auth.users trigger that auto-creates or updates profiles, explaining the duplicate key failure.",
+          "notes": "No code changes were required."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "inspected",
+          "reason": "Verified the application uses profile upsert semantics already, which informed the seed script fix.",
+          "notes": "No code changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T11:21:46.892Z",
+      "updatedAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "memoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "rootMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "parentMemoryIds": [
+        "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb"
+      ],
+      "relatedMemoryIds": [
+        "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+        "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+        "c31938d9-1623-4420-ab36-7b76e98160df",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf"
+      ],
+      "childMemoryIds": [
+        "ffb44219-2d37-4351-bb56-ee9cde69a329"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the PowerShell FHIR seed script so it no longer fails on duplicate profile primary keys. The seed flow now treats the profile created by the auth trigger as an upsert target and also upserts patient_identifiers, making reruns idempotent after partial attempts. The script still seeds PH Core example bundles into /fhir/receive-results for immunization, consultation history, medical history, and laboratory results.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "modified",
+          "reason": "Changed the seed flow to upsert profile and patient identifier rows instead of inserting them directly.",
+          "notes": "This is the direct fix for the duplicate key error."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the auth.users trigger that auto-creates or updates profiles, explaining the duplicate key failure.",
+          "notes": "No code changes were required."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "inspected",
+          "reason": "Verified the application uses profile upsert semantics already, which informed the seed script fix.",
+          "notes": "No code changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T11:21:46.973Z",
+      "updatedAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "memoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "rootMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "parentMemoryIds": [
+        "153c050e-9571-486c-b969-46045fd7cbfd"
+      ],
+      "relatedMemoryIds": [
+        "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+        "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+        "c31938d9-1623-4420-ab36-7b76e98160df",
+        "cabbc98a-b468-425d-a7c1-51dc4630d8cf"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the PowerShell FHIR seed script so it no longer fails on duplicate profile primary keys. The seed flow now treats the profile created by the auth trigger as an upsert target and also upserts patient_identifiers, making reruns idempotent after partial attempts. The script still seeds PH Core example bundles into /fhir/receive-results for immunization, consultation history, medical history, and laboratory results.",
+      "affectedFiles": [
+        {
+          "path": "scripts/seed-fhir-sync.ps1",
+          "action": "modified",
+          "reason": "Changed the seed flow to upsert profile and patient identifier rows instead of inserting them directly.",
+          "notes": "This is the direct fix for the duplicate key error."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the auth.users trigger that auto-creates or updates profiles, explaining the duplicate key failure.",
+          "notes": "No code changes were required."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "inspected",
+          "reason": "Verified the application uses profile upsert semantics already, which informed the seed script fix.",
+          "notes": "No code changes were required."
+        }
+      ],
+      "createdAt": "2026-05-11T11:21:47.053Z",
+      "updatedAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "memoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "rootMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added backend e2e coverage for the three FHIR webhook routes and stabilized the test harness by mocking the FHIR service boundary at the route layer. The new e2e spec verifies controller routing and gateway auth headers for /api/fhir/process-query, /api/fhir/receive-results, and /api/fhir/receive-push, while the test env now includes the gateway auth secret needed by the app bootstrap.",
+      "affectedFiles": [
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "created",
+          "reason": "Adds integration coverage for the three FHIR webhook endpoints at the route/controller boundary.",
+          "notes": "Mocks FhirSyncService and asserts request forwarding plus response bodies for each route."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Adds the gateway auth secret required for the Nest test app to bootstrap the FHIR auth guard configuration.",
+          "notes": "Keeps e2e environment consistent with runtime validation."
+        }
+      ],
+      "createdAt": "2026-05-11T11:54:11.465Z",
+      "updatedAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "memoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "rootMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "parentMemoryIds": [
+        "d63040dd-f558-4196-a262-ef4833098d7c"
+      ],
+      "relatedMemoryIds": [
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added backend e2e coverage for the three FHIR webhook routes and stabilized the test harness by mocking the FHIR service boundary at the route layer. The new e2e spec verifies controller routing and gateway auth headers for /api/fhir/process-query, /api/fhir/receive-results, and /api/fhir/receive-push, while the test env now includes the gateway auth secret needed by the app bootstrap.",
+      "affectedFiles": [
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "created",
+          "reason": "Adds integration coverage for the three FHIR webhook endpoints at the route/controller boundary.",
+          "notes": "Mocks FhirSyncService and asserts request forwarding plus response bodies for each route."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Adds the gateway auth secret required for the Nest test app to bootstrap the FHIR auth guard configuration.",
+          "notes": "Keeps e2e environment consistent with runtime validation."
+        }
+      ],
+      "createdAt": "2026-05-11T11:54:11.547Z",
+      "updatedAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "memoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "rootMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "parentMemoryIds": [
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1"
+      ],
+      "relatedMemoryIds": [
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "8fef6e2c-badb-486f-8a13-552bc68adadc",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added backend e2e coverage for the three FHIR webhook routes and stabilized the test harness by mocking the FHIR service boundary at the route layer. The new e2e spec verifies controller routing and gateway auth headers for /api/fhir/process-query, /api/fhir/receive-results, and /api/fhir/receive-push, while the test env now includes the gateway auth secret needed by the app bootstrap.",
+      "affectedFiles": [
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "created",
+          "reason": "Adds integration coverage for the three FHIR webhook endpoints at the route/controller boundary.",
+          "notes": "Mocks FhirSyncService and asserts request forwarding plus response bodies for each route."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Adds the gateway auth secret required for the Nest test app to bootstrap the FHIR auth guard configuration.",
+          "notes": "Keeps e2e environment consistent with runtime validation."
+        }
+      ],
+      "createdAt": "2026-05-11T11:54:11.626Z",
+      "updatedAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "memoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [
+        "919f5899-de28-4294-9738-b611c74d868c"
+      ],
+      "relatedMemoryIds": [
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "984fef77-d812-448c-a568-81e81ea47939"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a strict PH Core-aware FHIR inbound parsing layer for the backend webhook flow. The service now validates inbound receive-results and receive-push payloads through per-resource parser modules before mapping and persisting data, and the shared mapper was improved to handle array-shaped encounter code fields from PH Core examples. Added fixture-driven parser and service tests, and verified the backend e2e suite still passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Wired inbound webhook handling through the new parser registry before persistence, keeping route handling thin and validating PH Core payloads first.",
+          "notes": "receiveResults and receivePush now parse resources before repository writes."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Improved shared mapping logic for array-shaped codeable-concept fields so PH Core encounter payloads normalize correctly.",
+          "notes": "Encounter titles now resolve from array-shaped type fields."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.profile.ts",
+          "action": "created",
+          "reason": "Centralized strict PH Core profile suffix rules for supported FHIR resource families.",
+          "notes": "Used by parser modules to validate declared profiles."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.types.ts",
+          "action": "created",
+          "reason": "Defined the discriminated union types for parsed inbound patient and clinical resources.",
+          "notes": "Keeps parser outputs explicit and typed."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.utils.ts",
+          "action": "created",
+          "reason": "Added shared parser boundary helpers for resource-type validation and PH Core profile detection.",
+          "notes": "Shared by all resource-specific parsers."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/clinical.parser.ts",
+          "action": "created",
+          "reason": "Implemented the generic clinical resource parser that validates and normalizes supported non-patient FHIR payloads.",
+          "notes": "Delegates resource-specific mapping to the existing mapper."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/patient.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core patient parser boundary.",
+          "notes": "Returns the validated Patient resource for profile updates and identifier matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/immunization.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core immunization parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/encounter.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core encounter parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/observation.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core observation parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/condition.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core condition parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/procedure.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core procedure parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/medication-request.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core medication request parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.ts",
+          "action": "created",
+          "reason": "Added the parser registry that dispatches inbound resources to the correct resource-specific parser.",
+          "notes": "Used by FhirSyncService for receive-results and receive-push."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "created",
+          "reason": "Added fixture-driven parser tests using the PH Core example JSON files.",
+          "notes": "Covers patient and clinical resource families plus strict profile rejection."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added service-level tests proving parsed resources are persisted through the expected repository methods.",
+          "notes": "Covers receive-results and receive-push flows."
+        }
+      ],
+      "createdAt": "2026-05-11T14:56:50.315Z",
+      "updatedAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "memoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [
+        "3240056f-8485-489e-a2dd-6cbab524415a"
+      ],
+      "relatedMemoryIds": [
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "ef0c9774-f039-4400-bc33-afcc116e7094"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a strict PH Core-aware FHIR inbound parsing layer for the backend webhook flow. The service now validates inbound receive-results and receive-push payloads through per-resource parser modules before mapping and persisting data, and the shared mapper was improved to handle array-shaped encounter code fields from PH Core examples. Added fixture-driven parser and service tests, and verified the backend e2e suite still passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Wired inbound webhook handling through the new parser registry before persistence, keeping route handling thin and validating PH Core payloads first.",
+          "notes": "receiveResults and receivePush now parse resources before repository writes."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Improved shared mapping logic for array-shaped codeable-concept fields so PH Core encounter payloads normalize correctly.",
+          "notes": "Encounter titles now resolve from array-shaped type fields."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.profile.ts",
+          "action": "created",
+          "reason": "Centralized strict PH Core profile suffix rules for supported FHIR resource families.",
+          "notes": "Used by parser modules to validate declared profiles."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.types.ts",
+          "action": "created",
+          "reason": "Defined the discriminated union types for parsed inbound patient and clinical resources.",
+          "notes": "Keeps parser outputs explicit and typed."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.utils.ts",
+          "action": "created",
+          "reason": "Added shared parser boundary helpers for resource-type validation and PH Core profile detection.",
+          "notes": "Shared by all resource-specific parsers."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/clinical.parser.ts",
+          "action": "created",
+          "reason": "Implemented the generic clinical resource parser that validates and normalizes supported non-patient FHIR payloads.",
+          "notes": "Delegates resource-specific mapping to the existing mapper."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/patient.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core patient parser boundary.",
+          "notes": "Returns the validated Patient resource for profile updates and identifier matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/immunization.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core immunization parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/encounter.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core encounter parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/observation.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core observation parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/condition.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core condition parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/procedure.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core procedure parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/medication-request.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core medication request parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.ts",
+          "action": "created",
+          "reason": "Added the parser registry that dispatches inbound resources to the correct resource-specific parser.",
+          "notes": "Used by FhirSyncService for receive-results and receive-push."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "created",
+          "reason": "Added fixture-driven parser tests using the PH Core example JSON files.",
+          "notes": "Covers patient and clinical resource families plus strict profile rejection."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added service-level tests proving parsed resources are persisted through the expected repository methods.",
+          "notes": "Covers receive-results and receive-push flows."
+        }
+      ],
+      "createdAt": "2026-05-11T14:56:50.469Z",
+      "updatedAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "memoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "rootMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "parentMemoryIds": [
+        "984fef77-d812-448c-a568-81e81ea47939"
+      ],
+      "relatedMemoryIds": [
+        "fd68781d-1e36-4583-9c0e-e539c0e78773",
+        "7c65db09-3f2c-40d4-a326-607b906127c6",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a strict PH Core-aware FHIR inbound parsing layer for the backend webhook flow. The service now validates inbound receive-results and receive-push payloads through per-resource parser modules before mapping and persisting data, and the shared mapper was improved to handle array-shaped encounter code fields from PH Core examples. Added fixture-driven parser and service tests, and verified the backend e2e suite still passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Wired inbound webhook handling through the new parser registry before persistence, keeping route handling thin and validating PH Core payloads first.",
+          "notes": "receiveResults and receivePush now parse resources before repository writes."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Improved shared mapping logic for array-shaped codeable-concept fields so PH Core encounter payloads normalize correctly.",
+          "notes": "Encounter titles now resolve from array-shaped type fields."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.profile.ts",
+          "action": "created",
+          "reason": "Centralized strict PH Core profile suffix rules for supported FHIR resource families.",
+          "notes": "Used by parser modules to validate declared profiles."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.types.ts",
+          "action": "created",
+          "reason": "Defined the discriminated union types for parsed inbound patient and clinical resources.",
+          "notes": "Keeps parser outputs explicit and typed."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.utils.ts",
+          "action": "created",
+          "reason": "Added shared parser boundary helpers for resource-type validation and PH Core profile detection.",
+          "notes": "Shared by all resource-specific parsers."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/clinical.parser.ts",
+          "action": "created",
+          "reason": "Implemented the generic clinical resource parser that validates and normalizes supported non-patient FHIR payloads.",
+          "notes": "Delegates resource-specific mapping to the existing mapper."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/patient.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core patient parser boundary.",
+          "notes": "Returns the validated Patient resource for profile updates and identifier matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/immunization.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core immunization parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/encounter.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core encounter parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/observation.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core observation parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/condition.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core condition parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/procedure.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core procedure parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/medication-request.parser.ts",
+          "action": "created",
+          "reason": "Implemented the PH Core medication request parser boundary.",
+          "notes": "Wraps the generic clinical parser."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.ts",
+          "action": "created",
+          "reason": "Added the parser registry that dispatches inbound resources to the correct resource-specific parser.",
+          "notes": "Used by FhirSyncService for receive-results and receive-push."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "created",
+          "reason": "Added fixture-driven parser tests using the PH Core example JSON files.",
+          "notes": "Covers patient and clinical resource families plus strict profile rejection."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "created",
+          "reason": "Added service-level tests proving parsed resources are persisted through the expected repository methods.",
+          "notes": "Covers receive-results and receive-push flows."
+        }
+      ],
+      "createdAt": "2026-05-11T14:56:50.620Z",
+      "updatedAt": "2026-05-11T14:56:50.620Z"
     }
   ],
   "edges": [
@@ -11314,7 +12706,1015 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-11T02:19:22.480Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.178Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.295Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T09:44:37.406Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.516Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.635Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:20:53.747Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "toMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.168Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.273Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:38:39.377Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.583Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "toMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.662Z"
+    },
+    {
+      "fromMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "fromMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "fromMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "toMemoryId": "e458f1d1-bc66-4001-8e53-5e386f86b171",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "fromMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "fromMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T10:54:51.742Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "toMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.311Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "toMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.406Z"
+    },
+    {
+      "fromMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "toMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "fromMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "toMemoryId": "9e320bc9-0fa5-4513-92d3-7f7c8a8a1c1f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "fromMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "fromMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "toMemoryId": "c50d177a-d798-4606-85cf-d83b91943523",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "fromMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "toMemoryId": "1c252072-c48e-4899-801a-d583158eb2f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:12:28.504Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "toMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.892Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "fa2aa710-b19d-4ab2-9451-87a1f8ccb8bb",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "toMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:46.973Z"
+    },
+    {
+      "fromMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "toMemoryId": "153c050e-9571-486c-b969-46045fd7cbfd",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "fromMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "toMemoryId": "71333614-a29c-4e8e-a6db-157bfce5b0ed",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "fromMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "toMemoryId": "47aed6ca-b06c-476c-85b2-2816ad4c8e32",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "fromMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "toMemoryId": "c31938d9-1623-4420-ab36-7b76e98160df",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "fromMemoryId": "ffb44219-2d37-4351-bb56-ee9cde69a329",
+      "toMemoryId": "cabbc98a-b468-425d-a7c1-51dc4630d8cf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:21:47.053Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.465Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.547Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T11:54:11.626Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "toMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.315Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "3240056f-8485-489e-a2dd-6cbab524415a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "toMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.469Z"
+    },
+    {
+      "fromMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "toMemoryId": "984fef77-d812-448c-a568-81e81ea47939",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "fromMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "fromMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "toMemoryId": "7c65db09-3f2c-40d4-a326-607b906127c6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "fromMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "fromMemoryId": "ef0c9774-f039-4400-bc33-afcc116e7094",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T14:56:50.620Z"
     }
   ],
-  "updatedAt": "2026-05-11T02:19:22.482Z"
+  "updatedAt": "2026-05-11T14:56:50.624Z"
 }
