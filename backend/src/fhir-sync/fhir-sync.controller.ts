@@ -5,7 +5,7 @@ import { GatewayAuthGuard } from './gateway-auth.guard';
 import { FhirSyncService } from './fhir-sync.service';
 import { FhirSyncAcknowledgement } from './fhir-sync.types';
 
-@Controller('api/fhir')
+@Controller('fhir')
 @UseGuards(GatewayAuthGuard)
 export class GatewayWebhookController {
   constructor(private readonly fhirSyncService: FhirSyncService) {}

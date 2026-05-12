@@ -8476,6 +8476,2382 @@
       ],
       "createdAt": "2026-05-11T14:56:50.620Z",
       "updatedAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "memoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "rootMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773"
+      ],
+      "childMemoryIds": [
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a new interoperability simulation flow so the Flutter sync wizard can post real PH Core example data into the backend and store it against the signed-in account/profile. The backend now exposes a simulated sync endpoint that reuses the existing prepare flow for validation, loads checked-in PH Core fixtures, and forwards a Bundle into the existing FHIR receive-results persistence path. The frontend gained a neutral secondary Simulate request button under Prepare request, plus request/result plumbing and updated review copy. Validation passed with backend e2e coverage and Flutter analysis.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Exported FhirSyncService so the integration simulation service can reuse the existing persistence flow without duplicating storage logic.",
+          "notes": "Module export added for cross-module injection."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new /interoperability/sync/simulate endpoint alongside the existing prepare route.",
+          "notes": "Controller now routes simulation requests to the new service."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported FhirSyncModule and registered the new SyncSimulationService provider for the simulation workflow.",
+          "notes": "Keeps integration orchestration separate from fixture loading."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added an explicit response contract for simulated sync results.",
+          "notes": "Frontend can parse the response without loose typing."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "created",
+          "reason": "Encapsulates PH Core fixture loading, Bundle assembly, and delegation into FhirSyncService.receiveResults.",
+          "notes": "Loads the checked-in example JSON files and injects the selected patient identifier."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added an e2e test for the new simulate route and verified the generated bundle reaches the mocked FHIR sync service.",
+          "notes": "Confirms route wiring and payload shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Added a client method for the simulate endpoint and wired its response parsing.",
+          "notes": "Reuses existing HTTP helper and error handling."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Added a typed model for simulation results from the backend.",
+          "notes": "Keeps response parsing explicit at the boundary."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Added the new simulate action flow, loading state, and neutral snackbar feedback in the review step.",
+          "notes": "Simulation now runs below Prepare request and remains on screen after success."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "modified",
+          "reason": "Updated the review copy to explain that the Simulate request action posts PH Core sample resources into the current account for testing.",
+          "notes": "Improves discoverability of the new action."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_simulation_button.dart",
+          "action": "created",
+          "reason": "Provides a dedicated neutral button widget for the new simulation action so the wizard screen stays thin and reusable.",
+          "notes": "Uses a full-width outlined style with loading state."
+        }
+      ],
+      "createdAt": "2026-05-11T15:16:45.685Z",
+      "updatedAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "memoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "rootMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "parentMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119"
+      ],
+      "relatedMemoryIds": [
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773"
+      ],
+      "childMemoryIds": [
+        "d949e635-3036-4092-92c3-18526a99f324"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a new interoperability simulation flow so the Flutter sync wizard can post real PH Core example data into the backend and store it against the signed-in account/profile. The backend now exposes a simulated sync endpoint that reuses the existing prepare flow for validation, loads checked-in PH Core fixtures, and forwards a Bundle into the existing FHIR receive-results persistence path. The frontend gained a neutral secondary Simulate request button under Prepare request, plus request/result plumbing and updated review copy. Validation passed with backend e2e coverage and Flutter analysis.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Exported FhirSyncService so the integration simulation service can reuse the existing persistence flow without duplicating storage logic.",
+          "notes": "Module export added for cross-module injection."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new /interoperability/sync/simulate endpoint alongside the existing prepare route.",
+          "notes": "Controller now routes simulation requests to the new service."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported FhirSyncModule and registered the new SyncSimulationService provider for the simulation workflow.",
+          "notes": "Keeps integration orchestration separate from fixture loading."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added an explicit response contract for simulated sync results.",
+          "notes": "Frontend can parse the response without loose typing."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "created",
+          "reason": "Encapsulates PH Core fixture loading, Bundle assembly, and delegation into FhirSyncService.receiveResults.",
+          "notes": "Loads the checked-in example JSON files and injects the selected patient identifier."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added an e2e test for the new simulate route and verified the generated bundle reaches the mocked FHIR sync service.",
+          "notes": "Confirms route wiring and payload shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Added a client method for the simulate endpoint and wired its response parsing.",
+          "notes": "Reuses existing HTTP helper and error handling."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Added a typed model for simulation results from the backend.",
+          "notes": "Keeps response parsing explicit at the boundary."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Added the new simulate action flow, loading state, and neutral snackbar feedback in the review step.",
+          "notes": "Simulation now runs below Prepare request and remains on screen after success."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "modified",
+          "reason": "Updated the review copy to explain that the Simulate request action posts PH Core sample resources into the current account for testing.",
+          "notes": "Improves discoverability of the new action."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_simulation_button.dart",
+          "action": "created",
+          "reason": "Provides a dedicated neutral button widget for the new simulation action so the wizard screen stays thin and reusable.",
+          "notes": "Uses a full-width outlined style with loading state."
+        }
+      ],
+      "createdAt": "2026-05-11T15:16:45.834Z",
+      "updatedAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "memoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "rootMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "parentMemoryIds": [
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "relatedMemoryIds": [
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "fd68781d-1e36-4583-9c0e-e539c0e78773"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a new interoperability simulation flow so the Flutter sync wizard can post real PH Core example data into the backend and store it against the signed-in account/profile. The backend now exposes a simulated sync endpoint that reuses the existing prepare flow for validation, loads checked-in PH Core fixtures, and forwards a Bundle into the existing FHIR receive-results persistence path. The frontend gained a neutral secondary Simulate request button under Prepare request, plus request/result plumbing and updated review copy. Validation passed with backend e2e coverage and Flutter analysis.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Exported FhirSyncService so the integration simulation service can reuse the existing persistence flow without duplicating storage logic.",
+          "notes": "Module export added for cross-module injection."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new /interoperability/sync/simulate endpoint alongside the existing prepare route.",
+          "notes": "Controller now routes simulation requests to the new service."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported FhirSyncModule and registered the new SyncSimulationService provider for the simulation workflow.",
+          "notes": "Keeps integration orchestration separate from fixture loading."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Added an explicit response contract for simulated sync results.",
+          "notes": "Frontend can parse the response without loose typing."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "created",
+          "reason": "Encapsulates PH Core fixture loading, Bundle assembly, and delegation into FhirSyncService.receiveResults.",
+          "notes": "Loads the checked-in example JSON files and injects the selected patient identifier."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Added an e2e test for the new simulate route and verified the generated bundle reaches the mocked FHIR sync service.",
+          "notes": "Confirms route wiring and payload shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Added a client method for the simulate endpoint and wired its response parsing.",
+          "notes": "Reuses existing HTTP helper and error handling."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Added a typed model for simulation results from the backend.",
+          "notes": "Keeps response parsing explicit at the boundary."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Added the new simulate action flow, loading state, and neutral snackbar feedback in the review step.",
+          "notes": "Simulation now runs below Prepare request and remains on screen after success."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_review_step.dart",
+          "action": "modified",
+          "reason": "Updated the review copy to explain that the Simulate request action posts PH Core sample resources into the current account for testing.",
+          "notes": "Improves discoverability of the new action."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_request_simulation_button.dart",
+          "action": "created",
+          "reason": "Provides a dedicated neutral button widget for the new simulation action so the wizard screen stays thin and reusable.",
+          "notes": "Uses a full-width outlined style with loading state."
+        }
+      ],
+      "createdAt": "2026-05-11T15:16:45.980Z",
+      "updatedAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "memoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "rootMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "parentMemoryIds": [
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563"
+      ],
+      "childMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted the sync simulation flow so the user-facing request no longer carries a profileId in the body. The frontend now sends the authenticated account ID in an internal x-user-id header, while the backend simulation endpoint resolves the profile context from that header and persists the generated PH Core bundle through the existing receive-results-for-profile path. This preserves UUID-based internal storage without exposing profileId to the user and resolved the validation error the user was seeing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation request DTO so the request body no longer requires a UUID field from the user.",
+          "notes": "This is the main API-shape fix."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to read the internal x-user-id header and pass it to the simulation service.",
+          "notes": "Keeps account context internal to the transport layer."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Updated the simulation service to require a header-derived user ID and persist the simulated bundle against that profile context.",
+          "notes": "No longer depends on a body-level profileId."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send x-user-id as a header instead of profileId in the body, and added header merging support to the POST helper.",
+          "notes": "The body now matches the user-facing request shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Updated the wizard to pass the signed-in session user ID into the simulation client and keep the sign-in guard for missing context.",
+          "notes": "The button stays hidden from UUID details."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e simulation request to send x-user-id and removed the profileId body field.",
+          "notes": "Verifies the new transport shape."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete simulation payload type that exposed profileId in the public contract.",
+          "notes": "Prevents stale typing from reintroducing the field."
+        }
+      ],
+      "createdAt": "2026-05-11T15:48:31.633Z",
+      "updatedAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "memoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "rootMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "parentMemoryIds": [
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563"
+      ],
+      "childMemoryIds": [
+        "e017f57f-2c8b-458c-a159-240443db2ce9"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted the sync simulation flow so the user-facing request no longer carries a profileId in the body. The frontend now sends the authenticated account ID in an internal x-user-id header, while the backend simulation endpoint resolves the profile context from that header and persists the generated PH Core bundle through the existing receive-results-for-profile path. This preserves UUID-based internal storage without exposing profileId to the user and resolved the validation error the user was seeing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation request DTO so the request body no longer requires a UUID field from the user.",
+          "notes": "This is the main API-shape fix."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to read the internal x-user-id header and pass it to the simulation service.",
+          "notes": "Keeps account context internal to the transport layer."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Updated the simulation service to require a header-derived user ID and persist the simulated bundle against that profile context.",
+          "notes": "No longer depends on a body-level profileId."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send x-user-id as a header instead of profileId in the body, and added header merging support to the POST helper.",
+          "notes": "The body now matches the user-facing request shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Updated the wizard to pass the signed-in session user ID into the simulation client and keep the sign-in guard for missing context.",
+          "notes": "The button stays hidden from UUID details."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e simulation request to send x-user-id and removed the profileId body field.",
+          "notes": "Verifies the new transport shape."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete simulation payload type that exposed profileId in the public contract.",
+          "notes": "Prevents stale typing from reintroducing the field."
+        }
+      ],
+      "createdAt": "2026-05-11T15:48:31.747Z",
+      "updatedAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "memoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "rootMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "parentMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted the sync simulation flow so the user-facing request no longer carries a profileId in the body. The frontend now sends the authenticated account ID in an internal x-user-id header, while the backend simulation endpoint resolves the profile context from that header and persists the generated PH Core bundle through the existing receive-results-for-profile path. This preserves UUID-based internal storage without exposing profileId to the user and resolved the validation error the user was seeing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation request DTO so the request body no longer requires a UUID field from the user.",
+          "notes": "This is the main API-shape fix."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to read the internal x-user-id header and pass it to the simulation service.",
+          "notes": "Keeps account context internal to the transport layer."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Updated the simulation service to require a header-derived user ID and persist the simulated bundle against that profile context.",
+          "notes": "No longer depends on a body-level profileId."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send x-user-id as a header instead of profileId in the body, and added header merging support to the POST helper.",
+          "notes": "The body now matches the user-facing request shape."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Updated the wizard to pass the signed-in session user ID into the simulation client and keep the sign-in guard for missing context.",
+          "notes": "The button stays hidden from UUID details."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e simulation request to send x-user-id and removed the profileId body field.",
+          "notes": "Verifies the new transport shape."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete simulation payload type that exposed profileId in the public contract.",
+          "notes": "Prevents stale typing from reintroducing the field."
+        }
+      ],
+      "createdAt": "2026-05-11T15:48:31.855Z",
+      "updatedAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "memoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "rootMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "parentMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "relatedMemoryIds": [
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "cf9f2136-b062-482b-9dbe-74225e08a119"
+      ],
+      "childMemoryIds": [
+        "c4f288e9-68b0-40d8-b564-61a9ae06a2d6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the sync simulation auth-context problem by switching the frontend to send the authenticated Supabase access token as a Bearer Authorization header, and by making the backend simulation route resolve the current user from that token through AuthSupportService, with x-user-id only as a fallback. The request body no longer carries profileId, and the simulation still persists the PH Core bundle against the authenticated account via the existing receive-results-for-profile path. Validation passed after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed AuthSupportService is exported so the integration module can reuse existing Supabase-user resolution.",
+          "notes": "No code change required here."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AuthModule so the simulation service can resolve the authenticated user from the access token.",
+          "notes": "Keeps auth resolution reusable rather than duplicating it."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to accept Authorization and optional x-user-id headers and pass them to the simulation service.",
+          "notes": "The route now supports bearer-token auth context."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Resolved profile ID from the bearer token using AuthSupportService, with x-user-id fallback, before persisting the simulated PH Core bundle.",
+          "notes": "This is the core runtime fix for the missing account context error."
+        },
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation DTO so the body only contains request data relevant to the sync action.",
+          "notes": "Prevents users from having to provide internal UUIDs."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete public simulation payload type that exposed profileId.",
+          "notes": "Keeps the contract aligned with the new auth-based flow."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the simulation e2e test to use a bearer Authorization header and mocked AuthSupportService account resolution.",
+          "notes": "Verifies the real auth-context path instead of the fallback header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send Authorization: Bearer <accessToken> and to support extra request headers in POST calls.",
+          "notes": "Matches the rest of the app’s authenticated API calls."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Switched the simulation action to use AuthSession.accessToken and show a clear sign-in prompt when the token is unavailable.",
+          "notes": "The button now uses the authenticated session token rather than the user ID."
+        }
+      ],
+      "createdAt": "2026-05-11T16:08:59.690Z",
+      "updatedAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "memoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "rootMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "parentMemoryIds": [
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "relatedMemoryIds": [
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "cf9f2136-b062-482b-9dbe-74225e08a119"
+      ],
+      "childMemoryIds": [
+        "bdf04921-9f55-4477-a459-8ec20ce356ab"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the sync simulation auth-context problem by switching the frontend to send the authenticated Supabase access token as a Bearer Authorization header, and by making the backend simulation route resolve the current user from that token through AuthSupportService, with x-user-id only as a fallback. The request body no longer carries profileId, and the simulation still persists the PH Core bundle against the authenticated account via the existing receive-results-for-profile path. Validation passed after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed AuthSupportService is exported so the integration module can reuse existing Supabase-user resolution.",
+          "notes": "No code change required here."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AuthModule so the simulation service can resolve the authenticated user from the access token.",
+          "notes": "Keeps auth resolution reusable rather than duplicating it."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to accept Authorization and optional x-user-id headers and pass them to the simulation service.",
+          "notes": "The route now supports bearer-token auth context."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Resolved profile ID from the bearer token using AuthSupportService, with x-user-id fallback, before persisting the simulated PH Core bundle.",
+          "notes": "This is the core runtime fix for the missing account context error."
+        },
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation DTO so the body only contains request data relevant to the sync action.",
+          "notes": "Prevents users from having to provide internal UUIDs."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete public simulation payload type that exposed profileId.",
+          "notes": "Keeps the contract aligned with the new auth-based flow."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the simulation e2e test to use a bearer Authorization header and mocked AuthSupportService account resolution.",
+          "notes": "Verifies the real auth-context path instead of the fallback header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send Authorization: Bearer <accessToken> and to support extra request headers in POST calls.",
+          "notes": "Matches the rest of the app’s authenticated API calls."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Switched the simulation action to use AuthSession.accessToken and show a clear sign-in prompt when the token is unavailable.",
+          "notes": "The button now uses the authenticated session token rather than the user ID."
+        }
+      ],
+      "createdAt": "2026-05-11T16:08:59.832Z",
+      "updatedAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "memoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "rootMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "parentMemoryIds": [
+        "c4f288e9-68b0-40d8-b564-61a9ae06a2d6"
+      ],
+      "relatedMemoryIds": [
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "cf9f2136-b062-482b-9dbe-74225e08a119"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the sync simulation auth-context problem by switching the frontend to send the authenticated Supabase access token as a Bearer Authorization header, and by making the backend simulation route resolve the current user from that token through AuthSupportService, with x-user-id only as a fallback. The request body no longer carries profileId, and the simulation still persists the PH Core bundle against the authenticated account via the existing receive-results-for-profile path. Validation passed after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed AuthSupportService is exported so the integration module can reuse existing Supabase-user resolution.",
+          "notes": "No code change required here."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AuthModule so the simulation service can resolve the authenticated user from the access token.",
+          "notes": "Keeps auth resolution reusable rather than duplicating it."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Changed the simulation route to accept Authorization and optional x-user-id headers and pass them to the simulation service.",
+          "notes": "The route now supports bearer-token auth context."
+        },
+        {
+          "path": "backend/src/integration/sync-simulation.service.ts",
+          "action": "modified",
+          "reason": "Resolved profile ID from the bearer token using AuthSupportService, with x-user-id fallback, before persisting the simulated PH Core bundle.",
+          "notes": "This is the core runtime fix for the missing account context error."
+        },
+        {
+          "path": "backend/src/integration/dto/simulate-sync-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed profileId from the public simulation DTO so the body only contains request data relevant to the sync action.",
+          "notes": "Prevents users from having to provide internal UUIDs."
+        },
+        {
+          "path": "backend/src/integration/integration.types.ts",
+          "action": "modified",
+          "reason": "Removed the obsolete public simulation payload type that exposed profileId.",
+          "notes": "Keeps the contract aligned with the new auth-based flow."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the simulation e2e test to use a bearer Authorization header and mocked AuthSupportService account resolution.",
+          "notes": "Verifies the real auth-context path instead of the fallback header."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed the simulation client to send Authorization: Bearer <accessToken> and to support extra request headers in POST calls.",
+          "notes": "Matches the rest of the app’s authenticated API calls."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Switched the simulation action to use AuthSession.accessToken and show a clear sign-in prompt when the token is unavailable.",
+          "notes": "The button now uses the authenticated session token rather than the user ID."
+        }
+      ],
+      "createdAt": "2026-05-11T16:08:59.961Z",
+      "updatedAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "memoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "rootMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [
+        "473a3ec9-bc71-48b2-a463-0b738ad5723c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the sync simulation failure that surfaced as 'unable to store observation record' by making the backend observation/lab record filter text length-safe before insert. The root cause was an overlong laboratory_result_records.filter_value exceeding the database's 80-character check constraint. Added a reusable filter builder in the FHIR sync mapper so clinical record filter values are bounded, and added regression coverage for the PH Core parsers to assert filterValue length stays within 80 characters. Verified with targeted backend tests, backend build, and the sync simulation e2e route test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Added the length-safe filter builder and updated clinical record mapping so inserted filter values cannot exceed the database constraint.",
+          "notes": "This is the primary production fix for the observation storage failure."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage asserting clinical record filter values stay within the 80-character database limit.",
+          "notes": "Covers the observation fixture path that previously failed."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend test and build scripts before running validation.",
+          "notes": "No file changes were needed."
+        },
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the laboratory_result_records schema and its 80-character filter_value constraint to identify the root cause.",
+          "notes": "Read-only inspection only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Verified the persistence flow that inserts parsed clinical resources into the repository.",
+          "notes": "No code change required in this file."
+        }
+      ],
+      "createdAt": "2026-05-11T16:15:02.353Z",
+      "updatedAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "memoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "rootMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "parentMemoryIds": [
+        "d04ec1c7-1aa4-4ef2-912d-da41b7302b81"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [
+        "ede360e6-76c4-4c98-acaa-407a45455ac6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the sync simulation failure that surfaced as 'unable to store observation record' by making the backend observation/lab record filter text length-safe before insert. The root cause was an overlong laboratory_result_records.filter_value exceeding the database's 80-character check constraint. Added a reusable filter builder in the FHIR sync mapper so clinical record filter values are bounded, and added regression coverage for the PH Core parsers to assert filterValue length stays within 80 characters. Verified with targeted backend tests, backend build, and the sync simulation e2e route test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Added the length-safe filter builder and updated clinical record mapping so inserted filter values cannot exceed the database constraint.",
+          "notes": "This is the primary production fix for the observation storage failure."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage asserting clinical record filter values stay within the 80-character database limit.",
+          "notes": "Covers the observation fixture path that previously failed."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend test and build scripts before running validation.",
+          "notes": "No file changes were needed."
+        },
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the laboratory_result_records schema and its 80-character filter_value constraint to identify the root cause.",
+          "notes": "Read-only inspection only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Verified the persistence flow that inserts parsed clinical resources into the repository.",
+          "notes": "No code change required in this file."
+        }
+      ],
+      "createdAt": "2026-05-11T16:15:02.453Z",
+      "updatedAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "memoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "rootMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "parentMemoryIds": [
+        "473a3ec9-bc71-48b2-a463-0b738ad5723c"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "919f5899-de28-4294-9738-b611c74d868c",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the sync simulation failure that surfaced as 'unable to store observation record' by making the backend observation/lab record filter text length-safe before insert. The root cause was an overlong laboratory_result_records.filter_value exceeding the database's 80-character check constraint. Added a reusable filter builder in the FHIR sync mapper so clinical record filter values are bounded, and added regression coverage for the PH Core parsers to assert filterValue length stays within 80 characters. Verified with targeted backend tests, backend build, and the sync simulation e2e route test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Added the length-safe filter builder and updated clinical record mapping so inserted filter values cannot exceed the database constraint.",
+          "notes": "This is the primary production fix for the observation storage failure."
+        },
+        {
+          "path": "backend/src/fhir-sync/parsers/fhir-parser.registry.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage asserting clinical record filter values stay within the 80-character database limit.",
+          "notes": "Covers the observation fixture path that previously failed."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend test and build scripts before running validation.",
+          "notes": "No file changes were needed."
+        },
+        {
+          "path": "sqls/007_health_records_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the laboratory_result_records schema and its 80-character filter_value constraint to identify the root cause.",
+          "notes": "Read-only inspection only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Verified the persistence flow that inserts parsed clinical resources into the repository.",
+          "notes": "No code change required in this file."
+        }
+      ],
+      "createdAt": "2026-05-11T16:15:02.555Z",
+      "updatedAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "memoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "rootMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [
+        "fafd314e-d372-4763-8aef-78be854f6ff7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Refined the sync wizard UX so both prepare and simulate success flows use plain-language copy and return the user to the dashboard instead of showing technical stored-resource details. The wizard now shows user-facing success messages ('Your sync request is ready.' and 'Your records were synced successfully.') and pops back to the dashboard route on success. The personal information screen no longer repeats a technical follow-up snackbar after the sync wizard closes. Added widget tests covering both dashboard-return success paths.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Changed success handling to use user-facing copy and navigate back to the dashboard for both prepare and simulate actions.",
+          "notes": "Also removed stored-resource details from the success message path."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the follow-up snackbar that previously exposed technical sync flow wording after returning from the wizard.",
+          "notes": "The screen now simply opens the sync wizard and lets that flow manage its own success behavior."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Added regression coverage for the new dashboard-return behavior on both prepare and simulate success flows.",
+          "notes": "Includes a fake login result so the simulate path can exercise the bearer-token route."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Verified the test setup can populate an access token via the existing login-result path.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T16:41:23.232Z",
+      "updatedAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "memoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "rootMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "parentMemoryIds": [
+        "04fa1221-9d50-45a8-b647-893a3aa8de77"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [
+        "a0fc983c-c62a-4d11-9d44-a32881a6c6b0"
+      ],
+      "sectionKind": "decision",
+      "summary": "Refined the sync wizard UX so both prepare and simulate success flows use plain-language copy and return the user to the dashboard instead of showing technical stored-resource details. The wizard now shows user-facing success messages ('Your sync request is ready.' and 'Your records were synced successfully.') and pops back to the dashboard route on success. The personal information screen no longer repeats a technical follow-up snackbar after the sync wizard closes. Added widget tests covering both dashboard-return success paths.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Changed success handling to use user-facing copy and navigate back to the dashboard for both prepare and simulate actions.",
+          "notes": "Also removed stored-resource details from the success message path."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the follow-up snackbar that previously exposed technical sync flow wording after returning from the wizard.",
+          "notes": "The screen now simply opens the sync wizard and lets that flow manage its own success behavior."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Added regression coverage for the new dashboard-return behavior on both prepare and simulate success flows.",
+          "notes": "Includes a fake login result so the simulate path can exercise the bearer-token route."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Verified the test setup can populate an access token via the existing login-result path.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T16:41:23.351Z",
+      "updatedAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "memoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "rootMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "parentMemoryIds": [
+        "fafd314e-d372-4763-8aef-78be854f6ff7"
+      ],
+      "relatedMemoryIds": [
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Refined the sync wizard UX so both prepare and simulate success flows use plain-language copy and return the user to the dashboard instead of showing technical stored-resource details. The wizard now shows user-facing success messages ('Your sync request is ready.' and 'Your records were synced successfully.') and pops back to the dashboard route on success. The personal information screen no longer repeats a technical follow-up snackbar after the sync wizard closes. Added widget tests covering both dashboard-return success paths.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Changed success handling to use user-facing copy and navigate back to the dashboard for both prepare and simulate actions.",
+          "notes": "Also removed stored-resource details from the success message path."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the follow-up snackbar that previously exposed technical sync flow wording after returning from the wizard.",
+          "notes": "The screen now simply opens the sync wizard and lets that flow manage its own success behavior."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Added regression coverage for the new dashboard-return behavior on both prepare and simulate success flows.",
+          "notes": "Includes a fake login result so the simulate path can exercise the bearer-token route."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Verified the test setup can populate an access token via the existing login-result path.",
+          "notes": "No code changes were required here."
+        }
+      ],
+      "createdAt": "2026-05-11T16:41:23.468Z",
+      "updatedAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "memoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "d949e635-3036-4092-92c3-18526a99f324"
+      ],
+      "childMemoryIds": [
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented sync/profile lock workflow across backend and frontend: sync prepare now triggers a real gateway Patient request, Patient resource mapping now hydrates internal profile fields and marks profile as sync-locked, profile API exposes lock state, and personal information UI now enables sync based on identifier-only readiness and disables editing when sync-locked. Updated regression tests for profile readiness and sync navigation behavior, and validated with targeted Flutter and backend Jest suites.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Prepare sync now performs gateway Patient request and refactored gateway request helper supports POST payloads.",
+          "notes": "Added requestPatientSyncFromGateway and requestGatewayJson method split for GET/POST."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Test expectations updated because prepare sync now performs two gateway calls (provider fetch + patient request).",
+          "notes": "Added second mocked fetch response for gateway request endpoint."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Patient resource mapping now hydrates internal profile fields and marks profile as syncLocked.",
+          "notes": "Added identifier/address/telecom extraction helpers and lock marker assignment."
+        },
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Profile API contract now includes isSyncLocked state for frontend read-only handling.",
+          "notes": "Extended PatientProfileResponse interface."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Profile response generation now computes isSyncLocked and exposes helper for lock-state detection.",
+          "notes": "Added isPatientProfileSyncLocked utility."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Manual profile updates are now blocked when profile is sync-locked.",
+          "notes": "Added BadRequestException guard before upsert."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Default empty profile response now includes isSyncLocked for contract consistency.",
+          "notes": "Updated EMPTY_PATIENT_PROFILE_RESPONSE."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Frontend profile model now reads/writes isSyncLocked from API responses.",
+          "notes": "Extended UserProfileSummary constructor, fromJson, empty, and toJson."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Sync readiness now depends only on identifier presence as requested.",
+          "notes": "Removed completeness requirement from readiness state."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Personal information screen now passes read-only state to form and uses identifier-centric sync guidance copy.",
+          "notes": "Uses AuthSession.profile.isSyncLocked for form locking."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Profile form now supports read-only mode for synced/locked profiles.",
+          "notes": "Wrapped content with IgnorePointer/Opacity and hides action buttons when read-only."
+        },
+        {
+          "path": "frontend/test/features/profile/domain/profile_sync_readiness_test.dart",
+          "action": "modified",
+          "reason": "Updated readiness expectations for identifier-only gating behavior.",
+          "notes": "Adjusted expected readiness outcomes."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated fake interoperability client and expectations for revised sync readiness guidance.",
+          "notes": "Added simulateSyncRequest stub and removed outdated required-profile-details expectation."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        }
+      ],
+      "createdAt": "2026-05-12T05:04:22.435Z",
+      "updatedAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "memoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "relatedMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "d949e635-3036-4092-92c3-18526a99f324"
+      ],
+      "childMemoryIds": [
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented sync/profile lock workflow across backend and frontend: sync prepare now triggers a real gateway Patient request, Patient resource mapping now hydrates internal profile fields and marks profile as sync-locked, profile API exposes lock state, and personal information UI now enables sync based on identifier-only readiness and disables editing when sync-locked. Updated regression tests for profile readiness and sync navigation behavior, and validated with targeted Flutter and backend Jest suites.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Prepare sync now performs gateway Patient request and refactored gateway request helper supports POST payloads.",
+          "notes": "Added requestPatientSyncFromGateway and requestGatewayJson method split for GET/POST."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Test expectations updated because prepare sync now performs two gateway calls (provider fetch + patient request).",
+          "notes": "Added second mocked fetch response for gateway request endpoint."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Patient resource mapping now hydrates internal profile fields and marks profile as syncLocked.",
+          "notes": "Added identifier/address/telecom extraction helpers and lock marker assignment."
+        },
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Profile API contract now includes isSyncLocked state for frontend read-only handling.",
+          "notes": "Extended PatientProfileResponse interface."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Profile response generation now computes isSyncLocked and exposes helper for lock-state detection.",
+          "notes": "Added isPatientProfileSyncLocked utility."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Manual profile updates are now blocked when profile is sync-locked.",
+          "notes": "Added BadRequestException guard before upsert."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Default empty profile response now includes isSyncLocked for contract consistency.",
+          "notes": "Updated EMPTY_PATIENT_PROFILE_RESPONSE."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Frontend profile model now reads/writes isSyncLocked from API responses.",
+          "notes": "Extended UserProfileSummary constructor, fromJson, empty, and toJson."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Sync readiness now depends only on identifier presence as requested.",
+          "notes": "Removed completeness requirement from readiness state."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Personal information screen now passes read-only state to form and uses identifier-centric sync guidance copy.",
+          "notes": "Uses AuthSession.profile.isSyncLocked for form locking."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Profile form now supports read-only mode for synced/locked profiles.",
+          "notes": "Wrapped content with IgnorePointer/Opacity and hides action buttons when read-only."
+        },
+        {
+          "path": "frontend/test/features/profile/domain/profile_sync_readiness_test.dart",
+          "action": "modified",
+          "reason": "Updated readiness expectations for identifier-only gating behavior.",
+          "notes": "Adjusted expected readiness outcomes."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated fake interoperability client and expectations for revised sync readiness guidance.",
+          "notes": "Added simulateSyncRequest stub and removed outdated required-profile-details expectation."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        }
+      ],
+      "createdAt": "2026-05-12T05:04:22.600Z",
+      "updatedAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "memoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78"
+      ],
+      "relatedMemoryIds": [
+        "a2e47488-62dd-443a-b1a1-6478e866960a",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "e017f57f-2c8b-458c-a159-240443db2ce9",
+        "d949e635-3036-4092-92c3-18526a99f324"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented sync/profile lock workflow across backend and frontend: sync prepare now triggers a real gateway Patient request, Patient resource mapping now hydrates internal profile fields and marks profile as sync-locked, profile API exposes lock state, and personal information UI now enables sync based on identifier-only readiness and disables editing when sync-locked. Updated regression tests for profile readiness and sync navigation behavior, and validated with targeted Flutter and backend Jest suites.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Prepare sync now performs gateway Patient request and refactored gateway request helper supports POST payloads.",
+          "notes": "Added requestPatientSyncFromGateway and requestGatewayJson method split for GET/POST."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Test expectations updated because prepare sync now performs two gateway calls (provider fetch + patient request).",
+          "notes": "Added second mocked fetch response for gateway request endpoint."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Patient resource mapping now hydrates internal profile fields and marks profile as syncLocked.",
+          "notes": "Added identifier/address/telecom extraction helpers and lock marker assignment."
+        },
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Profile API contract now includes isSyncLocked state for frontend read-only handling.",
+          "notes": "Extended PatientProfileResponse interface."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Profile response generation now computes isSyncLocked and exposes helper for lock-state detection.",
+          "notes": "Added isPatientProfileSyncLocked utility."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Manual profile updates are now blocked when profile is sync-locked.",
+          "notes": "Added BadRequestException guard before upsert."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Default empty profile response now includes isSyncLocked for contract consistency.",
+          "notes": "Updated EMPTY_PATIENT_PROFILE_RESPONSE."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Frontend profile model now reads/writes isSyncLocked from API responses.",
+          "notes": "Extended UserProfileSummary constructor, fromJson, empty, and toJson."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Sync readiness now depends only on identifier presence as requested.",
+          "notes": "Removed completeness requirement from readiness state."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Personal information screen now passes read-only state to form and uses identifier-centric sync guidance copy.",
+          "notes": "Uses AuthSession.profile.isSyncLocked for form locking."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Profile form now supports read-only mode for synced/locked profiles.",
+          "notes": "Wrapped content with IgnorePointer/Opacity and hides action buttons when read-only."
+        },
+        {
+          "path": "frontend/test/features/profile/domain/profile_sync_readiness_test.dart",
+          "action": "modified",
+          "reason": "Updated readiness expectations for identifier-only gating behavior.",
+          "notes": "Adjusted expected readiness outcomes."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated fake interoperability client and expectations for revised sync readiness guidance.",
+          "notes": "Added simulateSyncRequest stub and removed outdated required-profile-details expectation."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        },
+        {
+          "path": "frontend/test/features/interoperability/domain/interoperability_models_test.dart",
+          "action": "modified",
+          "reason": "Updated UserProfileSummary fixture with new isSyncLocked field.",
+          "notes": "Constructor compatibility update."
+        }
+      ],
+      "createdAt": "2026-05-12T05:04:22.772Z",
+      "updatedAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "memoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "relatedMemoryIds": [
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "sectionKind": "fact",
+      "summary": "Relaxed personal information save behavior so the frontend and backend no longer require all fields for profile updates, while sync remains gated strictly by identifier presence. The backend now accepts partial profile drafts, merges them with existing profile data, and keeps the sync-lock enforcement introduced earlier. Frontend form fields were changed to optional validators and the sync button still depends on having at least one identifier. Regression tests were updated and targeted Flutter/Jest suites passed.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Converted the profile update contract to optional fields so saving changes no longer requires filling every personal information field.",
+          "notes": "All profile fields now validate only when non-empty."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Implemented partial-profile merge behavior and preserved sync-lock edit blocking.",
+          "notes": "Merges incoming drafts with existing row values instead of overwriting with empty strings."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "created",
+          "reason": "Added regression coverage for partial save behavior and sync-locked update rejection.",
+          "notes": "New targeted unit tests for the profile service."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed required-field UI cues and switched the form to optional validation across all profile fields.",
+          "notes": "The widget now matches the relaxed save contract."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted expectations so the sync button remains disabled without identifiers and the form no longer asserts required markers.",
+          "notes": "Also updated button style assertions to WidgetState."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Kept sync availability based only on identifier presence.",
+          "notes": "No longer depends on overall profile completeness."
+        }
+      ],
+      "createdAt": "2026-05-12T07:52:47.331Z",
+      "updatedAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "memoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "7566812a-d227-41f4-9531-511a90fa2449"
+      ],
+      "relatedMemoryIds": [
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "sectionKind": "decision",
+      "summary": "Relaxed personal information save behavior so the frontend and backend no longer require all fields for profile updates, while sync remains gated strictly by identifier presence. The backend now accepts partial profile drafts, merges them with existing profile data, and keeps the sync-lock enforcement introduced earlier. Frontend form fields were changed to optional validators and the sync button still depends on having at least one identifier. Regression tests were updated and targeted Flutter/Jest suites passed.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Converted the profile update contract to optional fields so saving changes no longer requires filling every personal information field.",
+          "notes": "All profile fields now validate only when non-empty."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Implemented partial-profile merge behavior and preserved sync-lock edit blocking.",
+          "notes": "Merges incoming drafts with existing row values instead of overwriting with empty strings."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "created",
+          "reason": "Added regression coverage for partial save behavior and sync-locked update rejection.",
+          "notes": "New targeted unit tests for the profile service."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed required-field UI cues and switched the form to optional validation across all profile fields.",
+          "notes": "The widget now matches the relaxed save contract."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted expectations so the sync button remains disabled without identifiers and the form no longer asserts required markers.",
+          "notes": "Also updated button style assertions to WidgetState."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Kept sync availability based only on identifier presence.",
+          "notes": "No longer depends on overall profile completeness."
+        }
+      ],
+      "createdAt": "2026-05-12T07:52:47.442Z",
+      "updatedAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "memoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "relatedMemoryIds": [
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+        "a2e47488-62dd-443a-b1a1-6478e866960a"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Relaxed personal information save behavior so the frontend and backend no longer require all fields for profile updates, while sync remains gated strictly by identifier presence. The backend now accepts partial profile drafts, merges them with existing profile data, and keeps the sync-lock enforcement introduced earlier. Frontend form fields were changed to optional validators and the sync button still depends on having at least one identifier. Regression tests were updated and targeted Flutter/Jest suites passed.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Converted the profile update contract to optional fields so saving changes no longer requires filling every personal information field.",
+          "notes": "All profile fields now validate only when non-empty."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Implemented partial-profile merge behavior and preserved sync-lock edit blocking.",
+          "notes": "Merges incoming drafts with existing row values instead of overwriting with empty strings."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "created",
+          "reason": "Added regression coverage for partial save behavior and sync-locked update rejection.",
+          "notes": "New targeted unit tests for the profile service."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed required-field UI cues and switched the form to optional validation across all profile fields.",
+          "notes": "The widget now matches the relaxed save contract."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted expectations so the sync button remains disabled without identifiers and the form no longer asserts required markers.",
+          "notes": "Also updated button style assertions to WidgetState."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/profile_sync_readiness.dart",
+          "action": "modified",
+          "reason": "Kept sync availability based only on identifier presence.",
+          "notes": "No longer depends on overall profile completeness."
+        }
+      ],
+      "createdAt": "2026-05-12T07:52:47.549Z",
+      "updatedAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "memoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "rootMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [
+        "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4"
+      ],
+      "sectionKind": "fact",
+      "summary": "Resolved backend TypeScript compile errors introduced by the recent partial-profile changes. The profile service now accepts optional first-name input in its normalization helper, and the integration service now uses proper TypeScript string-length checks instead of the invalid Dart-style isNotEmpty property. A backend build was run successfully afterward.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Adjusted helper typing to accept optional first-name input after DTO fields became partial.",
+          "notes": "This removes the TS2345 error at the merge call site."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Replaced invalid string property access with valid TypeScript string-empty checks in gateway request assembly.",
+          "notes": "This removes the TS2339 errors for reason and notes."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend build script before running targeted validation.",
+          "notes": "No changes were made to this file."
+        }
+      ],
+      "createdAt": "2026-05-12T07:56:23.829Z",
+      "updatedAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "memoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "rootMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "parentMemoryIds": [
+        "d2e09eeb-19ee-47c7-8427-5265fb05eed2"
+      ],
+      "relatedMemoryIds": [
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [
+        "3556a800-387a-4e96-a6ab-9e645ee38c4e"
+      ],
+      "sectionKind": "decision",
+      "summary": "Resolved backend TypeScript compile errors introduced by the recent partial-profile changes. The profile service now accepts optional first-name input in its normalization helper, and the integration service now uses proper TypeScript string-length checks instead of the invalid Dart-style isNotEmpty property. A backend build was run successfully afterward.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Adjusted helper typing to accept optional first-name input after DTO fields became partial.",
+          "notes": "This removes the TS2345 error at the merge call site."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Replaced invalid string property access with valid TypeScript string-empty checks in gateway request assembly.",
+          "notes": "This removes the TS2339 errors for reason and notes."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend build script before running targeted validation.",
+          "notes": "No changes were made to this file."
+        }
+      ],
+      "createdAt": "2026-05-12T07:56:23.952Z",
+      "updatedAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "memoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "rootMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "parentMemoryIds": [
+        "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4"
+      ],
+      "relatedMemoryIds": [
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Resolved backend TypeScript compile errors introduced by the recent partial-profile changes. The profile service now accepts optional first-name input in its normalization helper, and the integration service now uses proper TypeScript string-length checks instead of the invalid Dart-style isNotEmpty property. A backend build was run successfully afterward.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Adjusted helper typing to accept optional first-name input after DTO fields became partial.",
+          "notes": "This removes the TS2345 error at the merge call site."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Replaced invalid string property access with valid TypeScript string-empty checks in gateway request assembly.",
+          "notes": "This removes the TS2339 errors for reason and notes."
+        },
+        {
+          "path": "backend/package.json",
+          "action": "inspected",
+          "reason": "Confirmed the available backend build script before running targeted validation.",
+          "notes": "No changes were made to this file."
+        }
+      ],
+      "createdAt": "2026-05-12T07:56:24.098Z",
+      "updatedAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "memoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "rootMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "parentMemoryIds": [
+        "8fef6e2c-badb-486f-8a13-552bc68adadc"
+      ],
+      "relatedMemoryIds": [
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the duplicated FHIR webhook route prefix in the backend by changing the GatewayWebhookController base path from api/fhir to fhir. This removes the extra /api segment so the routes mount under /api/v1/fhir/... while preserving the existing global prefix and route exclusions.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Adjusted the controller route prefix to eliminate the duplicated api segment in the mounted FHIR webhook URLs.",
+          "notes": "This is the direct fix for the reported log output."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirmed the global prefix is already api/v1 and should remain unchanged.",
+          "notes": "The duplicate path did not originate here."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed the webhook controller is registered through the FhirSyncModule and no module-level prefix is introducing the duplication.",
+          "notes": "No change required."
+        }
+      ],
+      "createdAt": "2026-05-12T08:07:05.723Z",
+      "updatedAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "memoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "rootMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "parentMemoryIds": [
+        "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f"
+      ],
+      "relatedMemoryIds": [
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "8781dcae-0913-4621-abbb-fb705d201635"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the duplicated FHIR webhook route prefix in the backend by changing the GatewayWebhookController base path from api/fhir to fhir. This removes the extra /api segment so the routes mount under /api/v1/fhir/... while preserving the existing global prefix and route exclusions.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Adjusted the controller route prefix to eliminate the duplicated api segment in the mounted FHIR webhook URLs.",
+          "notes": "This is the direct fix for the reported log output."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirmed the global prefix is already api/v1 and should remain unchanged.",
+          "notes": "The duplicate path did not originate here."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed the webhook controller is registered through the FhirSyncModule and no module-level prefix is introducing the duplication.",
+          "notes": "No change required."
+        }
+      ],
+      "createdAt": "2026-05-12T08:07:05.823Z",
+      "updatedAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "memoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "rootMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "parentMemoryIds": [
+        "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3"
+      ],
+      "relatedMemoryIds": [
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "06173730-4807-44c9-999c-3059d3617c34",
+        "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the duplicated FHIR webhook route prefix in the backend by changing the GatewayWebhookController base path from api/fhir to fhir. This removes the extra /api segment so the routes mount under /api/v1/fhir/... while preserving the existing global prefix and route exclusions.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Adjusted the controller route prefix to eliminate the duplicated api segment in the mounted FHIR webhook URLs.",
+          "notes": "This is the direct fix for the reported log output."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirmed the global prefix is already api/v1 and should remain unchanged.",
+          "notes": "The duplicate path did not originate here."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.module.ts",
+          "action": "inspected",
+          "reason": "Confirmed the webhook controller is registered through the FhirSyncModule and no module-level prefix is introducing the duplication.",
+          "notes": "No change required."
+        }
+      ],
+      "createdAt": "2026-05-12T08:07:05.915Z",
+      "updatedAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "memoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "rootMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "parentMemoryIds": [
+        "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f"
+      ],
+      "relatedMemoryIds": [
+        "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+        "8781dcae-0913-4621-abbb-fb705d201635",
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "f910db6d-23f5-4d00-9e99-09c7b72b3b79"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the backend webhook routing mismatch that caused /api/v1/fhir/receive-results to 404. The global prefix in backend/src/main.ts now applies cleanly to all routes without excluding the FHIR webhook endpoints, the webhook controller remains mounted at @Controller('fhir'), and the e2e route test now boots with the same api/v1 global prefix used in production. Verification passed for both build and FHIR e2e routing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the FHIR-specific prefix exclusions so the global api/v1 prefix applies to the webhook routes.",
+          "notes": "This is the production routing fix."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Kept the webhook controller mounted under fhir so it combines with the global prefix to form /api/v1/fhir/...",
+          "notes": "This file was previously corrected away from api/fhir."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e app bootstrap and expectations to match the production api/v1 prefix.",
+          "notes": "This ensures route coverage reflects the deployed behavior."
+        }
+      ],
+      "createdAt": "2026-05-12T08:16:44.996Z",
+      "updatedAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "memoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "rootMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "parentMemoryIds": [
+        "4d377bdb-3e43-4221-bc19-5a135267b607"
+      ],
+      "relatedMemoryIds": [
+        "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+        "8781dcae-0913-4621-abbb-fb705d201635",
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "0f9d27bc-f381-4e4d-aac0-fc25eafa822d"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the backend webhook routing mismatch that caused /api/v1/fhir/receive-results to 404. The global prefix in backend/src/main.ts now applies cleanly to all routes without excluding the FHIR webhook endpoints, the webhook controller remains mounted at @Controller('fhir'), and the e2e route test now boots with the same api/v1 global prefix used in production. Verification passed for both build and FHIR e2e routing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the FHIR-specific prefix exclusions so the global api/v1 prefix applies to the webhook routes.",
+          "notes": "This is the production routing fix."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Kept the webhook controller mounted under fhir so it combines with the global prefix to form /api/v1/fhir/...",
+          "notes": "This file was previously corrected away from api/fhir."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e app bootstrap and expectations to match the production api/v1 prefix.",
+          "notes": "This ensures route coverage reflects the deployed behavior."
+        }
+      ],
+      "createdAt": "2026-05-12T08:16:45.113Z",
+      "updatedAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "memoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "rootMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "parentMemoryIds": [
+        "f910db6d-23f5-4d00-9e99-09c7b72b3b79"
+      ],
+      "relatedMemoryIds": [
+        "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+        "8781dcae-0913-4621-abbb-fb705d201635",
+        "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the backend webhook routing mismatch that caused /api/v1/fhir/receive-results to 404. The global prefix in backend/src/main.ts now applies cleanly to all routes without excluding the FHIR webhook endpoints, the webhook controller remains mounted at @Controller('fhir'), and the e2e route test now boots with the same api/v1 global prefix used in production. Verification passed for both build and FHIR e2e routing.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Removed the FHIR-specific prefix exclusions so the global api/v1 prefix applies to the webhook routes.",
+          "notes": "This is the production routing fix."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Kept the webhook controller mounted under fhir so it combines with the global prefix to form /api/v1/fhir/...",
+          "notes": "This file was previously corrected away from api/fhir."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated the e2e app bootstrap and expectations to match the production api/v1 prefix.",
+          "notes": "This ensures route coverage reflects the deployed behavior."
+        }
+      ],
+      "createdAt": "2026-05-12T08:16:45.217Z",
+      "updatedAt": "2026-05-12T08:16:45.217Z"
+    },
+    {
+      "memoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "relatedMemoryIds": [
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "sectionKind": "fact",
+      "summary": "Verified that the backend receive-results flow already overwrites the stored profile and marks it sync-locked via the Patient bundle payload, then fixed the Flutter side to refresh authoritative profile data from the backend so synced patient information replaces the cached personal information view. The personal information screen now refreshes on open, and the sync simulation flow refreshes after success; tests confirm the screen shows the synced name and lock state.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the backend receive-results handler already overwrites the stored profile and marks synced patient data as locked.",
+          "notes": "No backend code change was required."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Confirmed the Patient mapper sets syncLocked: true in the profile patch used by receive-results processing.",
+          "notes": "Supports the conclusion that the backend already enforces sync lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Added authoritative profile refresh support so the app can overwrite cached profile state with backend data.",
+          "notes": "Refresh helper fetches /profile/me and persists the returned profile."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Triggered a profile refresh when the personal information screen opens so synced data replaces stale local values and lock state updates.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Refreshed the profile after successful sync simulation before returning to the dashboard so the session cache reflects the synced patient data.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a widget test proving the screen overwrites stale profile data with synced profile data and shows the lock message.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the sync simulation test to verify the profile refresh callback is invoked and the session becomes locked with the synced name.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing form widget validation behavior remained intact after the profile refresh changes.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T14:58:51.356Z",
+      "updatedAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "memoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "2416da44-d776-48db-a81e-bc777dc381ec"
+      ],
+      "relatedMemoryIds": [
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "6e4520b9-87d2-4e6f-a696-d954832b323b"
+      ],
+      "sectionKind": "decision",
+      "summary": "Verified that the backend receive-results flow already overwrites the stored profile and marks it sync-locked via the Patient bundle payload, then fixed the Flutter side to refresh authoritative profile data from the backend so synced patient information replaces the cached personal information view. The personal information screen now refreshes on open, and the sync simulation flow refreshes after success; tests confirm the screen shows the synced name and lock state.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the backend receive-results handler already overwrites the stored profile and marks synced patient data as locked.",
+          "notes": "No backend code change was required."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Confirmed the Patient mapper sets syncLocked: true in the profile patch used by receive-results processing.",
+          "notes": "Supports the conclusion that the backend already enforces sync lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Added authoritative profile refresh support so the app can overwrite cached profile state with backend data.",
+          "notes": "Refresh helper fetches /profile/me and persists the returned profile."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Triggered a profile refresh when the personal information screen opens so synced data replaces stale local values and lock state updates.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Refreshed the profile after successful sync simulation before returning to the dashboard so the session cache reflects the synced patient data.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a widget test proving the screen overwrites stale profile data with synced profile data and shows the lock message.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the sync simulation test to verify the profile refresh callback is invoked and the session becomes locked with the synced name.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing form widget validation behavior remained intact after the profile refresh changes.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T14:58:51.488Z",
+      "updatedAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "memoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "relatedMemoryIds": [
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Verified that the backend receive-results flow already overwrites the stored profile and marks it sync-locked via the Patient bundle payload, then fixed the Flutter side to refresh authoritative profile data from the backend so synced patient information replaces the cached personal information view. The personal information screen now refreshes on open, and the sync simulation flow refreshes after success; tests confirm the screen shows the synced name and lock state.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed the backend receive-results handler already overwrites the stored profile and marks synced patient data as locked.",
+          "notes": "No backend code change was required."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Confirmed the Patient mapper sets syncLocked: true in the profile patch used by receive-results processing.",
+          "notes": "Supports the conclusion that the backend already enforces sync lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Added authoritative profile refresh support so the app can overwrite cached profile state with backend data.",
+          "notes": "Refresh helper fetches /profile/me and persists the returned profile."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Triggered a profile refresh when the personal information screen opens so synced data replaces stale local values and lock state updates.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Refreshed the profile after successful sync simulation before returning to the dashboard so the session cache reflects the synced patient data.",
+          "notes": "Added optional refresh hook for testability."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a widget test proving the screen overwrites stale profile data with synced profile data and shows the lock message.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the sync simulation test to verify the profile refresh callback is invoked and the session becomes locked with the synced name.",
+          "notes": "Uses an injected refresh callback to avoid network calls."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the existing form widget validation behavior remained intact after the profile refresh changes.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T14:58:51.622Z",
+      "updatedAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "memoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "a98723e2-71ee-4beb-837b-49a56fdc5a8a"
+      ],
+      "childMemoryIds": [
+        "e7d7a165-004e-4f10-9c3a-4e70f5ae0586"
+      ],
+      "sectionKind": "fact",
+      "summary": "Standardized the PhilHealth identifier system URI across the sync flow to the PH Core canonical URI http://philhealth.gov.ph/fhir/Identifier/philhealth-id. The backend now canonicalizes legacy http://philhealth.gov.ph identifiers for lookup and storage compatibility, while the Flutter sync UI sends the new URI. Verified affected backend and frontend tests pass after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Changed PhilHealth identifier extraction to use the canonical PH Core URI and still recognize the legacy URI.",
+          "notes": "Supports receive-results profile updates from PH Core Patient bundles."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added canonicalization and lookup compatibility so old and new PhilHealth system URIs both resolve patient profiles.",
+          "notes": "Prevents breaking existing patient identifier rows during the migration."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Normalizes outbound sync requests to the canonical PH Core PhilHealth URI.",
+          "notes": "This is what prepare-sync sends to the gateway."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Updated the sync identifier option URI used by the Flutter app to the PH Core PhilHealth naming-system URI.",
+          "notes": "Affects request preparation UI values."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit test inputs and expectations to the canonical PhilHealth URI.",
+          "notes": "Confirms sync preparation now emits the new identifier system."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated end-to-end request payloads and assertions to the canonical PhilHealth URI.",
+          "notes": "Covers the app-level sync flows."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results handling already expected the new PH Core URI in bundle fixtures and assertions.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results and receive-push route tests already exercised the correct payload shape after the URI change.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the profile refresh tests still validate overwrite and lock behavior after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed sync simulation tests still validate the profile refresh flow after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T15:39:11.425Z",
+      "updatedAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "memoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "a98723e2-71ee-4beb-837b-49a56fdc5a8a"
+      ],
+      "childMemoryIds": [
+        "74535931-abdf-4aeb-b4f3-169b79f88458"
+      ],
+      "sectionKind": "decision",
+      "summary": "Standardized the PhilHealth identifier system URI across the sync flow to the PH Core canonical URI http://philhealth.gov.ph/fhir/Identifier/philhealth-id. The backend now canonicalizes legacy http://philhealth.gov.ph identifiers for lookup and storage compatibility, while the Flutter sync UI sends the new URI. Verified affected backend and frontend tests pass after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Changed PhilHealth identifier extraction to use the canonical PH Core URI and still recognize the legacy URI.",
+          "notes": "Supports receive-results profile updates from PH Core Patient bundles."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added canonicalization and lookup compatibility so old and new PhilHealth system URIs both resolve patient profiles.",
+          "notes": "Prevents breaking existing patient identifier rows during the migration."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Normalizes outbound sync requests to the canonical PH Core PhilHealth URI.",
+          "notes": "This is what prepare-sync sends to the gateway."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Updated the sync identifier option URI used by the Flutter app to the PH Core PhilHealth naming-system URI.",
+          "notes": "Affects request preparation UI values."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit test inputs and expectations to the canonical PhilHealth URI.",
+          "notes": "Confirms sync preparation now emits the new identifier system."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated end-to-end request payloads and assertions to the canonical PhilHealth URI.",
+          "notes": "Covers the app-level sync flows."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results handling already expected the new PH Core URI in bundle fixtures and assertions.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results and receive-push route tests already exercised the correct payload shape after the URI change.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the profile refresh tests still validate overwrite and lock behavior after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed sync simulation tests still validate the profile refresh flow after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T15:39:11.567Z",
+      "updatedAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "memoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [
+        "e7d7a165-004e-4f10-9c3a-4e70f5ae0586"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+        "d949e635-3036-4092-92c3-18526a99f324",
+        "a98723e2-71ee-4beb-837b-49a56fdc5a8a"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Standardized the PhilHealth identifier system URI across the sync flow to the PH Core canonical URI http://philhealth.gov.ph/fhir/Identifier/philhealth-id. The backend now canonicalizes legacy http://philhealth.gov.ph identifiers for lookup and storage compatibility, while the Flutter sync UI sends the new URI. Verified affected backend and frontend tests pass after the change.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Changed PhilHealth identifier extraction to use the canonical PH Core URI and still recognize the legacy URI.",
+          "notes": "Supports receive-results profile updates from PH Core Patient bundles."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added canonicalization and lookup compatibility so old and new PhilHealth system URIs both resolve patient profiles.",
+          "notes": "Prevents breaking existing patient identifier rows during the migration."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Normalizes outbound sync requests to the canonical PH Core PhilHealth URI.",
+          "notes": "This is what prepare-sync sends to the gateway."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/domain/interoperability_models.dart",
+          "action": "modified",
+          "reason": "Updated the sync identifier option URI used by the Flutter app to the PH Core PhilHealth naming-system URI.",
+          "notes": "Affects request preparation UI values."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated unit test inputs and expectations to the canonical PhilHealth URI.",
+          "notes": "Confirms sync preparation now emits the new identifier system."
+        },
+        {
+          "path": "backend/test/app.e2e-spec.ts",
+          "action": "modified",
+          "reason": "Updated end-to-end request payloads and assertions to the canonical PhilHealth URI.",
+          "notes": "Covers the app-level sync flows."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results handling already expected the new PH Core URI in bundle fixtures and assertions.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "backend/test/fhir-sync.e2e-spec.ts",
+          "action": "inspected",
+          "reason": "Verified receive-results and receive-push route tests already exercised the correct payload shape after the URI change.",
+          "notes": "No changes required."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed the profile refresh tests still validate overwrite and lock behavior after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "inspected",
+          "reason": "Confirmed sync simulation tests still validate the profile refresh flow after the URI change.",
+          "notes": "No URI-specific changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-12T15:39:11.707Z",
+      "updatedAt": "2026-05-12T15:39:11.707Z"
     }
   ],
   "edges": [
@@ -13714,7 +16090,1519 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-11T14:56:50.620Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.685Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.834Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "toMemoryId": "fd68781d-1e36-4583-9c0e-e539c0e78773",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:16:45.980Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.633Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.747Z"
+    },
+    {
+      "fromMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "fromMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "fromMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "fromMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "fromMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T15:48:31.855Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "toMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.690Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "toMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.832Z"
+    },
+    {
+      "fromMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "toMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "fromMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "fromMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "fromMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "fromMemoryId": "bdf04921-9f55-4477-a459-8ec20ce356ab",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:08:59.961Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "toMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.353Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "d04ec1c7-1aa4-4ef2-912d-da41b7302b81",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "toMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.453Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "473a3ec9-bc71-48b2-a463-0b738ad5723c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "919f5899-de28-4294-9738-b611c74d868c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "ede360e6-76c4-4c98-acaa-407a45455ac6",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:15:02.555Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "toMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.232Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "toMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.351Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "fafd314e-d372-4763-8aef-78be854f6ff7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-11T16:41:23.468Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.435Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.600Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "e017f57f-2c8b-458c-a159-240443db2ce9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T05:04:22.772Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.331Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.442Z"
+    },
+    {
+      "fromMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "fromMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "fromMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "fromMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "toMemoryId": "8a630b01-0adb-41d9-91b8-9214d74c4e58",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "fromMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "toMemoryId": "a2e47488-62dd-443a-b1a1-6478e866960a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:52:47.549Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "toMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.829Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "d2e09eeb-19ee-47c7-8427-5265fb05eed2",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "toMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:23.952Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "3556a800-387a-4e96-a6ab-9e645ee38c4e",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T07:56:24.098Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "8fef6e2c-badb-486f-8a13-552bc68adadc",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "toMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.723Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "toMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.823Z"
+    },
+    {
+      "fromMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "toMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "fromMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "fromMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "toMemoryId": "06173730-4807-44c9-999c-3059d3617c34",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "fromMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "toMemoryId": "1504a6a1-2272-4dd2-a798-ddc609e8b478",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "fromMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:07:05.915Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "40c9ae86-46bf-4b4f-a77f-7c929ac3ed9f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "toMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:44.996Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "4d377bdb-3e43-4221-bc19-5a135267b607",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "toMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.113Z"
+    },
+    {
+      "fromMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "toMemoryId": "f910db6d-23f5-4d00-9e99-09c7b72b3b79",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.218Z"
+    },
+    {
+      "fromMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "toMemoryId": "5b04c3b9-bc9e-4781-9bc8-a0ff6f4974a3",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.218Z"
+    },
+    {
+      "fromMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "toMemoryId": "8781dcae-0913-4621-abbb-fb705d201635",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.218Z"
+    },
+    {
+      "fromMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "toMemoryId": "440e0aa6-7cf1-47f4-ba08-01f9ee89bef1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.218Z"
+    },
+    {
+      "fromMemoryId": "0f9d27bc-f381-4e4d-aac0-fc25eafa822d",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T08:16:45.218Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.356Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.488Z"
+    },
+    {
+      "fromMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "fromMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "fromMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "fromMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "fromMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T14:58:51.622Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "toMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.425Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.567Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "d949e635-3036-4092-92c3-18526a99f324",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "toMemoryId": "a98723e2-71ee-4beb-837b-49a56fdc5a8a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:39:11.707Z"
     }
   ],
-  "updatedAt": "2026-05-11T14:56:50.624Z"
+  "updatedAt": "2026-05-12T15:39:11.710Z"
 }

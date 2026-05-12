@@ -14,10 +14,13 @@ import {
 } from './integration.types';
 
 const DEFAULT_RESOURCE_TYPE = 'Patient';
-const PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
+const PHILHEALTH_IDENTIFIER_SYSTEM =
+  'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
+const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
 const PHILSYS_IDENTIFIER_SYSTEM =
   'http://philsys.gov.ph/fhir/Identifier/philsys-id';
 const GATEWAY_PROVIDER_LIST_PATH = '/providers';
+const GATEWAY_FHIR_REQUEST_PATIENT_PATH = '/fhir/request/Patient';
 
 @Injectable()
 export class IntegrationService {
@@ -66,6 +69,15 @@ export class IntegrationService {
       );
     }
 
+    await this.requestPatientSyncFromGateway({
+      requesterId: this.getRequiredConfig('WAH4PC_PROVIDER_ID'),
+      targetId: selectedProvider.id,
+      identifierSystem: this.normalizeIdentifierSystem(identifierSystem),
+      identifierValue,
+      reason: payload.reason?.trim(),
+      notes: payload.notes?.trim(),
+    });
+
     return {
       canSubmit: true,
       requesterId: this.getRequiredConfig('WAH4PC_PROVIDER_ID'),
@@ -84,9 +96,31 @@ export class IntegrationService {
   }
 
   private async fetchGatewayJson(path: string): Promise<unknown> {
+    return this.requestGatewayJson({
+      method: 'GET',
+      path,
+    });
+  }
+
+  private async postGatewayJson(
+    path: string,
+    body: Record<string, unknown>,
+  ): Promise<unknown> {
+    return this.requestGatewayJson({
+      method: 'POST',
+      path,
+      body,
+    });
+  }
+
+  private async requestGatewayJson(input: {
+    method: 'GET' | 'POST';
+    path: string;
+    body?: Record<string, unknown>;
+  }): Promise<unknown> {
     const gatewayUrl = this.resolveGatewayApiBaseUrl();
     const requestUrl = new URL(
-      path.replace(/^\//, ''),
+      input.path.replace(/^\//, ''),
       `${gatewayUrl}/`,
     ).toString();
     const apiKey = this.getRequiredConfig('WAH4PC_API_KEY');
@@ -97,11 +131,15 @@ export class IntegrationService {
     let response: Response;
     try {
       response = await fetch(requestUrl, {
-        method: 'GET',
+        method: input.method,
         headers: {
           Accept: 'application/json',
           'x-api-key': apiKey,
+          ...(input.method == 'POST'
+              ? {'Content-Type': 'application/json'}
+              : {}),
         },
+        body: input.body == null ? undefined : JSON.stringify(input.body),
         signal: controller.signal,
       });
     } catch (error) {
@@ -128,6 +166,31 @@ export class IntegrationService {
     }
 
     return decodedBody;
+  }
+
+  private async requestPatientSyncFromGateway(input: {
+    requesterId: string;
+    targetId: string;
+    identifierSystem: string;
+    identifierValue: string;
+    reason?: string;
+    notes?: string;
+  }): Promise<void> {
+    const reason = input.reason?.trim();
+    const notes = input.notes?.trim();
+
+    await this.postGatewayJson(GATEWAY_FHIR_REQUEST_PATIENT_PATH, {
+      requesterId: input.requesterId,
+      targetId: input.targetId,
+      patientIdentifiers: [
+        {
+          system: input.identifierSystem,
+          value: input.identifierValue,
+        },
+      ],
+      reason: reason && reason.length > 0 ? reason : 'Patient requested sync records',
+      notes: notes && notes.length > 0 ? notes : null,
+    });
   }
 
   private async safeParseJson(response: Response): Promise<unknown> {
@@ -235,11 +298,8 @@ export class IntegrationService {
 
   private normalizeIdentifierSystem(identifierSystem: string): string {
     const normalized = identifierSystem.trim();
-    if (
-      normalized === PHILHEALTH_IDENTIFIER_SYSTEM ||
-      normalized === PHILSYS_IDENTIFIER_SYSTEM
-    ) {
-      return normalized;
+    if (normalized === LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM) {
+      return PHILHEALTH_IDENTIFIER_SYSTEM;
     }
 
     return normalized;

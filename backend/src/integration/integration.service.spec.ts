@@ -67,38 +67,55 @@ describe('IntegrationService', () => {
   });
 
   it('prepares a sync request using the configured requester provider id', async () => {
-    const fetchSpy = jest.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(
-        JSON.stringify({
-          success: true,
-          data: [
-            {
-              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-              name: 'WAH for Clinics',
-              type: 'clinic',
-              facility_code: 'WAH4C',
-              location: 'Tarlac City',
-              isActive: true,
+    const fetchSpy = jest
+      .spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            success: true,
+            data: [
+              {
+                id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+                name: 'WAH for Clinics',
+                type: 'clinic',
+                facility_code: 'WAH4C',
+                location: 'Tarlac City',
+                isActive: true,
+              },
+            ],
+          }),
+          {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          },
+        ) as Response,
+      )
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            success: true,
+            data: {
+              id: 'txn_sync_001',
+              status: 'PENDING',
             },
-          ],
-        }),
-        {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        },
-      ) as Response,
-    );
+          }),
+          {
+            status: 202,
+            headers: { 'content-type': 'application/json' },
+          },
+        ) as Response,
+      );
 
     const service = new IntegrationService(createConfigService());
     const result = await service.prepareSyncRequest({
       providerId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-      identifierSystem: 'http://philsys.gov.ph/fhir/Identifier/philsys-id',
+      identifierSystem: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
       identifierValue: '1234-1234567-1',
       reason: 'Record sync',
       notes: 'Prepared from mobile app',
     });
 
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(result.canSubmit).toBe(true);
     expect(result.requesterId).toBe(baseConfig.WAH4PC_PROVIDER_ID);
     expect(result.targetProvider.id).toBe(
@@ -106,7 +123,7 @@ describe('IntegrationService', () => {
     );
     expect(result.patientIdentifiers).toEqual([
       {
-        system: 'http://philsys.gov.ph/fhir/Identifier/philsys-id',
+        system: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
         value: '1234-1234567-1',
       },
     ]);
@@ -141,7 +158,7 @@ describe('IntegrationService', () => {
     await expect(
       service.prepareSyncRequest({
         providerId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-        identifierSystem: 'http://philhealth.gov.ph',
+        identifierSystem: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
         identifierValue: '12-345678901-2',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);

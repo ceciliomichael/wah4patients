@@ -64,6 +64,7 @@ export interface PatientProfileResponse {
   genderIdentity: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
+  isSyncLocked: boolean;
   isComplete: boolean;
   missingFields: string[];
 }

@@ -82,6 +82,27 @@ export class FhirSyncService {
     }
 
     const bundle = this.extractBundle(request.data);
+    return this.persistReceiveResultsBundle(bundle);
+  }
+
+  async receiveResultsForProfile(
+    profileId: string,
+    payload: unknown,
+  ): Promise<FhirSyncAcknowledgement> {
+    const request = this.parseReceiveResultsRequest(payload);
+
+    if (request.status !== 'SUCCESS') {
+      return { message: 'Data received successfully' };
+    }
+
+    const bundle = this.extractBundle(request.data);
+    return this.persistReceiveResultsBundle(bundle, profileId);
+  }
+
+  private async persistReceiveResultsBundle(
+    bundle: FhirBundleResource,
+    profileId?: string,
+  ): Promise<FhirSyncAcknowledgement> {
     const parsedResources = extractBundleResources(bundle).map((resource) =>
       parseInboundResource(resource),
     );
@@ -92,19 +113,20 @@ export class FhirSyncService {
             extractIdentifiersFromUnknownResource(resource.resource),
           )
         : extractIdentifiersFromPatient(patientResource.resource);
-    const profileId = await this.repository.findProfileIdByIdentifiers(patientIdentifiers);
+    const resolvedProfileId =
+      profileId ?? (await this.repository.findProfileIdByIdentifiers(patientIdentifiers));
 
-    if (profileId === null) {
+    if (resolvedProfileId === null || resolvedProfileId === undefined) {
       throw new BadRequestException('Unable to match the received result to a patient profile.');
     }
 
     if (patientResource !== undefined) {
       await this.repository.updateProfile(
-        profileId,
+        resolvedProfileId,
         mapPatientResourceToRecordPatch(patientResource.resource),
       );
       await this.repository.upsertPatientIdentifiers(
-        profileId,
+        resolvedProfileId,
         extractIdentifiersFromPatient(patientResource.resource),
       );
     }
@@ -114,7 +136,7 @@ export class FhirSyncService {
         continue;
       }
 
-      await this.persistParsedInboundResource(profileId, parsedResource);
+      await this.persistParsedInboundResource(resolvedProfileId, parsedResource);
     }
 
     return { message: 'Data received successfully' };

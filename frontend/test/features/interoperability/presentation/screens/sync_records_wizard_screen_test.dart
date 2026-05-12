@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:frontend/app/app_routes.dart';
 import 'package:frontend/core/widgets/ui/buttons/primary_button_widget.dart';
 import 'package:frontend/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart';
 import 'package:frontend/features/auth/domain/auth_session.dart';
@@ -13,6 +14,7 @@ class FakeInteroperabilityClient implements InteroperabilityClient {
 
   final List<InteroperabilityProviderSummary> providers;
   int prepareSyncRequestCalls = 0;
+  int simulateSyncRequestCalls = 0;
 
   @override
   Future<List<InteroperabilityProviderSummary>> getProviders() async {
@@ -44,6 +46,23 @@ class FakeInteroperabilityClient implements InteroperabilityClient {
       gatewayUrl: 'https://wah4pc.echosphere.cfd',
       reason: reason,
       notes: notes,
+    );
+  }
+
+  @override
+  Future<SyncSimulationResult> simulateSyncRequest({
+    required String accessToken,
+    required String providerId,
+    required String identifierSystem,
+    required String identifierValue,
+    String? reason,
+    String? notes,
+  }) async {
+    simulateSyncRequestCalls += 1;
+    return const SyncSimulationResult(
+      message: 'Your records were synced successfully.',
+      transactionId: 'txn-sim-001',
+      storedResourceTypes: <String>['Patient', 'Observation'],
     );
   }
 }
@@ -130,6 +149,196 @@ void main() {
 
     expect(apiClient.prepareSyncRequestCalls, 1);
   });
+
+  testWidgets('returns to the dashboard after simulating a sync', (
+    WidgetTester tester,
+  ) async {
+    AuthSession.setProfile(_readyProfile());
+    AuthSession.setFromLoginResult(_readyLoginResult());
+    var profileRefreshCalls = 0;
+    final apiClient = FakeInteroperabilityClient(
+      providers: const <InteroperabilityProviderSummary>[
+        InteroperabilityProviderSummary(
+          id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+          name: 'WAH for Clinics',
+          type: 'clinic',
+          facilityCode: 'WAH4C',
+          location: 'Tarlac City',
+          isActive: true,
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        initialRoute: AppRoutes.dashboard,
+        onGenerateRoute: (settings) {
+          if (settings.name == AppRoutes.dashboard) {
+            return MaterialPageRoute<void>(
+              settings: settings,
+              builder: (context) => Scaffold(
+                body: Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.syncRecords);
+                    },
+                    child: const Text('Open sync wizard'),
+                  ),
+                ),
+              ),
+            );
+          }
+
+          if (settings.name == AppRoutes.syncRecords) {
+            return MaterialPageRoute<void>(
+              settings: settings,
+              builder: (_) => SyncRecordsWizardScreen(
+                apiClient: apiClient,
+                profileRefresh: () async {
+                  profileRefreshCalls += 1;
+                  AuthSession.setProfile(_syncedProfile());
+                  return true;
+                },
+              ),
+            );
+          }
+
+          return null;
+        },
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Open sync wizard'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) => widget is BottomSheetSelectFormField<String>,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('PhilHealth ID').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(PrimaryButtonWidget, 'Continue'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) => widget is BottomSheetSelectFormField<String>,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('WAH for Clinics').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(PrimaryButtonWidget, 'Continue'));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Simulate request'),
+      200,
+    );
+    await tester.tap(find.text('Simulate request'));
+    await tester.pumpAndSettle();
+
+    expect(apiClient.simulateSyncRequestCalls, 1);
+    expect(profileRefreshCalls, 1);
+    expect(AuthSession.profile.isSyncLocked, isTrue);
+    expect(AuthSession.shortDisplayName, 'Mariel Atienza');
+    expect(find.text('Open sync wizard'), findsOneWidget);
+    expect(find.text('Your records were synced successfully.'), findsOneWidget);
+  });
+
+  testWidgets('returns to the dashboard after preparing a sync request', (
+    WidgetTester tester,
+  ) async {
+    AuthSession.setProfile(_readyProfile());
+    final apiClient = FakeInteroperabilityClient(
+      providers: const <InteroperabilityProviderSummary>[
+        InteroperabilityProviderSummary(
+          id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+          name: 'WAH for Clinics',
+          type: 'clinic',
+          facilityCode: 'WAH4C',
+          location: 'Tarlac City',
+          isActive: true,
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        initialRoute: AppRoutes.dashboard,
+        onGenerateRoute: (settings) {
+          if (settings.name == AppRoutes.dashboard) {
+            return MaterialPageRoute<void>(
+              settings: settings,
+              builder: (context) => Scaffold(
+                body: Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.syncRecords);
+                    },
+                    child: const Text('Open sync wizard'),
+                  ),
+                ),
+              ),
+            );
+          }
+
+          if (settings.name == AppRoutes.syncRecords) {
+            return MaterialPageRoute<void>(
+              settings: settings,
+              builder: (_) => SyncRecordsWizardScreen(apiClient: apiClient),
+            );
+          }
+
+          return null;
+        },
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Open sync wizard'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) => widget is BottomSheetSelectFormField<String>,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('PhilHealth ID').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(PrimaryButtonWidget, 'Continue'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) => widget is BottomSheetSelectFormField<String>,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('WAH for Clinics').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(PrimaryButtonWidget, 'Continue'));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.widgetWithText(PrimaryButtonWidget, 'Prepare request'),
+      200,
+    );
+    await tester.tap(find.widgetWithText(PrimaryButtonWidget, 'Prepare request'));
+    await tester.pumpAndSettle();
+
+    expect(apiClient.prepareSyncRequestCalls, 1);
+    expect(find.text('Open sync wizard'), findsOneWidget);
+    expect(find.text('Your sync request is ready.'), findsOneWidget);
+  });
 }
 
 UserProfileSummary _readyProfile() {
@@ -156,7 +365,53 @@ UserProfileSummary _readyProfile() {
     genderIdentity: 'Male',
     emergencyContactName: 'Maria Dela Cruz',
     emergencyContactPhone: '09179876543',
+    isSyncLocked: false,
     isComplete: true,
     missingFields: <String>[],
+  );
+}
+
+UserProfileSummary _syncedProfile() {
+  return const UserProfileSummary(
+    givenNames: <String>['Mariel', 'Atienza'],
+    familyName: 'Atienza',
+    displayName: 'Mariel Atienza',
+    birthDate: '2000-06-20',
+    gender: 'female',
+    phoneNumber: '111',
+    communicationLanguage: 'Filipino',
+    philHealthId: '12-345678901-1',
+    philSysId: '',
+    addressLine1: 'Mwehehe',
+    addressLine2: '',
+    city: 'City of Las Piñas',
+    province: 'Abra',
+    postalCode: '111',
+    country: 'PH',
+    maritalStatus: 'Single',
+    nationality: 'Filipino',
+    religion: 'Catholic',
+    occupation: 'Teacher',
+    genderIdentity: 'Female',
+    emergencyContactName: 'Maria Atienza',
+    emergencyContactPhone: '111',
+    isSyncLocked: true,
+    isComplete: true,
+    missingFields: <String>[],
+  );
+}
+
+LoginResult _readyLoginResult() {
+  return LoginResult(
+    mfaRequired: false,
+    mfaChallengeToken: '',
+    mfaChallengeExpiresInSeconds: 0,
+    accessToken: 'test-access-token',
+    refreshToken: 'test-refresh-token',
+    expiresIn: 3600,
+    tokenType: 'bearer',
+    userId: '550e8400-e29b-41d4-a716-446655440000',
+    userEmail: 'patient@example.com',
+    profile: _readyProfile(),
   );
 }

@@ -67,6 +67,7 @@ const EMPTY_PATIENT_PROFILE_RESPONSE: PatientProfileResponse = {
   genderIdentity: '',
   emergencyContactName: '',
   emergencyContactPhone: '',
+  isSyncLocked: false,
   isComplete: false,
   missingFields: [],
 };

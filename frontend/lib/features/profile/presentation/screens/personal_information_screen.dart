@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,11 +20,13 @@ class PersonalInformationScreen extends StatefulWidget {
     this.showBackButton = true,
     this.wrapWithSafeArea = true,
     this.centerContent = false,
+    this.profileRefresh,
   });
 
   final bool showBackButton;
   final bool wrapWithSafeArea;
   final bool centerContent;
+  final Future<bool> Function()? profileRefresh;
 
   @override
   State<PersonalInformationScreen> createState() =>
@@ -34,6 +38,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   void _goBack() {
     Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited((widget.profileRefresh ?? AuthSession.refreshProfileFromBackend)());
   }
 
   Future<void> _saveProfile(PatientProfileDraft draft) async {
@@ -152,6 +162,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     PatientProfileFormWidget(
                       initialProfile: AuthSession.profile,
                       isSubmitting: _isSubmitting,
+                      isReadOnly: AuthSession.profile.isSyncLocked,
                       onSave: _saveProfile,
                       onReset: () {},
                     ),
@@ -188,19 +199,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   Future<void> _openSyncWizard() async {
-    final completed = await Navigator.of(
-      context,
-    ).pushNamed(AppRoutes.syncRecords);
-
-    if (!mounted || completed != true) {
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Sync request prepared. Gateway submission comes next.'),
-      ),
-    );
+    await Navigator.of(context).pushNamed(AppRoutes.syncRecords);
   }
 }
 
@@ -253,9 +252,9 @@ class _SyncReadinessCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isReady = readiness.isReady;
     final title = isReady ? 'Ready for sync records' : 'Sync records locked';
-    final description = isReady
-        ? 'Your profile has the minimum details needed for interoperability sync.'
-        : 'Complete the missing profile details below to unlock sync records.';
+    final description = readiness.isReady
+        ? 'Your identifier is ready. You can continue with sync records.'
+        : 'Add PhilHealth ID or PhilSys ID to unlock sync records.';
 
     return Container(
       padding: const EdgeInsets.all(20),

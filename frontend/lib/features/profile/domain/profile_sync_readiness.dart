@@ -37,10 +37,6 @@ ProfileSyncReadiness evaluateProfileSyncReadiness(UserProfileSummary profile) {
     addRequirement(label);
   }
 
-  if (!profile.isComplete && profile.missingFields.isEmpty) {
-    addRequirement('Required profile details');
-  }
-
   final hasIdentifier =
       profile.philHealthId.trim().isNotEmpty ||
       profile.philSysId.trim().isNotEmpty;
@@ -49,7 +45,7 @@ ProfileSyncReadiness evaluateProfileSyncReadiness(UserProfileSummary profile) {
   }
 
   return ProfileSyncReadiness(
-    isReady: profile.isComplete && hasIdentifier,
+    isReady: hasIdentifier,
     missingRequirements: List.unmodifiable(missingRequirements),
   );
 }

@@ -192,6 +192,7 @@ class UserProfileSummary {
     required this.genderIdentity,
     required this.emergencyContactName,
     required this.emergencyContactPhone,
+    required this.isSyncLocked,
     required this.isComplete,
     required this.missingFields,
   });
@@ -218,6 +219,7 @@ class UserProfileSummary {
   final String genderIdentity;
   final String emergencyContactName;
   final String emergencyContactPhone;
+  final bool isSyncLocked;
   final bool isComplete;
   final List<String> missingFields;
 
@@ -254,6 +256,7 @@ class UserProfileSummary {
       genderIdentity: _readString(json['genderIdentity']),
       emergencyContactName: _readString(json['emergencyContactName']),
       emergencyContactPhone: _readString(json['emergencyContactPhone']),
+      isSyncLocked: json['isSyncLocked'] == true,
       isComplete: json['isComplete'] == true,
       missingFields: missingFields,
     );
@@ -283,6 +286,7 @@ class UserProfileSummary {
       genderIdentity: '',
       emergencyContactName: '',
       emergencyContactPhone: '',
+      isSyncLocked: false,
       isComplete: false,
       missingFields: <String>[],
     );
@@ -312,6 +316,7 @@ class UserProfileSummary {
       'genderIdentity': genderIdentity,
       'emergencyContactName': emergencyContactName,
       'emergencyContactPhone': emergencyContactPhone,
+      'isSyncLocked': isSyncLocked,
       'isComplete': isComplete,
       'missingFields': missingFields,
     };

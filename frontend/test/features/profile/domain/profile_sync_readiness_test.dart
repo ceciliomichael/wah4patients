@@ -33,6 +33,7 @@ void main() {
       genderIdentity: '',
       emergencyContactName: '',
       emergencyContactPhone: '',
+      isSyncLocked: false,
       isComplete: isComplete,
       missingFields: missingFields,
     );
@@ -89,7 +90,7 @@ void main() {
       ),
     );
 
-    expect(readiness.isReady, isFalse);
+    expect(readiness.isReady, isTrue);
     expect(
       readiness.missingRequirements,
       containsAll(<String>['Birth date', 'Phone number', 'Address line 1']),

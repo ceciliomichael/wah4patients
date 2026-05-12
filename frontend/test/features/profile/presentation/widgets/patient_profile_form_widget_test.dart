@@ -84,6 +84,7 @@ UserProfileSummary _profile() {
     genderIdentity: 'Male',
     emergencyContactName: 'Maria Dela Cruz',
     emergencyContactPhone: '09179876543',
+    isSyncLocked: false,
     isComplete: true,
     missingFields: <String>[],
   );

@@ -1,3 +1,5 @@
+import { GatewayResourceType } from '../fhir-sync/fhir-sync.types';
+
 export interface GatewayProviderRecord {
   id: string;
   name: string;
@@ -44,4 +46,10 @@ export interface PreparedSyncRequestResponse {
   gatewayUrl: string;
   reason?: string;
   notes?: string;
+}
+
+export interface SimulatedSyncRequestResponse {
+  message: string;
+  transactionId: string;
+  storedResourceTypes: GatewayResourceType[];
 }

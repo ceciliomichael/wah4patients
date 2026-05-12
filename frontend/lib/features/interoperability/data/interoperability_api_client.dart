@@ -23,6 +23,15 @@ abstract class InteroperabilityClient {
     String? reason,
     String? notes,
   });
+
+  Future<SyncSimulationResult> simulateSyncRequest({
+    required String accessToken,
+    required String providerId,
+    required String identifierSystem,
+    required String identifierValue,
+    String? reason,
+    String? notes,
+  });
 }
 
 class InteroperabilityApiClient implements InteroperabilityClient {
@@ -70,6 +79,32 @@ class InteroperabilityApiClient implements InteroperabilityClient {
     return SyncRequestPreview.fromJson(response);
   }
 
+  @override
+  Future<SyncSimulationResult> simulateSyncRequest({
+    required String accessToken,
+    required String providerId,
+    required String identifierSystem,
+    required String identifierValue,
+    String? reason,
+    String? notes,
+  }) async {
+    final response = await _post(
+      path: '/interoperability/sync/simulate',
+      body: <String, dynamic>{
+        'providerId': providerId,
+        'identifierSystem': identifierSystem,
+        'identifierValue': identifierValue,
+        if (reason != null && reason.trim().isNotEmpty) 'reason': reason.trim(),
+        if (notes != null && notes.trim().isNotEmpty) 'notes': notes.trim(),
+      },
+      headers: <String, String>{
+        'authorization': 'Bearer ${accessToken.trim()}',
+      },
+    );
+
+    return SyncSimulationResult.fromJson(response);
+  }
+
   Future<Map<String, dynamic>> _get({required String path}) async {
     await AppEnvironment.load();
 
@@ -115,6 +150,7 @@ class InteroperabilityApiClient implements InteroperabilityClient {
   Future<Map<String, dynamic>> _post({
     required String path,
     required Map<String, dynamic> body,
+    Map<String, String> headers = const <String, String>{},
   }) async {
     await AppEnvironment.load();
 
@@ -125,15 +161,16 @@ class InteroperabilityApiClient implements InteroperabilityClient {
     }
 
     final uri = Uri.parse('${AppEnvironment.normalizedBackendBaseUrl}$path');
-    final headers = <String, String>{
+    final requestHeaders = <String, String>{
       'Content-Type': 'application/json',
       'x-api-key': AppEnvironment.backendApiKey.trim(),
+      ...headers,
     };
 
     late final http.Response response;
     try {
       response = await _httpClient
-          .post(uri, headers: headers, body: jsonEncode(body))
+          .post(uri, headers: requestHeaders, body: jsonEncode(body))
           .timeout(const Duration(seconds: 20));
     } on TimeoutException {
       throw const InteroperabilityApiException(

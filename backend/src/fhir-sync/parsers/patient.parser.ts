@@ -11,6 +11,6 @@ export function parsePatientResource(resource: unknown): ParsedPatientResource {
     kind: 'patient',
     resourceType: 'Patient',
     profile,
-    resource: record as FhirPatientResource,
+    resource: record as unknown as FhirPatientResource,
   };
 }

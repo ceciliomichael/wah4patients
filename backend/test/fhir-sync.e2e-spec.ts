@@ -28,6 +28,7 @@ describe('FhirSync routes (e2e)', () => {
       .compile();
 
     app = moduleFixture.createNestApplication();
+    app.setGlobalPrefix('api/v1');
     await app.init();
   });
 
@@ -42,9 +43,9 @@ describe('FhirSync routes (e2e)', () => {
     }
   });
 
-  it('/fhir/process-query (POST)', async () => {
+  it('/api/v1/fhir/process-query (POST)', async () => {
     await request(app.getHttpServer())
-      .post('/api/fhir/process-query')
+      .post('/api/v1/fhir/process-query')
       .set('x-gateway-auth', gatewayAuthKey)
       .send({
         transactionId: 'txn-001',
@@ -79,9 +80,9 @@ describe('FhirSync routes (e2e)', () => {
     });
   });
 
-  it('/fhir/receive-results (POST)', async () => {
+  it('/api/v1/fhir/receive-results (POST)', async () => {
     await request(app.getHttpServer())
-      .post('/api/fhir/receive-results')
+      .post('/api/v1/fhir/receive-results')
       .set('x-gateway-auth', gatewayAuthKey)
       .send({
         transactionId: 'txn-002',
@@ -185,9 +186,9 @@ describe('FhirSync routes (e2e)', () => {
     });
   });
 
-  it('/fhir/receive-push (POST)', async () => {
+  it('/api/v1/fhir/receive-push (POST)', async () => {
     await request(app.getHttpServer())
-      .post('/api/fhir/receive-push')
+      .post('/api/v1/fhir/receive-push')
       .set('x-gateway-auth', gatewayAuthKey)
       .send({
         transactionId: 'txn-003',

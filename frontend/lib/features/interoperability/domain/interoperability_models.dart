@@ -1,6 +1,7 @@
 import '../../auth/domain/models/auth_api_models.dart';
 
-const String philHealthIdentifierSystem = 'http://philhealth.gov.ph';
+const String philHealthIdentifierSystem =
+    'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
 const String philSysIdentifierSystem =
     'http://philsys.gov.ph/fhir/Identifier/philsys-id';
 
@@ -107,6 +108,35 @@ class SyncRequestPreview {
       gatewayUrl: _readString(json['gatewayUrl']),
       reason: _readOptionalString(json['reason']),
       notes: _readOptionalString(json['notes']),
+    );
+  }
+}
+
+class SyncSimulationResult {
+  const SyncSimulationResult({
+    required this.message,
+    required this.transactionId,
+    required this.storedResourceTypes,
+  });
+
+  final String message;
+  final String transactionId;
+  final List<String> storedResourceTypes;
+
+  factory SyncSimulationResult.fromJson(Map<String, dynamic> json) {
+    final storedResourceTypesValue = json['storedResourceTypes'];
+    final storedResourceTypes = storedResourceTypesValue is List
+        ? storedResourceTypesValue
+              .whereType<String>()
+              .map((value) => value.trim())
+              .where((value) => value.isNotEmpty)
+              .toList(growable: false)
+        : const <String>[];
+
+    return SyncSimulationResult(
+      message: _readString(json['message']),
+      transactionId: _readString(json['transactionId']),
+      storedResourceTypes: storedResourceTypes,
     );
   }
 }

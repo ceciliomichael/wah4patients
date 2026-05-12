@@ -12,12 +12,14 @@ class PatientProfileFormWidget extends StatefulWidget {
     super.key,
     required this.initialProfile,
     required this.isSubmitting,
+    this.isReadOnly = false,
     required this.onSave,
     required this.onReset,
   });
 
   final UserProfileSummary initialProfile;
   final bool isSubmitting;
+  final bool isReadOnly;
   final Future<void> Function(PatientProfileDraft draft) onSave;
   final VoidCallback onReset;
 
@@ -191,11 +193,34 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isInteractive = !widget.isReadOnly;
+
     return Form(
       key: _formKey,
-      child: Column(
+      child: Opacity(
+        opacity: isInteractive ? 1 : 0.72,
+        child: IgnorePointer(
+          ignoring: !isInteractive,
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (widget.isReadOnly) ...[
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceVariant,
+                border: Border.all(color: AppColors.border),
+                borderRadius: AppRadii.medium,
+              ),
+              child: Text(
+                'Synced profile data is locked and can no longer be edited.',
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
           _SectionHeader(
             title: 'Identity',
             description: 'Name, birth date, gender, and language details.',
@@ -207,9 +232,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'First name',
               hintText: 'Enter first name',
               icon: Icons.person_outline,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
             second: _ProfileTextField(
@@ -238,9 +262,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Last name',
               hintText: 'Enter last name',
               icon: Icons.badge,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
           ),
@@ -252,9 +275,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               hintText: 'YYYY-MM-DD',
               icon: Icons.cake_outlined,
               keyboardType: TextInputType.datetime,
-              validator: _birthDateValidator,
+              validator: _optionalBirthDateValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9-]')),
               ],
@@ -293,10 +315,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Gender',
               hintText: 'Select gender',
               icon: Icons.wc_outlined,
-              validator: (value) => value == null || value.trim().isEmpty
-                  ? 'Select gender'
-                  : null,
-              showRequiredIndicator: true,
+              validator: _optionalSelectValidator,
             ),
           ),
           const SizedBox(height: 16),
@@ -307,9 +326,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               hintText: 'Enter phone number',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
-              validator: _requiredPhoneValidator,
+              validator: _optionalPhoneValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _phoneInputFormatters(),
             ),
             second: _ProfileTextField(
@@ -317,9 +335,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Communication language',
               hintText: 'e.g. English or Filipino',
               icon: Icons.language_outlined,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
           ),
@@ -362,9 +379,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
             label: 'Address line 1',
             hintText: 'Street, building, or lot number',
             icon: Icons.home_outlined,
-            validator: _requiredTextValidator,
+            validator: _optionalTextValidator,
             textInputAction: TextInputAction.next,
-            showRequiredIndicator: true,
             inputFormatters: _addressInputFormatters(),
           ),
           const SizedBox(height: 16),
@@ -384,9 +400,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'City / municipality',
               hintText: 'Enter city',
               icon: Icons.location_city_outlined,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
             second: _ProfileTextField(
@@ -394,9 +409,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Province',
               hintText: 'Enter province',
               icon: Icons.map_outlined,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
           ),
@@ -407,9 +421,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Postal code',
               hintText: 'Enter postal code',
               icon: Icons.local_post_office_outlined,
-              validator: _requiredPostalCodeValidator,
+              validator: _optionalPostalCodeValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
               ],
@@ -419,9 +432,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               label: 'Country',
               hintText: 'Enter country',
               icon: Icons.public_outlined,
-              validator: _requiredTextValidator,
+              validator: _optionalTextValidator,
               textInputAction: TextInputAction.next,
-              showRequiredIndicator: true,
               inputFormatters: _nameInputFormatters(),
             ),
           ),
@@ -508,7 +520,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
           const SizedBox(height: 24),
           if (widget.isSubmitting) const LinearProgressIndicator(minHeight: 3),
           const SizedBox(height: 20),
-          if (MediaQuery.sizeOf(context).width >= 720)
+          if (!widget.isReadOnly && MediaQuery.sizeOf(context).width >= 720)
             Row(
               children: [
                 Expanded(
@@ -532,7 +544,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
                 ),
               ],
             )
-          else
+          else if (!widget.isReadOnly)
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -554,6 +566,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
               ],
             ),
         ],
+      ),
+        ),
       ),
     );
   }
@@ -617,7 +631,6 @@ class _ProfileTextField extends StatelessWidget {
     required this.icon,
     required this.validator,
     required this.textInputAction,
-    this.showRequiredIndicator = false,
     this.keyboardType,
     this.inputFormatters,
   });
@@ -628,7 +641,6 @@ class _ProfileTextField extends StatelessWidget {
   final IconData icon;
   final String? Function(String?) validator;
   final TextInputAction textInputAction;
-  final bool showRequiredIndicator;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
@@ -642,39 +654,9 @@ class _ProfileTextField extends StatelessWidget {
       textInputAction: textInputAction,
       style: AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimary),
       decoration: InputDecoration(
-        label: showRequiredIndicator
-            ? _RequiredLabel(label: label)
-            : Text(label),
+        label: Text(label),
         hintText: hintText,
         prefixIcon: Icon(icon, color: AppColors.textSecondary),
-      ),
-    );
-  }
-}
-
-class _RequiredLabel extends StatelessWidget {
-  const _RequiredLabel({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final labelStyle = AppTextStyles.labelLarge.copyWith(
-      color: AppColors.textPrimary,
-    );
-    final indicatorStyle = AppTextStyles.labelSmall.copyWith(
-      color: AppColors.danger,
-      fontWeight: FontWeight.w600,
-    );
-
-    return Text.rich(
-      TextSpan(
-        style: labelStyle,
-        children: [
-          TextSpan(text: label),
-          const TextSpan(text: ' '),
-          TextSpan(text: '*', style: indicatorStyle),
-        ],
       ),
     );
   }
@@ -734,25 +716,6 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-String? _requiredValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return null;
-}
-
-String? _requiredTextValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  if (!_textOnlyPattern.hasMatch(text)) {
-    return 'Use letters and basic punctuation only';
-  }
-  return null;
-}
-
 String? _optionalTextValidator(String? value) {
   final text = value?.trim() ?? '';
   if (text.isEmpty) {
@@ -763,25 +726,6 @@ String? _optionalTextValidator(String? value) {
   }
   if (!_textOnlyPattern.hasMatch(text)) {
     return 'Use letters and basic punctuation only';
-  }
-  return null;
-}
-
-String? _optionalValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.length > 120) {
-    return 'Value is too long';
-  }
-  return null;
-}
-
-String? _requiredPhoneValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  if (!_phonePattern.hasMatch(text)) {
-    return 'Enter a valid phone number';
   }
   return null;
 }
@@ -797,14 +741,37 @@ String? _optionalPhoneValidator(String? value) {
   return null;
 }
 
-String? _requiredPostalCodeValidator(String? value) {
+String? _optionalPostalCodeValidator(String? value) {
   final text = value?.trim() ?? '';
   if (text.isEmpty) {
-    return 'This field is required';
+    return null;
   }
   if (!_postalCodePattern.hasMatch(text)) {
     return 'Use a 4-digit postal code';
   }
+  return null;
+}
+
+String? _optionalBirthDateValidator(String? value) {
+  final text = value?.trim() ?? '';
+  if (text.isEmpty) {
+    return null;
+  }
+
+  final match = RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(text);
+  if (!match) {
+    return 'Use YYYY-MM-DD';
+  }
+
+  final parsed = DateTime.tryParse('${text}T00:00:00Z');
+  if (parsed == null) {
+    return 'Enter a valid date';
+  }
+
+  return null;
+}
+
+String? _optionalSelectValidator(String? value) {
   return null;
 }
 
@@ -827,33 +794,6 @@ String? _optionalPhilSysIdValidator(String? value) {
   if (!_philSysPattern.hasMatch(text)) {
     return 'Use a valid PhilSys ID';
   }
-  return null;
-}
-
-String? _optionalNameValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.length > 100) {
-    return 'Name is too long';
-  }
-  return null;
-}
-
-String? _birthDateValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-
-  final match = RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(text);
-  if (!match) {
-    return 'Use YYYY-MM-DD';
-  }
-
-  final parsed = DateTime.tryParse('${text}T00:00:00Z');
-  if (parsed == null) {
-    return 'Enter a valid date';
-  }
-
   return null;
 }
 

@@ -1,6 +1,7 @@
 import { Json } from '../supabase/database.types';
 import {
   FhirBundleResource,
+  FhirAddress,
   FhirHumanName,
   FhirOperationOutcome,
   FhirPatientProfilePatch,
@@ -46,7 +47,9 @@ export interface MedicationResupplyInsert {
   displayOrder: number;
 }
 
-const PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
+const PHILHEALTH_IDENTIFIER_SYSTEM =
+  'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
+const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
 const PHILSYS_IDENTIFIER_SYSTEM = 'http://philsys.gov.ph/fhir/Identifier/philsys-id';
 
 export function normalizeIdentifier(value: unknown): NormalizedIdentifier | null {
@@ -78,13 +81,42 @@ export function extractPatientProfilePatch(
   const name = firstValue(patient.name);
   const givenNames = name?.given?.map((value) => value.trim()).filter(Boolean) ?? [];
   const familyName = name?.family?.trim() ?? '';
+  const normalizedIdentifiers = extractIdentifiersFromPatient(patient);
+  const phoneNumber = extractPreferredTelecomValue(patient.telecom, 'phone');
+  const firstAddress = firstValue(patient.address);
+  const philHealthId = extractIdentifierValueBySystem(
+    normalizedIdentifiers,
+    PHILHEALTH_IDENTIFIER_SYSTEM,
+  );
+  const philSysId = extractIdentifierValueBySystem(
+    normalizedIdentifiers,
+    PHILSYS_IDENTIFIER_SYSTEM,
+  );
 
   return {
     givenNames,
     familyName,
     patientProfile: {
-      birthDate: patient.birthDate ?? null,
-      gender: patient.gender ?? null,
+      birthDate: patient.birthDate ?? '',
+      gender: patient.gender ?? '',
+      phoneNumber,
+      communicationLanguage: '',
+      philHealthId,
+      philSysId,
+      addressLine1: extractAddressLine(firstAddress),
+      addressLine2: '',
+      city: firstAddress?.city ?? '',
+      province: firstAddress?.state ?? '',
+      postalCode: firstAddress?.postalCode ?? '',
+      country: firstAddress?.country ?? '',
+      maritalStatus: '',
+      nationality: '',
+      religion: '',
+      occupation: '',
+      genderIdentity: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      syncLocked: true,
       telecom: (patient.telecom ?? []).map((entry) => ({
         system: entry.system ?? null,
         value: entry.value ?? null,
@@ -98,12 +130,74 @@ export function extractPatientProfilePatch(
         postalCode: entry.postalCode ?? null,
         country: entry.country ?? null,
       })),
-      identifier: extractIdentifiersFromPatient(patient).map((identifier) => ({
+      identifier: normalizedIdentifiers.map((identifier) => ({
         system: identifier.system,
         value: identifier.value,
       })),
     } as Json,
   } satisfies FhirPatientProfilePatch;
+}
+
+function extractIdentifierValueBySystem(
+  identifiers: NormalizedIdentifier[],
+  targetSystem: string,
+): string {
+  const systemCandidates =
+    targetSystem === PHILHEALTH_IDENTIFIER_SYSTEM
+      ? [
+          PHILHEALTH_IDENTIFIER_SYSTEM,
+          LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM,
+        ]
+      : [targetSystem];
+
+  for (const identifier of identifiers) {
+    if (systemCandidates.includes(identifier.system)) {
+      return identifier.value;
+    }
+  }
+
+  return '';
+}
+
+function extractPreferredTelecomValue(
+  telecom: FhirPatientResource['telecom'],
+  system: string,
+): string {
+  if (telecom == null) {
+    return '';
+  }
+
+  for (const entry of telecom) {
+    const entrySystem = entry.system?.trim().toLowerCase() ?? '';
+    const entryValue = entry.value?.trim() ?? '';
+    if (entrySystem === system && entryValue.length > 0) {
+      return entryValue;
+    }
+  }
+
+  for (const entry of telecom) {
+    const entryValue = entry.value?.trim() ?? '';
+    if (entryValue.length > 0) {
+      return entryValue;
+    }
+  }
+
+  return '';
+}
+
+function extractAddressLine(address: FhirAddress | undefined): string {
+  if (address == null) {
+    return '';
+  }
+
+  const lines = (address.line ?? [])
+    .map((value) => value.trim())
+    .filter((value) => value.length > 0);
+  if (lines.length > 0) {
+    return lines.join(', ');
+  }
+
+  return address.text?.trim() ?? '';
 }
 
 export function extractIdentifiersFromUnknownResource(resource: unknown): NormalizedIdentifier[] {
@@ -364,10 +458,7 @@ function mapImmunizationResource(resource: Record<string, unknown>): InternalRec
     subtitle: [status, administeredAt, site].filter(Boolean).join(' • '),
     summaryLabel: 'Vaccine',
     summaryValue: vaccineName,
-    filterValue: [status, vaccineName, site, route, lotNumber]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase(),
+    filterValue: buildFilterValue(status, vaccineName, site, route, lotNumber),
     statusLabel: toTitleCase(status),
     statusColorKey: 'success',
     accentColorKey: 'secondary',
@@ -424,10 +515,7 @@ function mapEncounterResource(resource: Record<string, unknown>): InternalRecord
     subtitle: [status, recordedAt, provider].filter(Boolean).join(' • '),
     summaryLabel: 'Consultation',
     summaryValue: encounterType,
-    filterValue: [status, encounterType, provider, location, reason]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase(),
+    filterValue: buildFilterValue(status, encounterType, provider, location, reason),
     statusLabel: toTitleCase(status),
     statusColorKey: 'primary',
     accentColorKey: 'primary',
@@ -457,7 +545,7 @@ function mapObservationResource(resource: Record<string, unknown>): InternalReco
     subtitle: [status, recordedAt, value].filter(Boolean).join(' • '),
     summaryLabel: 'Result',
     summaryValue: value || observationName,
-    filterValue: [status, observationName, value, performer].filter(Boolean).join(' ').toLowerCase(),
+    filterValue: buildFilterValue(status, observationName, value, performer),
     statusLabel: toTitleCase(status),
     statusColorKey: 'success',
     accentColorKey: 'primary_dark',
@@ -491,7 +579,7 @@ function mapConditionResource(
     subtitle: [status, recordedAt, provider].filter(Boolean).join(' • '),
     summaryLabel: resourceLabel,
     summaryValue: title,
-    filterValue: [status, title, provider].filter(Boolean).join(' ').toLowerCase(),
+    filterValue: buildFilterValue(status, title, provider),
     statusLabel: toTitleCase(status),
     statusColorKey: 'primary',
     accentColorKey: 'primary',
@@ -715,6 +803,27 @@ function detailJson(label: string, value: string): Json | null {
     label: trimmedLabel,
     value: trimmedValue,
   };
+}
+
+function buildFilterValue(...parts: string[]): string {
+  const normalizedParts = parts.map((part) => part.trim()).filter(Boolean);
+  let value = '';
+
+  for (const part of normalizedParts) {
+    const candidate = value.length > 0 ? `${value} ${part}` : part;
+    if (candidate.length <= 80) {
+      value = candidate;
+      continue;
+    }
+
+    if (value.length === 0) {
+      value = part.slice(0, 80);
+    }
+
+    break;
+  }
+
+  return value.toLowerCase();
 }
 
 function toTitleCase(value: string): string {

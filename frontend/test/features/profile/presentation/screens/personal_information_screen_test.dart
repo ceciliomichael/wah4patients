@@ -53,6 +53,22 @@ class _FakeInteroperabilityClient implements InteroperabilityClient {
       notes: notes,
     );
   }
+
+  @override
+  Future<SyncSimulationResult> simulateSyncRequest({
+    required String accessToken,
+    required String providerId,
+    required String identifierSystem,
+    required String identifierValue,
+    String? reason,
+    String? notes,
+  }) async {
+    return const SyncSimulationResult(
+      message: 'Your records were synced successfully.',
+      transactionId: 'txn-sim-001',
+      storedResourceTypes: <String>['Patient'],
+    );
+  }
 }
 
 void main() {
@@ -72,7 +88,6 @@ void main() {
       expect(find.text('Personal Information'), findsWidgets);
       expect(find.text('Profile completion first'), findsNothing);
       expect(find.text('Sync records locked'), findsOneWidget);
-      expect(find.text('Required profile details'), findsOneWidget);
       expect(find.text('PhilHealth ID or PhilSys ID'), findsOneWidget);
       expect(find.text('Identity'), findsOneWidget);
       expect(find.text('Identifiers'), findsOneWidget);
@@ -90,26 +105,53 @@ void main() {
         find.widgetWithText(ElevatedButton, 'Reset'),
       );
       expect(
-        resetButton.style?.backgroundColor?.resolve(<MaterialState>{}),
+        resetButton.style?.backgroundColor?.resolve(<WidgetState>{}),
         AppColors.surface,
       );
       expect(
-        resetButton.style?.foregroundColor?.resolve(<MaterialState>{}),
+        resetButton.style?.foregroundColor?.resolve(<WidgetState>{}),
         AppColors.textPrimary,
       );
-      expect(find.text('First name *'), findsOneWidget);
-      expect(find.text('Last name *'), findsOneWidget);
-      expect(find.text('Birth date *'), findsOneWidget);
-      expect(find.text('Gender *'), findsOneWidget);
-      expect(find.text('Phone number *'), findsOneWidget);
+      expect(find.text('First name'), findsWidgets);
+      expect(find.text('Last name'), findsWidgets);
+      expect(find.text('Birth date'), findsWidgets);
+      expect(find.text('Gender'), findsWidgets);
+      expect(find.text('Phone number'), findsWidgets);
       expect(find.text('PhilHealth ID'), findsOneWidget);
       expect(find.text('PhilSys ID'), findsOneWidget);
-      expect(find.text('Address line 1 *'), findsOneWidget);
-      expect(find.text('City / municipality *'), findsOneWidget);
-      expect(find.text('Province *'), findsOneWidget);
-      expect(find.text('Postal code *'), findsOneWidget);
-      expect(find.text('Country *'), findsOneWidget);
+      expect(find.text('Address line 1'), findsWidgets);
+      expect(find.text('City / municipality'), findsWidgets);
+      expect(find.text('Province'), findsWidgets);
+      expect(find.text('Postal code'), findsWidgets);
+      expect(find.text('Country'), findsWidgets);
       expect(find.text('Emergency contact phone'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'refreshes synced profile data when the screen opens',
+    (WidgetTester tester) async {
+      AuthSession.setProfile(_staleProfile());
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PersonalInformationScreen(
+            profileRefresh: () async {
+              AuthSession.setProfile(_syncedProfile());
+              return true;
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Mariel Atienza'), findsOneWidget);
+      expect(
+        find.text('Synced profile data is locked and can no longer be edited.'),
+        findsOneWidget,
+      );
+      expect(find.text('Michael Robert'), findsNothing);
     },
   );
 
@@ -171,6 +213,67 @@ UserProfileSummary _readyProfile() {
     genderIdentity: 'Male',
     emergencyContactName: 'Maria Dela Cruz',
     emergencyContactPhone: '09179876543',
+    isSyncLocked: false,
+    isComplete: true,
+    missingFields: <String>[],
+  );
+}
+
+UserProfileSummary _staleProfile() {
+  return const UserProfileSummary(
+    givenNames: <String>['Michael'],
+    familyName: 'Robert',
+    displayName: 'Michael Robert',
+    birthDate: '1990-01-01',
+    gender: 'male',
+    phoneNumber: '09171234567',
+    communicationLanguage: 'Filipino',
+    philHealthId: '12-345678901-2',
+    philSysId: '',
+    addressLine1: '123 Mabini St',
+    addressLine2: '',
+    city: 'Quezon City',
+    province: 'Metro Manila',
+    postalCode: '1100',
+    country: 'Philippines',
+    maritalStatus: 'Single',
+    nationality: 'Filipino',
+    religion: 'Catholic',
+    occupation: 'Teacher',
+    genderIdentity: 'Male',
+    emergencyContactName: 'Maria Robert',
+    emergencyContactPhone: '09179876543',
+    isSyncLocked: false,
+    isComplete: true,
+    missingFields: <String>[],
+  );
+}
+
+UserProfileSummary _syncedProfile() {
+  return const UserProfileSummary(
+    givenNames: <String>['Mariel', 'Atienza'],
+    familyName: 'Atienza',
+    displayName: 'Mariel Atienza',
+    birthDate: '2000-06-20',
+    gender: 'female',
+    phoneNumber: '111',
+    communicationLanguage: 'Filipino',
+    philHealthId: '12-345678901-1',
+    philSysId: '',
+    addressLine1: 'Mwehehe',
+    addressLine2: '',
+    city: 'City of Las Piñas',
+    province: 'Abra',
+    postalCode: '111',
+    country: 'PH',
+    maritalStatus: 'Single',
+    nationality: 'Filipino',
+    religion: 'Catholic',
+    occupation: 'Teacher',
+    genderIdentity: 'Female',
+    emergencyContactName: 'Maria Atienza',
+    emergencyContactPhone: '111',
+    isSyncLocked: true,
     isComplete: true,
     missingFields: <String>[],
   );

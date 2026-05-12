@@ -14,6 +14,7 @@ export interface ProfileRow {
 }
 
 type PatientProfileRecord = Record<string, string>;
+const SYNC_LOCKED_PROFILE_FLAG = 'syncLocked';
 
 export interface ProfileUpsertInput {
   id: string;
@@ -98,6 +99,7 @@ export class ProfileRepository {
       genderIdentity: profile.genderIdentity,
       emergencyContactName: profile.emergencyContactName,
       emergencyContactPhone: profile.emergencyContactPhone,
+      isSyncLocked: isPatientProfileSyncLocked(row.patient_profile),
       isComplete: missingFields.length === 0,
       missingFields,
     };
@@ -120,6 +122,15 @@ export class ProfileRepository {
 
     return displayNameParts.join(' ');
   }
+}
+
+export function isPatientProfileSyncLocked(value: unknown): boolean {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    return false;
+  }
+
+  const record = value as Record<string, unknown>;
+  return record[SYNC_LOCKED_PROFILE_FLAG] == true;
 }
 
 const EMPTY_PROFILE: PatientProfileRecord = {

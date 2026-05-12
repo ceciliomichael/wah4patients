@@ -43,6 +43,10 @@ describe('FHIR inbound parsers', () => {
     expect(parsed.resourceType).toBe(_resourceType);
     expect(parsed.profile).toContain('/phcore/StructureDefinition/ph-core-');
     expect(parsed.insert).toEqual(expect.objectContaining({ [expectedKey]: expectedValue }));
+
+    if ('filterValue' in parsed.insert) {
+      expect(parsed.insert.filterValue.length).toBeLessThanOrEqual(80);
+    }
   });
 
   it('rejects resources that do not declare the required PH Core profile', () => {

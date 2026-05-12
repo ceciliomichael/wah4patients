@@ -1,12 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CompleteRegistrationDto } from './dto/complete-registration.dto';
-import { ProfileNameDto } from './dto/profile-name.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import {
   PatientProfileResponse,
   CompleteRegistrationResponse,
 } from './auth.types';
-import { ProfileRepository, type ProfileRow } from './profile.repository';
+import {
+  ProfileRepository,
+  isPatientProfileSyncLocked,
+  type ProfileRow,
+} from './profile.repository';
+
+interface ProfileDraftInput {
+  firstName?: string;
+  secondName?: string;
+  middleName?: string;
+  lastName?: string;
+  birthDate?: string;
+  gender?: string;
+  phoneNumber?: string;
+  communicationLanguage?: string;
+  philHealthId?: string;
+  philSysId?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
+  maritalStatus?: string;
+  nationality?: string;
+  religion?: string;
+  occupation?: string;
+  genderIdentity?: string;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+}
 
 @Injectable()
 export class ProfileService {
@@ -23,14 +52,25 @@ export class ProfileService {
   async saveProfileFromDto(
     userId: string,
     email: string,
-    dto: UpdateProfileDto | ProfileNameDto,
+    dto: ProfileDraftInput,
   ): Promise<PatientProfileResponse> {
+    const existingRow = await this.profileRepository.findByUserId(userId);
+    if (
+      existingRow !== null &&
+      isPatientProfileSyncLocked(existingRow.patient_profile)
+    ) {
+      throw new BadRequestException(
+        'Your profile is synced and can no longer be edited manually.',
+      );
+    }
+
+    const mergedProfile = this.mergeProfile(existingRow, dto);
     const row = await this.profileRepository.upsert({
       id: userId,
       email,
-      givenNames: this.toGivenNames(dto),
-      familyName: this.normalizeNamePart(dto.lastName),
-      patientProfile: this.toPatientProfile(dto),
+      givenNames: mergedProfile.givenNames,
+      familyName: mergedProfile.familyName,
+      patientProfile: mergedProfile.patientProfile,
     });
 
     return this.profileRepository.toResponse(row);
@@ -62,14 +102,188 @@ export class ProfileService {
     });
   }
 
-  private toGivenNames(dto: ProfileNameDto): string[] {
-    const names = [
+  private mergeProfile(
+    existingRow: ProfileRow | null,
+    dto: ProfileDraftInput,
+  ): {
+    givenNames: string[];
+    familyName: string;
+    patientProfile: {
+      birthDate: string;
+      gender: string;
+      phoneNumber: string;
+      communicationLanguage: string;
+      philHealthId: string;
+      philSysId: string;
+      addressLine1: string;
+      addressLine2: string;
+      city: string;
+      province: string;
+      postalCode: string;
+      country: string;
+      maritalStatus: string;
+      nationality: string;
+      religion: string;
+      occupation: string;
+      genderIdentity: string;
+      emergencyContactName: string;
+      emergencyContactPhone: string;
+    };
+  } {
+    const existingGivenNames = existingRow?.given_names ?? [];
+    const existingFamilyName = existingRow?.family_name ?? '';
+    const existingPatientProfile = this.normalizeExistingPatientProfile(
+      existingRow?.patient_profile,
+    );
+
+    const givenNames = this.mergeGivenNames(dto, existingGivenNames);
+    const familyName = this.mergeNamePart(dto.lastName, existingFamilyName);
+
+    return {
+      givenNames,
+      familyName,
+      patientProfile: {
+        birthDate: this.mergeField(dto.birthDate, existingPatientProfile.birthDate),
+        gender: this.mergeField(dto.gender, existingPatientProfile.gender),
+        phoneNumber: this.mergeField(
+          dto.phoneNumber,
+          existingPatientProfile.phoneNumber,
+        ),
+        communicationLanguage: this.mergeField(
+          dto.communicationLanguage,
+          existingPatientProfile.communicationLanguage,
+        ),
+        philHealthId: this.mergeField(
+          dto.philHealthId,
+          existingPatientProfile.philHealthId,
+        ),
+        philSysId: this.mergeField(dto.philSysId, existingPatientProfile.philSysId),
+        addressLine1: this.mergeField(
+          dto.addressLine1,
+          existingPatientProfile.addressLine1,
+        ),
+        addressLine2: this.mergeField(
+          dto.addressLine2,
+          existingPatientProfile.addressLine2,
+        ),
+        city: this.mergeField(dto.city, existingPatientProfile.city),
+        province: this.mergeField(dto.province, existingPatientProfile.province),
+        postalCode: this.mergeField(
+          dto.postalCode,
+          existingPatientProfile.postalCode,
+        ),
+        country: this.mergeField(dto.country, existingPatientProfile.country),
+        maritalStatus: this.mergeField(
+          dto.maritalStatus,
+          existingPatientProfile.maritalStatus,
+        ),
+        nationality: this.mergeField(
+          dto.nationality,
+          existingPatientProfile.nationality,
+        ),
+        religion: this.mergeField(dto.religion, existingPatientProfile.religion),
+        occupation: this.mergeField(dto.occupation, existingPatientProfile.occupation),
+        genderIdentity: this.mergeField(
+          dto.genderIdentity,
+          existingPatientProfile.genderIdentity,
+        ),
+        emergencyContactName: this.mergeField(
+          dto.emergencyContactName,
+          existingPatientProfile.emergencyContactName,
+        ),
+        emergencyContactPhone: this.mergeField(
+          dto.emergencyContactPhone,
+          existingPatientProfile.emergencyContactPhone,
+        ),
+      },
+    };
+  }
+
+  private mergeGivenNames(
+    dto: ProfileDraftInput,
+    existingGivenNames: string[],
+  ): string[] {
+    const nextNames = [
       this.normalizeNamePart(dto.firstName),
       this.normalizeNamePart(dto.secondName ?? ''),
       this.normalizeNamePart(dto.middleName ?? ''),
-    ];
+    ].filter((name) => name.length > 0);
 
-    return names.filter((name) => name.length > 0);
+    if (nextNames.length > 0) {
+      return nextNames;
+    }
+
+    return existingGivenNames.map((name) => this.normalizeNamePart(name));
+  }
+
+  private mergeNamePart(nextValue: string | undefined, existingValue: string): string {
+    const normalizedNext = this.normalizeOptional(nextValue);
+    if (normalizedNext.length > 0) {
+      return normalizedNext;
+    }
+
+    return this.normalizeOptional(existingValue);
+  }
+
+  private mergeField(nextValue: string | undefined, existingValue: string): string {
+    return this.mergeNamePart(nextValue, existingValue);
+  }
+
+  private normalizeExistingPatientProfile(
+    value: ProfileRow['patient_profile'] | undefined,
+  ): {
+    birthDate: string;
+    gender: string;
+    phoneNumber: string;
+    communicationLanguage: string;
+    philHealthId: string;
+    philSysId: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    province: string;
+    postalCode: string;
+    country: string;
+    maritalStatus: string;
+    nationality: string;
+    religion: string;
+    occupation: string;
+    genderIdentity: string;
+    emergencyContactName: string;
+    emergencyContactPhone: string;
+  } {
+    const record =
+      value !== null && typeof value === 'object' && !Array.isArray(value)
+        ? (value as Record<string, unknown>)
+        : {};
+
+    return {
+      birthDate: this.normalizeOptional(record.birthDate as string | undefined),
+      gender: this.normalizeOptional(record.gender as string | undefined),
+      phoneNumber: this.normalizeOptional(record.phoneNumber as string | undefined),
+      communicationLanguage: this.normalizeOptional(
+        record.communicationLanguage as string | undefined,
+      ),
+      philHealthId: this.normalizeOptional(record.philHealthId as string | undefined),
+      philSysId: this.normalizeOptional(record.philSysId as string | undefined),
+      addressLine1: this.normalizeOptional(record.addressLine1 as string | undefined),
+      addressLine2: this.normalizeOptional(record.addressLine2 as string | undefined),
+      city: this.normalizeOptional(record.city as string | undefined),
+      province: this.normalizeOptional(record.province as string | undefined),
+      postalCode: this.normalizeOptional(record.postalCode as string | undefined),
+      country: this.normalizeOptional(record.country as string | undefined),
+      maritalStatus: this.normalizeOptional(record.maritalStatus as string | undefined),
+      nationality: this.normalizeOptional(record.nationality as string | undefined),
+      religion: this.normalizeOptional(record.religion as string | undefined),
+      occupation: this.normalizeOptional(record.occupation as string | undefined),
+      genderIdentity: this.normalizeOptional(record.genderIdentity as string | undefined),
+      emergencyContactName: this.normalizeOptional(
+        record.emergencyContactName as string | undefined,
+      ),
+      emergencyContactPhone: this.normalizeOptional(
+        record.emergencyContactPhone as string | undefined,
+      ),
+    };
   }
 
   private toPatientProfile(dto: Partial<UpdateProfileDto>): {
@@ -120,8 +334,8 @@ export class ProfileService {
     return this.toPatientProfile({});
   }
 
-  private normalizeNamePart(value: string): string {
-    return value.trim().replace(/\s+/g, ' ');
+  private normalizeNamePart(value: string | undefined): string {
+    return this.normalizeOptional(value);
   }
 
   private normalizeOptional(value: string | undefined): string {

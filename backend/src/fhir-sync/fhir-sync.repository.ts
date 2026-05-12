@@ -26,6 +26,9 @@ type MedicationResupplyHistoryRecordRow =
   Database['public']['Tables']['medication_resupply_history_records']['Row'];
 
 const LIST_LIMIT = 100;
+const PHILHEALTH_IDENTIFIER_SYSTEM =
+  'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
+const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
 
 @Injectable()
 export class FhirSyncRepository {
@@ -39,19 +42,21 @@ export class FhirSyncRepository {
       .filter((identifier): identifier is NormalizedIdentifier => identifier !== null);
 
     for (const identifier of normalizedIdentifiers) {
-      const { data, error } = await this.supabaseService.adminClient
-        .from('patient_identifiers')
-        .select('profile_id')
-        .eq('identifier_system', identifier.system)
-        .eq('identifier_value', identifier.value)
-        .maybeSingle();
+      for (const identifierSystem of this.getLookupSystems(identifier.system)) {
+        const { data, error } = await this.supabaseService.adminClient
+          .from('patient_identifiers')
+          .select('profile_id')
+          .eq('identifier_system', identifierSystem)
+          .eq('identifier_value', identifier.value)
+          .maybeSingle();
 
-      if (error !== null) {
-        throw new InternalServerErrorException('Unable to resolve patient identifiers');
-      }
+        if (error !== null) {
+          throw new InternalServerErrorException('Unable to resolve patient identifiers');
+        }
 
-      if (data !== null) {
-        return data.profile_id;
+        if (data !== null) {
+          return data.profile_id;
+        }
       }
     }
 
@@ -296,6 +301,29 @@ export class FhirSyncRepository {
       return null;
     }
 
-    return { system, value };
+    return {
+      system: this.normalizeIdentifierSystem(system),
+      value,
+    };
+  }
+
+  private getLookupSystems(system: string): string[] {
+    if (system === PHILHEALTH_IDENTIFIER_SYSTEM) {
+      return [PHILHEALTH_IDENTIFIER_SYSTEM, LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM];
+    }
+
+    if (system === LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM) {
+      return [LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM, PHILHEALTH_IDENTIFIER_SYSTEM];
+    }
+
+    return [system];
+  }
+
+  private normalizeIdentifierSystem(system: string): string {
+    if (system === LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM) {
+      return PHILHEALTH_IDENTIFIER_SYSTEM;
+    }
+
+    return system;
   }
 }

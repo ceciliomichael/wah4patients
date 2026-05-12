@@ -56,6 +56,7 @@ UserProfileSummary _profile({String philHealthId = '', String philSysId = ''}) {
     genderIdentity: 'Male',
     emergencyContactName: 'Maria Dela Cruz',
     emergencyContactPhone: '09179876543',
+    isSyncLocked: false,
     isComplete: true,
     missingFields: const <String>[],
   );

@@ -118,6 +118,25 @@ class AuthSession {
     unawaited(AuthLocalStore.updateProfile(profile));
   }
 
+  static Future<bool> refreshProfileFromBackend() async {
+    final accessToken = _accessToken?.trim() ?? '';
+    if (accessToken.isEmpty) {
+      return false;
+    }
+
+    try {
+      final result = await AuthApiClient.instance.getMyProfile(
+        accessToken: accessToken,
+      );
+      _profile = result.profile;
+      _notifyChanged();
+      await AuthLocalStore.updateProfile(result.profile);
+      return true;
+    } on AuthApiException {
+      return false;
+    }
+  }
+
   static void clear() {
     _accessToken = null;
     _refreshToken = null;

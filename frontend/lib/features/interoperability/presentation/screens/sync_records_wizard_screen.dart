@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../app/app_routes.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
@@ -14,13 +15,19 @@ import '../../domain/interoperability_models.dart';
 import '../widgets/sync_identifier_step.dart';
 import '../widgets/sync_provider_step.dart';
 import '../widgets/sync_request_review_step.dart';
+import '../widgets/sync_request_simulation_button.dart';
 import '../widgets/sync_wizard_step_header.dart';
 
 class SyncRecordsWizardScreen extends StatefulWidget {
-  SyncRecordsWizardScreen({super.key, InteroperabilityClient? apiClient})
+  SyncRecordsWizardScreen({
+    super.key,
+    InteroperabilityClient? apiClient,
+    this.profileRefresh,
+  })
     : apiClient = apiClient ?? InteroperabilityApiClient.instance;
 
   final InteroperabilityClient apiClient;
+  final Future<bool> Function()? profileRefresh;
 
   @override
   State<SyncRecordsWizardScreen> createState() =>
@@ -33,6 +40,7 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
   String? _selectedProviderId;
   bool _isLoadingProviders = false;
   bool _isPreparingRequest = false;
+  bool _isSimulatingRequest = false;
   String? _providerErrorMessage;
   List<InteroperabilityProviderSummary> _providers =
       const <InteroperabilityProviderSummary>[];
@@ -95,6 +103,7 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
       1 => _selectedProvider != null,
       _ => _selectedIdentifierOption != null && _selectedProvider != null,
     };
+    final isBusy = _isPreparingRequest || _isSimulatingRequest;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -131,15 +140,24 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
                     icon: _currentStep == 2
                         ? Icons.verified_outlined
                         : Icons.arrow_forward,
-                    onPressed: canContinue && !_isPreparingRequest
+                    onPressed: canContinue && !isBusy
                         ? _handleNext
                         : null,
                     isLoading: _isPreparingRequest,
                   ),
+                  if (_currentStep == 2) ...[
+                    const SizedBox(height: 12),
+                    SyncRequestSimulationButton(
+                      onPressed: canContinue && !isBusy
+                          ? _simulateSyncRequest
+                          : null,
+                      isLoading: _isSimulatingRequest,
+                    ),
+                  ],
                   if (_currentStep > 0) ...[
                     const SizedBox(height: 12),
                     _BackButton(
-                      onPressed: _isPreparingRequest ? null : _handleBack,
+                      onPressed: isBusy ? null : _handleBack,
                     ),
                   ],
                 ],
@@ -283,11 +301,12 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
       }
 
       if (!preview.canSubmit) {
-        _showSnackBar('The sync request is not ready yet.');
+        _showSnackBar('Please complete the request details first.');
         return;
       }
 
-      Navigator.of(context).pop(true);
+      _showSnackBar('Your sync request is ready.');
+      _returnToDashboard();
     } on InteroperabilityApiException catch (error) {
       if (!mounted) {
         return;
@@ -298,6 +317,56 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
       if (mounted) {
         setState(() {
           _isPreparingRequest = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _simulateSyncRequest() async {
+    final selectedIdentifier = _selectedIdentifierOption;
+    final selectedProvider = _selectedProvider;
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    if (selectedIdentifier == null || selectedProvider == null) {
+      _showSnackBar('Select an identifier and provider first.');
+      return;
+    }
+
+    if (accessToken.isEmpty) {
+      _showSnackBar('Sign in again so the app can authenticate the request.');
+      return;
+    }
+
+    setState(() {
+      _isSimulatingRequest = true;
+    });
+
+    try {
+      await widget.apiClient.simulateSyncRequest(
+        accessToken: accessToken,
+        providerId: selectedProvider.id,
+        identifierSystem: selectedIdentifier.systemUri,
+        identifierValue: selectedIdentifier.value,
+        reason: 'Patient requested sync records',
+      );
+
+      await (widget.profileRefresh ?? AuthSession.refreshProfileFromBackend)();
+
+      if (!mounted) {
+        return;
+      }
+
+      _showSnackBar('Your records were synced successfully.');
+      _returnToDashboard();
+    } on InteroperabilityApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      _showSnackBar(error.message);
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSimulatingRequest = false;
         });
       }
     }
@@ -354,7 +423,13 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.primary),
+      SnackBar(content: Text(message), backgroundColor: AppColors.textPrimary),
+    );
+  }
+
+  void _returnToDashboard() {
+    Navigator.of(context).popUntil(
+      (route) => route.settings.name == AppRoutes.dashboard || route.isFirst,
     );
   }
 }
