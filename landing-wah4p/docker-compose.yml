@@ -1,0 +1,11 @@
+services:
+  landing-wah4p:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3049
+    ports:
+      - "0.0.0.0:3049:3049"
+    restart: always

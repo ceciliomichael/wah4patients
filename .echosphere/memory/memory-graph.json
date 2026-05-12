@@ -11604,6 +11604,415 @@
       ],
       "createdAt": "2026-05-12T16:41:14.175Z",
       "updatedAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "memoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "rootMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added containerization support for the backend NestJS app and the landing Next.js app in separate directories. The backend now has a multi-stage Dockerfile plus a compose file that loads .env and publishes port 3000. The landing app now has a multi-stage Dockerfile plus a compose file that publishes container port 3000 on host port 3001. Both compose files validated successfully with docker compose config.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the backend container build and runtime image for NestJS.",
+          "notes": "Multi-stage build with production-only runtime dependencies."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the backend container locally with environment and port settings.",
+          "notes": "Loads backend/.env and maps port 3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the landing page container build and runtime image for Next.js.",
+          "notes": "Multi-stage build starts the app on 0.0.0.0:3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the landing container locally with its own host port mapping.",
+          "notes": "Maps host 3001 to container 3000."
+        }
+      ],
+      "createdAt": "2026-05-12T17:29:37.041Z",
+      "updatedAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "memoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "rootMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "parentMemoryIds": [
+        "6a47ef04-bad3-4df1-a77d-1d876ae82741"
+      ],
+      "relatedMemoryIds": [
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [
+        "8c2dda6a-2eab-4bae-92f4-4418011e3e09"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added containerization support for the backend NestJS app and the landing Next.js app in separate directories. The backend now has a multi-stage Dockerfile plus a compose file that loads .env and publishes port 3000. The landing app now has a multi-stage Dockerfile plus a compose file that publishes container port 3000 on host port 3001. Both compose files validated successfully with docker compose config.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the backend container build and runtime image for NestJS.",
+          "notes": "Multi-stage build with production-only runtime dependencies."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the backend container locally with environment and port settings.",
+          "notes": "Loads backend/.env and maps port 3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the landing page container build and runtime image for Next.js.",
+          "notes": "Multi-stage build starts the app on 0.0.0.0:3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the landing container locally with its own host port mapping.",
+          "notes": "Maps host 3001 to container 3000."
+        }
+      ],
+      "createdAt": "2026-05-12T17:29:37.149Z",
+      "updatedAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "memoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "rootMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "parentMemoryIds": [
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da"
+      ],
+      "relatedMemoryIds": [
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added containerization support for the backend NestJS app and the landing Next.js app in separate directories. The backend now has a multi-stage Dockerfile plus a compose file that loads .env and publishes port 3000. The landing app now has a multi-stage Dockerfile plus a compose file that publishes container port 3000 on host port 3001. Both compose files validated successfully with docker compose config.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the backend container build and runtime image for NestJS.",
+          "notes": "Multi-stage build with production-only runtime dependencies."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the backend container locally with environment and port settings.",
+          "notes": "Loads backend/.env and maps port 3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "created",
+          "reason": "Defines the landing page container build and runtime image for Next.js.",
+          "notes": "Multi-stage build starts the app on 0.0.0.0:3000."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "created",
+          "reason": "Defines how to run the landing container locally with its own host port mapping.",
+          "notes": "Maps host 3001 to container 3000."
+        }
+      ],
+      "createdAt": "2026-05-12T17:29:37.258Z",
+      "updatedAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "memoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "rootMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "parentMemoryIds": [
+        "8c2dda6a-2eab-4bae-92f4-4418011e3e09"
+      ],
+      "relatedMemoryIds": [
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+        "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b"
+      ],
+      "childMemoryIds": [
+        "1b385d0b-5a66-4520-9ece-83284871d4f6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted the Docker setup so backend now runs on port 3048 and landing-wah4p runs on port 3049. Updated both Dockerfiles and compose files so the container process, exposed port, and published host port all match. Also switched both services to restart: always. docker compose config validation passed for both directories.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the backend container-exposed port to match the new runtime port 3048.",
+          "notes": "Only the EXPOSE directive changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated backend published port, container port environment, and restart policy.",
+          "notes": "Now maps 3048:3048 and uses restart: always."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the landing container port and startup command to use 3049.",
+          "notes": "Next.js now starts on 0.0.0.0:3049."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated landing published port, container port environment, and restart policy.",
+          "notes": "Now maps 3049:3049 and uses restart: always."
+        }
+      ],
+      "createdAt": "2026-05-12T17:32:13.506Z",
+      "updatedAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "memoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "rootMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "parentMemoryIds": [
+        "e8bfda69-8aae-4abe-9455-233d750fa3d9"
+      ],
+      "relatedMemoryIds": [
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+        "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b"
+      ],
+      "childMemoryIds": [
+        "b4774d93-73d9-4a55-a47e-c3a9b76c55e2"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted the Docker setup so backend now runs on port 3048 and landing-wah4p runs on port 3049. Updated both Dockerfiles and compose files so the container process, exposed port, and published host port all match. Also switched both services to restart: always. docker compose config validation passed for both directories.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the backend container-exposed port to match the new runtime port 3048.",
+          "notes": "Only the EXPOSE directive changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated backend published port, container port environment, and restart policy.",
+          "notes": "Now maps 3048:3048 and uses restart: always."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the landing container port and startup command to use 3049.",
+          "notes": "Next.js now starts on 0.0.0.0:3049."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated landing published port, container port environment, and restart policy.",
+          "notes": "Now maps 3049:3049 and uses restart: always."
+        }
+      ],
+      "createdAt": "2026-05-12T17:32:13.607Z",
+      "updatedAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "memoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "rootMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "parentMemoryIds": [
+        "1b385d0b-5a66-4520-9ece-83284871d4f6"
+      ],
+      "relatedMemoryIds": [
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+        "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted the Docker setup so backend now runs on port 3048 and landing-wah4p runs on port 3049. Updated both Dockerfiles and compose files so the container process, exposed port, and published host port all match. Also switched both services to restart: always. docker compose config validation passed for both directories.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the backend container-exposed port to match the new runtime port 3048.",
+          "notes": "Only the EXPOSE directive changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated backend published port, container port environment, and restart policy.",
+          "notes": "Now maps 3048:3048 and uses restart: always."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\Dockerfile",
+          "action": "modified",
+          "reason": "Changed the landing container port and startup command to use 3049.",
+          "notes": "Next.js now starts on 0.0.0.0:3049."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Updated landing published port, container port environment, and restart policy.",
+          "notes": "Now maps 3049:3049 and uses restart: always."
+        }
+      ],
+      "createdAt": "2026-05-12T17:32:13.711Z",
+      "updatedAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "memoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "rootMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "parentMemoryIds": [
+        "e8bfda69-8aae-4abe-9455-233d750fa3d9"
+      ],
+      "relatedMemoryIds": [
+        "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+        "1b385d0b-5a66-4520-9ece-83284871d4f6",
+        "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da"
+      ],
+      "childMemoryIds": [
+        "0860fe5c-7cc9-4a24-a362-e6a2ef407099"
+      ],
+      "sectionKind": "fact",
+      "summary": "Made the Docker setup explicitly accessible through 0.0.0.0. The backend now listens on 0.0.0.0 in NestJS bootstrap, and both backend and landing compose files publish ports with host_ip 0.0.0.0 while preserving ports 3048 and 3049 and restart: always. docker compose config validation succeeded for both services.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Needed to explicitly bind the backend server to 0.0.0.0 inside the container.",
+          "notes": "Changed app.listen signature to include host."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the backend port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3048 port and restart policy."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the landing port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3049 port and restart policy."
+        }
+      ],
+      "createdAt": "2026-05-12T17:46:57.500Z",
+      "updatedAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "memoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "rootMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "parentMemoryIds": [
+        "e73923a9-b7ce-4163-aa23-746f1eb3f97f"
+      ],
+      "relatedMemoryIds": [
+        "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+        "1b385d0b-5a66-4520-9ece-83284871d4f6",
+        "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da"
+      ],
+      "childMemoryIds": [
+        "dc48b782-561d-4fef-a919-ccb6143585e1"
+      ],
+      "sectionKind": "decision",
+      "summary": "Made the Docker setup explicitly accessible through 0.0.0.0. The backend now listens on 0.0.0.0 in NestJS bootstrap, and both backend and landing compose files publish ports with host_ip 0.0.0.0 while preserving ports 3048 and 3049 and restart: always. docker compose config validation succeeded for both services.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Needed to explicitly bind the backend server to 0.0.0.0 inside the container.",
+          "notes": "Changed app.listen signature to include host."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the backend port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3048 port and restart policy."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the landing port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3049 port and restart policy."
+        }
+      ],
+      "createdAt": "2026-05-12T17:46:57.613Z",
+      "updatedAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "memoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "rootMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "parentMemoryIds": [
+        "0860fe5c-7cc9-4a24-a362-e6a2ef407099"
+      ],
+      "relatedMemoryIds": [
+        "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+        "1b385d0b-5a66-4520-9ece-83284871d4f6",
+        "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+        "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Made the Docker setup explicitly accessible through 0.0.0.0. The backend now listens on 0.0.0.0 in NestJS bootstrap, and both backend and landing compose files publish ports with host_ip 0.0.0.0 while preserving ports 3048 and 3049 and restart: always. docker compose config validation succeeded for both services.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Needed to explicitly bind the backend server to 0.0.0.0 inside the container.",
+          "notes": "Changed app.listen signature to include host."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the backend port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3048 port and restart policy."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Needed to publish the landing port on host_ip 0.0.0.0 for explicit network accessibility.",
+          "notes": "Preserved 3049 port and restart policy."
+        }
+      ],
+      "createdAt": "2026-05-12T17:46:57.725Z",
+      "updatedAt": "2026-05-12T17:46:57.725Z"
     }
   ],
   "edges": [
@@ -18739,7 +19148,378 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.041Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "toMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.149Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:29:37.258Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "toMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.506Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "toMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.607Z"
+    },
+    {
+      "fromMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "toMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "fromMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "fromMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "toMemoryId": "6a47ef04-bad3-4df1-a77d-1d876ae82741",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "fromMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "fromMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:32:13.711Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "e8bfda69-8aae-4abe-9455-233d750fa3d9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "toMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.500Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "e73923a9-b7ce-4163-aa23-746f1eb3f97f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "toMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.613Z"
+    },
+    {
+      "fromMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "toMemoryId": "0860fe5c-7cc9-4a24-a362-e6a2ef407099",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "fromMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "toMemoryId": "b4774d93-73d9-4a55-a47e-c3a9b76c55e2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "fromMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "toMemoryId": "1b385d0b-5a66-4520-9ece-83284871d4f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "fromMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "toMemoryId": "8c2dda6a-2eab-4bae-92f4-4418011e3e09",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "fromMemoryId": "dc48b782-561d-4fef-a919-ccb6143585e1",
+      "toMemoryId": "cc1c54a4-ded1-4a7c-a8f3-19d5cd7bf0da",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T17:46:57.725Z"
     }
   ],
-  "updatedAt": "2026-05-12T16:41:14.182Z"
+  "updatedAt": "2026-05-12T17:46:57.731Z"
 }
