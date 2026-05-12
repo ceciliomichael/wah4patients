@@ -10852,6 +10852,758 @@
       ],
       "createdAt": "2026-05-12T15:39:11.707Z",
       "updatedAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "memoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "444f3686-e431-428c-b21c-cd3315573730",
+      "rootMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+        "04fa1221-9d50-45a8-b647-893a3aa8de77"
+      ],
+      "childMemoryIds": [
+        "17499495-2583-445a-817f-32239deb57ec"
+      ],
+      "sectionKind": "fact",
+      "summary": "Created a new root-level draft UAT guide for WAH staff testing the WAH4P app. The document covers test purpose, prerequisites, environment checks, pass/fail rules, detailed scenario tables for launch, onboarding, auth, record linking, dashboard, profile, PHR, EHR, medication resupply, appointments, support/legal screens, plus defect logging and sign-off. A Kanban card was created and moved to done to track the documentation task.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\UAT.md",
+          "action": "created",
+          "reason": "New root-level draft UAT document for WAH staff to follow when testing the WAH4P app.",
+          "notes": "Includes test scenarios, prerequisites, defect logging, and sign-off."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scenarios with the app's existing routed screens and flows.",
+          "notes": "Provided the screen inventory for launch, onboarding, auth, profile, PHR, EHR, medication resupply, and appointments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scope with the documented product and integration priorities.",
+          "notes": "Helped keep the draft focused on patient profile readiness and gateway sync areas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Used to understand the broader data and persistence areas that may need UAT coverage.",
+          "notes": "Helped include validation around save/persist behaviors and record screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to understand gateway-related flows that informed the sync and record-linking testing context.",
+          "notes": "Relevant for provider discovery and sync-related references."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Reviewed local repository instructions before creating the documentation file.",
+          "notes": "Confirmed the repo's operating and documentation conventions."
+        }
+      ],
+      "createdAt": "2026-05-12T15:48:46.669Z",
+      "updatedAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "memoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "444f3686-e431-428c-b21c-cd3315573730",
+      "rootMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "parentMemoryIds": [
+        "444f3686-e431-428c-b21c-cd3315573730"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+        "04fa1221-9d50-45a8-b647-893a3aa8de77"
+      ],
+      "childMemoryIds": [
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Created a new root-level draft UAT guide for WAH staff testing the WAH4P app. The document covers test purpose, prerequisites, environment checks, pass/fail rules, detailed scenario tables for launch, onboarding, auth, record linking, dashboard, profile, PHR, EHR, medication resupply, appointments, support/legal screens, plus defect logging and sign-off. A Kanban card was created and moved to done to track the documentation task.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\UAT.md",
+          "action": "created",
+          "reason": "New root-level draft UAT document for WAH staff to follow when testing the WAH4P app.",
+          "notes": "Includes test scenarios, prerequisites, defect logging, and sign-off."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scenarios with the app's existing routed screens and flows.",
+          "notes": "Provided the screen inventory for launch, onboarding, auth, profile, PHR, EHR, medication resupply, and appointments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scope with the documented product and integration priorities.",
+          "notes": "Helped keep the draft focused on patient profile readiness and gateway sync areas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Used to understand the broader data and persistence areas that may need UAT coverage.",
+          "notes": "Helped include validation around save/persist behaviors and record screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to understand gateway-related flows that informed the sync and record-linking testing context.",
+          "notes": "Relevant for provider discovery and sync-related references."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Reviewed local repository instructions before creating the documentation file.",
+          "notes": "Confirmed the repo's operating and documentation conventions."
+        }
+      ],
+      "createdAt": "2026-05-12T15:48:46.792Z",
+      "updatedAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "memoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "444f3686-e431-428c-b21c-cd3315573730",
+      "rootMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "parentMemoryIds": [
+        "17499495-2583-445a-817f-32239deb57ec"
+      ],
+      "relatedMemoryIds": [
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+        "04fa1221-9d50-45a8-b647-893a3aa8de77"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Created a new root-level draft UAT guide for WAH staff testing the WAH4P app. The document covers test purpose, prerequisites, environment checks, pass/fail rules, detailed scenario tables for launch, onboarding, auth, record linking, dashboard, profile, PHR, EHR, medication resupply, appointments, support/legal screens, plus defect logging and sign-off. A Kanban card was created and moved to done to track the documentation task.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\UAT.md",
+          "action": "created",
+          "reason": "New root-level draft UAT document for WAH staff to follow when testing the WAH4P app.",
+          "notes": "Includes test scenarios, prerequisites, defect logging, and sign-off."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\SCREENS.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scenarios with the app's existing routed screens and flows.",
+          "notes": "Provided the screen inventory for launch, onboarding, auth, profile, PHR, EHR, medication resupply, and appointments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backlog.md",
+          "action": "inspected",
+          "reason": "Used to align the UAT scope with the documented product and integration priorities.",
+          "notes": "Helped keep the draft focused on patient profile readiness and gateway sync areas."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\checklist.md",
+          "action": "inspected",
+          "reason": "Used to understand the broader data and persistence areas that may need UAT coverage.",
+          "notes": "Helped include validation around save/persist behaviors and record screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\wah4pc.md",
+          "action": "inspected",
+          "reason": "Used to understand gateway-related flows that informed the sync and record-linking testing context.",
+          "notes": "Relevant for provider discovery and sync-related references."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\AGENTS.md",
+          "action": "inspected",
+          "reason": "Reviewed local repository instructions before creating the documentation file.",
+          "notes": "Confirmed the repo's operating and documentation conventions."
+        }
+      ],
+      "createdAt": "2026-05-12T15:48:46.910Z",
+      "updatedAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "memoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "rootMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+        "444f3686-e431-428c-b21c-cd3315573730",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "185b0534-a163-471c-bae7-d292b4ccbea9"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the WAH4P landing page in the Next.js frontend under landing-wah4p with a modular, composition-first structure. The page now uses the provided horizontal logo in the header, includes clear image placeholder sections, and presents an Android APK download CTA alongside an Apple coming-soon state. Styling was kept calm, neutral, and consistent with the existing product UI while avoiding purple-tinted accents. Lint and production build both passed after formatting fixes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated page metadata and base body styling to match the new landing page experience.",
+          "notes": "Title, description, and global body classes were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Added lightweight base styles for the landing page background, scroll behavior, and shared resets.",
+          "notes": "Kept the CSS minimal and global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "created",
+          "reason": "Created the thin landing page entrypoint that composes the landing sections.",
+          "notes": "Imports the modular landing components."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "created",
+          "reason": "Provides the header brand lockup and APK navigation CTA.",
+          "notes": "Uses the provided horizontal logo image."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "created",
+          "reason": "Implements the hero section, main value proposition, CTA row, and the primary image placeholder block.",
+          "notes": "Includes three quick-value cards and a large preview placeholder."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "created",
+          "reason": "Adds concise feature/value cards to support the landing narrative.",
+          "notes": "Keeps the page straightforward and readable."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "created",
+          "reason": "Creates a dedicated section for future image placements so screenshot slots are obvious to editors.",
+          "notes": "Contains three separate placeholder cards."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "created",
+          "reason": "Implements the Android APK download CTA and Apple coming-soon block.",
+          "notes": "Uses a stable placeholder APK path for now."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\postcss.config.mjs",
+          "action": "modified",
+          "reason": "Normalized the file formatting so Biome would pass cleanly.",
+          "notes": "Rewritten with LF line endings."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\tsconfig.json",
+          "action": "inspected",
+          "reason": "Confirmed the @/* path alias resolves correctly for the new component imports.",
+          "notes": "No changes needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested logo asset exists for the landing header.",
+          "notes": "Used by the new header component."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_colors.dart",
+          "action": "inspected",
+          "reason": "Reviewed the frontend palette conventions before designing the landing page.",
+          "notes": "Helped anchor the landing styling decisions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Reviewed the app typography scale to keep the landing page aligned with the product tone.",
+          "notes": "Used for design consistency guidance."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Reviewed how the frontend app defines its general theme and surfaces.",
+          "notes": "Informed the landing page structure and spacing choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:35:00.166Z",
+      "updatedAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "memoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "rootMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "parentMemoryIds": [
+        "b21404cc-f536-42e0-8746-340a94af948b"
+      ],
+      "relatedMemoryIds": [
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+        "444f3686-e431-428c-b21c-cd3315573730",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the WAH4P landing page in the Next.js frontend under landing-wah4p with a modular, composition-first structure. The page now uses the provided horizontal logo in the header, includes clear image placeholder sections, and presents an Android APK download CTA alongside an Apple coming-soon state. Styling was kept calm, neutral, and consistent with the existing product UI while avoiding purple-tinted accents. Lint and production build both passed after formatting fixes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated page metadata and base body styling to match the new landing page experience.",
+          "notes": "Title, description, and global body classes were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Added lightweight base styles for the landing page background, scroll behavior, and shared resets.",
+          "notes": "Kept the CSS minimal and global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "created",
+          "reason": "Created the thin landing page entrypoint that composes the landing sections.",
+          "notes": "Imports the modular landing components."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "created",
+          "reason": "Provides the header brand lockup and APK navigation CTA.",
+          "notes": "Uses the provided horizontal logo image."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "created",
+          "reason": "Implements the hero section, main value proposition, CTA row, and the primary image placeholder block.",
+          "notes": "Includes three quick-value cards and a large preview placeholder."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "created",
+          "reason": "Adds concise feature/value cards to support the landing narrative.",
+          "notes": "Keeps the page straightforward and readable."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "created",
+          "reason": "Creates a dedicated section for future image placements so screenshot slots are obvious to editors.",
+          "notes": "Contains three separate placeholder cards."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "created",
+          "reason": "Implements the Android APK download CTA and Apple coming-soon block.",
+          "notes": "Uses a stable placeholder APK path for now."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\postcss.config.mjs",
+          "action": "modified",
+          "reason": "Normalized the file formatting so Biome would pass cleanly.",
+          "notes": "Rewritten with LF line endings."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\tsconfig.json",
+          "action": "inspected",
+          "reason": "Confirmed the @/* path alias resolves correctly for the new component imports.",
+          "notes": "No changes needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested logo asset exists for the landing header.",
+          "notes": "Used by the new header component."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_colors.dart",
+          "action": "inspected",
+          "reason": "Reviewed the frontend palette conventions before designing the landing page.",
+          "notes": "Helped anchor the landing styling decisions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Reviewed the app typography scale to keep the landing page aligned with the product tone.",
+          "notes": "Used for design consistency guidance."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Reviewed how the frontend app defines its general theme and surfaces.",
+          "notes": "Informed the landing page structure and spacing choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:35:00.350Z",
+      "updatedAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "memoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "rootMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "parentMemoryIds": [
+        "185b0534-a163-471c-bae7-d292b4ccbea9"
+      ],
+      "relatedMemoryIds": [
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+        "444f3686-e431-428c-b21c-cd3315573730",
+        "5fa28486-8861-4f59-a019-cc24e9188f97",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the WAH4P landing page in the Next.js frontend under landing-wah4p with a modular, composition-first structure. The page now uses the provided horizontal logo in the header, includes clear image placeholder sections, and presents an Android APK download CTA alongside an Apple coming-soon state. Styling was kept calm, neutral, and consistent with the existing product UI while avoiding purple-tinted accents. Lint and production build both passed after formatting fixes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated page metadata and base body styling to match the new landing page experience.",
+          "notes": "Title, description, and global body classes were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Added lightweight base styles for the landing page background, scroll behavior, and shared resets.",
+          "notes": "Kept the CSS minimal and global."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "created",
+          "reason": "Created the thin landing page entrypoint that composes the landing sections.",
+          "notes": "Imports the modular landing components."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "created",
+          "reason": "Provides the header brand lockup and APK navigation CTA.",
+          "notes": "Uses the provided horizontal logo image."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "created",
+          "reason": "Implements the hero section, main value proposition, CTA row, and the primary image placeholder block.",
+          "notes": "Includes three quick-value cards and a large preview placeholder."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "created",
+          "reason": "Adds concise feature/value cards to support the landing narrative.",
+          "notes": "Keeps the page straightforward and readable."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "created",
+          "reason": "Creates a dedicated section for future image placements so screenshot slots are obvious to editors.",
+          "notes": "Contains three separate placeholder cards."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "created",
+          "reason": "Implements the Android APK download CTA and Apple coming-soon block.",
+          "notes": "Uses a stable placeholder APK path for now."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\postcss.config.mjs",
+          "action": "modified",
+          "reason": "Normalized the file formatting so Biome would pass cleanly.",
+          "notes": "Rewritten with LF line endings."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\tsconfig.json",
+          "action": "inspected",
+          "reason": "Confirmed the @/* path alias resolves correctly for the new component imports.",
+          "notes": "No changes needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested logo asset exists for the landing header.",
+          "notes": "Used by the new header component."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_colors.dart",
+          "action": "inspected",
+          "reason": "Reviewed the frontend palette conventions before designing the landing page.",
+          "notes": "Helped anchor the landing styling decisions."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\core\\constants\\app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Reviewed the app typography scale to keep the landing page aligned with the product tone.",
+          "notes": "Used for design consistency guidance."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "inspected",
+          "reason": "Reviewed how the frontend app defines its general theme and surfaces.",
+          "notes": "Informed the landing page structure and spacing choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:35:00.518Z",
+      "updatedAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "memoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "185b0534-a163-471c-bae7-d292b4ccbea9"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c"
+      ],
+      "childMemoryIds": [
+        "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0"
+      ],
+      "sectionKind": "fact",
+      "summary": "Refined the WAH4P landing page in landing-wah4p after feedback that the earlier version felt too editorial and too card-heavy. The landing now uses a more lively product-launch style with flatter sections, stronger WAH Flutter accent colors (deep purple, blue, orange), a clearer hero, a more expressive preview area, and a bold Android download banner with Apple marked coming soon. The page still uses the provided horizontal logo and keeps obvious image placeholder slots for future screenshots.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated landing page metadata and base body styling to the warmer app-aligned background.",
+          "notes": "Kept the app shell lightweight."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Adjusted the global landing background and base text color to match the newer visual direction.",
+          "notes": "Still minimal base CSS only."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "modified",
+          "reason": "Reworked the header to include navigation and accent-aware download affordance.",
+          "notes": "Uses the provided horizontal logo."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "modified",
+          "reason": "Overhauled the hero into a more lively product landing layout with accent chips and a larger preview area.",
+          "notes": "Replaced the earlier card-heavy presentation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "modified",
+          "reason": "Flattened the feature section into a banded layout with separators instead of standalone cards.",
+          "notes": "Improves rhythm and reduces visual heaviness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "modified",
+          "reason": "Reworked the preview section into a collage-like placeholder area for future images.",
+          "notes": "Keeps obvious image drop zones without feeling sparse."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Converted the download area into a bold brand banner with a clearer Android CTA and Apple status.",
+          "notes": "More visually distinct than the earlier neutral card."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "inspected",
+          "reason": "Confirmed the landing entrypoint still composes the section modules cleanly after the redesign.",
+          "notes": "No code change needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested header logo asset remains the correct source for the brand lockup.",
+          "notes": "Still used in the header."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "inspected",
+          "reason": "Reviewed the Flutter dashboard accent usage as a reference for the landing page’s stronger color direction.",
+          "notes": "Informed the blue/orange/purple accent choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:41:13.865Z",
+      "updatedAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "memoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c"
+      ],
+      "childMemoryIds": [
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2"
+      ],
+      "sectionKind": "decision",
+      "summary": "Refined the WAH4P landing page in landing-wah4p after feedback that the earlier version felt too editorial and too card-heavy. The landing now uses a more lively product-launch style with flatter sections, stronger WAH Flutter accent colors (deep purple, blue, orange), a clearer hero, a more expressive preview area, and a bold Android download banner with Apple marked coming soon. The page still uses the provided horizontal logo and keeps obvious image placeholder slots for future screenshots.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated landing page metadata and base body styling to the warmer app-aligned background.",
+          "notes": "Kept the app shell lightweight."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Adjusted the global landing background and base text color to match the newer visual direction.",
+          "notes": "Still minimal base CSS only."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "modified",
+          "reason": "Reworked the header to include navigation and accent-aware download affordance.",
+          "notes": "Uses the provided horizontal logo."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "modified",
+          "reason": "Overhauled the hero into a more lively product landing layout with accent chips and a larger preview area.",
+          "notes": "Replaced the earlier card-heavy presentation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "modified",
+          "reason": "Flattened the feature section into a banded layout with separators instead of standalone cards.",
+          "notes": "Improves rhythm and reduces visual heaviness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "modified",
+          "reason": "Reworked the preview section into a collage-like placeholder area for future images.",
+          "notes": "Keeps obvious image drop zones without feeling sparse."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Converted the download area into a bold brand banner with a clearer Android CTA and Apple status.",
+          "notes": "More visually distinct than the earlier neutral card."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "inspected",
+          "reason": "Confirmed the landing entrypoint still composes the section modules cleanly after the redesign.",
+          "notes": "No code change needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested header logo asset remains the correct source for the brand lockup.",
+          "notes": "Still used in the header."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "inspected",
+          "reason": "Reviewed the Flutter dashboard accent usage as a reference for the landing page’s stronger color direction.",
+          "notes": "Informed the blue/orange/purple accent choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:41:14.021Z",
+      "updatedAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "memoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Refined the WAH4P landing page in landing-wah4p after feedback that the earlier version felt too editorial and too card-heavy. The landing now uses a more lively product-launch style with flatter sections, stronger WAH Flutter accent colors (deep purple, blue, orange), a clearer hero, a more expressive preview area, and a bold Android download banner with Apple marked coming soon. The page still uses the provided horizontal logo and keeps obvious image placeholder slots for future screenshots.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\layout.tsx",
+          "action": "modified",
+          "reason": "Updated landing page metadata and base body styling to the warmer app-aligned background.",
+          "notes": "Kept the app shell lightweight."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\globals.css",
+          "action": "modified",
+          "reason": "Adjusted the global landing background and base text color to match the newer visual direction.",
+          "notes": "Still minimal base CSS only."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-header.tsx",
+          "action": "modified",
+          "reason": "Reworked the header to include navigation and accent-aware download affordance.",
+          "notes": "Uses the provided horizontal logo."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-hero.tsx",
+          "action": "modified",
+          "reason": "Overhauled the hero into a more lively product landing layout with accent chips and a larger preview area.",
+          "notes": "Replaced the earlier card-heavy presentation."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-highlights.tsx",
+          "action": "modified",
+          "reason": "Flattened the feature section into a banded layout with separators instead of standalone cards.",
+          "notes": "Improves rhythm and reduces visual heaviness."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-image-showcase.tsx",
+          "action": "modified",
+          "reason": "Reworked the preview section into a collage-like placeholder area for future images.",
+          "notes": "Keeps obvious image drop zones without feeling sparse."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Converted the download area into a bold brand banner with a clearer Android CTA and Apple status.",
+          "notes": "More visually distinct than the earlier neutral card."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "inspected",
+          "reason": "Confirmed the landing entrypoint still composes the section modules cleanly after the redesign.",
+          "notes": "No code change needed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\public\\wahforpatients_horizontal.png",
+          "action": "inspected",
+          "reason": "Confirmed the requested header logo asset remains the correct source for the brand lockup.",
+          "notes": "Still used in the header."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "inspected",
+          "reason": "Reviewed the Flutter dashboard accent usage as a reference for the landing page’s stronger color direction.",
+          "notes": "Informed the blue/orange/purple accent choices."
+        }
+      ],
+      "createdAt": "2026-05-12T16:41:14.175Z",
+      "updatedAt": "2026-05-12T16:41:14.175Z"
     }
   ],
   "edges": [
@@ -17602,7 +18354,392 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-12T15:39:11.707Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.669Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.792Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "a0fc983c-c62a-4d11-9d44-a32881a6c6b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "toMemoryId": "04fa1221-9d50-45a8-b647-893a3aa8de77",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T15:48:46.910Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.166Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.350Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "444f3686-e431-428c-b21c-cd3315573730",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "5fa28486-8861-4f59-a019-cc24e9188f97",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:35:00.518Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "toMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:13.865Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.021Z"
+    },
+    {
+      "fromMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "toMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "fromMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "fromMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "fromMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.175Z"
+    },
+    {
+      "fromMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "toMemoryId": "6a0f6a4d-bb6c-4aa3-b326-88a0fa70267c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-12T16:41:14.175Z"
     }
   ],
-  "updatedAt": "2026-05-12T15:39:11.710Z"
+  "updatedAt": "2026-05-12T16:41:14.182Z"
 }
