@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -30,7 +31,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final GlobalKey<FormFieldState<String>> _otpFieldKey =
       GlobalKey<FormFieldState<String>>();
   Timer? _resendTimer;
-  int _resendCooldown = 45;
+  static const int _initialResendCooldownSeconds = 90;
+  int _resendCooldown = _initialResendCooldownSeconds;
   bool _resending = false;
   bool _verifying = false;
 
@@ -49,7 +51,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   void _startCooldown() {
     _resendTimer?.cancel();
     setState(() {
-      _resendCooldown = 45;
+      _resendCooldown = _initialResendCooldownSeconds;
     });
 
     _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -87,17 +89,15 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
       _otpFieldKey.currentState?.reset();
       _startCooldown();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('A new verification code was sent.')),
+      AppNotificationCenter.instance.showSuccess(
+        'A new verification code was sent.',
       );
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -142,9 +142,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {

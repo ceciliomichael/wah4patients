@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -208,6 +210,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (dialogContext) {
         return ProfileCompletionPromptDialog(
           onCompleteProfile: () {
+            unawaited(AuthLocalStore.setProfileCompletionPromptDismissed(true));
             Navigator.of(dialogContext).pop();
             Navigator.of(context).pushNamed(AppRoutes.personalInformation);
           },
@@ -219,6 +222,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             }
           },
           onClose: () {
+            unawaited(AuthLocalStore.setProfileCompletionPromptDismissed(true));
             Navigator.of(dialogContext).pop();
           },
         );

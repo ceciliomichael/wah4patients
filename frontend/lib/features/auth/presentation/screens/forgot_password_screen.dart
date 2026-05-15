@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -161,17 +162,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       });
       _otpFieldKey.currentState?.reset();
       _startCooldown(response.cooldownSeconds);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response.message)),
-      );
+      AppNotificationCenter.instance.showSuccess(response.message);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -203,17 +200,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       _otpFieldKey.currentState?.reset();
       _startCooldown(response.cooldownSeconds);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response.message)),
-      );
+      AppNotificationCenter.instance.showSuccess(response.message);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -260,9 +253,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -278,10 +269,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
 
     if (_passwordResetToken.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Missing password reset token. Please verify your code again.'),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Missing password reset token. Please verify your code again.',
       );
       return;
     }
@@ -305,9 +294,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response.message)),
-      );
+      AppNotificationCenter.instance.showSuccess(response.message);
       Navigator.of(context).pushReplacementNamed(
         AppRoutes.login,
         arguments: _email,
@@ -317,9 +304,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {

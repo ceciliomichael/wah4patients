@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -52,7 +53,7 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
       try {
         if (pin != widget.arguments.initialMpin) {
           _controller.clear();
-          _controller.setError('MPIN does not match. Try again.');
+          Navigator.of(context).pop(false);
           return;
         }
 
@@ -71,12 +72,8 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
           return;
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'MPIN saved successfully. This device is now registered for MPIN unlock.',
-            ),
-          ),
+        AppNotificationCenter.instance.showSuccess(
+          'MPIN saved successfully. This device is now registered for MPIN unlock.',
         );
 
         final nextRouteAfterSave = widget.arguments.nextRouteAfterSave;
@@ -115,10 +112,8 @@ class _MpinConfirmScreenState extends State<MpinConfirmScreen> {
               return;
             }
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Complete MPIN setup to continue registration.'),
-              ),
+            AppNotificationCenter.instance.showWarning(
+              'Complete MPIN setup to continue registration.',
             );
           },
           child: MpinFlowScaffold(

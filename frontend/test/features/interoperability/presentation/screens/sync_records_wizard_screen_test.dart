@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:frontend/app/app_notification_center.dart';
 import 'package:frontend/app/app_routes.dart';
 import 'package:frontend/core/widgets/ui/buttons/primary_button_widget.dart';
 import 'package:frontend/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart';
+import 'package:frontend/core/widgets/feature/app_notification_host.dart';
 import 'package:frontend/features/auth/domain/auth_session.dart';
 import 'package:frontend/features/auth/domain/models/auth_api_models.dart';
 import 'package:frontend/features/interoperability/data/interoperability_api_client.dart';
@@ -70,6 +72,11 @@ class FakeInteroperabilityClient implements InteroperabilityClient {
 void main() {
   setUp(() {
     AuthSession.clear();
+    AppNotificationCenter.instance.dismiss();
+  });
+
+  tearDown(() {
+    AppNotificationCenter.instance.dismiss();
   });
 
   testWidgets('walks through identifier and provider selection', (
@@ -98,7 +105,18 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MaterialApp(home: SyncRecordsWizardScreen(apiClient: apiClient)),
+      MaterialApp(
+        builder: (context, child) {
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              if (child != null) child,
+              AppNotificationHost(controller: AppNotificationCenter.instance),
+            ],
+          );
+        },
+        home: SyncRecordsWizardScreen(apiClient: apiClient),
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -172,6 +190,15 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         initialRoute: AppRoutes.dashboard,
+        builder: (context, child) {
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              if (child != null) child,
+              AppNotificationHost(controller: AppNotificationCenter.instance),
+            ],
+          );
+        },
         onGenerateRoute: (settings) {
           if (settings.name == AppRoutes.dashboard) {
             return MaterialPageRoute<void>(
@@ -271,6 +298,15 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         initialRoute: AppRoutes.dashboard,
+        builder: (context, child) {
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              if (child != null) child,
+              AppNotificationHost(controller: AppNotificationCenter.instance),
+            ],
+          );
+        },
         onGenerateRoute: (settings) {
           if (settings.name == AppRoutes.dashboard) {
             return MaterialPageRoute<void>(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -68,9 +70,7 @@ class _MpinLoginScreenState extends State<MpinLoginScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     }
   }
 
@@ -127,13 +127,33 @@ class _MpinLoginScreenState extends State<MpinLoginScreen> {
             isLoading: _controller.isSubmitting,
             icon: Icons.login_outlined,
           ),
-          secondaryAction: SecondaryButtonWidget(
-            text: 'Use authenticator',
-            onPressed: _controller.isSubmitting
-                ? null
-                : () => Navigator.of(context).pop(),
-            icon: Icons.verified_user_outlined,
-            textColor: AppColors.primary,
+          secondaryAction: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Allow a clear recovery path for users who have lost their MPIN:
+              // they can return to the normal password reset flow first, then
+              // change MPIN from Security Settings after signing back in.
+              SecondaryButtonWidget(
+                text: 'Use authenticator',
+                onPressed: _controller.isSubmitting
+                    ? null
+                    : () => Navigator.of(context).pop(),
+                icon: Icons.verified_user_outlined,
+                textColor: AppColors.primary,
+              ),
+              const SizedBox(height: 8),
+              SecondaryButtonWidget(
+                text: 'Forgot MPIN?',
+                onPressed: _controller.isSubmitting
+                    ? null
+                    : () => Navigator.of(context).pushNamed(
+                          AppRoutes.forgotPassword,
+                          arguments: widget.arguments.email,
+                        ),
+                icon: Icons.lock_reset_outlined,
+                textColor: AppColors.textSecondary,
+              ),
+            ],
           ),
         );
       },

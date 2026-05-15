@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/config/screen_protection.dart';
@@ -128,10 +129,8 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('MPIN is not enabled on this device. Please sign in again.'),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'MPIN is not enabled on this device. Please sign in again.',
       );
       _forceSignOut();
       return;
@@ -167,9 +166,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
             return;
           }
 
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(result.message)));
+          AppNotificationCenter.instance.showSuccess(result.message);
           final navigator = Navigator.of(context);
           if (navigator.canPop()) {
             navigator.pop(true);
@@ -269,12 +266,8 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
                       onDigitTap: _onDigitTap,
                       onDeleteTap: _onDeleteTap,
                       onBiometricTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Biometric sign-in will be available soon.',
-                            ),
-                          ),
+                        AppNotificationCenter.instance.showInfo(
+                          'Biometric sign-in will be available soon.',
                         );
                       },
                     ),

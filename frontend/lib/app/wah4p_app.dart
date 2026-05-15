@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../core/widgets/feature/app_notification_host.dart';
 import '../core/constants/app_border_radii.dart';
 import '../core/constants/app_colors.dart';
 import '../core/constants/app_text_styles.dart';
 import 'app_lock_state_service.dart';
+import 'app_notification_center.dart';
 import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
@@ -197,6 +199,15 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
       theme: theme,
       initialRoute: AppRoutes.splash,
+      builder: (context, child) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            if (child != null) child,
+            AppNotificationHost(controller: AppNotificationCenter.instance),
+          ],
+        );
+      },
       onGenerateRoute: (settings) {
         if (settings.name == AppRoutes.splash) {
           return _buildStartupRoute(settings);

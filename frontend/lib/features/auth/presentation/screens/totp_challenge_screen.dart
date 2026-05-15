@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -79,12 +80,8 @@ class _TotpChallengeScreenState extends State<TotpChallengeScreen>
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Signed in, but MPIN device registration failed: ${error.message}',
-          ),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Signed in, but MPIN device registration failed: ${error.message}',
       );
     }
   }

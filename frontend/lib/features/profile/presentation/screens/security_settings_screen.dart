@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -101,9 +102,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted && showLoadingIndicator) {
         setState(() {
@@ -226,9 +225,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(response.message)));
+      AppNotificationCenter.instance.showSuccess(response.message);
       Navigator.of(
         context,
       ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
@@ -237,9 +234,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -279,18 +274,14 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(response.message)));
+      AppNotificationCenter.instance.showSuccess(response.message);
       await _refreshSecurityStatus(showLoadingIndicator: false);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -323,10 +314,8 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
 
-      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-        const SnackBar(
-          content: Text('Please sign in again to access security settings.'),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Please sign in again to access security settings.',
       );
       Navigator.of(
         context,

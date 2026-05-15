@@ -114,7 +114,8 @@ void main() {
       );
       expect(find.text('First name'), findsWidgets);
       expect(find.text('Last name'), findsWidgets);
-      expect(find.text('Birth date'), findsWidgets);
+      expect(find.textContaining('Birth date'), findsWidgets);
+      expect(find.textContaining('Optional'), findsWidgets);
       expect(find.text('Gender'), findsWidgets);
       expect(find.text('Phone number'), findsWidgets);
       expect(find.text('PhilHealth ID'), findsOneWidget);

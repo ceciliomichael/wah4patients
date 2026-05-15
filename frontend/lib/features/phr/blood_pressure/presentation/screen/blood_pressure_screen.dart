@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_border_radii.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_text_styles.dart';
@@ -105,12 +106,6 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     }
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.primary),
-    );
-  }
-
   Color _categoryColor(String category) {
     return switch (category) {
       'Normal' => AppColors.success,
@@ -136,13 +131,17 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         diastolic == null ||
         systolic <= 0 ||
         diastolic <= 0) {
-      _showSnackBar('Enter valid systolic and diastolic readings.');
+      AppNotificationCenter.instance.showWarning(
+        'Enter valid systolic and diastolic readings.',
+      );
       return;
     }
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      _showSnackBar('Please sign in again to save blood pressure records.');
+      AppNotificationCenter.instance.showWarning(
+        'Please sign in again to save blood pressure records.',
+      );
       return;
     }
 
@@ -166,9 +165,11 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         _diastolicController.clear();
       });
 
-      _showSnackBar('Blood pressure entry saved to the database.');
+      AppNotificationCenter.instance.showSuccess(
+        'Blood pressure entry saved to the database.',
+      );
     } on PersonalRecordsApiException catch (error) {
-      _showSnackBar(error.message);
+      AppNotificationCenter.instance.showError(error.message);
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -422,9 +423,7 @@ class _SyncRecordsWizardScreenState extends State<SyncRecordsWizardScreen> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.textPrimary),
-    );
+    AppNotificationCenter.instance.showInfo(message);
   }
 
   void _returnToDashboard() {

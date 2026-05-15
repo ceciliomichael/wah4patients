@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -106,12 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (securityVerificationToken.isEmpty) {
           AuthSession.clear();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Email verification is required to register this device for MPIN.',
-              ),
-            ),
+          AppNotificationCenter.instance.showWarning(
+            'Email verification is required to register this device for MPIN.',
           );
           return false;
         }
@@ -130,10 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return false;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Signed in, but MPIN device registration failed: ${error.message}'),
-        ),
+      AppNotificationCenter.instance.showError(
+        'Signed in, but MPIN device registration failed: ${error.message}',
       );
       return true;
     }
@@ -212,9 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {

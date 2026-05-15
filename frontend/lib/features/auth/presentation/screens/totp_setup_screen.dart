@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -38,9 +39,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
 
   void _copyManualKey() {
     Clipboard.setData(ClipboardData(text: _manualEntryKey));
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Manual setup key copied.')));
+    AppNotificationCenter.instance.showSuccess('Manual setup key copied.');
   }
 
   @override
@@ -68,8 +67,8 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You must be signed in to set up 2FA.')),
+      AppNotificationCenter.instance.showWarning(
+        'You must be signed in to set up 2FA.',
       );
       Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       return;
@@ -103,9 +102,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         _stage = _SetupStage.loadFailed;
       });
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } catch (_) {
       if (!mounted) {
         return;
@@ -118,9 +115,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         _stage = _SetupStage.loadFailed;
       });
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text(fallbackMessage)));
+      AppNotificationCenter.instance.showError(fallbackMessage);
     }
   }
 
@@ -132,8 +127,8 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
     final code = _verificationController.value.trim();
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Session expired. Please sign in again.')),
+      AppNotificationCenter.instance.showWarning(
+        'Session expired. Please sign in again.',
       );
       Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       return;
@@ -154,9 +149,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
       }
 
       if (widget.allowSkip) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result.message)));
+        AppNotificationCenter.instance.showSuccess(result.message);
         Navigator.of(
           context,
         ).pushNamedAndRemoveUntil(AppRoutes.dashboard, (route) => false);
@@ -167,9 +160,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
         _stage = _SetupStage.showSuccess;
       });
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(result.message)));
+      AppNotificationCenter.instance.showSuccess(result.message);
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
@@ -177,9 +168,7 @@ class _TotpSetupScreenState extends State<TotpSetupScreen> {
 
       _verificationController.clear();
       _verificationController.setError(error.message);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {

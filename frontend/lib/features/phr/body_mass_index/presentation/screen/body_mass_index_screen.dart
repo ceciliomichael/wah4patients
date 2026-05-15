@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
@@ -155,22 +156,16 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
     final height = double.tryParse(_heightController.text.trim());
 
     if (weight == null || height == null || weight <= 0 || height <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Enter valid weight and height values.'),
-          backgroundColor: AppColors.primary,
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Enter valid weight and height values.',
       );
       return;
     }
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please sign in again to save BMI records.'),
-          backgroundColor: AppColors.primary,
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Please sign in again to save BMI records.',
       );
       return;
     }
@@ -201,12 +196,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message),
-          backgroundColor: AppColors.primary,
-        ),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     }
   }
 

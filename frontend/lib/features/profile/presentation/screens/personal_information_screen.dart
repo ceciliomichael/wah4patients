@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -53,10 +54,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Your session expired. Please sign in again.'),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Your session expired. Please sign in again.',
       );
       Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       return;
@@ -82,18 +81,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Personal details updated.')),
-      );
+      AppNotificationCenter.instance.showSuccess('Personal details updated.');
       Navigator.of(context).pop();
     } on AuthApiException catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {

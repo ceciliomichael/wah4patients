@@ -54,6 +54,12 @@ List<PasswordRequirement> buildPasswordRequirements(String password) {
       description: 'Contains one number',
       isMet: RegExp(r'\d').hasMatch(password),
     ),
+    PasswordRequirement(
+      description: 'Contains one special character',
+      isMet: RegExp(r'''[!@#\$%^&*()_+\-=\[\]{};:'",.<>/?\\|`~]''').hasMatch(
+        password,
+      ),
+    ),
   ];
 }
 
@@ -81,6 +87,12 @@ String? validatePassword(String? value) {
 
   if (!RegExp(r'\d').hasMatch(password)) {
     return 'Include at least one number';
+  }
+
+  if (!RegExp(r'''[!@#\$%^&*()_+\-=\[\]{};:'",.<>/?\\|`~]''').hasMatch(
+    password,
+  )) {
+    return 'Include at least one special character';
   }
 
   return null;

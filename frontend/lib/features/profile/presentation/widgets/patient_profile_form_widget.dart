@@ -131,7 +131,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
         ? profile.givenNames[2]
         : '';
     _lastNameController.text = profile.familyName;
-    _birthDateController.text = profile.birthDate;
+    _birthDateController.text = _formatBirthDateForDisplay(profile.birthDate);
     _gender = profile.gender.isNotEmpty ? profile.gender : 'unknown';
     _phoneNumberController.text = profile.phoneNumber;
     _communicationLanguageController.text = profile.communicationLanguage;
@@ -163,7 +163,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
         secondName: _secondNameController.text.trim(),
         middleName: _middleNameController.text.trim(),
         lastName: _lastNameController.text.trim(),
-        birthDate: _birthDateController.text.trim(),
+        birthDate: _formatBirthDateForApi(_birthDateController.text.trim()),
         gender: _gender,
         phoneNumber: _phoneNumberController.text.trim(),
         communicationLanguage: _communicationLanguageController.text.trim(),
@@ -189,6 +189,37 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   void _handleReset() {
     _hydrateFromProfile(widget.initialProfile);
     widget.onReset();
+  }
+
+  Future<void> _pickBirthDate() async {
+    if (widget.isReadOnly) {
+      return;
+    }
+
+    final currentValue = _parseBirthDate(_birthDateController.text.trim());
+    final now = DateTime.now();
+    final initialDate = currentValue ?? DateTime(now.year - 18, now.month, now.day);
+    final firstDate = DateTime(now.year - 120, 1, 1);
+    final lastDate = DateTime(now.year, now.month, now.day);
+
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate.isBefore(firstDate)
+          ? firstDate
+          : initialDate.isAfter(lastDate)
+          ? lastDate
+          : initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+
+    if (selectedDate == null) {
+      return;
+    }
+
+    setState(() {
+      _birthDateController.text = _formatBirthDate(selectedDate);
+    });
   }
 
   @override
@@ -223,7 +254,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
           ],
           _SectionHeader(
             title: 'Identity',
-            description: 'Name, birth date, gender, and language details.',
+            description:
+                'First name is required; second name and middle name are optional if you normally use them.',
           ),
           const SizedBox(height: 16),
           _buildTwoColumnRow(
@@ -271,15 +303,21 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
           _buildTwoColumnRow(
             first: _ProfileTextField(
               controller: _birthDateController,
-              label: 'Birth date',
-              hintText: 'YYYY-MM-DD',
+              label: 'Birth date (Optional)',
+              hintText: 'MM/DD/YYYY',
               icon: Icons.cake_outlined,
               keyboardType: TextInputType.datetime,
               validator: _optionalBirthDateValidator,
               textInputAction: TextInputAction.next,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9-]')),
-              ],
+              readOnly: true,
+              onTap: _pickBirthDate,
+              suffixIcon: IconButton(
+                onPressed: widget.isSubmitting ? null : _pickBirthDate,
+                icon: const Icon(
+                  Icons.calendar_month_outlined,
+                  color: AppColors.textSecondary,
+                ),
+              ),
             ),
             second: BottomSheetSelectFormField<String>(
               value: _gender,
@@ -633,6 +671,9 @@ class _ProfileTextField extends StatelessWidget {
     required this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
+    this.readOnly = false,
+    this.onTap,
+    this.suffixIcon,
   });
 
   final TextEditingController controller;
@@ -643,6 +684,9 @@ class _ProfileTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -652,11 +696,14 @@ class _ProfileTextField extends StatelessWidget {
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       textInputAction: textInputAction,
+      readOnly: readOnly,
+      onTap: onTap,
       style: AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimary),
       decoration: InputDecoration(
         label: Text(label),
         hintText: hintText,
         prefixIcon: Icon(icon, color: AppColors.textSecondary),
+        suffixIcon: suffixIcon,
       ),
     );
   }
@@ -758,14 +805,9 @@ String? _optionalBirthDateValidator(String? value) {
     return null;
   }
 
-  final match = RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(text);
-  if (!match) {
-    return 'Use YYYY-MM-DD';
-  }
-
-  final parsed = DateTime.tryParse('${text}T00:00:00Z');
-  if (parsed == null) {
-    return 'Enter a valid date';
+  final parsedDate = _parseBirthDate(text);
+  if (parsedDate == null) {
+    return 'Use MM/DD/YYYY';
   }
 
   return null;
@@ -825,4 +867,53 @@ List<TextInputFormatter> _addressInputFormatters() {
   return <TextInputFormatter>[
     FilteringTextInputFormatter.allow(RegExp(r"[A-Za-zÀ-ÿ0-9' .,\-/#()]")),
   ];
+}
+
+String _formatBirthDate(DateTime dateTime) {
+  final month = dateTime.month.toString().padLeft(2, '0');
+  final day = dateTime.day.toString().padLeft(2, '0');
+  return '$month/$day/${dateTime.year}';
+}
+
+String _formatBirthDateForDisplay(String rawValue) {
+  final dateTime = _parseBirthDate(rawValue);
+  if (dateTime == null) {
+    return rawValue.trim();
+  }
+
+  return _formatBirthDate(dateTime);
+}
+
+String _formatBirthDateForApi(String rawValue) {
+  final dateTime = _parseBirthDate(rawValue);
+  if (dateTime == null) {
+    return rawValue.trim();
+  }
+
+  final month = dateTime.month.toString().padLeft(2, '0');
+  final day = dateTime.day.toString().padLeft(2, '0');
+  return '${dateTime.year}-$month-$day';
+}
+
+DateTime? _parseBirthDate(String rawValue) {
+  final text = rawValue.trim();
+  if (text.isEmpty) {
+    return null;
+  }
+
+  final mmDdYyyy = RegExp(r'^(\d{2})/(\d{2})/(\d{4})$').firstMatch(text);
+  if (mmDdYyyy != null) {
+    final month = int.tryParse(mmDdYyyy.group(1) ?? '');
+    final day = int.tryParse(mmDdYyyy.group(2) ?? '');
+    final year = int.tryParse(mmDdYyyy.group(3) ?? '');
+    if (month == null || day == null || year == null) {
+      return null;
+    }
+
+    return DateTime.tryParse(
+      '${year.toString().padLeft(4, '0')}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}T00:00:00Z',
+    );
+  }
+
+  return DateTime.tryParse('${text}T00:00:00Z');
 }

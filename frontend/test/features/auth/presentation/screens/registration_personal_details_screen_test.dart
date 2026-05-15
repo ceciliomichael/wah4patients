@@ -21,6 +21,12 @@ void main() {
 
       expect(find.byType(AuthSurfaceCard), findsNothing);
       expect(find.text('Tell us your name'), findsOneWidget);
+      expect(
+        find.text(
+          'First name is required. Second name and middle name are optional, so only enter them if they are part of your name.',
+        ),
+        findsOneWidget,
+      );
       expect(find.text('First name *'), findsOneWidget);
       expect(find.text('Second name (Optional)'), findsOneWidget);
       expect(find.text('Middle name (Optional)'), findsOneWidget);

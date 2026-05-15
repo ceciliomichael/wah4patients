@@ -1,0 +1,125 @@
+Test scenarios,,,SEANN,ANNA,CARLA,HAZER,PAUL,KRISHA,MIKA,TOPS,TON,GREGG,MAVS,ARIES,FILSON
+UAT-01,Open the app from a fresh start.,The splash screen appears without errors.,,NEED TO RENAME FOR PROPER BRANDING,,"PASS 
+
+However, If the splash screen is accidentally skipped, the splash screen will no longer appear and the app will go directly to the login page when the app is relaunched.",PASS,PASS,,PASS,PASS,PASS,no logo icon and app name provided (PASS),Pass,P
+UAT-02,Wait for the app to finish its startup check.,The app routes to the correct next screen based on the user state.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,Pass,Pass,P
+UAT-03,Relaunch the app after it has already been used.,The app returns to the expected authenticated or onboarding path without looping.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,Pass,Pass,
+2) Onboarding flow,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-04,Start from the first onboarding screen.,The onboarding content is readable and the page layout is correct.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,pass,Pass,P
+UAT-05,Tap through each onboarding page in sequence.,Each next screen loads correctly and the controls work.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,pass,Pass,P
+UAT-06,Move back to a previous onboarding page if that option is available.,Back navigation works and preserves the current flow state.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,pass,Pass,P
+UAT-07,Complete onboarding to the final step.,The app proceeds to the next intended screen without error.,,PASS,,PASS,PASS,PASS,,PASS,PASS,PASS,pass,Pass,P
+"3) Registration, login, and password recovery",,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-08,Open the registration flow.,Registration screens load in the correct order.,,PASS,,PASS,PASS,PASS,,PASS,PASS,"PASS (Suggestion: Option to save login credentials(use Fingerprint that can use for sign in, no need to input email or password)",pass (can sign up continue same email ),Pass,P
+UAT-09,Enter valid registration details.,The app accepts the data and continues to the next step.,,,,PASS,PASS,2ND NAME? Optional indicator if applicable,,PASS,PASS,PASS,First Name and second name must be togetherno confirmation in saving,First name and second name should be 1 field to avoid confusion,second name can cause misconception
+UAT-11,Set a password that meets the validation rules.,The password is accepted and saved.,,PRIVACY STATEMENT IS EMPTY,,"PASS
+
+Add special character as one of the requirements for setting a Password","PASS
+
+However, the privacy statement is empty",PASS,,if the password is not same there is no indicator,"PASS
+
+Extend the email verification code time for users with weak signal or senior citizens.
+
+The registration page must retain data when going back.
+
+MPIN setup must have reset",PASS,Pass(validation message not noticeable it is snack bar just make it toast or toast at top or bottom to more visible or make red border in the input fields),"There is no immediate indication of whether or not the 2 passwords are the same. Only the requirements of the password is shown. When confirmation MPIN is wrong, it does not go to the set MPIN page but trather wants to confirm the MPIN. Suggestion: when the confirmation MPIN is wrong go back to the setting of the MPIN.","Navigation gusto ko mag back into password, email, name"
+UAT-12,"Log out, then log back in with valid credentials.",Login succeeds and the user returns to the expected landing screen.,,PASS,,PASS,PASS,PASS,,"FAIL cant proceed
+PASS use different email and restart the app",,"PASS (Suggestion: Option to save login credentials(use Fingerprint that can use for sign in, no need to input email or password)",Pass,"Redundancy in password. For first login MPIN shouldn't be needed since email and password is provided initially. Succeeding logins will use MPIN, to verify that the account holder is the user.",
+UAT-13,Use the forgot-password flow with a valid account.,The reset flow starts and the user receives the expected next-step instruction.,,PASS,,"PASS
+
+Also add reset MPIN",PASS,PASS,,PASS,,"PASS (When OTP is incorrect, toast message is comlicated)",pass,Suggestion: When changing MPIN there should be an option to input the password or send it to the email. (Input password reduces the hassle of opening and new tab and entering a new OTP.),"Link instead of OTP, can set the same old password,  Forgot MPIN?"
+UAT-14,Complete the reset-password/new-password flow if available.,The new password is accepted and the account can log in again.,,USED OLD PASSWORD FOR CREATING NEW PASSWORD AND GOT ACCEPTED,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,
+UAT-15,Test the sync code or verification code screen if it is included in the build.,The code is accepted and the user continues without error.,,,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,
+4) Patient record linking,,,,,,,,,,PASS,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-16,Open the patient record linking introduction screen.,The screen explains the linking flow clearly.,,,,,,,,,,,failed,,
+UAT-17,Enter a valid patient identifier.,The identifier is accepted without format errors.,,,,,,,,,,,failed,,
+UAT-18,Select a facility or provider from the list.,The correct target can be selected and confirmed.,,,,,,,,,,,failed,,
+UAT-19,Complete the linking flow.,The app shows the link as completed or pending as expected.,,,,,,,,,,,failed,,
+UAT-20,Try an invalid or incomplete identifier.,The app shows a clear validation message and blocks submission.,,,,,,,,,,,failed,,
+5) Dashboard and navigation,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-21,Open the dashboard after login.,The dashboard loads correctly and the layout is stable.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,"P, but comment Caching data"
+UAT-22,"Tap each visible card, menu item, or shortcut.",Each item opens the correct section.,,PASS,,PASS,PASS,PASS,,BP range indicator incorrect,,PASS,pass,The complete set-up keeps popping up if the user hasn't finished setting up. I think its better if the user has a button to complete set-up rather than popping up each time the user access the home page.,P
+UAT-23,Return to the dashboard from a child screen.,The app returns to the correct place without losing state unexpectedly.,,PASS,,PASS,PASS,PASS,,PaSS,,PASS,pass,Pass,P
+UAT-24,Rotate the device or change screen size if supported.,The layout remains readable and usable.,,PASS,,PASS,Can't scroll down calendar on landscape,PASS,,Calendar can't bescrolled down when the screen is set to landscape,,PASS,pass,"Suggestion: A zoom function since some patients, have a hard time reading characters on the screen. Or adjust the font size for reader accessibility.",P
+6) Profile and personal information,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-25,Open the profile screen.,The user profile screen loads successfully.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,Pass,P
+UAT-26,Open personal information.,The personal information screen loads and shows the current values.,,PASS,,PASS,PASS,"NO CALENDAR PROMPT/ WRONG FORMAT SHOULD BE MONTH, DAY & YEAR. then nasave kahit walang nakalagay na birth date, must have (optional) indicator if not required",,"BIRTHDAY FORMAT SHOULD BE MM/DD/YYYY
+AND AUTO FILL OUT FORMAT",,PASS(Suggestion: Personal Information can be divided into sections with different tabs) ,pass,Pass,P
+UAT-27,Edit a supported field such as name or phone number.,The app accepts the change and saves it correctly.,,DATA ENTRY FOR BDAY MUST FOLLOW A STRICT FORMAT,,PASS,PASS,,,PASS,,PASS(apply save changes confirmation when user tries to back),pass (I the save changes mus be sticky so visible all the time,"Suggestion: add a summary of the fields that were edited/ Add a tooltip/icon which will enable the editing of the field. When editing a field and when going back, Give the user the option to save the changes or not and give a summary of what changes was implemented.","F: Accepting  some symbols such as  artihmethic symbols, Birthdate plain text just numbers? can be ahead of time?"
+UAT-28,Save with a required field missing or invalid.,The app blocks the save and shows a helpful validation message.,,"NO INDICATOR WHICH FIELD IS REQUIRED, INTENTIONALLY LEFT FIRST NAME BLANK BUT WITH SECOND NAME, BUT PROCEEDED IN SAVING 2ND NAME ONLY",,"If the first name field is left blank and “Save Changes” is clicked, the second, middle, or last name is automatically moved to the first name field, indicating that the first name is required. However, there are no indicators or promt message showing that the field is required.","If the first name is left blank and save changes is clicked, it will automatically move the second,middle,or last name as the first name, which shows that the first name is required. However there are no indicators that show that it is required",MUST GIVE (OPTIONAL) INDICATOR WHICH FIELD IS REQUIRED,,SHOULD REDIRECT YOU TO REQUIRED FIELD AFTER SAVING IF DID NOT MET ANY REQUIRED FIELD,,PASS ,cannot i dentify where is the required field no confirmation in saving,Note: When deleting the value of the necessary fields and clicking save it resets to the original values. For me this shouldn't happen if the values are deleted and when clicking save it should prevent the user from saving changes if the necessary fields have invalid values.,P
+UAT-29,Reopen the profile after saving.,The saved values persist and match the input.,,PASS,,,PASS,PASS,,PASS,,PASS,pass,The data is restored to the previous values for necessary values.,P
+7) Personal health record screens,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-30,Open the BMI screen.,The BMI screen loads correctly.,,AGE MUST AUTO COMPUTE BASED ON PATIENT'S BDAY,,"PASS
+
+Add option to edit",PASS,PASS,,PASS EDIT OPTION AND PUT ARE YOU SURE YOU WANT TO SAVE INDICATOR,,PASS,pass,pass,P
+UAT-31,Enter a height and weight sample value if editing is available.,The app accepts valid values and shows the expected BMI result.,,"-BMI SAVED NOT REFLECTING IMMEDIATELY ON THE DASHBOARD AFTER SAVING
+-""-MULTIPLE RECORDINGS MUST CONTAIN TIME STAMP
+-ADD EDIT AND DELETE OPTIONS
+-ADD NOTIFICATION OF SUCCESFULL SAVING
+-LIMIT ACCEPTABLE VALUE FOR DATA ENTRY""",,PASS,PASS,PASS,,PASS,,PASS,can add but cannot update or delete no confirmation in saving,Suggestion: simplify the BMI by removing the imperial since it is not used here in the Philippines. The should be automatically computed based on their birth date.A confirmation page and summary of the data should be provided to ensure that the data being inputted is correct.,P: should support other unit of measurement or atleast a converter
+Blood pressure,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-32,Open the blood pressure screen.,The screen loads correctly.,,PASS,,PASS,PASS,PASS,,PASS,,PASS ,pass,pass,P
+UAT-33,Enter a valid blood pressure reading if editing is available.,The app accepts the values and displays the record properly.,,"-MULTIPLE RECORDINGS MUST CONTAIN TIME STAMP
+-ADD EDIT AND DELETE OPTIONS
+-ADD NOTIFICATION OF SUCCESFULL SAVING
+-LIMIT ACCEPTABLE VALUE FOR DATA ENTRY",,"Add Time in records display and Option to edit
+
+","Displayed the recorded data correctly however, the category shows stage 1 hypertension for a 130/80 blood pressure even though it should show Elevated. It also showed stage 1 hypertension on a reading of 120/80 even though that is the normal value",,,BP INDICATOR RANGE INCORRECT,,"PASS(Save new reading must not be clicked multiple times to avoid duplication, also Data must be sorted from old to latest in history section)",can add but cannot update or delete no confirmation in saving,A confirmation page and summary should be provided in order to make sure the data is correct and accurate. ,P: time should be included on the lables on history
+Temperature,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-34,Open the temperature screen.,The screen loads correctly.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,P: kay rylie daw po pop up for confirmations with summaries
+UAT-35,Enter a valid temperature reading if editing is available.,The app accepts the value and displays it correctly.,,"-MULTIPLE RECORDINGS MUST CONTAIN TIME STAMP
+-ADD EDIT AND DELETE OPTIONS
+-ADD NOTIFICATION OF SUCCESFULL SAVING
+-LIMIT ACCEPTABLE VALUE FOR DATA ENTRY",,Limit data entry,PASS,PASS,,PASS LIMIT THE INTEGERS,,"PASS(Save Temperature must not be clicked multiple times to avoid duplication, also Data must be sorted from old to new in history section)",can add but cannot update or delete no confirmation in saving,Simplify the process by removing Fahrenheit since that metric system is not commonly used here in the Philippines. ,"P: limitting the buttons press, to prevent spamming, Time stamp on history"
+Medicine intake,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+ ,Open the medicine intake screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-37,Record or review a medication intake entry if available.,The entry is saved or displayed as expected.,,,,,,,,,,,,,
+8) EHR screens,,,,,,,,,,,,,,,
+Medical history,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-38,Open the medical history screen.,The screen loads without errors.,,,,,,,,,,,,,
+UAT-39,Review any available history cards or entries.,The entries are readable and correctly formatted.,,,,,,,,,,,,,
+Immunization records,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-40,Open the immunization records screen.,The screen loads without errors.,,,,,,,,,,,,,
+UAT-41,Review any available immunization entries.,Each record shows the correct vaccine details and dates.,,,,,,,,,,,,,
+Medical consultations,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-42,Open the medical consultations screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-43,Review any consultation entries.,The consultation details are visible and accurate.,,,,,,,,,,,,,
+Laboratory test results,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-44,Open the laboratory test results screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-45,Open a lab result if one is present.,"The result details, status, and attachment links display correctly.",,,,,,,,,,,,,
+9) Medication resupply flow,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-46,Open the medication resupply landing screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-47,Open active prescriptions.,The prescription list appears with the expected items.,,,,,,,,,,,,,
+UAT-48,Open the prescription viewer.,The selected prescription opens correctly and remains read-only.,,,,,,,,,,,,,
+UAT-49,Open the request form.,The request form loads with the correct fields.,,,,,,,,,,,,,
+UAT-50,"Enter valid quantity and notes, then submit.",The request is accepted and confirmation is shown.,,,,,,,,,,,,,
+UAT-51,Try submitting an incomplete request.,The app shows validation messages and blocks submission.,,,,,,,,,,,,,
+UAT-52,Open the resupply history screen.,Submitted or test entries appear with the correct status.,,,,,,,,,,,,,
+10) Appointment booking,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-53,Open the onsite consultation screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-54,Enter the required appointment information and submit.,The app accepts the request and shows a confirmation or next step.,,,,,,,,,,,,,
+UAT-55,Open the teleconsultation screen.,The screen loads correctly.,,,,,,,,,,,,,
+UAT-56,Enter valid teleconsultation details and submit.,The request is accepted without errors.,,,,,,,,,,,,,
+UAT-57,Try submitting with missing required appointment details.,The app blocks submission and explains what is missing.,,,,,,,,,,,,,
+11) Support / legal / informational screens,,,,,,,,,,,,,,,
+Test ID,Steps,Expected result,,,,,,,,,,,,,
+UAT-58,Open About Us from profile or menu.,The page loads and text is readable.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,P
+UAT-59,Open About App from profile or menu.,The page loads and text is readable.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,P
+UAT-60,Open Privacy Statement if it is included in the build.,The page loads and displays the correct policy content.,,PASS,,PASS,PASS,PASS,,PASS,,PASS,pass,pass,P
+Evidence to capture,,,,,,,,,,,,,,,
+"For each failed case, record:",,,,,,,,,,,,,,"Suggestion: In order to avoid the duplication of data and multiple account creation of each user, I think its better if the hospital, RHU, clinic would take the email or phone number of the patient and add to the new account page. If they used an email it would send a link to account creation, if sent to the phone number an OTP will be given and be used during account creation.",

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
@@ -109,12 +110,6 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
     }
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.primary),
-    );
-  }
-
   List<MedicineIntakeEntry> get _filteredMedicines {
     final normalizedQuery = _searchQuery.toLowerCase();
 
@@ -162,7 +157,9 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      _showSnackBar('Please sign in again to save medicine records.');
+      AppNotificationCenter.instance.showWarning(
+        'Please sign in again to save medicine records.',
+      );
       return;
     }
 
@@ -187,9 +184,11 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
         _medicines.insert(0, entry);
       });
 
-      _showSnackBar('Medicine saved to the database.');
+      AppNotificationCenter.instance.showSuccess(
+        'Medicine saved to the database.',
+      );
     } on PersonalRecordsApiException catch (error) {
-      _showSnackBar(error.message);
+      AppNotificationCenter.instance.showError(error.message);
     }
   }
 

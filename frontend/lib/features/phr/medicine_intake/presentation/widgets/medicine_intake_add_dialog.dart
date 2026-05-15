@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../app/app_notification_center.dart';
 import '../../../../../core/constants/app_border_radii.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
@@ -43,11 +44,8 @@ class _MedicineIntakeAddDialogState extends State<MedicineIntakeAddDialog> {
     final notes = _notesController.text.trim();
 
     if (name.isEmpty || dosage.isEmpty || schedule.isEmpty || nextDose.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fill out name, dosage, schedule, and next dose.'),
-          backgroundColor: AppColors.primary,
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Fill out name, dosage, schedule, and next dose.',
       );
       return;
     }

@@ -12013,6 +12013,1009 @@
       ],
       "createdAt": "2026-05-12T17:46:57.725Z",
       "updatedAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "memoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "rootMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [
+        "ff5caf06-9246-4b40-947c-d5d5916675d8"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a first pass of UI-only fixes from the APC testing comments while explicitly avoiding sync/interoperability changes. Updated splash branding, added stronger password validation and a live password mismatch notice, improved the personal-information birth-date field with a date picker and MM/DD/YYYY display, and made the dashboard profile-completion prompt dismiss reliably. Added targeted tests for the new splash branding, password validator, and adjusted profile screen expectations. Verified the updated frontend tests passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_validators.dart",
+          "action": "modified",
+          "reason": "Expanded password policy to require a special character and surfaced that requirement in validation responses and requirement lists.",
+          "notes": "This is part of the password-registration UI hardening."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Improved password registration UX with live mismatch feedback and privacy-statement navigation to the real legal screen.",
+          "notes": "No sync/interoperability code was changed."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Changed the profile-completion prompt lifecycle so close/complete actions dismiss it and stop repeat popup loops.",
+          "notes": "Only local dashboard UI behavior changed."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Upgraded birth-date entry UX with a date picker, formatted display, and safe serialization for saves.",
+          "notes": "This keeps the profile screen more usable without altering sync logic."
+        },
+        {
+          "path": "frontend/lib/features/splash/presentation/splash_screen.dart",
+          "action": "modified",
+          "reason": "Added explicit branding text to the splash screen so the app name is visible during startup.",
+          "notes": "This addresses the branding-related UI comment."
+        },
+        {
+          "path": "frontend/test/widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the startup test to match the actual startup gate used by the app.",
+          "notes": "The test now checks the startup gate text instead of the splash widget."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted profile-screen expectations to match the updated birth-date label and optional indicator wording.",
+          "notes": "Keeps the UI test aligned with the new form copy."
+        },
+        {
+          "path": "frontend/test/features/auth/domain/auth_validators_test.dart",
+          "action": "created",
+          "reason": "Added focused unit coverage for the new special-character password rule and requirement list.",
+          "notes": "New test file under the auth domain test area."
+        },
+        {
+          "path": "frontend/test/features/splash/presentation/splash_screen_test.dart",
+          "action": "created",
+          "reason": "Added a direct splash-screen UI test to verify the new branding text appears.",
+          "notes": "New test file under splash presentation tests."
+        }
+      ],
+      "createdAt": "2026-05-14T09:47:22.055Z",
+      "updatedAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "memoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "rootMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "parentMemoryIds": [
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [
+        "c135e93c-db68-4948-8ddd-5efd17a9f839"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a first pass of UI-only fixes from the APC testing comments while explicitly avoiding sync/interoperability changes. Updated splash branding, added stronger password validation and a live password mismatch notice, improved the personal-information birth-date field with a date picker and MM/DD/YYYY display, and made the dashboard profile-completion prompt dismiss reliably. Added targeted tests for the new splash branding, password validator, and adjusted profile screen expectations. Verified the updated frontend tests passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_validators.dart",
+          "action": "modified",
+          "reason": "Expanded password policy to require a special character and surfaced that requirement in validation responses and requirement lists.",
+          "notes": "This is part of the password-registration UI hardening."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Improved password registration UX with live mismatch feedback and privacy-statement navigation to the real legal screen.",
+          "notes": "No sync/interoperability code was changed."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Changed the profile-completion prompt lifecycle so close/complete actions dismiss it and stop repeat popup loops.",
+          "notes": "Only local dashboard UI behavior changed."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Upgraded birth-date entry UX with a date picker, formatted display, and safe serialization for saves.",
+          "notes": "This keeps the profile screen more usable without altering sync logic."
+        },
+        {
+          "path": "frontend/lib/features/splash/presentation/splash_screen.dart",
+          "action": "modified",
+          "reason": "Added explicit branding text to the splash screen so the app name is visible during startup.",
+          "notes": "This addresses the branding-related UI comment."
+        },
+        {
+          "path": "frontend/test/widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the startup test to match the actual startup gate used by the app.",
+          "notes": "The test now checks the startup gate text instead of the splash widget."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted profile-screen expectations to match the updated birth-date label and optional indicator wording.",
+          "notes": "Keeps the UI test aligned with the new form copy."
+        },
+        {
+          "path": "frontend/test/features/auth/domain/auth_validators_test.dart",
+          "action": "created",
+          "reason": "Added focused unit coverage for the new special-character password rule and requirement list.",
+          "notes": "New test file under the auth domain test area."
+        },
+        {
+          "path": "frontend/test/features/splash/presentation/splash_screen_test.dart",
+          "action": "created",
+          "reason": "Added a direct splash-screen UI test to verify the new branding text appears.",
+          "notes": "New test file under splash presentation tests."
+        }
+      ],
+      "createdAt": "2026-05-14T09:47:22.194Z",
+      "updatedAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "memoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "rootMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "parentMemoryIds": [
+        "ff5caf06-9246-4b40-947c-d5d5916675d8"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a first pass of UI-only fixes from the APC testing comments while explicitly avoiding sync/interoperability changes. Updated splash branding, added stronger password validation and a live password mismatch notice, improved the personal-information birth-date field with a date picker and MM/DD/YYYY display, and made the dashboard profile-completion prompt dismiss reliably. Added targeted tests for the new splash branding, password validator, and adjusted profile screen expectations. Verified the updated frontend tests passed.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_validators.dart",
+          "action": "modified",
+          "reason": "Expanded password policy to require a special character and surfaced that requirement in validation responses and requirement lists.",
+          "notes": "This is part of the password-registration UI hardening."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Improved password registration UX with live mismatch feedback and privacy-statement navigation to the real legal screen.",
+          "notes": "No sync/interoperability code was changed."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Changed the profile-completion prompt lifecycle so close/complete actions dismiss it and stop repeat popup loops.",
+          "notes": "Only local dashboard UI behavior changed."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Upgraded birth-date entry UX with a date picker, formatted display, and safe serialization for saves.",
+          "notes": "This keeps the profile screen more usable without altering sync logic."
+        },
+        {
+          "path": "frontend/lib/features/splash/presentation/splash_screen.dart",
+          "action": "modified",
+          "reason": "Added explicit branding text to the splash screen so the app name is visible during startup.",
+          "notes": "This addresses the branding-related UI comment."
+        },
+        {
+          "path": "frontend/test/widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the startup test to match the actual startup gate used by the app.",
+          "notes": "The test now checks the startup gate text instead of the splash widget."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Adjusted profile-screen expectations to match the updated birth-date label and optional indicator wording.",
+          "notes": "Keeps the UI test aligned with the new form copy."
+        },
+        {
+          "path": "frontend/test/features/auth/domain/auth_validators_test.dart",
+          "action": "created",
+          "reason": "Added focused unit coverage for the new special-character password rule and requirement list.",
+          "notes": "New test file under the auth domain test area."
+        },
+        {
+          "path": "frontend/test/features/splash/presentation/splash_screen_test.dart",
+          "action": "created",
+          "reason": "Added a direct splash-screen UI test to verify the new branding text appears.",
+          "notes": "New test file under splash presentation tests."
+        }
+      ],
+      "createdAt": "2026-05-14T09:47:22.326Z",
+      "updatedAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "memoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "rootMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d",
+        "c135e93c-db68-4948-8ddd-5efd17a9f839",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the next round of APC testing fixes for the auth/profile cluster. UAT-09 was clarified with explicit name guidance in registration and profile forms, the email verification resend cooldown was increased, MPIN confirmation now returns the user to setup when the code mismatches, and MPIN login now offers a recovery path into password reset. The fix-status checklist in for-fixing.md was updated to mark UAT-09 as fixed while keeping broader MPIN/recovery items open.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\for-fixing.md",
+          "action": "modified",
+          "reason": "Updated the fix-status checklist so UAT-09 is tracked as fixed and no longer listed as open.",
+          "notes": "Kept the interoperability/sync checklist group unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Added helper text clarifying that second name and middle name are optional to address UAT-09 confusion.",
+          "notes": "No navigation or backend behavior changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the profile identity section copy so the same name-field clarification appears in profile editing.",
+          "notes": "Keeps the naming guidance consistent across registration and profile editing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Extended the resend cooldown window to better match the UAT feedback about verification timing.",
+          "notes": "Set the initial cooldown to 90 seconds."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_setup_screen.dart",
+          "action": "modified",
+          "reason": "Made the setup screen handle a failed MPIN confirmation result and show an inline retry error instead of leaving the user in a dead-end state.",
+          "notes": "Uses the confirmation route result to detect mismatch."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_confirm_screen.dart",
+          "action": "modified",
+          "reason": "Changed mismatch handling so the confirm screen returns to the setup step instead of staying on the same screen.",
+          "notes": "Successful save flow remains unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_login_screen.dart",
+          "action": "modified",
+          "reason": "Added a secondary recovery action that routes users into the existing forgot-password flow with the email prefilled.",
+          "notes": "This gives a clear recovery entry point without adding a new backend flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\auth\\presentation\\screens\\registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the registration personal-details widget test to assert the new helper text, so the UAT-09 clarification is covered by an automated test.",
+          "notes": "Existing requirement-label assertions remain in place."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Confirmed the forgot-password route accepts a plain email string, which made the new MPIN recovery entry point safe to wire.",
+          "notes": "No changes required."
+        }
+      ],
+      "createdAt": "2026-05-14T10:37:51.182Z",
+      "updatedAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "memoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "rootMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "parentMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17"
+      ],
+      "relatedMemoryIds": [
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d",
+        "c135e93c-db68-4948-8ddd-5efd17a9f839",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the next round of APC testing fixes for the auth/profile cluster. UAT-09 was clarified with explicit name guidance in registration and profile forms, the email verification resend cooldown was increased, MPIN confirmation now returns the user to setup when the code mismatches, and MPIN login now offers a recovery path into password reset. The fix-status checklist in for-fixing.md was updated to mark UAT-09 as fixed while keeping broader MPIN/recovery items open.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\for-fixing.md",
+          "action": "modified",
+          "reason": "Updated the fix-status checklist so UAT-09 is tracked as fixed and no longer listed as open.",
+          "notes": "Kept the interoperability/sync checklist group unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Added helper text clarifying that second name and middle name are optional to address UAT-09 confusion.",
+          "notes": "No navigation or backend behavior changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the profile identity section copy so the same name-field clarification appears in profile editing.",
+          "notes": "Keeps the naming guidance consistent across registration and profile editing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Extended the resend cooldown window to better match the UAT feedback about verification timing.",
+          "notes": "Set the initial cooldown to 90 seconds."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_setup_screen.dart",
+          "action": "modified",
+          "reason": "Made the setup screen handle a failed MPIN confirmation result and show an inline retry error instead of leaving the user in a dead-end state.",
+          "notes": "Uses the confirmation route result to detect mismatch."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_confirm_screen.dart",
+          "action": "modified",
+          "reason": "Changed mismatch handling so the confirm screen returns to the setup step instead of staying on the same screen.",
+          "notes": "Successful save flow remains unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_login_screen.dart",
+          "action": "modified",
+          "reason": "Added a secondary recovery action that routes users into the existing forgot-password flow with the email prefilled.",
+          "notes": "This gives a clear recovery entry point without adding a new backend flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\auth\\presentation\\screens\\registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the registration personal-details widget test to assert the new helper text, so the UAT-09 clarification is covered by an automated test.",
+          "notes": "Existing requirement-label assertions remain in place."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Confirmed the forgot-password route accepts a plain email string, which made the new MPIN recovery entry point safe to wire.",
+          "notes": "No changes required."
+        }
+      ],
+      "createdAt": "2026-05-14T10:37:51.344Z",
+      "updatedAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "memoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "rootMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "parentMemoryIds": [
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "relatedMemoryIds": [
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d",
+        "c135e93c-db68-4948-8ddd-5efd17a9f839",
+        "6e4520b9-87d2-4e6f-a696-d954832b323b",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the next round of APC testing fixes for the auth/profile cluster. UAT-09 was clarified with explicit name guidance in registration and profile forms, the email verification resend cooldown was increased, MPIN confirmation now returns the user to setup when the code mismatches, and MPIN login now offers a recovery path into password reset. The fix-status checklist in for-fixing.md was updated to mark UAT-09 as fixed while keeping broader MPIN/recovery items open.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\for-fixing.md",
+          "action": "modified",
+          "reason": "Updated the fix-status checklist so UAT-09 is tracked as fixed and no longer listed as open.",
+          "notes": "Kept the interoperability/sync checklist group unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Added helper text clarifying that second name and middle name are optional to address UAT-09 confusion.",
+          "notes": "No navigation or backend behavior changed."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Adjusted the profile identity section copy so the same name-field clarification appears in profile editing.",
+          "notes": "Keeps the naming guidance consistent across registration and profile editing."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Extended the resend cooldown window to better match the UAT feedback about verification timing.",
+          "notes": "Set the initial cooldown to 90 seconds."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_setup_screen.dart",
+          "action": "modified",
+          "reason": "Made the setup screen handle a failed MPIN confirmation result and show an inline retry error instead of leaving the user in a dead-end state.",
+          "notes": "Uses the confirmation route result to detect mismatch."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_confirm_screen.dart",
+          "action": "modified",
+          "reason": "Changed mismatch handling so the confirm screen returns to the setup step instead of staying on the same screen.",
+          "notes": "Successful save flow remains unchanged."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_login_screen.dart",
+          "action": "modified",
+          "reason": "Added a secondary recovery action that routes users into the existing forgot-password flow with the email prefilled.",
+          "notes": "This gives a clear recovery entry point without adding a new backend flow."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\auth\\presentation\\screens\\registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Extended the registration personal-details widget test to assert the new helper text, so the UAT-09 clarification is covered by an automated test.",
+          "notes": "Existing requirement-label assertions remain in place."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_router.dart",
+          "action": "inspected",
+          "reason": "Confirmed the forgot-password route accepts a plain email string, which made the new MPIN recovery entry point safe to wire.",
+          "notes": "No changes required."
+        }
+      ],
+      "createdAt": "2026-05-14T10:37:51.513Z",
+      "updatedAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "memoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "rootMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0"
+      ],
+      "childMemoryIds": [
+        "5a145c59-7615-4a96-ae34-39de504ed74f"
+      ],
+      "sectionKind": "fact",
+      "summary": "Planned a repo-wide migration from ScaffoldMessenger snackbars to a reusable top-of-screen notification card in the Flutter frontend. Discovery showed about 57 snackbar callsites across 21 files, mostly in auth, PHR, profile, interoperability, and appointments screens plus one dialog. The proposed design is a shared notification banner component plus a global controller/service mounted at the app root so notifications can slide down from the top and work from any screen or dialog.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "This is the MaterialApp entrypoint and likely host for the global notification system.",
+          "notes": "Contains the existing navigator key and theme setup."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_colors.dart",
+          "action": "inspected",
+          "reason": "Needed to understand the current palette and avoid introducing conflicting notification colors.",
+          "notes": "Current primary color is purple, but the new notification should not rely on purple tint."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_border_radii.dart",
+          "action": "inspected",
+          "reason": "Needed to match the existing rounded card language for the notification surface.",
+          "notes": "All shared radii resolve to a 20px rounded style."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Needed to keep typography consistent inside the notification card.",
+          "notes": "Provides the reusable body/title styles used across shared UI."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_bottom_sheet_widget.dart",
+          "action": "inspected",
+          "reason": "Shows existing shared surface composition patterns for reusable feature-level widgets.",
+          "notes": "Useful styling reference for a new notification card/host."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/buttons/primary_button_widget.dart",
+          "action": "inspected",
+          "reason": "Shows shared widget organization and styling conventions for reusable UI primitives.",
+          "notes": "Confirms the repo favors explicit reusable UI components."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Shows how shared widgets are structured and how overlays are used in the codebase.",
+          "notes": "Useful reference for building a reusable notification host or overlay behavior."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/calendar_view_mode_dropdown.dart",
+          "action": "inspected",
+          "reason": "Contains an existing OverlayEntry pattern that can inform the new notification animation/placement approach.",
+          "notes": "Demonstrates the codebase already uses overlays for floating UI."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_filter_dropdown.dart",
+          "action": "inspected",
+          "reason": "Provides another overlay pattern and cleanup behavior example for floating UI components.",
+          "notes": "Useful for lifecycle and dismissal handling."
+        },
+        {
+          "path": "frontend/pubspec.yaml",
+          "action": "inspected",
+          "reason": "Needed to confirm available dependencies and avoid planning around a package that is not present.",
+          "notes": "No extra animation package is currently declared."
+        }
+      ],
+      "createdAt": "2026-05-14T18:16:12.832Z",
+      "updatedAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "memoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "rootMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "parentMemoryIds": [
+        "e7f2dc22-09c4-465f-84a4-2413814c9090"
+      ],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0"
+      ],
+      "childMemoryIds": [
+        "992b57a3-9621-4d0f-825c-6bb797be2e73"
+      ],
+      "sectionKind": "decision",
+      "summary": "Planned a repo-wide migration from ScaffoldMessenger snackbars to a reusable top-of-screen notification card in the Flutter frontend. Discovery showed about 57 snackbar callsites across 21 files, mostly in auth, PHR, profile, interoperability, and appointments screens plus one dialog. The proposed design is a shared notification banner component plus a global controller/service mounted at the app root so notifications can slide down from the top and work from any screen or dialog.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "This is the MaterialApp entrypoint and likely host for the global notification system.",
+          "notes": "Contains the existing navigator key and theme setup."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_colors.dart",
+          "action": "inspected",
+          "reason": "Needed to understand the current palette and avoid introducing conflicting notification colors.",
+          "notes": "Current primary color is purple, but the new notification should not rely on purple tint."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_border_radii.dart",
+          "action": "inspected",
+          "reason": "Needed to match the existing rounded card language for the notification surface.",
+          "notes": "All shared radii resolve to a 20px rounded style."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Needed to keep typography consistent inside the notification card.",
+          "notes": "Provides the reusable body/title styles used across shared UI."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_bottom_sheet_widget.dart",
+          "action": "inspected",
+          "reason": "Shows existing shared surface composition patterns for reusable feature-level widgets.",
+          "notes": "Useful styling reference for a new notification card/host."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/buttons/primary_button_widget.dart",
+          "action": "inspected",
+          "reason": "Shows shared widget organization and styling conventions for reusable UI primitives.",
+          "notes": "Confirms the repo favors explicit reusable UI components."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Shows how shared widgets are structured and how overlays are used in the codebase.",
+          "notes": "Useful reference for building a reusable notification host or overlay behavior."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/calendar_view_mode_dropdown.dart",
+          "action": "inspected",
+          "reason": "Contains an existing OverlayEntry pattern that can inform the new notification animation/placement approach.",
+          "notes": "Demonstrates the codebase already uses overlays for floating UI."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_filter_dropdown.dart",
+          "action": "inspected",
+          "reason": "Provides another overlay pattern and cleanup behavior example for floating UI components.",
+          "notes": "Useful for lifecycle and dismissal handling."
+        },
+        {
+          "path": "frontend/pubspec.yaml",
+          "action": "inspected",
+          "reason": "Needed to confirm available dependencies and avoid planning around a package that is not present.",
+          "notes": "No extra animation package is currently declared."
+        }
+      ],
+      "createdAt": "2026-05-14T18:16:13.204Z",
+      "updatedAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "memoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "rootMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "parentMemoryIds": [
+        "5a145c59-7615-4a96-ae34-39de504ed74f"
+      ],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Planned a repo-wide migration from ScaffoldMessenger snackbars to a reusable top-of-screen notification card in the Flutter frontend. Discovery showed about 57 snackbar callsites across 21 files, mostly in auth, PHR, profile, interoperability, and appointments screens plus one dialog. The proposed design is a shared notification banner component plus a global controller/service mounted at the app root so notifications can slide down from the top and work from any screen or dialog.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "This is the MaterialApp entrypoint and likely host for the global notification system.",
+          "notes": "Contains the existing navigator key and theme setup."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_colors.dart",
+          "action": "inspected",
+          "reason": "Needed to understand the current palette and avoid introducing conflicting notification colors.",
+          "notes": "Current primary color is purple, but the new notification should not rely on purple tint."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_border_radii.dart",
+          "action": "inspected",
+          "reason": "Needed to match the existing rounded card language for the notification surface.",
+          "notes": "All shared radii resolve to a 20px rounded style."
+        },
+        {
+          "path": "frontend/lib/core/constants/app_text_styles.dart",
+          "action": "inspected",
+          "reason": "Needed to keep typography consistent inside the notification card.",
+          "notes": "Provides the reusable body/title styles used across shared UI."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_bottom_sheet_widget.dart",
+          "action": "inspected",
+          "reason": "Shows existing shared surface composition patterns for reusable feature-level widgets.",
+          "notes": "Useful styling reference for a new notification card/host."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/buttons/primary_button_widget.dart",
+          "action": "inspected",
+          "reason": "Shows shared widget organization and styling conventions for reusable UI primitives.",
+          "notes": "Confirms the repo favors explicit reusable UI components."
+        },
+        {
+          "path": "frontend/lib/core/widgets/ui/inputs/bottom_sheet_select_form_field.dart",
+          "action": "inspected",
+          "reason": "Shows how shared widgets are structured and how overlays are used in the codebase.",
+          "notes": "Useful reference for building a reusable notification host or overlay behavior."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/calendar_view_mode_dropdown.dart",
+          "action": "inspected",
+          "reason": "Contains an existing OverlayEntry pattern that can inform the new notification animation/placement approach.",
+          "notes": "Demonstrates the codebase already uses overlays for floating UI."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_filter_dropdown.dart",
+          "action": "inspected",
+          "reason": "Provides another overlay pattern and cleanup behavior example for floating UI components.",
+          "notes": "Useful for lifecycle and dismissal handling."
+        },
+        {
+          "path": "frontend/pubspec.yaml",
+          "action": "inspected",
+          "reason": "Needed to confirm available dependencies and avoid planning around a package that is not present.",
+          "notes": "No extra animation package is currently declared."
+        }
+      ],
+      "createdAt": "2026-05-14T18:16:13.357Z",
+      "updatedAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "memoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "rootMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "parentMemoryIds": [
+        "992b57a3-9621-4d0f-825c-6bb797be2e73"
+      ],
+      "relatedMemoryIds": [
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "childMemoryIds": [
+        "2059d6de-5c04-4332-9079-05088544411e"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a reusable top-of-screen notification system in the Flutter frontend and migrated snackbar callsites to it. The app now mounts a global notification host from WAH4PApp, notifications slide down as neutral cards, and screens use AppNotificationCenter instead of ScaffoldMessenger snackbars. I also added a focused widget test for the new host and updated the sync-records screen test harness to include the notification host and dismiss the shared timer state.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_notification_center.dart",
+          "action": "created",
+          "reason": "Defines the reusable global notification service, message model, severity helpers, and auto-dismiss lifecycle for the new top notification system.",
+          "notes": "Singleton service used from feature screens and tests."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_notification_host.dart",
+          "action": "created",
+          "reason": "Provides the reusable top-of-screen notification host/card UI with slide-down animation and neutral styling.",
+          "notes": "Mounted in the app root and exercised by a focused widget test."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Hosts the notification overlay at the MaterialApp level so messages are visible across the whole app.",
+          "notes": "Uses MaterialApp.builder to stack the host above routed content."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Migrated local snackbar helper calls to the shared notification service.",
+          "notes": "Uses info severity for the booking flow prompts."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Migrated all wizard prompts and backend feedback to the shared notification service.",
+          "notes": "Keeps the screen behavior but routes messages through AppNotificationCenter."
+        },
+        {
+          "path": "frontend/lib/features/phr/blood_pressure/presentation/screen/blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Replaced direct snackbar usage with shared warning/success/error notifications.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Replaced BMI validation and result snackbars with shared warning/error notifications.",
+          "notes": "Keeps user feedback consistent with the new notification surface."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/screen/medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Replaced medicine intake snackbar feedback with the shared notification service.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/widgets/medicine_intake_add_dialog.dart",
+          "action": "modified",
+          "reason": "Converted dialog validation snackbar to the shared warning notification.",
+          "notes": "Dialog now uses the same notification system as full screens."
+        },
+        {
+          "path": "frontend/lib/features/phr/temperature/presentation/screen/temperature_screen.dart",
+          "action": "modified",
+          "reason": "Replaced temperature record snackbar feedback with shared warning/error notifications.",
+          "notes": "Preserves the same text content while using the top notification card."
+        },
+        {
+          "path": "frontend/test/core/widgets/feature/app_notification_host_test.dart",
+          "action": "created",
+          "reason": "Adds focused coverage for the reusable notification host’s placement and dismissal behavior.",
+          "notes": "Uses the global service and resets state between tests."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test harness to mount the notification host and clear the global notification timer state.",
+          "notes": "Needed because the screen now uses the shared notification service instead of ScaffoldMessenger."
+        }
+      ],
+      "createdAt": "2026-05-14T18:26:58.658Z",
+      "updatedAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "memoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "rootMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "parentMemoryIds": [
+        "b1a01252-278c-42e8-99df-60c0e4feae12"
+      ],
+      "relatedMemoryIds": [
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "childMemoryIds": [
+        "558289ee-7b2e-493a-9c2d-bc33b83d6d32"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a reusable top-of-screen notification system in the Flutter frontend and migrated snackbar callsites to it. The app now mounts a global notification host from WAH4PApp, notifications slide down as neutral cards, and screens use AppNotificationCenter instead of ScaffoldMessenger snackbars. I also added a focused widget test for the new host and updated the sync-records screen test harness to include the notification host and dismiss the shared timer state.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_notification_center.dart",
+          "action": "created",
+          "reason": "Defines the reusable global notification service, message model, severity helpers, and auto-dismiss lifecycle for the new top notification system.",
+          "notes": "Singleton service used from feature screens and tests."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_notification_host.dart",
+          "action": "created",
+          "reason": "Provides the reusable top-of-screen notification host/card UI with slide-down animation and neutral styling.",
+          "notes": "Mounted in the app root and exercised by a focused widget test."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Hosts the notification overlay at the MaterialApp level so messages are visible across the whole app.",
+          "notes": "Uses MaterialApp.builder to stack the host above routed content."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Migrated local snackbar helper calls to the shared notification service.",
+          "notes": "Uses info severity for the booking flow prompts."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Migrated all wizard prompts and backend feedback to the shared notification service.",
+          "notes": "Keeps the screen behavior but routes messages through AppNotificationCenter."
+        },
+        {
+          "path": "frontend/lib/features/phr/blood_pressure/presentation/screen/blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Replaced direct snackbar usage with shared warning/success/error notifications.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Replaced BMI validation and result snackbars with shared warning/error notifications.",
+          "notes": "Keeps user feedback consistent with the new notification surface."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/screen/medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Replaced medicine intake snackbar feedback with the shared notification service.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/widgets/medicine_intake_add_dialog.dart",
+          "action": "modified",
+          "reason": "Converted dialog validation snackbar to the shared warning notification.",
+          "notes": "Dialog now uses the same notification system as full screens."
+        },
+        {
+          "path": "frontend/lib/features/phr/temperature/presentation/screen/temperature_screen.dart",
+          "action": "modified",
+          "reason": "Replaced temperature record snackbar feedback with shared warning/error notifications.",
+          "notes": "Preserves the same text content while using the top notification card."
+        },
+        {
+          "path": "frontend/test/core/widgets/feature/app_notification_host_test.dart",
+          "action": "created",
+          "reason": "Adds focused coverage for the reusable notification host’s placement and dismissal behavior.",
+          "notes": "Uses the global service and resets state between tests."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test harness to mount the notification host and clear the global notification timer state.",
+          "notes": "Needed because the screen now uses the shared notification service instead of ScaffoldMessenger."
+        }
+      ],
+      "createdAt": "2026-05-14T18:26:58.822Z",
+      "updatedAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "memoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "rootMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "parentMemoryIds": [
+        "2059d6de-5c04-4332-9079-05088544411e"
+      ],
+      "relatedMemoryIds": [
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "cf9f2136-b062-482b-9dbe-74225e08a119",
+        "baad605d-c75b-4f5e-8258-2d14f3c72e48"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a reusable top-of-screen notification system in the Flutter frontend and migrated snackbar callsites to it. The app now mounts a global notification host from WAH4PApp, notifications slide down as neutral cards, and screens use AppNotificationCenter instead of ScaffoldMessenger snackbars. I also added a focused widget test for the new host and updated the sync-records screen test harness to include the notification host and dismiss the shared timer state.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_notification_center.dart",
+          "action": "created",
+          "reason": "Defines the reusable global notification service, message model, severity helpers, and auto-dismiss lifecycle for the new top notification system.",
+          "notes": "Singleton service used from feature screens and tests."
+        },
+        {
+          "path": "frontend/lib/core/widgets/feature/app_notification_host.dart",
+          "action": "created",
+          "reason": "Provides the reusable top-of-screen notification host/card UI with slide-down animation and neutral styling.",
+          "notes": "Mounted in the app root and exercised by a focused widget test."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Hosts the notification overlay at the MaterialApp level so messages are visible across the whole app.",
+          "notes": "Uses MaterialApp.builder to stack the host above routed content."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Migrated local snackbar helper calls to the shared notification service.",
+          "notes": "Uses info severity for the booking flow prompts."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "modified",
+          "reason": "Migrated all wizard prompts and backend feedback to the shared notification service.",
+          "notes": "Keeps the screen behavior but routes messages through AppNotificationCenter."
+        },
+        {
+          "path": "frontend/lib/features/phr/blood_pressure/presentation/screen/blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Replaced direct snackbar usage with shared warning/success/error notifications.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/body_mass_index/presentation/screen/body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Replaced BMI validation and result snackbars with shared warning/error notifications.",
+          "notes": "Keeps user feedback consistent with the new notification surface."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/screen/medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Replaced medicine intake snackbar feedback with the shared notification service.",
+          "notes": "Removed the now-unused local snackbar helper."
+        },
+        {
+          "path": "frontend/lib/features/phr/medicine_intake/presentation/widgets/medicine_intake_add_dialog.dart",
+          "action": "modified",
+          "reason": "Converted dialog validation snackbar to the shared warning notification.",
+          "notes": "Dialog now uses the same notification system as full screens."
+        },
+        {
+          "path": "frontend/lib/features/phr/temperature/presentation/screen/temperature_screen.dart",
+          "action": "modified",
+          "reason": "Replaced temperature record snackbar feedback with shared warning/error notifications.",
+          "notes": "Preserves the same text content while using the top notification card."
+        },
+        {
+          "path": "frontend/test/core/widgets/feature/app_notification_host_test.dart",
+          "action": "created",
+          "reason": "Adds focused coverage for the reusable notification host’s placement and dismissal behavior.",
+          "notes": "Uses the global service and resets state between tests."
+        },
+        {
+          "path": "frontend/test/features/interoperability/presentation/screens/sync_records_wizard_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated the test harness to mount the notification host and clear the global notification timer state.",
+          "notes": "Needed because the screen now uses the shared notification service instead of ScaffoldMessenger."
+        }
+      ],
+      "createdAt": "2026-05-14T18:26:58.979Z",
+      "updatedAt": "2026-05-14T18:26:58.979Z"
     }
   ],
   "edges": [
@@ -19519,7 +20522,525 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-12T17:46:57.725Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.055Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "toMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.194Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T09:47:22.326Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.182Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.344Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "c135e93c-db68-4948-8ddd-5efd17a9f839",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "6e4520b9-87d2-4e6f-a696-d954832b323b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T10:37:51.513Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:12.832Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.204Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "toMemoryId": "26c3b5d2-3dc9-497f-b730-f6a6f016a0b0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:16:13.357Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "toMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.658Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "b1a01252-278c-42e8-99df-60c0e4feae12",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "toMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.822Z"
+    },
+    {
+      "fromMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "toMemoryId": "2059d6de-5c04-4332-9079-05088544411e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "fromMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "fromMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "fromMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "toMemoryId": "cf9f2136-b062-482b-9dbe-74225e08a119",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "fromMemoryId": "558289ee-7b2e-493a-9c2d-bc33b83d6d32",
+      "toMemoryId": "baad605d-c75b-4f5e-8258-2d14f3c72e48",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-14T18:26:58.979Z"
     }
   ],
-  "updatedAt": "2026-05-12T17:46:57.731Z"
+  "updatedAt": "2026-05-14T18:26:58.982Z"
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
@@ -74,9 +75,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.primary),
-    );
+    AppNotificationCenter.instance.showInfo(message);
   }
 
   void _handleBack() {

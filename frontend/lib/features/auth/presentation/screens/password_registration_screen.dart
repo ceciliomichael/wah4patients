@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -84,30 +85,22 @@ class _PasswordRegistrationScreenState
         validatePasswordConfirmation(password, confirmPassword) == null;
   }
 
+  String? get _passwordMismatchMessage {
+    final password = _passwordController.text;
+    final confirmPassword = _confirmPasswordController.text;
+    if (password.isEmpty || confirmPassword.isEmpty) {
+      return null;
+    }
+
+    return password == confirmPassword ? null : 'Passwords do not match yet.';
+  }
+
   void _goBack() {
     Navigator.of(context).pop();
   }
 
   void _showPrivacyPreview() {
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) {
-        return HelpModalWidget(
-          title: 'Privacy Statement',
-          messages: const [
-            'This is a local frontend preview of the registration flow.',
-            'Account creation uses the secure backend API.',
-            'The final privacy policy details can be updated later.',
-          ],
-          icons: const [
-            Icons.visibility_off_outlined,
-            Icons.storage_outlined,
-            Icons.description_outlined,
-          ],
-          onClose: () => Navigator.of(dialogContext).pop(),
-        );
-      },
-    );
+    Navigator.of(context).pushNamed(AppRoutes.privacyStatement);
   }
 
   Future<void> _createAccount() async {
@@ -120,12 +113,8 @@ class _PasswordRegistrationScreenState
     }
 
     if (widget.registrationToken.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Missing registration token. Please verify your email again.',
-          ),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Missing registration token. Please verify your email again.',
       );
       return;
     }
@@ -186,9 +175,7 @@ class _PasswordRegistrationScreenState
         return;
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.message)));
+      AppNotificationCenter.instance.showError(error.message);
     } finally {
       if (mounted) {
         setState(() {
@@ -203,6 +190,7 @@ class _PasswordRegistrationScreenState
     final screenWidth = MediaQuery.of(context).size.width;
     final horizontalPadding = screenWidth > 600 ? 48.0 : 24.0;
     const requirementsVisible = true;
+    final passwordMismatchMessage = _passwordMismatchMessage;
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -401,6 +389,39 @@ class _PasswordRegistrationScreenState
                           ),
                         ),
                       ),
+                      if (passwordMismatchMessage != null) ...[
+                        const SizedBox(height: 10),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.red.shade200),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                size: 18,
+                                color: Colors.red.shade700,
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  passwordMismatchMessage,
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    color: Colors.red.shade700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 20),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

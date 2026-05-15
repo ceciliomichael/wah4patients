@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -65,12 +66,8 @@ class _RegistrationPersonalDetailsScreenState
     );
 
     if (profileDraft.givenNames.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Please enter at least one given name before continuing.',
-          ),
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Please enter at least one given name before continuing.',
       );
       return;
     }
@@ -237,6 +234,8 @@ class _RegistrationPersonalDetailsScreenState
                                 lastNameController: _lastNameController,
                                 enabled: !_isSubmitting,
                                 showRequirementIndicators: true,
+                                helperText:
+                                    'First name is required. Second name and middle name are optional, so only enter them if they are part of your name.',
                               ),
                             ),
                           ],

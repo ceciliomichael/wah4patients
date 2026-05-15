@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_border_radii.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_text_styles.dart';
@@ -163,11 +164,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please sign in again to save temperature records.'),
-          backgroundColor: AppColors.primary,
-        ),
+      AppNotificationCenter.instance.showWarning(
+        'Please sign in again to save temperature records.',
       );
       return;
     }
@@ -195,9 +193,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message), backgroundColor: AppColors.primary),
-      );
+      AppNotificationCenter.instance.showError(error.message);
     }
   }
 

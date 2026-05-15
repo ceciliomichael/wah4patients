@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -39,7 +40,7 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
         return;
       }
 
-      Navigator.of(context).pushNamed(
+      final confirmationResult = await Navigator.of(context).pushNamed<bool>(
         AppRoutes.mpinConfirm,
         arguments: MpinConfirmArguments(
           initialMpin: _controller.value,
@@ -49,6 +50,13 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
           nextRouteArguments: widget.arguments?.nextRouteArguments,
         ),
       );
+
+      if (!mounted || confirmationResult != false) {
+        return;
+      }
+
+      _controller.clear();
+      _controller.setError('MPIN does not match. Please enter it again.');
     });
   }
 
@@ -66,10 +74,8 @@ class _MpinSetupScreenState extends State<MpinSetupScreen> {
               return;
             }
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Complete MPIN setup to continue registration.'),
-              ),
+            AppNotificationCenter.instance.showWarning(
+              'Complete MPIN setup to continue registration.',
             );
           },
           child: MpinFlowScaffold(
