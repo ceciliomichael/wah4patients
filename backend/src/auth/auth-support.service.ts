@@ -55,6 +55,18 @@ export interface RefreshSessionResult {
   error: { message: string } | null;
 }
 
+interface AuthUserSummary {
+  id: string;
+  email?: string | null;
+}
+
+interface AuthUserListResult {
+  data: {
+    users: AuthUserSummary[];
+  };
+  error: { message: string } | null;
+}
+
 @Injectable()
 export class AuthSupportService {
   private readonly logger = new Logger(AuthSupportService.name);
@@ -400,6 +412,45 @@ export class AuthSupportService {
 
     const profile = data as { id: string } | null;
     return profile?.id ?? null;
+  }
+
+  async findAuthUserIdByEmail(email: string): Promise<string | null> {
+    const normalizedEmail = this.normalizeEmail(email);
+    const pageSize = 100;
+
+    for (let page = 1; page < 100; page += 1) {
+      const response = (await this.supabaseService.adminClient.auth.admin.listUsers(
+        {
+          page,
+          perPage: pageSize,
+        },
+      )) as AuthUserListResult;
+
+      if (response.error !== null) {
+        this.logger.error('Failed to look up auth user by email', {
+          email: normalizedEmail,
+          message: response.error.message,
+        });
+        throw new BadGatewayException('Unable to verify account email');
+      }
+
+      const users = response.data.users;
+      const matchingUser = users.find(
+        (user) => this.normalizeEmail(user.email ?? '') === normalizedEmail,
+      );
+      if (matchingUser !== null && matchingUser !== undefined) {
+        return matchingUser.id;
+      }
+
+      if (users.length < pageSize) {
+        return null;
+      }
+    }
+
+    this.logger.warn('Auth user lookup exceeded pagination guard', {
+      email: normalizedEmail,
+    });
+    return null;
   }
 
   isSupabaseDuplicateUserError(message: string): boolean {

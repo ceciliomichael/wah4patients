@@ -13,6 +13,8 @@ import { ProfileRepository } from './profile.repository';
 import { ProfileService } from './profile.service';
 import { PasswordResetAuthService } from './password-reset-auth.service';
 import { PasswordResetOtpRepository } from './password-reset-otp.repository';
+import { PasswordHistoryRepository } from './password-history.repository';
+import { PasswordHistoryService } from './password-history.service';
 import { RegistrationAuthService } from './registration-auth.service';
 import { RegistrationOtpRepository } from './registration-otp.repository';
 import { UserMpinDeviceRepository } from './user-mpin-device.repository';
@@ -33,6 +35,8 @@ import { UserMpinRepository } from './user-mpin.repository';
     MpinAuthService,
     ProfileService,
     ProfileRepository,
+    PasswordHistoryRepository,
+    PasswordHistoryService,
     RegistrationOtpRepository,
     PasswordResetOtpRepository,
     TotpFactorRepository,

@@ -48,7 +48,7 @@ class MonthViewWidget extends StatelessWidget {
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: const [
@@ -161,45 +161,41 @@ class MonthViewWidget extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 12),
               if (selectedDayEvents.isEmpty)
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: double.infinity,
-                    constraints: const BoxConstraints(minHeight: 128),
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: AppRadii.large,
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'No events for this day',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                Container(
+                  width: double.infinity,
+                  constraints: const BoxConstraints(minHeight: 128),
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: AppRadii.large,
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'No events for this day',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ),
                 )
               else
-                Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.zero,
-                    itemCount: selectedDayEvents.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      final event = selectedDayEvents[index];
-                      return CalendarEventCardWidget(
-                        event: event,
-                        onTap: () => onEventTap(event),
-                      );
-                    },
-                  ),
+                Column(
+                  children: [
+                    ...selectedDayEvents.map(
+                      (event) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: CalendarEventCardWidget(
+                          event: event,
+                          onTap: () => onEventTap(event),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              const SizedBox(height: 12),
             ],
           );
         },

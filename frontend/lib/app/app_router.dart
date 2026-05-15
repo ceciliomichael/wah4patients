@@ -336,7 +336,7 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
         },
       );
     case AppRoutes.mpinConfirm:
-      return _buildSlideRoute(
+      return _buildSlideRoute<bool?>(
         settings: settings,
         builder: (_) {
           final args = settings.arguments;

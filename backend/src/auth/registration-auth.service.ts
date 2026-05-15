@@ -22,6 +22,7 @@ import {
 import { CompleteRegistrationDto } from './dto/complete-registration.dto';
 import { RequestRegistrationOtpDto } from './dto/request-registration-otp.dto';
 import { VerifyRegistrationOtpDto } from './dto/verify-registration-otp.dto';
+import { PasswordHistoryService } from './password-history.service';
 import { RegistrationOtpRepository } from './registration-otp.repository';
 import { ProfileService } from './profile.service';
 
@@ -37,12 +38,19 @@ export class RegistrationAuthService {
     private readonly profileService: ProfileService,
     private readonly settings: AuthSettingsService,
     private readonly support: AuthSupportService,
+    private readonly passwordHistoryService: PasswordHistoryService,
   ) {}
 
   async requestRegistrationOtp(
     dto: RequestRegistrationOtpDto,
   ): Promise<RequestOtpResponse> {
     const normalizedEmail = this.support.normalizeEmail(dto.email);
+    const existingAuthUserId =
+      await this.support.findAuthUserIdByEmail(normalizedEmail);
+    if (existingAuthUserId !== null) {
+      throw new ConflictException('An account with this email already exists');
+    }
+
     const existingRecord =
       await this.registrationOtpRepository.findByEmail(normalizedEmail);
     const now = new Date();
@@ -231,7 +239,7 @@ export class RegistrationAuthService {
       );
     }
 
-    let profile;
+    let profile: CompleteRegistrationResponse['profile'];
     try {
       profile = await this.profileService.saveRegistrationProfile(
         userId,
@@ -240,6 +248,18 @@ export class RegistrationAuthService {
       );
     } catch (error) {
       this.logger.error('Failed to persist registration profile', {
+        email: normalizedEmail,
+        userId,
+      });
+
+      await this.supabaseService.adminClient.auth.admin.deleteUser(userId);
+      throw error;
+    }
+
+    try {
+      await this.passwordHistoryService.createPasswordEntry(userId, password);
+    } catch (error) {
+      this.logger.error('Failed to persist registration password history', {
         email: normalizedEmail,
         userId,
       });

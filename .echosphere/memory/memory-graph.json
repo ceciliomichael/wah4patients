@@ -13016,6 +13016,966 @@
       ],
       "createdAt": "2026-05-14T18:26:58.979Z",
       "updatedAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "memoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [
+        "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented backend auth protections for signup email uniqueness and password reuse prevention on password reset. Added a dedicated password history table, repository, and service to hash and compare recent passwords, wired it into registration and password reset flows, and updated database typings and module providers. Also added targeted unit tests for the new auth behavior and verified the backend build passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "modified",
+          "reason": "Registered the new password history repository and service so Nest can inject them into auth flows.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Added early duplicate-email rejection for signup and recorded the initial password in history after successful registration.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.ts",
+          "action": "modified",
+          "reason": "Blocked password reuse on reset and rolled back password-history entries if the auth update failed.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.repository.ts",
+          "action": "created",
+          "reason": "Introduced backend data access for recent password hashes, insertion, deletion, and pruning.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.ts",
+          "action": "created",
+          "reason": "Added password hashing, comparison, and history pruning logic as a dedicated auth helper service.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for password reuse rejection and password-history insertion/pruning behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking registration when the email is already in use and recording the initial password history entry.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking password reuse, writing password history on success, and cleaning up on update failure.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Added typed support for the new password_history_records table in Supabase database typings.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/011_password_history_setup.sql",
+          "action": "created",
+          "reason": "Added the database migration for password history storage, trigger, index, and RLS denial policy.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:07:29.987Z",
+      "updatedAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "memoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [
+        "0e8b5163-2664-4c1b-adbe-15feb8b15038"
+      ],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [
+        "cc721ca8-0fa7-4a18-afd2-a2e59d798f92"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented backend auth protections for signup email uniqueness and password reuse prevention on password reset. Added a dedicated password history table, repository, and service to hash and compare recent passwords, wired it into registration and password reset flows, and updated database typings and module providers. Also added targeted unit tests for the new auth behavior and verified the backend build passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "modified",
+          "reason": "Registered the new password history repository and service so Nest can inject them into auth flows.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Added early duplicate-email rejection for signup and recorded the initial password in history after successful registration.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.ts",
+          "action": "modified",
+          "reason": "Blocked password reuse on reset and rolled back password-history entries if the auth update failed.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.repository.ts",
+          "action": "created",
+          "reason": "Introduced backend data access for recent password hashes, insertion, deletion, and pruning.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.ts",
+          "action": "created",
+          "reason": "Added password hashing, comparison, and history pruning logic as a dedicated auth helper service.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for password reuse rejection and password-history insertion/pruning behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking registration when the email is already in use and recording the initial password history entry.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking password reuse, writing password history on success, and cleaning up on update failure.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Added typed support for the new password_history_records table in Supabase database typings.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/011_password_history_setup.sql",
+          "action": "created",
+          "reason": "Added the database migration for password history storage, trigger, index, and RLS denial policy.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:07:30.319Z",
+      "updatedAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "memoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [
+        "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7"
+      ],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented backend auth protections for signup email uniqueness and password reuse prevention on password reset. Added a dedicated password history table, repository, and service to hash and compare recent passwords, wired it into registration and password reset flows, and updated database typings and module providers. Also added targeted unit tests for the new auth behavior and verified the backend build passes.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.module.ts",
+          "action": "modified",
+          "reason": "Registered the new password history repository and service so Nest can inject them into auth flows.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Added early duplicate-email rejection for signup and recorded the initial password in history after successful registration.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.ts",
+          "action": "modified",
+          "reason": "Blocked password reuse on reset and rolled back password-history entries if the auth update failed.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.repository.ts",
+          "action": "created",
+          "reason": "Introduced backend data access for recent password hashes, insertion, deletion, and pruning.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.ts",
+          "action": "created",
+          "reason": "Added password hashing, comparison, and history pruning logic as a dedicated auth helper service.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-history.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for password reuse rejection and password-history insertion/pruning behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking registration when the email is already in use and recording the initial password history entry.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/password-reset-auth.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for blocking password reuse, writing password history on success, and cleaning up on update failure.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Added typed support for the new password_history_records table in Supabase database typings.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/011_password_history_setup.sql",
+          "action": "created",
+          "reason": "Added the database migration for password history storage, trigger, index, and RLS denial policy.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:07:30.443Z",
+      "updatedAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "memoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [
+        "0e8b5163-2664-4c1b-adbe-15feb8b15038"
+      ],
+      "relatedMemoryIds": [
+        "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+        "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a"
+      ],
+      "childMemoryIds": [
+        "e6418f95-3192-4954-b74b-8f3a6bdd73d5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Completed the auth hardening work and refined signup duplicate-email detection to use Supabase Auth users as the primary source of truth. The backend now blocks OTP issuance for already-registered emails by paging through auth.admin.listUsers, while retaining the createUser conflict fallback. Password-reset reuse prevention, password history storage, and targeted tests remain in place and verified with backend build/tests.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Added a direct Supabase Auth user lookup helper that pages through admin listUsers to find existing emails.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for the new paginated auth-user lookup behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Switched signup OTP availability checks to the new Supabase Auth user lookup helper.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated the registration tests to mock the new auth-user lookup method.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:22:10.026Z",
+      "updatedAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "memoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [
+        "6207377a-513b-465f-8000-f96cd3e68199"
+      ],
+      "relatedMemoryIds": [
+        "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+        "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a"
+      ],
+      "childMemoryIds": [
+        "713c9011-e166-4814-b010-66988782d74f"
+      ],
+      "sectionKind": "decision",
+      "summary": "Completed the auth hardening work and refined signup duplicate-email detection to use Supabase Auth users as the primary source of truth. The backend now blocks OTP issuance for already-registered emails by paging through auth.admin.listUsers, while retaining the createUser conflict fallback. Password-reset reuse prevention, password history storage, and targeted tests remain in place and verified with backend build/tests.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Added a direct Supabase Auth user lookup helper that pages through admin listUsers to find existing emails.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for the new paginated auth-user lookup behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Switched signup OTP availability checks to the new Supabase Auth user lookup helper.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated the registration tests to mock the new auth-user lookup method.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:22:10.125Z",
+      "updatedAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "memoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "rootMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "parentMemoryIds": [
+        "e6418f95-3192-4954-b74b-8f3a6bdd73d5"
+      ],
+      "relatedMemoryIds": [
+        "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+        "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Completed the auth hardening work and refined signup duplicate-email detection to use Supabase Auth users as the primary source of truth. The backend now blocks OTP issuance for already-registered emails by paging through auth.admin.listUsers, while retaining the createUser conflict fallback. Password-reset reuse prevention, password history storage, and targeted tests remain in place and verified with backend build/tests.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Added a direct Supabase Auth user lookup helper that pages through admin listUsers to find existing emails.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "created",
+          "reason": "Added unit coverage for the new paginated auth-user lookup behavior.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.ts",
+          "action": "modified",
+          "reason": "Switched signup OTP availability checks to the new Supabase Auth user lookup helper.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/auth/registration-auth.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated the registration tests to mock the new auth-user lookup method.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-15T04:22:10.223Z",
+      "updatedAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "memoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "rootMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "parentMemoryIds": [
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [
+        "b2d10478-f2f3-412d-ad60-31fa4cd2ca96"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the MPIN registration navigation crash by aligning the confirmation route type with the boolean result returned from the confirmation screen. Added a regression test that drives the MPIN setup flow through the app router and confirms it reaches the confirmation screen without a route cast failure.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Typed the MPIN confirmation route as `PageRouteBuilder<bool?>` so Navigator can cast the route result correctly during the registration flow.",
+          "notes": "This is the core fix for the crash."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/mpin_setup_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a regression test covering the setup-to-confirmation navigation path through the real app router.",
+          "notes": "The test fails if the route cast error returns."
+        }
+      ],
+      "createdAt": "2026-05-15T04:53:42.820Z",
+      "updatedAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "memoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "rootMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "parentMemoryIds": [
+        "a11a382a-c0e3-4611-8c86-d9579ae03324"
+      ],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [
+        "0cf3b681-bc36-4282-a6fc-5487a567a38f"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the MPIN registration navigation crash by aligning the confirmation route type with the boolean result returned from the confirmation screen. Added a regression test that drives the MPIN setup flow through the app router and confirms it reaches the confirmation screen without a route cast failure.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Typed the MPIN confirmation route as `PageRouteBuilder<bool?>` so Navigator can cast the route result correctly during the registration flow.",
+          "notes": "This is the core fix for the crash."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/mpin_setup_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a regression test covering the setup-to-confirmation navigation path through the real app router.",
+          "notes": "The test fails if the route cast error returns."
+        }
+      ],
+      "createdAt": "2026-05-15T04:53:42.908Z",
+      "updatedAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "memoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "rootMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "parentMemoryIds": [
+        "b2d10478-f2f3-412d-ad60-31fa4cd2ca96"
+      ],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "e867df04-3627-4fd5-8761-093f68fc528d"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the MPIN registration navigation crash by aligning the confirmation route type with the boolean result returned from the confirmation screen. Added a regression test that drives the MPIN setup flow through the app router and confirms it reaches the confirmation screen without a route cast failure.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Typed the MPIN confirmation route as `PageRouteBuilder<bool?>` so Navigator can cast the route result correctly during the registration flow.",
+          "notes": "This is the core fix for the crash."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/mpin_setup_screen_test.dart",
+          "action": "modified",
+          "reason": "Added a regression test covering the setup-to-confirmation navigation path through the real app router.",
+          "notes": "The test fails if the route cast error returns."
+        }
+      ],
+      "createdAt": "2026-05-15T04:53:42.995Z",
+      "updatedAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "memoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "rootMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4"
+      ],
+      "childMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the calendar landscape scrolling issue in the Flutter frontend by making the month view vertically scrollable inside the calendar screen shell. The change preserved the existing route shell, dashboard integration, and day/week behaviors while removing the month view’s fixed non-scrollable layout trap.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view into a vertically scrollable layout so the calendar can scroll in landscape mode without overflowing the shell.",
+          "notes": "Wrapped the month content in a SingleChildScrollView and removed the inner Expanded ListView."
+        }
+      ],
+      "createdAt": "2026-05-15T05:00:23.088Z",
+      "updatedAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "memoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "rootMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "parentMemoryIds": [
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c"
+      ],
+      "relatedMemoryIds": [
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4"
+      ],
+      "childMemoryIds": [
+        "985c5a89-ce10-4fc8-a064-da1bc1b6cc62"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the calendar landscape scrolling issue in the Flutter frontend by making the month view vertically scrollable inside the calendar screen shell. The change preserved the existing route shell, dashboard integration, and day/week behaviors while removing the month view’s fixed non-scrollable layout trap.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view into a vertically scrollable layout so the calendar can scroll in landscape mode without overflowing the shell.",
+          "notes": "Wrapped the month content in a SingleChildScrollView and removed the inner Expanded ListView."
+        }
+      ],
+      "createdAt": "2026-05-15T05:00:23.190Z",
+      "updatedAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "memoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "rootMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "parentMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf"
+      ],
+      "relatedMemoryIds": [
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "e7f2dc22-09c4-465f-84a4-2413814c9090",
+        "5a145c59-7615-4a96-ae34-39de504ed74f",
+        "069724db-1570-44b3-a684-9a38f7afa9b5",
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the calendar landscape scrolling issue in the Flutter frontend by making the month view vertically scrollable inside the calendar screen shell. The change preserved the existing route shell, dashboard integration, and day/week behaviors while removing the month view’s fixed non-scrollable layout trap.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view into a vertically scrollable layout so the calendar can scroll in landscape mode without overflowing the shell.",
+          "notes": "Wrapped the month content in a SingleChildScrollView and removed the inner Expanded ListView."
+        }
+      ],
+      "createdAt": "2026-05-15T05:00:23.273Z",
+      "updatedAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "memoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "rootMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "parentMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf"
+      ],
+      "relatedMemoryIds": [
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "5a145c59-7615-4a96-ae34-39de504ed74f"
+      ],
+      "childMemoryIds": [
+        "b41141b7-c5d9-40ae-8bbb-fd181468deb5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Refined the calendar landscape scrolling fix in the Flutter frontend so the month view uses an orientation-aware sliver layout: the weekday header is pinned only in portrait, while landscape keeps the header in normal flow. This preserved scrollability without introducing sticky behavior in landscape and kept day/week behavior unchanged.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view to an orientation-aware sliver layout and limited sticky behavior to portrait mode only.",
+          "notes": "Added a conditional pinned SliverPersistentHeader and preserved normal flow in landscape."
+        }
+      ],
+      "createdAt": "2026-05-15T05:05:40.191Z",
+      "updatedAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "memoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "rootMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "parentMemoryIds": [
+        "814bc82c-3869-4e06-b1db-6d5e80366824"
+      ],
+      "relatedMemoryIds": [
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "5a145c59-7615-4a96-ae34-39de504ed74f"
+      ],
+      "childMemoryIds": [
+        "b34b3736-1588-4501-beee-d5ec3a507222"
+      ],
+      "sectionKind": "decision",
+      "summary": "Refined the calendar landscape scrolling fix in the Flutter frontend so the month view uses an orientation-aware sliver layout: the weekday header is pinned only in portrait, while landscape keeps the header in normal flow. This preserved scrollability without introducing sticky behavior in landscape and kept day/week behavior unchanged.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view to an orientation-aware sliver layout and limited sticky behavior to portrait mode only.",
+          "notes": "Added a conditional pinned SliverPersistentHeader and preserved normal flow in landscape."
+        }
+      ],
+      "createdAt": "2026-05-15T05:05:40.286Z",
+      "updatedAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "memoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "rootMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "parentMemoryIds": [
+        "b41141b7-c5d9-40ae-8bbb-fd181468deb5"
+      ],
+      "relatedMemoryIds": [
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+        "992b57a3-9621-4d0f-825c-6bb797be2e73",
+        "5a145c59-7615-4a96-ae34-39de504ed74f"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Refined the calendar landscape scrolling fix in the Flutter frontend so the month view uses an orientation-aware sliver layout: the weekday header is pinned only in portrait, while landscape keeps the header in normal flow. This preserved scrollability without introducing sticky behavior in landscape and kept day/week behavior unchanged.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Converted the month view to an orientation-aware sliver layout and limited sticky behavior to portrait mode only.",
+          "notes": "Added a conditional pinned SliverPersistentHeader and preserved normal flow in landscape."
+        }
+      ],
+      "createdAt": "2026-05-15T05:05:40.368Z",
+      "updatedAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "memoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "rootMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "parentMemoryIds": [
+        "b41141b7-c5d9-40ae-8bbb-fd181468deb5"
+      ],
+      "relatedMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "b34b3736-1588-4501-beee-d5ec3a507222",
+        "814bc82c-3869-4e06-b1db-6d5e80366824"
+      ],
+      "childMemoryIds": [
+        "d0715a58-101a-49ee-aa86-d9ba4a9bfd87"
+      ],
+      "sectionKind": "fact",
+      "summary": "Reworked the Flutter calendar screen so the header, filter chips, and calendar views all live in one page-level scroll flow. This removed the remaining sticky behavior in the calendar top section and preserved a normal scrolling experience in both portrait and landscape without changing the surrounding dashboard shell.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/screens/calendar_screen.dart",
+          "action": "modified",
+          "reason": "Changed the calendar page composition to a single page-level scroll container so the header and filter chips scroll away normally.",
+          "notes": "Removed the Expanded layout and wrapped the entire calendar body in a scroll view."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the month view's internal scroll behavior so it participates in the page-level scroll flow.",
+          "notes": "Kept the grid and event sections as a regular column."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/day_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the day view's internal list scrolling so the page scroll is consistent across calendar modes.",
+          "notes": "Replaced the inner ListView with a column of event cards."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/week_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the week view's internal scroll wrapper so the calendar header and filters can scroll together with the content.",
+          "notes": "The view now renders as a normal column inside the outer scroll container."
+        }
+      ],
+      "createdAt": "2026-05-15T05:07:55.995Z",
+      "updatedAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "memoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "rootMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "parentMemoryIds": [
+        "e30c4ee8-2f9e-477f-b73c-49b416e4c694"
+      ],
+      "relatedMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "b34b3736-1588-4501-beee-d5ec3a507222",
+        "814bc82c-3869-4e06-b1db-6d5e80366824"
+      ],
+      "childMemoryIds": [
+        "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a"
+      ],
+      "sectionKind": "decision",
+      "summary": "Reworked the Flutter calendar screen so the header, filter chips, and calendar views all live in one page-level scroll flow. This removed the remaining sticky behavior in the calendar top section and preserved a normal scrolling experience in both portrait and landscape without changing the surrounding dashboard shell.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/screens/calendar_screen.dart",
+          "action": "modified",
+          "reason": "Changed the calendar page composition to a single page-level scroll container so the header and filter chips scroll away normally.",
+          "notes": "Removed the Expanded layout and wrapped the entire calendar body in a scroll view."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the month view's internal scroll behavior so it participates in the page-level scroll flow.",
+          "notes": "Kept the grid and event sections as a regular column."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/day_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the day view's internal list scrolling so the page scroll is consistent across calendar modes.",
+          "notes": "Replaced the inner ListView with a column of event cards."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/week_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the week view's internal scroll wrapper so the calendar header and filters can scroll together with the content.",
+          "notes": "The view now renders as a normal column inside the outer scroll container."
+        }
+      ],
+      "createdAt": "2026-05-15T05:07:56.090Z",
+      "updatedAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "memoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "rootMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "parentMemoryIds": [
+        "d0715a58-101a-49ee-aa86-d9ba4a9bfd87"
+      ],
+      "relatedMemoryIds": [
+        "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+        "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+        "b34b3736-1588-4501-beee-d5ec3a507222",
+        "814bc82c-3869-4e06-b1db-6d5e80366824"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Reworked the Flutter calendar screen so the header, filter chips, and calendar views all live in one page-level scroll flow. This removed the remaining sticky behavior in the calendar top section and preserved a normal scrolling experience in both portrait and landscape without changing the surrounding dashboard shell.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/calendar/presentation/screens/calendar_screen.dart",
+          "action": "modified",
+          "reason": "Changed the calendar page composition to a single page-level scroll container so the header and filter chips scroll away normally.",
+          "notes": "Removed the Expanded layout and wrapped the entire calendar body in a scroll view."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/month_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the month view's internal scroll behavior so it participates in the page-level scroll flow.",
+          "notes": "Kept the grid and event sections as a regular column."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/day_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the day view's internal list scrolling so the page scroll is consistent across calendar modes.",
+          "notes": "Replaced the inner ListView with a column of event cards."
+        },
+        {
+          "path": "frontend/lib/features/calendar/presentation/widgets/views/week_view_widget.dart",
+          "action": "modified",
+          "reason": "Removed the week view's internal scroll wrapper so the calendar header and filters can scroll together with the content.",
+          "notes": "The view now renders as a normal column inside the outer scroll container."
+        }
+      ],
+      "createdAt": "2026-05-15T05:07:56.190Z",
+      "updatedAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "memoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0"
+      ],
+      "relatedMemoryIds": [
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "childMemoryIds": [
+        "47283e96-11fd-4910-9e22-f5e88ff006a6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a backend fix so saving the Personal Information profile now mirrors PhilHealth and PhilSys identifiers into patient_identifiers. This resolves the receive-results patient matching failure caused by profile data living only in profiles.patient_profile. Targeted repository/service tests pass; a broader eslint check still reports formatting and typing issues in the touched files, so lint cleanup remains separate from the functional fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Added patient_identifiers upsert support and identifier extraction from saved patient profile data.",
+          "notes": "Introduced canonical PhilHealth and PhilSys system constants and payload builder."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile save orchestration to invoke identifier synchronization after saving profile data.",
+          "notes": "Uses the merged profile payload so the sync reflects the submitted profile values."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Extended service tests to verify that profile saves now trigger patient identifier synchronization.",
+          "notes": "Added mock method coverage for upsertPatientIdentifiers."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "modified",
+          "reason": "Added repository coverage for the new patient_identifiers upsert behavior.",
+          "notes": "Verifies canonical system URIs and conflict handling."
+        }
+      ],
+      "createdAt": "2026-05-15T07:54:45.006Z",
+      "updatedAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "memoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [
+        "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6"
+      ],
+      "relatedMemoryIds": [
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "childMemoryIds": [
+        "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a backend fix so saving the Personal Information profile now mirrors PhilHealth and PhilSys identifiers into patient_identifiers. This resolves the receive-results patient matching failure caused by profile data living only in profiles.patient_profile. Targeted repository/service tests pass; a broader eslint check still reports formatting and typing issues in the touched files, so lint cleanup remains separate from the functional fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Added patient_identifiers upsert support and identifier extraction from saved patient profile data.",
+          "notes": "Introduced canonical PhilHealth and PhilSys system constants and payload builder."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile save orchestration to invoke identifier synchronization after saving profile data.",
+          "notes": "Uses the merged profile payload so the sync reflects the submitted profile values."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Extended service tests to verify that profile saves now trigger patient identifier synchronization.",
+          "notes": "Added mock method coverage for upsertPatientIdentifiers."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "modified",
+          "reason": "Added repository coverage for the new patient_identifiers upsert behavior.",
+          "notes": "Verifies canonical system URIs and conflict handling."
+        }
+      ],
+      "createdAt": "2026-05-15T07:54:45.109Z",
+      "updatedAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "memoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "rootMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "parentMemoryIds": [
+        "47283e96-11fd-4910-9e22-f5e88ff006a6"
+      ],
+      "relatedMemoryIds": [
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a backend fix so saving the Personal Information profile now mirrors PhilHealth and PhilSys identifiers into patient_identifiers. This resolves the receive-results patient matching failure caused by profile data living only in profiles.patient_profile. Targeted repository/service tests pass; a broader eslint check still reports formatting and typing issues in the touched files, so lint cleanup remains separate from the functional fix.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Added patient_identifiers upsert support and identifier extraction from saved patient profile data.",
+          "notes": "Introduced canonical PhilHealth and PhilSys system constants and payload builder."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile save orchestration to invoke identifier synchronization after saving profile data.",
+          "notes": "Uses the merged profile payload so the sync reflects the submitted profile values."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Extended service tests to verify that profile saves now trigger patient identifier synchronization.",
+          "notes": "Added mock method coverage for upsertPatientIdentifiers."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.spec.ts",
+          "action": "modified",
+          "reason": "Added repository coverage for the new patient_identifiers upsert behavior.",
+          "notes": "Verifies canonical system URIs and conflict handling."
+        }
+      ],
+      "createdAt": "2026-05-15T07:54:45.213Z",
+      "updatedAt": "2026-05-15T07:54:45.213Z"
     }
   ],
   "edges": [
@@ -21040,7 +22000,868 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-14T18:26:58.979Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "toMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:29.987Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "toMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.319Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:07:30.443Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "0e8b5163-2664-4c1b-adbe-15feb8b15038",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "toMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.026Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "6207377a-513b-465f-8000-f96cd3e68199",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "toMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.125Z"
+    },
+    {
+      "fromMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "toMemoryId": "e6418f95-3192-4954-b74b-8f3a6bdd73d5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "fromMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "toMemoryId": "2cff4be5-b4a4-49dd-8bba-3d3b5626c3b7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "fromMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "toMemoryId": "cc721ca8-0fa7-4a18-afd2-a2e59d798f92",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "fromMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "fromMemoryId": "713c9011-e166-4814-b010-66988782d74f",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:22:10.223Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "toMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.820Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "a11a382a-c0e3-4611-8c86-d9579ae03324",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "toMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.908Z"
+    },
+    {
+      "fromMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "toMemoryId": "b2d10478-f2f3-412d-ad60-31fa4cd2ca96",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "fromMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "fromMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "fromMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "fromMemoryId": "0cf3b681-bc36-4282-a6fc-5487a567a38f",
+      "toMemoryId": "e867df04-3627-4fd5-8761-093f68fc528d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T04:53:42.995Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.088Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "toMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.190Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "e7f2dc22-09c4-465f-84a4-2413814c9090",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "069724db-1570-44b3-a684-9a38f7afa9b5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:00:23.273Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "toMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.191Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "toMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.286Z"
+    },
+    {
+      "fromMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "toMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "fromMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "fromMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "toMemoryId": "985c5a89-ce10-4fc8-a064-da1bc1b6cc62",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "fromMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "toMemoryId": "992b57a3-9621-4d0f-825c-6bb797be2e73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "fromMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "toMemoryId": "5a145c59-7615-4a96-ae34-39de504ed74f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:05:40.368Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "b41141b7-c5d9-40ae-8bbb-fd181468deb5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "toMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:55.995Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "e30c4ee8-2f9e-477f-b73c-49b416e4c694",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "toMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.090Z"
+    },
+    {
+      "fromMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "toMemoryId": "d0715a58-101a-49ee-aa86-d9ba4a9bfd87",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "fromMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "toMemoryId": "26480bcb-ae0b-4831-90a7-d5986aaf79bf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "fromMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "toMemoryId": "e874d2eb-89a6-4d85-90db-10e14670fb8c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "fromMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "toMemoryId": "b34b3736-1588-4501-beee-d5ec3a507222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "fromMemoryId": "12fe7e30-1afe-47b3-8407-6f0c1a94aa7a",
+      "toMemoryId": "814bc82c-3869-4e06-b1db-6d5e80366824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T05:07:56.190Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "toMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.006Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "7e2b8581-ee67-4bf3-b93d-02a9feb21ce6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "toMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.109Z"
+    },
+    {
+      "fromMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "toMemoryId": "47283e96-11fd-4910-9e22-f5e88ff006a6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "fromMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "fromMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "toMemoryId": "e7d7a165-004e-4f10-9c3a-4e70f5ae0586",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "fromMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "fromMemoryId": "17b3cec7-1bd8-4cd8-be0e-cbd87a1b1db8",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T07:54:45.213Z"
     }
   ],
-  "updatedAt": "2026-05-14T18:26:58.982Z"
+  "updatedAt": "2026-05-15T07:54:45.216Z"
 }

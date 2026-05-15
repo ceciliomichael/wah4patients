@@ -84,19 +84,18 @@ class DayViewWidget extends StatelessWidget {
               ),
             )
           else
-            Expanded(
-              child: ListView.separated(
-                itemCount: events.length,
-                physics: const BouncingScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(height: 8),
-                itemBuilder: (context, index) {
-                  final event = events[index];
-                  return CalendarEventCardWidget(
-                    event: event,
-                    onTap: () => onEventTap(event),
-                  );
-                },
-              ),
+            Column(
+              children: [
+                ...events.map(
+                  (event) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: CalendarEventCardWidget(
+                      event: event,
+                      onTap: () => onEventTap(event),
+                    ),
+                  ),
+                ),
+              ],
             ),
         ],
       ),

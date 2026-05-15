@@ -2,51 +2,61 @@ import { BadRequestException } from '@nestjs/common';
 import { ProfileRepository, type ProfileRow } from './profile.repository';
 import { ProfileService } from './profile.service';
 
+type ProfileRepositoryMock = {
+  findByUserId: jest.Mock<Promise<ProfileRow | null>, [string]>;
+  upsert: jest.Mock<Promise<ProfileRow>, [Parameters<ProfileRepository['upsert']>[0]]>;
+  upsertPatientIdentifiers: jest.Mock<
+    Promise<void>,
+    [string, Parameters<ProfileRepository['upsertPatientIdentifiers']>[1]]
+  >;
+  toResponse: jest.Mock<ReturnType<ProfileRepository['toResponse']>, [ProfileRow]>;
+};
+
 describe('ProfileService', () => {
-  const createRepositoryMock = () => {
-    return {
-      findByUserId: jest.fn(),
-      upsert: jest.fn(),
-      toResponse: jest.fn(),
-    } as unknown as jest.Mocked<ProfileRepository>;
-  };
+  const createRepositoryMock = (): ProfileRepositoryMock => ({
+    findByUserId: jest.fn<Promise<ProfileRow | null>, [string]>(),
+    upsert: jest.fn<Promise<ProfileRow>, [Parameters<ProfileRepository['upsert']>[0]]>(),
+    upsertPatientIdentifiers: jest.fn<
+      Promise<void>,
+      [string, Parameters<ProfileRepository['upsertPatientIdentifiers']>[1]]
+    >(),
+    toResponse: jest.fn<ReturnType<ProfileRepository['toResponse']>, [ProfileRow]>(),
+  });
 
   const buildRow = (
     overrides: Partial<ProfileRow> = {},
     patientProfile: Record<string, unknown> = {},
-  ): ProfileRow => {
-    return {
-      id: '550e8400-e29b-41d4-a716-446655440000',
-      email: 'juan@example.com',
-      given_names: ['Juan'],
-      family_name: 'Dela Cruz',
-      patient_profile: {
-        birthDate: '1990-05-15',
-        gender: 'male',
-        phoneNumber: '09171234567',
-        communicationLanguage: 'Filipino',
-        philHealthId: '12-345678901-2',
-        philSysId: '',
-        addressLine1: '123 Main Street',
-        addressLine2: '',
-        city: 'Quezon City',
-        province: 'Metro Manila',
-        postalCode: '1100',
-        country: 'Philippines',
-        maritalStatus: '',
-        nationality: '',
-        religion: '',
-        occupation: '',
-        genderIdentity: '',
-        emergencyContactName: '',
-        emergencyContactPhone: '',
-        ...patientProfile,
-      },
-      created_at: '2025-01-01T00:00:00.000Z',
-      updated_at: '2025-01-01T00:00:00.000Z',
-      ...overrides,
-    } as ProfileRow;
-  };
+  ): ProfileRow => ({
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    email: 'juan@example.com',
+    given_names: ['Juan'],
+    family_name: 'Dela Cruz',
+    patient_profile: {
+      birthDate: '1990-05-15',
+      gender: 'male',
+      phoneNumber: '09171234567',
+      communicationLanguage: 'Filipino',
+      philHealthId: '12-345678901-2',
+      philSysId: '',
+      addressLine1: '123 Main Street',
+      addressLine2: '',
+      city: 'Quezon City',
+      province: 'Metro Manila',
+      postalCode: '1100',
+      country: 'Philippines',
+      maritalStatus: '',
+      nationality: '',
+      religion: '',
+      occupation: '',
+      genderIdentity: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      ...patientProfile,
+    },
+    created_at: '2025-01-01T00:00:00.000Z',
+    updated_at: '2025-01-01T00:00:00.000Z',
+    ...overrides,
+  });
 
   afterEach(() => {
     jest.restoreAllMocks();
@@ -54,7 +64,7 @@ describe('ProfileService', () => {
 
   it('merges partial profile updates without requiring missing fields', async () => {
     const profileRepository = createRepositoryMock();
-    const service = new ProfileService(profileRepository);
+    const service = new ProfileService(profileRepository as unknown as ProfileRepository);
     const existingRow = buildRow({}, {
       birthDate: '1990-05-15',
       gender: 'male',
@@ -79,6 +89,7 @@ describe('ProfileService', () => {
 
     profileRepository.findByUserId.mockResolvedValue(existingRow);
     profileRepository.upsert.mockResolvedValue(existingRow);
+    profileRepository.upsertPatientIdentifiers.mockResolvedValue(undefined);
     profileRepository.toResponse.mockReturnValue({
       givenNames: ['Maria'],
       familyName: 'Dela Cruz',
@@ -129,17 +140,18 @@ describe('ProfileService', () => {
         country: 'Philippines',
       }),
     });
+    expect(profileRepository.upsertPatientIdentifiers).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({
+        philHealthId: '12-345678901-2',
+      }),
+    );
   });
 
   it('blocks manual updates when the profile is sync locked', async () => {
     const profileRepository = createRepositoryMock();
-    const service = new ProfileService(profileRepository);
-    const lockedRow = buildRow(
-      {},
-      {
-        syncLocked: true,
-      },
-    );
+    const service = new ProfileService(profileRepository as unknown as ProfileRepository);
+    const lockedRow = buildRow({}, { syncLocked: true });
 
     profileRepository.findByUserId.mockResolvedValue(lockedRow);
 
@@ -150,5 +162,6 @@ describe('ProfileService', () => {
     ).rejects.toBeInstanceOf(BadRequestException);
 
     expect(profileRepository.upsert).not.toHaveBeenCalled();
+    expect(profileRepository.upsertPatientIdentifiers).not.toHaveBeenCalled();
   });
 });

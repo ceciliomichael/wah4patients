@@ -157,81 +157,90 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     return Container(
       color: AppColors.background,
-      child: Column(
-        children: [
-          CalendarHeaderWidget(
-            selectedDate: _selectedDate,
-            currentViewMode: _viewMode,
-            onViewModeChanged: (mode) {
-              setState(() {
-                _viewMode = mode;
-              });
-            },
-            onPreviousMonth: () {
-              setState(() {
-                _selectedDate = DateTime(
-                  _selectedDate.year,
-                  _selectedDate.month - 1,
-                  _selectedDate.day,
-                );
-              });
-            },
-            onNextMonth: () {
-              setState(() {
-                _selectedDate = DateTime(
-                  _selectedDate.year,
-                  _selectedDate.month + 1,
-                  _selectedDate.day,
-                );
-              });
-            },
-            onTodayPressed: () {
-              setState(() {
-                _selectedDate = DateTime.now();
-              });
-            },
-          ),
-          EventTypeFilterWidget(
-            selectedType: _selectedType,
-            onTypeSelected: (type) {
-              setState(() {
-                _selectedType = type;
-              });
-            },
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: switch (_viewMode) {
-              CalendarViewMode.month => MonthViewWidget(
-                selectedDate: _selectedDate,
-                events: filteredEvents,
-                selectedDayEvents: selectedDayEvents,
-                onDateSelected: (date) {
-                  setState(() {
-                    _selectedDate = date;
-                  });
-                },
-                onEventTap: _showEventDetails,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CalendarHeaderWidget(
+                    selectedDate: _selectedDate,
+                    currentViewMode: _viewMode,
+                    onViewModeChanged: (mode) {
+                      setState(() {
+                        _viewMode = mode;
+                      });
+                    },
+                    onPreviousMonth: () {
+                      setState(() {
+                        _selectedDate = DateTime(
+                          _selectedDate.year,
+                          _selectedDate.month - 1,
+                          _selectedDate.day,
+                        );
+                      });
+                    },
+                    onNextMonth: () {
+                      setState(() {
+                        _selectedDate = DateTime(
+                          _selectedDate.year,
+                          _selectedDate.month + 1,
+                          _selectedDate.day,
+                        );
+                      });
+                    },
+                    onTodayPressed: () {
+                      setState(() {
+                        _selectedDate = DateTime.now();
+                      });
+                    },
+                  ),
+                  EventTypeFilterWidget(
+                    selectedType: _selectedType,
+                    onTypeSelected: (type) {
+                      setState(() {
+                        _selectedType = type;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  switch (_viewMode) {
+                    CalendarViewMode.month => MonthViewWidget(
+                      selectedDate: _selectedDate,
+                      events: filteredEvents,
+                      selectedDayEvents: selectedDayEvents,
+                      onDateSelected: (date) {
+                        setState(() {
+                          _selectedDate = date;
+                        });
+                      },
+                      onEventTap: _showEventDetails,
+                    ),
+                    CalendarViewMode.week => WeekViewWidget(
+                      selectedDate: _selectedDate,
+                      events: _eventsForWeek(_selectedDate),
+                      onDateSelected: (date) {
+                        setState(() {
+                          _selectedDate = date;
+                          _viewMode = CalendarViewMode.day;
+                        });
+                      },
+                      onEventTap: _showEventDetails,
+                    ),
+                    CalendarViewMode.day => DayViewWidget(
+                      selectedDate: _selectedDate,
+                      events: selectedDayEvents,
+                      onEventTap: _showEventDetails,
+                    ),
+                  },
+                ],
               ),
-              CalendarViewMode.week => WeekViewWidget(
-                selectedDate: _selectedDate,
-                events: _eventsForWeek(_selectedDate),
-                onDateSelected: (date) {
-                  setState(() {
-                    _selectedDate = date;
-                    _viewMode = CalendarViewMode.day;
-                  });
-                },
-                onEventTap: _showEventDetails,
-              ),
-              CalendarViewMode.day => DayViewWidget(
-                selectedDate: _selectedDate,
-                events: selectedDayEvents,
-                onEventTap: _showEventDetails,
-              ),
-            },
-          ),
-        ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -43,7 +43,7 @@ class WeekViewWidget extends StatelessWidget {
       groupedEvents.putIfAbsent(key, () => <CalendarEvent>[]).add(event);
     }
 
-    return SingleChildScrollView(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,14 +76,14 @@ class WeekViewWidget extends StatelessWidget {
                         color: isSelected
                             ? AppColors.primary
                             : isToday
-                            ? AppColors.secondary.withValues(alpha: 0.12)
+                            ? AppColors.primary.withValues(alpha: 0.12)
                             : AppColors.surfaceVariant,
                         borderRadius: AppRadii.medium,
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
                               : isToday
-                              ? AppColors.secondary
+                              ? AppColors.primary
                               : AppColors.border,
                         ),
                       ),
@@ -105,7 +105,7 @@ class WeekViewWidget extends StatelessWidget {
                               color: isSelected
                                   ? AppColors.textOnPrimary
                                   : isToday
-                                  ? AppColors.secondary
+                                  ? AppColors.primary
                                   : AppColors.black,
                               fontWeight: FontWeight.w700,
                             ),

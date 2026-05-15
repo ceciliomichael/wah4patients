@@ -21,6 +21,7 @@ import {
 import { CompletePasswordResetDto } from './dto/complete-password-reset.dto';
 import { RequestPasswordResetOtpDto } from './dto/request-password-reset-otp.dto';
 import { VerifyPasswordResetOtpDto } from './dto/verify-password-reset-otp.dto';
+import { PasswordHistoryService } from './password-history.service';
 import { PasswordResetOtpRepository } from './password-reset-otp.repository';
 
 @Injectable()
@@ -34,6 +35,7 @@ export class PasswordResetAuthService {
     private readonly passwordResetOtpRepository: PasswordResetOtpRepository,
     private readonly settings: AuthSettingsService,
     private readonly support: AuthSupportService,
+    private readonly passwordHistoryService: PasswordHistoryService,
   ) {}
 
   async requestPasswordResetOtp(
@@ -215,6 +217,13 @@ export class PasswordResetAuthService {
       throw new BadGatewayException('Unable to reset password');
     }
 
+    await this.passwordHistoryService.assertPasswordNotReused(userId, password);
+
+    const historyEntry = await this.passwordHistoryService.createPasswordEntry(
+      userId,
+      password,
+    );
+
     const { error } =
       await this.supabaseService.adminClient.auth.admin.updateUserById(userId, {
         password,
@@ -225,6 +234,19 @@ export class PasswordResetAuthService {
         email: normalizedEmail,
         message: error.message,
       });
+
+      try {
+        await this.passwordHistoryService.deletePasswordEntry(historyEntry.id);
+      } catch (deleteError) {
+        this.logger.error('Failed to roll back password history entry', {
+          email: normalizedEmail,
+          userId,
+          message:
+            deleteError instanceof Error
+              ? deleteError.message
+              : 'Unknown error',
+        });
+      }
 
       throw new BadGatewayException(
         error.message.trim().length > 0

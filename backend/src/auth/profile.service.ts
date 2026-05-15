@@ -72,6 +72,10 @@ export class ProfileService {
       familyName: mergedProfile.familyName,
       patientProfile: mergedProfile.patientProfile,
     });
+    await this.profileRepository.upsertPatientIdentifiers(
+      userId,
+      mergedProfile.patientProfile,
+    );
 
     return this.profileRepository.toResponse(row);
   }

@@ -1,4 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Database } from '../supabase/database.types';
 import { Json } from '../supabase/database.types';
 import { SupabaseService } from '../supabase/supabase.service';
 import { PatientProfileResponse } from './auth.types';
@@ -14,7 +15,13 @@ export interface ProfileRow {
 }
 
 type PatientProfileRecord = Record<string, string>;
+type PatientIdentifierInsert =
+  Database['public']['Tables']['patient_identifiers']['Insert'];
 const SYNC_LOCKED_PROFILE_FLAG = 'syncLocked';
+const PHILHEALTH_IDENTIFIER_SYSTEM =
+  'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
+const PHILSYS_IDENTIFIER_SYSTEM =
+  'http://philsys.gov.ph/fhir/Identifier/philsys-id';
 
 export interface ProfileUpsertInput {
   id: string;
@@ -66,6 +73,23 @@ export class ProfileRepository {
     }
 
     return data as unknown as ProfileRow;
+  }
+
+  async upsertPatientIdentifiers(profileId: string, patientProfile: Json): Promise<void> {
+    const payload = this.buildPatientIdentifierPayload(profileId, patientProfile);
+    if (payload.length === 0) {
+      return;
+    }
+
+    const { error } = await this.supabaseService.adminClient
+      .from('patient_identifiers')
+      .upsert(payload, {
+        onConflict: 'profile_id,identifier_system,identifier_value',
+      });
+
+    if (error !== null) {
+      throw new InternalServerErrorException('Unable to save patient identifiers');
+    }
   }
 
   toResponse(row: ProfileRow): PatientProfileResponse {
@@ -121,6 +145,49 @@ export class ProfileRepository {
     }
 
     return displayNameParts.join(' ');
+  }
+
+  private buildPatientIdentifierPayload(
+    profileId: string,
+    patientProfile: Json,
+  ): PatientIdentifierInsert[] {
+    if (patientProfile === null || typeof patientProfile !== 'object' || Array.isArray(patientProfile)) {
+      return [];
+    }
+
+    const record = patientProfile as Record<string, unknown>;
+    const identifiers: PatientIdentifierInsert[] = [];
+
+    const philHealthId = this.normalizeProfileIdentifier(record['philHealthId']);
+    if (philHealthId !== null) {
+      identifiers.push({
+        profile_id: profileId,
+        identifier_system: PHILHEALTH_IDENTIFIER_SYSTEM,
+        identifier_value: philHealthId,
+        verified_at: new Date().toISOString(),
+      });
+    }
+
+    const philSysId = this.normalizeProfileIdentifier(record['philSysId']);
+    if (philSysId !== null) {
+      identifiers.push({
+        profile_id: profileId,
+        identifier_system: PHILSYS_IDENTIFIER_SYSTEM,
+        identifier_value: philSysId,
+        verified_at: new Date().toISOString(),
+      });
+    }
+
+    return identifiers;
+  }
+
+  private normalizeProfileIdentifier(value: unknown): string | null {
+    if (typeof value !== 'string') {
+      return null;
+    }
+
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : null;
   }
 }
 
