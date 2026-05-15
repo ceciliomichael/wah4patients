@@ -30,7 +30,6 @@ class _RegistrationPersonalDetailsScreenState
     extends State<RegistrationPersonalDetailsScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _secondNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
@@ -39,7 +38,6 @@ class _RegistrationPersonalDetailsScreenState
   @override
   void dispose() {
     _firstNameController.dispose();
-    _secondNameController.dispose();
     _middleNameController.dispose();
     _lastNameController.dispose();
     super.dispose();
@@ -60,7 +58,6 @@ class _RegistrationPersonalDetailsScreenState
 
     final profileDraft = RegistrationProfileDraft(
       firstName: _firstNameController.text,
-      secondName: _secondNameController.text,
       middleName: _middleNameController.text,
       lastName: _lastNameController.text,
     );
@@ -229,13 +226,12 @@ class _RegistrationPersonalDetailsScreenState
                               key: _formKey,
                               child: PatientNameFieldsForm(
                                 firstNameController: _firstNameController,
-                                secondNameController: _secondNameController,
                                 middleNameController: _middleNameController,
                                 lastNameController: _lastNameController,
                                 enabled: !_isSubmitting,
                                 showRequirementIndicators: true,
                                 helperText:
-                                    'First name is required. Second name and middle name are optional, so only enter them if they are part of your name.',
+                                    'Use the first name field for your full first/given name. Add a middle name only if you normally use one.',
                               ),
                             ),
                           ],

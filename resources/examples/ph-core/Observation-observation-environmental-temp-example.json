@@ -2,7 +2,7 @@
   "resourceType" : "Observation",
   "id" : "observation-environmental-temp-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-observation"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-observation"]
   },
   "language" : "en",
   "text" : {

@@ -2,7 +2,7 @@
   "resourceType" : "Practitioner",
   "id" : "example-practitioner",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-practitioner"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-practitioner"]
   },
   "language" : "en",
   "text" : {

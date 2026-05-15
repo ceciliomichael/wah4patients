@@ -2,7 +2,7 @@
   "resourceType" : "Practitioner",
   "id" : "practitioner-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-practitioner"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-practitioner"]
   },
   "language" : "en",
   "text" : {
@@ -96,7 +96,7 @@
   }],
   "address" : [{
     "extension" : [{
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/ph-core/StructureDefinition/barangay",
+      "url" : "https://fhir-ph-core.wah.ph/ph-core/StructureDefinition/barangay",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1339000003",
@@ -104,7 +104,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/ph-core/StructureDefinition/city-municipality",
+      "url" : "https://fhir-ph-core.wah.ph/ph-core/StructureDefinition/city-municipality",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380600000",
@@ -112,7 +112,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/ph-core/StructureDefinition/region",
+      "url" : "https://fhir-ph-core.wah.ph/ph-core/StructureDefinition/region",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1300000000",

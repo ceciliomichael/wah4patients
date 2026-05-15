@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "municipalities",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/municipalities",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/municipalities",
   "version": "1Q-2026",
   "name": "Municipalities",
   "title": "Municipalities",

@@ -2,7 +2,7 @@
   "resourceType" : "Procedure",
   "id" : "procedure-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-procedure"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-procedure"]
   },
   "language" : "en",
   "text" : {
@@ -11,7 +11,7 @@
   },
   "identifier" : [{
     "use" : "usual",
-    "system" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/NamingSystem/procedure-id",
+    "system" : "https://fhir-ph-core.wah.ph/phcore/NamingSystem/procedure-id",
     "value" : "PROC-2024-000123"
   },
   {

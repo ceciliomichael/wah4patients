@@ -2,7 +2,7 @@
   "resourceType" : "Condition",
   "id" : "condition-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-condition"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-condition"]
   },
   "language" : "en",
   "text" : {

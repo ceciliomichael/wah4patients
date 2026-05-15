@@ -90,6 +90,7 @@ void main() {
       expect(find.text('Sync records locked'), findsOneWidget);
       expect(find.text('PhilHealth ID or PhilSys ID'), findsOneWidget);
       expect(find.text('Identity'), findsOneWidget);
+      expect(find.text('Second name'), findsNothing);
       expect(find.text('Identifiers'), findsOneWidget);
       expect(find.text('Address'), findsOneWidget);
       expect(find.text('Optional details'), findsOneWidget);

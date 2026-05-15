@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "provinces",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/provinces",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/provinces",
   "version": "1Q-2026",
   "name": "Provinces",
   "title": "Provinces",

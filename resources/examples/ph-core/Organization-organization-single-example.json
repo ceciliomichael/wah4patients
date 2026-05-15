@@ -2,7 +2,7 @@
   "resourceType" : "Organization",
   "id" : "organization-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-organization"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-organization"]
   },
   "language" : "en",
   "text" : {
@@ -10,7 +10,7 @@
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">The Department of Health - Central Office (NHFR: 1234567890, PAN: PAN-2024-56789, PEN: PEN-987654321) is an active PH Core Organization located at 123, Barangay 1, City of Las Piñas, Benguet, 1740, Philippines. The organization can be contacted via phone at +63-2-8651-7800 or email at contact@doh.gov.ph.</div>"
   },
   "identifier" : [{
-    "system" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/Identifier/doh-nhfr-code",
+    "system" : "https://fhir-ph-core.wah.ph/phcore/Identifier/doh-nhfr-code",
     "value" : "1234567890"
   },
   {
@@ -39,7 +39,7 @@
   }],
   "address" : [{
     "extension" : [{
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/region",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/region",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1401100000",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/city-municipality",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/city-municipality",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380200000",
@@ -55,7 +55,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/barangay",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/barangay",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380100001",
@@ -77,7 +77,7 @@
     }],
     "address" : {
       "extension" : [{
-        "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/region",
+        "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/region",
         "valueCoding" : {
           "system" : "https://psa.gov.ph/classification/psgc",
           "code" : "1401100000",
@@ -85,7 +85,7 @@
         }
       },
       {
-        "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/city-municipality",
+        "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/city-municipality",
         "valueCoding" : {
           "system" : "https://psa.gov.ph/classification/psgc",
           "code" : "1380200000",
@@ -93,7 +93,7 @@
         }
       },
       {
-        "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/barangay",
+        "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/barangay",
         "valueCoding" : {
           "system" : "https://psa.gov.ph/classification/psgc",
           "code" : "1380100001",

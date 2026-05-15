@@ -6,7 +6,7 @@
     "status" : "extensions",
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Juan Dela Cruz is a male patient born on 1 January 1980, residing in Manila, NCR, Philippines.</div>"
   },
-  "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient",
+  "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient",
   "version" : "0.2.0",
   "name" : "PHCorePatient",
   "title" : "PH Core Patient",
@@ -478,7 +478,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-group"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-group"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -515,7 +515,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-people"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-people"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -552,7 +552,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/occupation"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/occupation"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -589,7 +589,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/race"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/race"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -626,7 +626,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/educational-attainment"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/educational-attainment"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -697,7 +697,7 @@
       },
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-pwd-disability"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-pwd-disability"]
       }],
       "condition" : ["ele-1"],
       "constraint" : [{
@@ -823,11 +823,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -838,11 +838,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -853,11 +853,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -875,7 +875,7 @@
       },
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philhealth-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philhealth-id"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -914,11 +914,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -929,11 +929,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -944,11 +944,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -966,7 +966,7 @@
       },
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philsys-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philsys-id"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -1047,11 +1047,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1062,11 +1062,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1077,11 +1077,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1099,7 +1099,7 @@
       },
       "type" : [{
         "code" : "HumanName",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-name"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-name"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -1134,11 +1134,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1149,11 +1149,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1164,11 +1164,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1220,11 +1220,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1235,11 +1235,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1250,11 +1250,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1315,11 +1315,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1330,11 +1330,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1345,11 +1345,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1449,11 +1449,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1464,11 +1464,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1479,11 +1479,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1501,7 +1501,7 @@
       },
       "type" : [{
         "code" : "Address",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-address"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-address"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -1536,11 +1536,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1551,11 +1551,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1566,11 +1566,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1701,11 +1701,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1716,11 +1716,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1731,11 +1731,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1791,11 +1791,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1806,11 +1806,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1821,11 +1821,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2116,11 +2116,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2131,11 +2131,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2146,11 +2146,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2281,11 +2281,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2296,11 +2296,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2311,11 +2311,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2371,11 +2371,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2386,11 +2386,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2401,11 +2401,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2463,7 +2463,7 @@
       },
       "type" : [{
         "code" : "HumanName",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-name"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-name"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -2537,11 +2537,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2552,11 +2552,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2567,11 +2567,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2588,7 +2588,7 @@
       },
       "type" : [{
         "code" : "Address",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-address"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-address"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -2677,7 +2677,7 @@
       },
       "type" : [{
         "code" : "Reference",
-        "targetProfile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-organization"]
+        "targetProfile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-organization"]
       }],
       "condition" : ["pat-1"],
       "constraint" : [{
@@ -2894,11 +2894,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2909,11 +2909,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2924,11 +2924,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3069,11 +3069,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3084,11 +3084,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3099,11 +3099,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3159,11 +3159,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3174,11 +3174,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3189,11 +3189,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3292,9 +3292,9 @@
       },
       "type" : [{
         "code" : "Reference",
-        "targetProfile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-practitioner",
-        "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-practitionerrole",
-        "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-organization"]
+        "targetProfile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-practitioner",
+        "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-practitionerrole",
+        "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-organization"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -3335,7 +3335,7 @@
       },
       "type" : [{
         "code" : "Reference",
-        "targetProfile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-organization"]
+        "targetProfile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-organization"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -3524,8 +3524,8 @@
           "valueBoolean" : false
         }],
         "code" : "Reference",
-        "targetProfile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient",
-        "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson"]
+        "targetProfile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient",
+        "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -3653,7 +3653,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-group"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-group"]
       }]
     },
     {
@@ -3664,7 +3664,7 @@
       "max" : "1",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-people"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-people"]
       }]
     },
     {
@@ -3675,7 +3675,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/occupation"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/occupation"]
       }]
     },
     {
@@ -3686,7 +3686,7 @@
       "max" : "1",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/race"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/race"]
       }]
     },
     {
@@ -3697,7 +3697,7 @@
       "max" : "1",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/educational-attainment"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/educational-attainment"]
       }]
     },
     {
@@ -3720,7 +3720,7 @@
       "max" : "1",
       "type" : [{
         "code" : "Extension",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-pwd-disability"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-pwd-disability"]
       }]
     },
     {
@@ -3745,7 +3745,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3756,7 +3756,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3767,7 +3767,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3777,7 +3777,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philhealth-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philhealth-id"]
       }],
       "mustSupport" : true
     },
@@ -3790,7 +3790,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3801,7 +3801,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3812,7 +3812,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3822,7 +3822,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philsys-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philsys-id"]
       }],
       "mustSupport" : true
     },
@@ -3835,7 +3835,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3846,7 +3846,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3857,14 +3857,14 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
       "path" : "Patient.name",
       "type" : [{
         "code" : "HumanName",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-name"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-name"]
       }],
       "mustSupport" : true
     },
@@ -3877,7 +3877,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3888,7 +3888,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3899,7 +3899,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3915,7 +3915,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3926,7 +3926,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3937,7 +3937,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3954,7 +3954,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },

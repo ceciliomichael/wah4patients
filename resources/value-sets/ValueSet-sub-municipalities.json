@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "sub-municipalities",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/sub-municipalities",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/sub-municipalities",
   "version": "1Q-2026",
   "name": "SubMunicipalities",
   "title": "Sub-Municipalities",

@@ -2,7 +2,7 @@
   "resourceType" : "RelatedPerson",
   "id" : "relatedperson-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson"]
   },
   "language" : "en",
   "text" : {
@@ -47,7 +47,7 @@
   "birthDate" : "1955-01-01",
   "address" : [{
     "extension" : [{
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/barangay",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/barangay",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0133070250",
@@ -55,7 +55,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/city-municipality",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/city-municipality",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0133070000",
@@ -63,7 +63,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/province",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/province",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0133000000",
@@ -71,7 +71,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/region",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/region",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0100000000",

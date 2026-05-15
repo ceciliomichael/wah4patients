@@ -7,7 +7,6 @@ class PatientNameFieldsForm extends StatelessWidget {
   const PatientNameFieldsForm({
     super.key,
     required this.firstNameController,
-    required this.secondNameController,
     required this.middleNameController,
     required this.lastNameController,
     required this.enabled,
@@ -16,7 +15,6 @@ class PatientNameFieldsForm extends StatelessWidget {
   });
 
   final TextEditingController firstNameController;
-  final TextEditingController secondNameController;
   final TextEditingController middleNameController;
   final TextEditingController lastNameController;
   final bool enabled;
@@ -56,26 +54,11 @@ class PatientNameFieldsForm extends StatelessWidget {
                       enabled: enabled,
                       label: 'First name',
                       requirement: _FieldRequirement.required,
-                      hintText: 'Enter first name',
+                      hintText: 'Enter first/given name',
                       autofillHints: const [AutofillHints.givenName],
                       textInputAction: TextInputAction.next,
                       validator: _requiredNameValidator,
                       icon: Icons.person_outline,
-                      showRequirementIndicator: showRequirementIndicators,
-                    ),
-                  ),
-                  SizedBox(
-                    width: fieldWidth,
-                    child: _NameField(
-                      controller: secondNameController,
-                      enabled: enabled,
-                      label: 'Second name',
-                      requirement: _FieldRequirement.optional,
-                      hintText: 'Enter second name',
-                      autofillHints: const [AutofillHints.middleName],
-                      textInputAction: TextInputAction.next,
-                      validator: _optionalNameValidator,
-                      icon: Icons.badge_outlined,
                       showRequirementIndicator: showRequirementIndicators,
                     ),
                   ),
@@ -95,7 +78,7 @@ class PatientNameFieldsForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: fieldWidth,
+                    width: isWide ? constraints.maxWidth : fieldWidth,
                     child: _NameField(
                       controller: lastNameController,
                       enabled: enabled,

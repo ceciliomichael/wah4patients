@@ -2,7 +2,7 @@
   "resourceType" : "AllergyIntolerance",
   "id" : "allergy-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-allergyintolerance"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-allergyintolerance"]
   },
   "language" : "en",
   "text" : {

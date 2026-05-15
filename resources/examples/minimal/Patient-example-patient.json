@@ -2,7 +2,7 @@
   "resourceType" : "Patient",
   "id" : "example-patient",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient"]
   },
   "language" : "en",
   "text" : {
@@ -40,7 +40,7 @@
     }
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/race",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/race",
     "valueCodeableConcept" : {
       "coding" : [{
         "system" : "http://terminology.hl7.org/CodeSystem/v3-Race",
@@ -63,7 +63,7 @@
   "birthDate" : "1980-01-01",
   "address" : [{
     "extension" : [{
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/barangay",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/barangay",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380100001",
@@ -71,7 +71,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/city-municipality",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/city-municipality",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380200000",
@@ -79,7 +79,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/province",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/province",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0402100000",

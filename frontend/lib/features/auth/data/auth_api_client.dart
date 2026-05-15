@@ -67,7 +67,6 @@ class AuthApiClient {
         'password': password,
         'registrationToken': registrationToken,
         'firstName': profile.firstName,
-        'secondName': profile.secondName,
         'middleName': profile.middleName,
         'lastName': profile.lastName,
       },
@@ -82,7 +81,6 @@ class AuthApiClient {
       path: '/profile/me',
       body: <String, dynamic>{
         'firstName': profile.firstName,
-        'secondName': profile.secondName,
         'middleName': profile.middleName,
         'lastName': profile.lastName,
         'birthDate': profile.birthDate,

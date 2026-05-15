@@ -31,7 +31,6 @@ class PatientProfileFormWidget extends StatefulWidget {
 class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController _firstNameController;
-  late final TextEditingController _secondNameController;
   late final TextEditingController _middleNameController;
   late final TextEditingController _lastNameController;
   late final TextEditingController _birthDateController;
@@ -59,7 +58,6 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   void initState() {
     super.initState();
     _firstNameController = TextEditingController();
-    _secondNameController = TextEditingController();
     _middleNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _birthDateController = TextEditingController();
@@ -96,7 +94,6 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   @override
   void dispose() {
     _firstNameController.dispose();
-    _secondNameController.dispose();
     _middleNameController.dispose();
     _lastNameController.dispose();
     _birthDateController.dispose();
@@ -124,11 +121,8 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
     _firstNameController.text = profile.givenNames.isNotEmpty
         ? profile.givenNames.first
         : '';
-    _secondNameController.text = profile.givenNames.length > 1
+    _middleNameController.text = profile.givenNames.length > 1
         ? profile.givenNames[1]
-        : '';
-    _middleNameController.text = profile.givenNames.length > 2
-        ? profile.givenNames[2]
         : '';
     _lastNameController.text = profile.familyName;
     _birthDateController.text = _formatBirthDateForDisplay(profile.birthDate);
@@ -160,7 +154,6 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
     await widget.onSave(
       PatientProfileDraft(
         firstName: _firstNameController.text.trim(),
-        secondName: _secondNameController.text.trim(),
         middleName: _middleNameController.text.trim(),
         lastName: _lastNameController.text.trim(),
         birthDate: _formatBirthDateForApi(_birthDateController.text.trim()),
@@ -233,73 +226,62 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
         child: IgnorePointer(
           ignoring: !isInteractive,
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (widget.isReadOnly) ...[
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                border: Border.all(color: AppColors.border),
-                borderRadius: AppRadii.medium,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (widget.isReadOnly) ...[
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceVariant,
+                    border: Border.all(color: AppColors.border),
+                    borderRadius: AppRadii.medium,
+                  ),
+                  child: Text(
+                    'Synced profile data is locked and can no longer be edited.',
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+              _SectionHeader(
+                title: 'Identity',
+                description:
+                    'First name is required; use it for your full first/given name. Middle name is optional if you normally use one.',
               ),
-              child: Text(
-                'Synced profile data is locked and can no longer be edited.',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+              const SizedBox(height: 16),
+              _buildTwoColumnRow(
+                first: _ProfileTextField(
+                  controller: _firstNameController,
+                  label: 'First name',
+                  hintText: 'Enter first/given name',
+                  icon: Icons.person_outline,
+                  validator: _optionalTextValidator,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: _nameInputFormatters(),
+                ),
+                second: _ProfileTextField(
+                  controller: _middleNameController,
+                  label: 'Middle name',
+                  hintText: 'Enter middle name',
+                  icon: Icons.account_circle_outlined,
+                  validator: _optionalTextValidator,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: _nameInputFormatters(),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-          ],
-          _SectionHeader(
-            title: 'Identity',
-            description:
-                'First name is required; second name and middle name are optional if you normally use them.',
-          ),
-          const SizedBox(height: 16),
-          _buildTwoColumnRow(
-            first: _ProfileTextField(
-              controller: _firstNameController,
-              label: 'First name',
-              hintText: 'Enter first name',
-              icon: Icons.person_outline,
-              validator: _optionalTextValidator,
-              textInputAction: TextInputAction.next,
-              inputFormatters: _nameInputFormatters(),
-            ),
-            second: _ProfileTextField(
-              controller: _secondNameController,
-              label: 'Second name',
-              hintText: 'Enter second name',
-              icon: Icons.badge_outlined,
-              validator: _optionalTextValidator,
-              textInputAction: TextInputAction.next,
-              inputFormatters: _nameInputFormatters(),
-            ),
-          ),
-          const SizedBox(height: 16),
-          _buildTwoColumnRow(
-            first: _ProfileTextField(
-              controller: _middleNameController,
-              label: 'Middle name',
-              hintText: 'Enter middle name',
-              icon: Icons.account_circle_outlined,
-              validator: _optionalTextValidator,
-              textInputAction: TextInputAction.next,
-              inputFormatters: _nameInputFormatters(),
-            ),
-            second: _ProfileTextField(
-              controller: _lastNameController,
-              label: 'Last name',
-              hintText: 'Enter last name',
-              icon: Icons.badge,
-              validator: _optionalTextValidator,
-              textInputAction: TextInputAction.next,
-              inputFormatters: _nameInputFormatters(),
-            ),
-          ),
-          const SizedBox(height: 16),
+              const SizedBox(height: 16),
+              _ProfileTextField(
+                controller: _lastNameController,
+                label: 'Last name',
+                hintText: 'Enter last name',
+                icon: Icons.badge,
+                validator: _optionalTextValidator,
+                textInputAction: TextInputAction.next,
+                inputFormatters: _nameInputFormatters(),
+              ),
+              const SizedBox(height: 16),
           _buildTwoColumnRow(
             first: _ProfileTextField(
               controller: _birthDateController,

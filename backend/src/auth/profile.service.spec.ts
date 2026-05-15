@@ -148,6 +148,84 @@ describe('ProfileService', () => {
     );
   });
 
+  it('stores the first and middle given names from profile updates', async () => {
+    const profileRepository = createRepositoryMock();
+    const service = new ProfileService(profileRepository as unknown as ProfileRepository);
+    const existingRow = buildRow();
+    const savedRow = buildRow(
+      {
+        given_names: ['Michael Christian', 'Aparicio'],
+        family_name: 'Cecilio',
+      },
+      {
+        birthDate: '1990-05-15',
+        gender: 'male',
+        phoneNumber: '09171234567',
+        communicationLanguage: 'Filipino',
+        philHealthId: '12-345678901-2',
+        philSysId: '',
+        addressLine1: '123 Main Street',
+        addressLine2: '',
+        city: 'Quezon City',
+        province: 'Metro Manila',
+        postalCode: '1100',
+        country: 'Philippines',
+        maritalStatus: '',
+        nationality: '',
+        religion: '',
+        occupation: '',
+        genderIdentity: '',
+        emergencyContactName: '',
+        emergencyContactPhone: '',
+      },
+    );
+
+    profileRepository.findByUserId.mockResolvedValue(existingRow);
+    profileRepository.upsert.mockResolvedValue(savedRow);
+    profileRepository.upsertPatientIdentifiers.mockResolvedValue(undefined);
+    profileRepository.toResponse.mockReturnValue({
+      givenNames: ['Michael Christian', 'Aparicio'],
+      familyName: 'Cecilio',
+      displayName: 'Michael Christian Aparicio Cecilio',
+      birthDate: '1990-05-15',
+      gender: 'male',
+      phoneNumber: '09171234567',
+      communicationLanguage: 'Filipino',
+      philHealthId: '12-345678901-2',
+      philSysId: '',
+      addressLine1: '123 Main Street',
+      addressLine2: '',
+      city: 'Quezon City',
+      province: 'Metro Manila',
+      postalCode: '1100',
+      country: 'Philippines',
+      maritalStatus: '',
+      nationality: '',
+      religion: '',
+      occupation: '',
+      genderIdentity: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      isSyncLocked: false,
+      isComplete: true,
+      missingFields: [],
+    });
+
+    await service.saveProfileFromDto('user-1', 'juan@example.com', {
+      firstName: 'Michael Christian',
+      middleName: 'Aparicio',
+      lastName: 'Cecilio',
+    });
+
+    expect(profileRepository.upsert).toHaveBeenCalledWith({
+      id: 'user-1',
+      email: 'juan@example.com',
+      givenNames: ['Michael Christian', 'Aparicio'],
+      familyName: 'Cecilio',
+      patientProfile: expect.any(Object),
+    });
+  });
+
   it('blocks manual updates when the profile is sync locked', async () => {
     const profileRepository = createRepositoryMock();
     const service = new ProfileService(profileRepository as unknown as ProfileRepository);

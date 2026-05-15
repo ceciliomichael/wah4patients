@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "barangays",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/barangays",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/barangays",
   "version": "1Q-2026",
   "name": "Barangays",
   "title": "Barangays",

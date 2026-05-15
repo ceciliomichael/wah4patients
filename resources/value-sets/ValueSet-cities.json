@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "cities",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/cities",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/cities",
   "version": "1Q-2026",
   "name": "Cities",
   "title": "Cities",

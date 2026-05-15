@@ -2,7 +2,7 @@
   "resourceType" : "Encounter",
   "id" : "example-encounter",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-encounter"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-encounter"]
   },
   "language" : "en",
   "text" : {

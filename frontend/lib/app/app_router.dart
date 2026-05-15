@@ -136,7 +136,6 @@ Route<dynamic>? buildAppRoute(RouteSettings settings) {
             registrationToken: '',
             profileDraft: const RegistrationProfileDraft(
               firstName: '',
-              secondName: '',
               middleName: '',
               lastName: '',
             ),

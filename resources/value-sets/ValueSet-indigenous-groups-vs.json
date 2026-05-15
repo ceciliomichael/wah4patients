@@ -4,9 +4,9 @@
   "language" : "en",
   "text" : {
     "status" : "generated",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ValueSet indigenous-groups-vs</b></p><a name=\"indigenous-groups-vs\"> </a><a name=\"hcindigenous-groups-vs\"> </a><ul><li>Include all codes defined in <a href=\"CodeSystem-indigenous-groups-cs.html\"><code>https://wah-fhir-ph-core.echosphere.cfd/phcore/CodeSystem/indigenous-groups-cs</code></a><span title=\"Version is not explicitly stated, which means it is fixed to the version provided in this specification\"> version &#x1F4E6;0.2.0</span></li></ul></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ValueSet indigenous-groups-vs</b></p><a name=\"indigenous-groups-vs\"> </a><a name=\"hcindigenous-groups-vs\"> </a><ul><li>Include all codes defined in <a href=\"CodeSystem-indigenous-groups-cs.html\"><code>https://fhir-ph-core.wah.ph/phcore/CodeSystem/indigenous-groups-cs</code></a><span title=\"Version is not explicitly stated, which means it is fixed to the version provided in this specification\"> version &#x1F4E6;0.2.0</span></li></ul></div>"
   },
-  "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/indigenous-groups-vs",
+  "url" : "https://fhir-ph-core.wah.ph/phcore/ValueSet/indigenous-groups-vs",
   "version" : "0.2.0",
   "name" : "IndigenousGroupsVS",
   "title" : "Indigenous Groups",
@@ -40,7 +40,7 @@
   "compose" : {
     "include" : [
       {
-        "system" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/CodeSystem/indigenous-groups-cs"
+        "system" : "https://fhir-ph-core.wah.ph/phcore/CodeSystem/indigenous-groups-cs"
       }
     ]
   }

@@ -2,7 +2,7 @@
   "resourceType" : "Immunization",
   "id" : "example-immunization",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-immunization"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-immunization"]
   },
   "language" : "en",
   "text" : {

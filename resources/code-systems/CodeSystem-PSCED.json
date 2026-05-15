@@ -4,9 +4,9 @@
   "language": "en",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem PSCED</b></p><a name=\"PSCED\"> </a><a name=\"hcPSCED\"> </a><p>This case-sensitive code system <code>https://wah-fhir-ph-core.echosphere.cfd/phcore/CodeSystem/PSCED</code> defines Philippine Standard Classification of Education (PSCED) codes.</p><p>Total concepts: 1116</p></div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem PSCED</b></p><a name=\"PSCED\"> </a><a name=\"hcPSCED\"> </a><p>This case-sensitive code system <code>https://fhir-ph-core.wah.ph/phcore/CodeSystem/PSCED</code> defines Philippine Standard Classification of Education (PSCED) codes.</p><p>Total concepts: 1116</p></div>"
   },
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/CodeSystem/PSCED",
+  "url": "https://fhir-ph-core.wah.ph/phcore/CodeSystem/PSCED",
   "version": "0.2.0",
   "name": "PSCEDCS",
   "title": "PSCED",

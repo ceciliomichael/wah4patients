@@ -2,7 +2,7 @@
   "resourceType" : "MedicationRequest",
   "id" : "medicationrequest-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-medicationrequest"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-medicationrequest"]
   },
   "language" : "en",
   "text" : {

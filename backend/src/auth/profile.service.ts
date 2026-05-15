@@ -13,7 +13,6 @@ import {
 
 interface ProfileDraftInput {
   firstName?: string;
-  secondName?: string;
   middleName?: string;
   lastName?: string;
   birthDate?: string;
@@ -209,8 +208,7 @@ export class ProfileService {
   ): string[] {
     const nextNames = [
       this.normalizeNamePart(dto.firstName),
-      this.normalizeNamePart(dto.secondName ?? ''),
-      this.normalizeNamePart(dto.middleName ?? ''),
+      this.normalizeNamePart(dto.middleName),
     ].filter((name) => name.length > 0);
 
     if (nextNames.length > 0) {

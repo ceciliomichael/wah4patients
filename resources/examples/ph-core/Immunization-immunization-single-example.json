@@ -2,7 +2,7 @@
   "resourceType" : "Immunization",
   "id" : "immunization-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-immunization"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-immunization"]
   },
   "language" : "en",
   "text" : {
@@ -10,11 +10,11 @@
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Juan Dela Cruz received a completed intramuscular influenza (H5N1-1203) vaccine in the left arm on January 10, 2013, at Philippine General Hospital. The vaccine lot number was AAJN11K and was privately funded. Dose 1 was administered by Dr. Maria Clara Santos.</div>"
   },
   "extension" : [{
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/batch-number",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/batch-number",
     "valueString" : "AAJN11K"
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/administered-product",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/administered-product",
     "valueReference" : {
       "reference" : "Medication/medication-single-example"
     }

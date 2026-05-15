@@ -13976,6 +13976,615 @@
       ],
       "createdAt": "2026-05-15T07:54:45.213Z",
       "updatedAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "memoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "rootMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [
+        "996b1a2d-e717-4757-bf64-5cd19cb20ae1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Reviewed the name-field cleanup request and identified the exact frontend/backend boundaries. The app currently still exposes a separate second-name field in the registration and profile edit flows, while the backend profile DTOs and merge logic still accept and persist secondName. The received FHIR patient example with given=['Michael Christian','Aparicio'] should be interpreted in the UI as first name = Michael Christian and middle name = Aparicio, not as a second-name field. No SQL schema migration appears necessary because profiles already store given_names as a text array; the change is primarily field mapping and UI/API contract cleanup.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Defines the registration and profile draft contracts that currently include secondName and compose givenNames.",
+          "notes": "Needs a constructor and getter shape update."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "Serializes registration and profile update payloads, including the secondName field that must be removed.",
+          "notes": "Payload keys will need to match the simplified contract."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "inspected",
+          "reason": "Registration screen owns the current name-entry controls and helper copy for the second-name field.",
+          "notes": "Entry screen needs copy and controller cleanup."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "inspected",
+          "reason": "Shared name-form widget currently renders first, second, middle, and last name fields.",
+          "notes": "This is the main UI component to simplify."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "inspected",
+          "reason": "Profile edit form hydrates and saves secondName and middleName separately.",
+          "notes": "Hydration and save mapping need to collapse to first/middle/last."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "inspected",
+          "reason": "Base DTO still validates secondName and controls the API contract for registration/profile name updates.",
+          "notes": "Removing the property here propagates to both registration and profile DTOs."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "inspected",
+          "reason": "Manual profile update DTO still declares secondName explicitly.",
+          "notes": "Must be aligned with the simplified name contract."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "inspected",
+          "reason": "Profile merge logic currently builds given_names from firstName, secondName, and middleName.",
+          "notes": "This is the backend persistence boundary that must normalize to first/middle."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "FHIR incoming patient name parsing already extracts given name arrays; the user-visible bug is in downstream mapping rather than this extractor.",
+          "notes": "No change appears necessary for the basic given array extraction."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "inspected",
+          "reason": "Existing tests cover partial profile merges and are the right place to add coverage for the new first/middle-only name composition.",
+          "notes": "Add a case for Michael Christian / Aparicio-style data."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "inspected",
+          "reason": "Widget test asserts the old second-name label and helper copy.",
+          "notes": "Update to reflect the new two-part given-name UX."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Widget test uses TextFormField indices that will shift after removing the second-name field.",
+          "notes": "Field index expectations need to be updated."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the profile schema already stores given_names as text[] and does not need a new column for this change.",
+          "notes": "Likely no SQL migration needed."
+        }
+      ],
+      "createdAt": "2026-05-15T09:21:51.306Z",
+      "updatedAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "memoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "rootMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "parentMemoryIds": [
+        "1129bdbf-683c-40a8-89c3-a6eb9dd7977b"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [
+        "25b91050-3f8c-4387-98f2-319ada73d20c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Reviewed the name-field cleanup request and identified the exact frontend/backend boundaries. The app currently still exposes a separate second-name field in the registration and profile edit flows, while the backend profile DTOs and merge logic still accept and persist secondName. The received FHIR patient example with given=['Michael Christian','Aparicio'] should be interpreted in the UI as first name = Michael Christian and middle name = Aparicio, not as a second-name field. No SQL schema migration appears necessary because profiles already store given_names as a text array; the change is primarily field mapping and UI/API contract cleanup.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Defines the registration and profile draft contracts that currently include secondName and compose givenNames.",
+          "notes": "Needs a constructor and getter shape update."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "Serializes registration and profile update payloads, including the secondName field that must be removed.",
+          "notes": "Payload keys will need to match the simplified contract."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "inspected",
+          "reason": "Registration screen owns the current name-entry controls and helper copy for the second-name field.",
+          "notes": "Entry screen needs copy and controller cleanup."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "inspected",
+          "reason": "Shared name-form widget currently renders first, second, middle, and last name fields.",
+          "notes": "This is the main UI component to simplify."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "inspected",
+          "reason": "Profile edit form hydrates and saves secondName and middleName separately.",
+          "notes": "Hydration and save mapping need to collapse to first/middle/last."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "inspected",
+          "reason": "Base DTO still validates secondName and controls the API contract for registration/profile name updates.",
+          "notes": "Removing the property here propagates to both registration and profile DTOs."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "inspected",
+          "reason": "Manual profile update DTO still declares secondName explicitly.",
+          "notes": "Must be aligned with the simplified name contract."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "inspected",
+          "reason": "Profile merge logic currently builds given_names from firstName, secondName, and middleName.",
+          "notes": "This is the backend persistence boundary that must normalize to first/middle."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "FHIR incoming patient name parsing already extracts given name arrays; the user-visible bug is in downstream mapping rather than this extractor.",
+          "notes": "No change appears necessary for the basic given array extraction."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "inspected",
+          "reason": "Existing tests cover partial profile merges and are the right place to add coverage for the new first/middle-only name composition.",
+          "notes": "Add a case for Michael Christian / Aparicio-style data."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "inspected",
+          "reason": "Widget test asserts the old second-name label and helper copy.",
+          "notes": "Update to reflect the new two-part given-name UX."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Widget test uses TextFormField indices that will shift after removing the second-name field.",
+          "notes": "Field index expectations need to be updated."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the profile schema already stores given_names as text[] and does not need a new column for this change.",
+          "notes": "Likely no SQL migration needed."
+        }
+      ],
+      "createdAt": "2026-05-15T09:21:51.483Z",
+      "updatedAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "memoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "rootMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "parentMemoryIds": [
+        "996b1a2d-e717-4757-bf64-5cd19cb20ae1"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Reviewed the name-field cleanup request and identified the exact frontend/backend boundaries. The app currently still exposes a separate second-name field in the registration and profile edit flows, while the backend profile DTOs and merge logic still accept and persist secondName. The received FHIR patient example with given=['Michael Christian','Aparicio'] should be interpreted in the UI as first name = Michael Christian and middle name = Aparicio, not as a second-name field. No SQL schema migration appears necessary because profiles already store given_names as a text array; the change is primarily field mapping and UI/API contract cleanup.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Defines the registration and profile draft contracts that currently include secondName and compose givenNames.",
+          "notes": "Needs a constructor and getter shape update."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "Serializes registration and profile update payloads, including the secondName field that must be removed.",
+          "notes": "Payload keys will need to match the simplified contract."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "inspected",
+          "reason": "Registration screen owns the current name-entry controls and helper copy for the second-name field.",
+          "notes": "Entry screen needs copy and controller cleanup."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "inspected",
+          "reason": "Shared name-form widget currently renders first, second, middle, and last name fields.",
+          "notes": "This is the main UI component to simplify."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "inspected",
+          "reason": "Profile edit form hydrates and saves secondName and middleName separately.",
+          "notes": "Hydration and save mapping need to collapse to first/middle/last."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "inspected",
+          "reason": "Base DTO still validates secondName and controls the API contract for registration/profile name updates.",
+          "notes": "Removing the property here propagates to both registration and profile DTOs."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "inspected",
+          "reason": "Manual profile update DTO still declares secondName explicitly.",
+          "notes": "Must be aligned with the simplified name contract."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "inspected",
+          "reason": "Profile merge logic currently builds given_names from firstName, secondName, and middleName.",
+          "notes": "This is the backend persistence boundary that must normalize to first/middle."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "FHIR incoming patient name parsing already extracts given name arrays; the user-visible bug is in downstream mapping rather than this extractor.",
+          "notes": "No change appears necessary for the basic given array extraction."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "inspected",
+          "reason": "Existing tests cover partial profile merges and are the right place to add coverage for the new first/middle-only name composition.",
+          "notes": "Add a case for Michael Christian / Aparicio-style data."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "inspected",
+          "reason": "Widget test asserts the old second-name label and helper copy.",
+          "notes": "Update to reflect the new two-part given-name UX."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "inspected",
+          "reason": "Widget test uses TextFormField indices that will shift after removing the second-name field.",
+          "notes": "Field index expectations need to be updated."
+        },
+        {
+          "path": "sqls/001_auth_setup.sql",
+          "action": "inspected",
+          "reason": "Confirmed the profile schema already stores given_names as text[] and does not need a new column for this change.",
+          "notes": "Likely no SQL migration needed."
+        }
+      ],
+      "createdAt": "2026-05-15T09:21:51.840Z",
+      "updatedAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "memoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "rootMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "parentMemoryIds": [
+        "25b91050-3f8c-4387-98f2-319ada73d20c"
+      ],
+      "relatedMemoryIds": [
+        "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+        "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [
+        "9fa3be2c-8dda-4f3e-b596-3307f3547352"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented the name-field simplification across registration and personal information/profile editing. The app no longer exposes a standalone second-name field; registration and profile edit now use first name + middle name + last name, with first name treated as the full given-name entry. Backend auth DTOs and profile merge logic were updated to remove secondName and store given names as [firstName, middleName]. Existing SQL schema was left untouched because profiles already use a given_names text[] column and the team is fine clearing test data often.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Removed secondName from registration and profile draft models and changed givenNames composition to firstName plus middleName.",
+          "notes": "This is the shared frontend contract used by signup and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Updated registration and profile update payloads to stop sending secondName.",
+          "notes": "Keeps frontend requests aligned with the simplified backend contract."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Updated the default registration draft constructor to match the new draft shape without secondName.",
+          "notes": "Prevents route fallback construction from referencing the removed field."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Removed the second-name controller and updated helper copy for the registration flow.",
+          "notes": "The entry screen now passes only first, middle, and last names onward."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "modified",
+          "reason": "Removed the second-name field from the shared name form widget and updated first-name guidance.",
+          "notes": "This widget is shared by registration and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Hydrates and saves only first, middle, and last names, with first name mapped to the first given-name part and middle name to the second part.",
+          "notes": "Also updated the identity copy to explain the new behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the base name DTO so registration/profile validation no longer accepts it.",
+          "notes": "This affects both registration and patient profile DTO inheritance."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the partial profile update DTO contract.",
+          "notes": "Keeps PATCH profile payloads aligned with the simplified name model."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Changed profile merge logic to build given_names from firstName and middleName only.",
+          "notes": "Existing given names are preserved when no new name values are supplied."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for persisting Michael Christian / Aparicio as first and middle given names.",
+          "notes": "Also kept the existing partial-update and sync-lock tests."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UI expectations to the new first/given-name helper copy and removed second-name assertions.",
+          "notes": "Covers the signup screen wording and fields."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added hydration coverage for first/middle names and adjusted field index checks after removing second-name UI.",
+          "notes": "Also verifies the second-name label is absent."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that the personal information screen no longer shows a second-name field.",
+          "notes": "Ensures the shared profile screen stays aligned with the new contract."
+        }
+      ],
+      "createdAt": "2026-05-15T09:38:36.315Z",
+      "updatedAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "memoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "rootMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "parentMemoryIds": [
+        "14e1b95b-14fb-49de-8434-335816b2cf8a"
+      ],
+      "relatedMemoryIds": [
+        "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+        "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [
+        "eb5f43d0-7484-42db-a2b0-f20afd8bb295"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented the name-field simplification across registration and personal information/profile editing. The app no longer exposes a standalone second-name field; registration and profile edit now use first name + middle name + last name, with first name treated as the full given-name entry. Backend auth DTOs and profile merge logic were updated to remove secondName and store given names as [firstName, middleName]. Existing SQL schema was left untouched because profiles already use a given_names text[] column and the team is fine clearing test data often.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Removed secondName from registration and profile draft models and changed givenNames composition to firstName plus middleName.",
+          "notes": "This is the shared frontend contract used by signup and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Updated registration and profile update payloads to stop sending secondName.",
+          "notes": "Keeps frontend requests aligned with the simplified backend contract."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Updated the default registration draft constructor to match the new draft shape without secondName.",
+          "notes": "Prevents route fallback construction from referencing the removed field."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Removed the second-name controller and updated helper copy for the registration flow.",
+          "notes": "The entry screen now passes only first, middle, and last names onward."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "modified",
+          "reason": "Removed the second-name field from the shared name form widget and updated first-name guidance.",
+          "notes": "This widget is shared by registration and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Hydrates and saves only first, middle, and last names, with first name mapped to the first given-name part and middle name to the second part.",
+          "notes": "Also updated the identity copy to explain the new behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the base name DTO so registration/profile validation no longer accepts it.",
+          "notes": "This affects both registration and patient profile DTO inheritance."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the partial profile update DTO contract.",
+          "notes": "Keeps PATCH profile payloads aligned with the simplified name model."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Changed profile merge logic to build given_names from firstName and middleName only.",
+          "notes": "Existing given names are preserved when no new name values are supplied."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for persisting Michael Christian / Aparicio as first and middle given names.",
+          "notes": "Also kept the existing partial-update and sync-lock tests."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UI expectations to the new first/given-name helper copy and removed second-name assertions.",
+          "notes": "Covers the signup screen wording and fields."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added hydration coverage for first/middle names and adjusted field index checks after removing second-name UI.",
+          "notes": "Also verifies the second-name label is absent."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that the personal information screen no longer shows a second-name field.",
+          "notes": "Ensures the shared profile screen stays aligned with the new contract."
+        }
+      ],
+      "createdAt": "2026-05-15T09:38:36.484Z",
+      "updatedAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "memoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "rootMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "parentMemoryIds": [
+        "9fa3be2c-8dda-4f3e-b596-3307f3547352"
+      ],
+      "relatedMemoryIds": [
+        "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+        "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+        "ff5caf06-9246-4b40-947c-d5d5916675d8",
+        "9eae6220-2959-446f-b020-cb066704dbfa"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented the name-field simplification across registration and personal information/profile editing. The app no longer exposes a standalone second-name field; registration and profile edit now use first name + middle name + last name, with first name treated as the full given-name entry. Backend auth DTOs and profile merge logic were updated to remove secondName and store given names as [firstName, middleName]. Existing SQL schema was left untouched because profiles already use a given_names text[] column and the team is fine clearing test data often.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Removed secondName from registration and profile draft models and changed givenNames composition to firstName plus middleName.",
+          "notes": "This is the shared frontend contract used by signup and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Updated registration and profile update payloads to stop sending secondName.",
+          "notes": "Keeps frontend requests aligned with the simplified backend contract."
+        },
+        {
+          "path": "frontend/lib/app/app_router.dart",
+          "action": "modified",
+          "reason": "Updated the default registration draft constructor to match the new draft shape without secondName.",
+          "notes": "Prevents route fallback construction from referencing the removed field."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/registration_personal_details_screen.dart",
+          "action": "modified",
+          "reason": "Removed the second-name controller and updated helper copy for the registration flow.",
+          "notes": "The entry screen now passes only first, middle, and last names onward."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_name_fields_form.dart",
+          "action": "modified",
+          "reason": "Removed the second-name field from the shared name form widget and updated first-name guidance.",
+          "notes": "This widget is shared by registration and profile editing."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Hydrates and saves only first, middle, and last names, with first name mapped to the first given-name part and middle name to the second part.",
+          "notes": "Also updated the identity copy to explain the new behavior."
+        },
+        {
+          "path": "backend/src/auth/dto/profile-name.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the base name DTO so registration/profile validation no longer accepts it.",
+          "notes": "This affects both registration and patient profile DTO inheritance."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Removed secondName from the partial profile update DTO contract.",
+          "notes": "Keeps PATCH profile payloads aligned with the simplified name model."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Changed profile merge logic to build given_names from firstName and middleName only.",
+          "notes": "Existing given names are preserved when no new name values are supplied."
+        },
+        {
+          "path": "backend/src/auth/profile.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for persisting Michael Christian / Aparicio as first and middle given names.",
+          "notes": "Also kept the existing partial-update and sync-lock tests."
+        },
+        {
+          "path": "frontend/test/features/auth/presentation/screens/registration_personal_details_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated UI expectations to the new first/given-name helper copy and removed second-name assertions.",
+          "notes": "Covers the signup screen wording and fields."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added hydration coverage for first/middle names and adjusted field index checks after removing second-name UI.",
+          "notes": "Also verifies the second-name label is absent."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Added an assertion that the personal information screen no longer shows a second-name field.",
+          "notes": "Ensures the shared profile screen stays aligned with the new contract."
+        }
+      ],
+      "createdAt": "2026-05-15T09:38:36.653Z",
+      "updatedAt": "2026-05-15T09:38:36.653Z"
     }
   ],
   "edges": [
@@ -22861,7 +23470,259 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-15T07:54:45.213Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "toMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.306Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "toMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.483Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "7f137b7a-e24e-44ed-b0aa-da76c84cb4c4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:21:51.840Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "25b91050-3f8c-4387-98f2-319ada73d20c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "toMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.315Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "14e1b95b-14fb-49de-8434-335816b2cf8a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "toMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.484Z"
+    },
+    {
+      "fromMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "toMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "fromMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "toMemoryId": "1129bdbf-683c-40a8-89c3-a6eb9dd7977b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "fromMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "toMemoryId": "996b1a2d-e717-4757-bf64-5cd19cb20ae1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "fromMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "toMemoryId": "ff5caf06-9246-4b40-947c-d5d5916675d8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "fromMemoryId": "eb5f43d0-7484-42db-a2b0-f20afd8bb295",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T09:38:36.653Z"
     }
   ],
-  "updatedAt": "2026-05-15T07:54:45.216Z"
+  "updatedAt": "2026-05-15T09:38:36.661Z"
 }

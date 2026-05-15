@@ -11,18 +11,16 @@ class RegistrationPersonalDetailsArguments {
 class RegistrationProfileDraft {
   const RegistrationProfileDraft({
     required this.firstName,
-    required this.secondName,
     required this.middleName,
     required this.lastName,
   });
 
   final String firstName;
-  final String secondName;
   final String middleName;
   final String lastName;
 
   List<String> get givenNames {
-    final values = <String>[firstName, secondName, middleName]
+    final values = <String>[firstName, middleName]
         .map((value) => value.trim())
         .where((value) => value.isNotEmpty)
         .toList(growable: false);
@@ -33,7 +31,6 @@ class RegistrationProfileDraft {
 class PatientProfileDraft {
   const PatientProfileDraft({
     required this.firstName,
-    required this.secondName,
     required this.middleName,
     required this.lastName,
     required this.birthDate,
@@ -58,7 +55,6 @@ class PatientProfileDraft {
   });
 
   final String firstName;
-  final String secondName;
   final String middleName;
   final String lastName;
   final String birthDate;
@@ -82,7 +78,7 @@ class PatientProfileDraft {
   final String emergencyContactPhone;
 
   List<String> get givenNames {
-    final values = <String>[firstName, secondName, middleName]
+    final values = <String>[firstName, middleName]
         .map((value) => value.trim())
         .where((value) => value.isNotEmpty)
         .toList(growable: false);

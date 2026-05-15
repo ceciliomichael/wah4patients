@@ -2,7 +2,7 @@
   "resourceType" : "Patient",
   "id" : "patient-single-example",
   "meta" : {
-    "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient"]
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-patient"]
   },
   "language" : "en",
   "text" : {
@@ -40,21 +40,21 @@
     }
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-people",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-people",
     "valueBoolean" : true
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/indigenous-group",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/indigenous-group",
     "valueCodeableConcept" : {
       "coding" : [{
-        "system" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/CodeSystem/indigenous-groups-cs",
+        "system" : "https://fhir-ph-core.wah.ph/phcore/CodeSystem/indigenous-groups-cs",
         "code" : "Aetas",
         "display" : "Aetas"
       }]
     }
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/race",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/race",
     "valueCodeableConcept" : {
       "coding" : [{
         "system" : "http://terminology.hl7.org/CodeSystem/v3-Race",
@@ -64,7 +64,7 @@
     }
   },
   {
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/educational-attainment",
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/educational-attainment",
     "valueCodeableConcept" : {
       "coding" : [{
         "system" : "https://psa.gov.ph/classification/psced/level",
@@ -90,7 +90,7 @@
         "start" : "2020-01-01"
       }
     }],
-    "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/occupation"
+    "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/occupation"
   }],
   "identifier" : [{
     "system" : "http://philhealth.gov.ph/fhir/Identifier/philhealth-id",
@@ -106,7 +106,7 @@
   "birthDate" : "1980-01-01",
   "address" : [{
     "extension" : [{
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/barangay",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/barangay",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380100001",
@@ -114,7 +114,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/city-municipality",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/city-municipality",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "1380200000",
@@ -122,7 +122,7 @@
       }
     },
     {
-      "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/province",
+      "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/province",
       "valueCoding" : {
         "system" : "https://psa.gov.ph/classification/psgc",
         "code" : "0402100000",

@@ -2,7 +2,7 @@
   "resourceType" : "Observation",
   "id" : "observation-bp-example",
   "meta" : {
-    "profile" : ["https://fhir.doh.gov.ph/phcore/StructureDefinition/ph-core-observation",
+    "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-observation",
     "http://hl7.org/fhir/StructureDefinition/vitalsigns",
     "http://hl7.org/fhir/StructureDefinition/bp"]
   },

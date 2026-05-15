@@ -24,18 +24,6 @@ export class ProfileNameDto {
     (_, value) => typeof value === 'string' && value.trim().length > 0,
   )
   @IsString()
-  @Matches(/\S/, { message: 'secondName cannot be blank' })
-  @Matches(NAME_PATTERN, {
-    message: 'secondName can only contain letters, spaces, and basic punctuation',
-  })
-  @MaxLength(100)
-  secondName?: string;
-
-  @IsOptional()
-  @ValidateIf(
-    (_, value) => typeof value === 'string' && value.trim().length > 0,
-  )
-  @IsString()
   @Matches(/\S/, { message: 'middleName cannot be blank' })
   @Matches(NAME_PATTERN, {
     message: 'middleName can only contain letters, spaces, and basic punctuation',

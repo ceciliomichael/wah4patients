@@ -4,11 +4,11 @@
   "language" : "en",
   "text" : {
     "status" : "generated",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: NamingSystem DOHNHFRCodeNS</b></p><a name=\"DOHNHFRCodeNS\"> </a><a name=\"hcDOHNHFRCodeNS\"> </a><h3>Summary</h3><table class=\"grid\"><tr><td>Defining URL</td><td>https://wah-fhir-ph-core.echosphere.cfd/phcore/NamingSystem/DOHNHFRCodeNS</td></tr><tr><td>Version</td><td>0.2.0</td></tr><tr><td>Name</td><td>DOHNHFRCode</td></tr><tr><td>Status</td><td>draft</td></tr><tr><td>Definition</td><td><div><p>Health Facility Code (HFC) from the National Health Facility Registry.</p>\n</div></td></tr><tr><td>Publisher</td><td>Wireless Access for Health (WAH)</td></tr></table><h3>Identifiers</h3><table class=\"grid\"><tr><td><b>Type</b></td><td><b>Value</b></td></tr><tr><td>URI</td><td>https://wah-fhir-ph-core.echosphere.cfd/phcore/Identifier/doh-nhfr-code</td></tr></table></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: NamingSystem DOHNHFRCodeNS</b></p><a name=\"DOHNHFRCodeNS\"> </a><a name=\"hcDOHNHFRCodeNS\"> </a><h3>Summary</h3><table class=\"grid\"><tr><td>Defining URL</td><td>https://fhir-ph-core.wah.ph/phcore/NamingSystem/DOHNHFRCodeNS</td></tr><tr><td>Version</td><td>0.2.0</td></tr><tr><td>Name</td><td>DOHNHFRCode</td></tr><tr><td>Status</td><td>draft</td></tr><tr><td>Definition</td><td><div><p>Health Facility Code (HFC) from the National Health Facility Registry.</p>\n</div></td></tr><tr><td>Publisher</td><td>Wireless Access for Health (WAH)</td></tr></table><h3>Identifiers</h3><table class=\"grid\"><tr><td><b>Type</b></td><td><b>Value</b></td></tr><tr><td>URI</td><td>https://fhir-ph-core.wah.ph/phcore/Identifier/doh-nhfr-code</td></tr></table></div>"
   },
   "extension" : [{
     "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-NamingSystem.url",
-    "valueUri" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/NamingSystem/DOHNHFRCodeNS"
+    "valueUri" : "https://fhir-ph-core.wah.ph/phcore/NamingSystem/DOHNHFRCodeNS"
   },
   {
     "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-NamingSystem.version",
@@ -36,6 +36,6 @@
   }],
   "uniqueId" : [{
     "type" : "uri",
-    "value" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/Identifier/doh-nhfr-code"
+    "value" : "https://fhir-ph-core.wah.ph/phcore/Identifier/doh-nhfr-code"
   }]
 }

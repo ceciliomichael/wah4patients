@@ -6,7 +6,7 @@
     "status" : "extensions",
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureDefinition ph-core-relatedperson</b></p><a name=\"ph-core-relatedperson\"> </a><a name=\"hcph-core-relatedperson\"> </a><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border: 0px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top;\"><tr style=\"border: 1px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top\"><th style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; padding-top: 3px; padding-bottom: 3px\" class=\"hierarchy\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"The logical name of the element\">Name</a></th><th style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; padding-top: 3px; padding-bottom: 3px\" class=\"hierarchy\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Information about the use of the element\">Flags</a></th><th style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; padding-top: 3px; padding-bottom: 3px\" class=\"hierarchy\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Minimum and Maximum # of times the element can appear in the instance\">Card.</a></th><th style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; padding-top: 3px; padding-bottom: 3px; width: 100px\" class=\"hierarchy\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Reference to the type of the element\">Type</a></th><th style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; padding-top: 3px; padding-bottom: 3px\" class=\"hierarchy\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Additional information about the element\">Description &amp; Constraints</a><span style=\"float: right\"><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Legend for this format\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3goXBCwdPqAP0wAAAldJREFUOMuNk0tIlFEYhp9z/vE2jHkhxXA0zJCMitrUQlq4lnSltEqCFhFG2MJFhIvIFpkEWaTQqjaWZRkp0g26URZkTpbaaOJkDqk10szoODP//7XIMUe0elcfnPd9zsfLOYplGrpRwZaqTtw3K7PtGem7Q6FoidbGgqHVy/HRb669R+56zx7eRV1L31JGxYbBtjKK93cxeqfyQHbehkZbUkK20goELEuIzEd+dHS+qz/Y8PTSif0FnGkbiwcAjHaU1+QWOptFiyCLp/LnKptpqIuXHx6rbR26kJcBX3yLgBfnd7CxwJmflpP2wUg0HIAoUUpZBmKzELGWcN8nAr6Gpu7tLU/CkwAaoKTWRSQyt89Q8w6J+oVQkKnBoblH7V0PPvUOvDYXfopE/SJmALsxnVm6LbkotrUtNowMeIrVrBcBpaMmdS0j9df7abpSuy7HWehwJdt1lhVwi/J58U5beXGAF6c3UXLycw1wdFklArBn87xdh0ZsZtArghBdAA3+OEDVubG4UEzP6x1FOWneHh2VDAHBAt80IbdXDcesNoCvs3E5AFyNSU5nbrDPZpcUEQQTFZiEVx+51fxMhhyJEAgvlriadIJZZksRuwBYMOPBbO3hePVVqgEJhFeUuFLhIPkRP6BQLIBrmMenujm/3g4zc398awIe90Zb5A1vREALqneMcYgP/xVQWlG+Ncu5vgwwlaUNx+3799rfe96u9K0JSDXcOzOTJg4B6IgmXfsygc7/Bvg9g9E58/cDVmGIBOP/zT8Bz1zqWqpbXIsd0O9hajXfL6u4BaOS6SeWAAAAAElFTkSuQmCC\" alt=\"doco\" style=\"background-color: inherit\"/></a></span></th></tr><tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck1.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_resource.png\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Resource\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson\">RelatedPerson</a><a name=\"RelatedPerson\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a href=\"http://hl7.org/fhir/R4/relatedperson.html\">RelatedPerson</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">A person that is related to a patient, but who is not a direct target of care</span></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck13.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_slice.png\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Slice Definition\" class=\"hierarchy\"/> <a style=\"font-style: italic; font-style: italic\" href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.identifier\">Slices for identifier</a><a name=\"RelatedPerson.identifier\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"font-style: italic\"/><span style=\"opacity: 0.5; font-style: italic\">0</span><span style=\"opacity: 0.5; font-style: italic\">..</span><span style=\"opacity: 0.5; font-style: italic\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; font-style: italic; opacity: 0.5; font-style: italic\" href=\"http://hl7.org/fhir/R4/datatypes.html#Identifier\">Identifier</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5; font-style: italic\">A human identifier for this person</span><br style=\"font-style: italic\"/><span style=\"font-weight:bold; font-style: italic\">Slice: </span><span style=\"font-style: italic\">Unordered, Open by value:system</span></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck133.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_slicer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> identifier:All Slices<a name=\"RelatedPerson.identifier.2\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\">Content/Rules for all slices</td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck1320.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline_slicer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end_slicer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.identifier.use\">use</a><a name=\"RelatedPerson.identifier.use\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">1</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#code\">code</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">usual | official | temp | secondary | old (If known)</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck134.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_slicer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_slice_item.png\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Slice Item\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.identifier:PHCorePhilHealthID\" title=\"Slice PHCorePhilHealthID\">identifier:PHCorePhilHealthID</a><a name=\"RelatedPerson.identifier.3\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\">0..*</td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a href=\"StructureDefinition-ph-core-philhealth-id.html\" title=\"Identifier\">PHCorePhilHealthID</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">A human identifier for this person</span><br/><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck124.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end_slicer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_slice_item.png\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Slice Item\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.identifier:PHCorePhilSysID\" title=\"Slice PHCorePhilSysID\">identifier:PHCorePhilSysID</a><a name=\"RelatedPerson.identifier.4\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\">0..*</td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a href=\"StructureDefinition-ph-core-philsys-id.html\" title=\"Identifier\">PHCorePhilSysID</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">A human identifier for this person</span><br/><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck11.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.relationship\">relationship</a><a name=\"RelatedPerson.relationship\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#CodeableConcept\">CodeableConcept</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">The nature of the relationship</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck110.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.relationship.coding\">coding</a><a name=\"RelatedPerson.relationship.coding\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#Coding\">Coding</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">Code defined by a terminology system</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck100.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vline.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.relationship.text\">text</a><a name=\"RelatedPerson.relationship.text\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">1</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#string\">string</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">Plain text representation of the concept</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck10.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_datatype.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Data Type\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.name\">name</a><a name=\"RelatedPerson.name\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a href=\"StructureDefinition-ph-core-name.html\" title=\"HumanName\">PHCoreName</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">A name associated with the person</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck10.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.telecom\">telecom</a><a name=\"RelatedPerson.telecom\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#ContactPoint\">ContactPoint</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">A contact detail for the person</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck10.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_datatype.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Data Type\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.address\">address</a><a name=\"RelatedPerson.address\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a href=\"StructureDefinition-ph-core-address.html\" title=\"Address\">PHCoreAddress</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">Address where the related person can be contacted or visited</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck01.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.communication\">communication</a><a name=\"RelatedPerson.communication\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"/></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck001.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_blank.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.communication.language\">language</a><a name=\"RelatedPerson.communication.language\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">1</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">1</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#CodeableConcept\">CodeableConcept</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">The language which can be used to communicate with the patient about his or her health</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck0010.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_blank.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_blank.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: white; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.communication.language.coding\">coding</a><a name=\"RelatedPerson.communication.language.coding\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">*</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#Coding\">Coding</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">Code defined by a terminology system</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr style=\"border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7\"><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck0000.png)\" class=\"hierarchy\"><img src=\"tbl_spacer.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_blank.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_blank.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"tbl_vjoin_end.png\" alt=\".\" style=\"background-color: inherit\" class=\"hierarchy\"/><img src=\"icon_element.gif\" alt=\".\" style=\"background-color: #F7F7F7; background-color: inherit\" title=\"Element\" class=\"hierarchy\"/> <a href=\"StructureDefinition-ph-core-relatedperson-definitions.html#RelatedPerson.communication.language.text\">text</a><a name=\"RelatedPerson.communication.language.text\"> </a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"padding-left: 3px; padding-right: 3px; color: white; background-color: #D50000\" title=\"This element has obligations and must be supported\">SO</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">0</span><span style=\"opacity: 0.5\">..</span><span style=\"opacity: 0.5\">1</span></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><a style=\"opacity: 0.5; opacity: 0.5\" href=\"http://hl7.org/fhir/R4/datatypes.html#string\">string</a></td><td style=\"vertical-align: top; text-align : var(--ig-left,left); background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px\" class=\"hierarchy\"><span style=\"opacity: 0.5\">Plain text representation of the concept</span><table class=\"obligation grid\"><tr><td style=\"font-size: 11px\"><b>Obligations</b></td><td style=\"font-size: 11px\"><b>Actor</b></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Server.html\">PH Core Server</a></td></tr><tr><td style=\"font-size: 11px\"><b>SHALL</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-handle\" title=\"Obligation Codes: correctly handle\">handle</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Consumer.html\">PH Core Consumer</a></td></tr><tr><td style=\"font-size: 11px\"><b>MAY</b>:<a href=\"http://hl7.org/fhir/extensions/5.2.0/CodeSystem-obligation.html#obligation-able-to-populate\" title=\"Obligation Codes: be able to populate\">able-to-populate</a></td><td style=\"font-size: 11px; opacity: 0.5;\"><a href=\"ActorDefinition-Creator.html\">PH Core Creator</a></td></tr></table></td></tr>\r\n<tr><td colspan=\"5\" class=\"hierarchy\"><br/><a href=\"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views\" title=\"Legend for this format\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3goXBCwdPqAP0wAAAldJREFUOMuNk0tIlFEYhp9z/vE2jHkhxXA0zJCMitrUQlq4lnSltEqCFhFG2MJFhIvIFpkEWaTQqjaWZRkp0g26URZkTpbaaOJkDqk10szoODP//7XIMUe0elcfnPd9zsfLOYplGrpRwZaqTtw3K7PtGem7Q6FoidbGgqHVy/HRb669R+56zx7eRV1L31JGxYbBtjKK93cxeqfyQHbehkZbUkK20goELEuIzEd+dHS+qz/Y8PTSif0FnGkbiwcAjHaU1+QWOptFiyCLp/LnKptpqIuXHx6rbR26kJcBX3yLgBfnd7CxwJmflpP2wUg0HIAoUUpZBmKzELGWcN8nAr6Gpu7tLU/CkwAaoKTWRSQyt89Q8w6J+oVQkKnBoblH7V0PPvUOvDYXfopE/SJmALsxnVm6LbkotrUtNowMeIrVrBcBpaMmdS0j9df7abpSuy7HWehwJdt1lhVwi/J58U5beXGAF6c3UXLycw1wdFklArBn87xdh0ZsZtArghBdAA3+OEDVubG4UEzP6x1FOWneHh2VDAHBAt80IbdXDcesNoCvs3E5AFyNSU5nbrDPZpcUEQQTFZiEVx+51fxMhhyJEAgvlriadIJZZksRuwBYMOPBbO3hePVVqgEJhFeUuFLhIPkRP6BQLIBrmMenujm/3g4zc398awIe90Zb5A1vREALqneMcYgP/xVQWlG+Ncu5vgwwlaUNx+3799rfe96u9K0JSDXcOzOTJg4B6IgmXfsygc7/Bvg9g9E58/cDVmGIBOP/zT8Bz1zqWqpbXIsd0O9hajXfL6u4BaOS6SeWAAAAAElFTkSuQmCC\" alt=\"doco\" style=\"background-color: inherit\"/> Documentation for this format</a></td></tr></table></div>"
   },
-  "url" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson",
+  "url" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson",
   "version" : "0.2.0",
   "name" : "PHCoreRelatedPerson",
   "title" : "PH Core RelatedPerson",
@@ -520,11 +520,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -535,11 +535,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -550,11 +550,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -822,11 +822,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -837,11 +837,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -852,11 +852,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -874,7 +874,7 @@
       },
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philhealth-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philhealth-id"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -985,11 +985,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1000,11 +1000,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1015,11 +1015,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1731,11 +1731,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1746,11 +1746,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1761,11 +1761,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -1783,7 +1783,7 @@
       },
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philsys-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philsys-id"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -1894,11 +1894,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1909,11 +1909,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -1924,11 +1924,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2714,11 +2714,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2729,11 +2729,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2744,11 +2744,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2884,11 +2884,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2899,11 +2899,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2914,11 +2914,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -2974,11 +2974,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -2989,11 +2989,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3004,11 +3004,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3060,11 +3060,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3075,11 +3075,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3090,11 +3090,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3111,7 +3111,7 @@
       },
       "type" : [{
         "code" : "HumanName",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-name"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-name"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -3142,11 +3142,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3157,11 +3157,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3172,11 +3172,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3298,11 +3298,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3313,11 +3313,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3328,11 +3328,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3349,7 +3349,7 @@
       },
       "type" : [{
         "code" : "Address",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-address"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-address"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -3593,11 +3593,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3608,11 +3608,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3623,11 +3623,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3760,11 +3760,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3775,11 +3775,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3790,11 +3790,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3850,11 +3850,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3865,11 +3865,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3880,11 +3880,11 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         },
         {
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-source",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-relatedperson|0.2.0"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -3987,7 +3987,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -3998,7 +3998,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4009,7 +4009,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4025,7 +4025,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4036,7 +4036,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4047,7 +4047,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4057,7 +4057,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philhealth-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philhealth-id"]
       }],
       "mustSupport" : true
     },
@@ -4070,7 +4070,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4081,7 +4081,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4092,7 +4092,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4102,7 +4102,7 @@
       "max" : "*",
       "type" : [{
         "code" : "Identifier",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-philsys-id"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-philsys-id"]
       }],
       "mustSupport" : true
     },
@@ -4115,7 +4115,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4126,7 +4126,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4137,7 +4137,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4153,7 +4153,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4164,7 +4164,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4175,7 +4175,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4195,7 +4195,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4206,7 +4206,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4217,7 +4217,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4233,7 +4233,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4244,7 +4244,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4255,14 +4255,14 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
       "path" : "RelatedPerson.name",
       "type" : [{
         "code" : "HumanName",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-name"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-name"]
       }],
       "mustSupport" : true
     },
@@ -4275,7 +4275,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4286,7 +4286,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4297,7 +4297,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4313,7 +4313,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4324,7 +4324,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4335,14 +4335,14 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
       "path" : "RelatedPerson.address",
       "type" : [{
         "code" : "Address",
-        "profile" : ["https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-address"]
+        "profile" : ["https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-address"]
       }],
       "mustSupport" : true
     },
@@ -4355,7 +4355,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4366,7 +4366,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4377,7 +4377,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4393,7 +4393,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4404,7 +4404,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4415,7 +4415,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],
@@ -4435,7 +4435,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Server"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Server"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4446,7 +4446,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Consumer"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Consumer"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       },
@@ -4457,7 +4457,7 @@
         },
         {
           "url" : "actor",
-          "valueCanonical" : "https://wah-fhir-ph-core.echosphere.cfd/phcore/ActorDefinition/Creator"
+          "valueCanonical" : "https://fhir-ph-core.wah.ph/phcore/ActorDefinition/Creator"
         }],
         "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
       }],

@@ -2,7 +2,7 @@
   "resourceType": "ValueSet",
   "id": "regions",
   "language": "en",
-  "url": "https://wah-fhir-ph-core.echosphere.cfd/phcore/ValueSet/regions",
+  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/regions",
   "version": "1Q-2026",
   "name": "Regions",
   "title": "Regions",

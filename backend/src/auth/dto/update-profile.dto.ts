@@ -25,12 +25,6 @@ export class UpdateProfileDto {
   @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
   @IsString()
   @MaxLength(100)
-  secondName?: string;
-
-  @IsOptional()
-  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
-  @IsString()
-  @MaxLength(100)
   middleName?: string;
 
   @IsOptional()
