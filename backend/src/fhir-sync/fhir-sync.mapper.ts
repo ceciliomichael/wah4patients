@@ -51,6 +51,7 @@ const PHILHEALTH_IDENTIFIER_SYSTEM =
   'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
 const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
 const PHILSYS_IDENTIFIER_SYSTEM = 'http://philsys.gov.ph/fhir/Identifier/philsys-id';
+const PHILSYS_IDENTIFIER_SYSTEM_HTTPS = 'https://philsys.gov.ph/fhir/Identifier/philsys-id';
 
 export function normalizeIdentifier(value: unknown): NormalizedIdentifier | null {
   if (!isRecord(value)) {
@@ -84,6 +85,33 @@ export function extractPatientProfilePatch(
   const normalizedIdentifiers = extractIdentifiersFromPatient(patient);
   const phoneNumber = extractPreferredTelecomValue(patient.telecom, 'phone');
   const firstAddress = firstValue(patient.address);
+  const firstAddressExtensions = firstAddress?.extension ?? [];
+  const province = extractAddressExtensionDisplay(
+    firstAddressExtensions,
+    'province',
+  );
+  const region = extractAddressExtensionDisplay(firstAddressExtensions, 'region');
+  const cityFromExtension = extractAddressExtensionDisplay(
+    firstAddressExtensions,
+    'city-municipality',
+  );
+  const barangay = extractAddressExtensionDisplay(firstAddressExtensions, 'barangay');
+  const maritalStatus = extractCodeableConceptDisplay(patient.maritalStatus);
+  const indigenousPeople = extractBooleanExtension(
+    patient.extension,
+    'indigenous-people',
+  );
+  const indigenousGroup = extractPatientExtensionDisplay(
+    patient.extension,
+    'indigenous-group',
+  );
+  const race = extractPatientExtensionDisplay(patient.extension, 'race');
+  const educationalAttainment = extractPatientExtensionDisplay(
+    patient.extension,
+    'educational-attainment',
+  );
+  const sexAtBirth = extractPatientExtensionDisplay(patient.extension, 'recordedSexOrGender');
+  const pwd = extractPwdDisability(patient.extension);
   const philHealthId = extractIdentifierValueBySystem(
     normalizedIdentifiers,
     PHILHEALTH_IDENTIFIER_SYSTEM,
@@ -105,15 +133,26 @@ export function extractPatientProfilePatch(
       philSysId,
       addressLine1: extractAddressLine(firstAddress),
       addressLine2: '',
-      city: firstAddress?.city ?? '',
-      province: firstAddress?.state ?? '',
+      city: cityFromExtension.length > 0 ? cityFromExtension : (firstAddress?.city ?? ''),
+      province: province.length > 0 ? province : (firstAddress?.state ?? ''),
+      region,
+      barangay,
       postalCode: firstAddress?.postalCode ?? '',
       country: firstAddress?.country ?? '',
-      maritalStatus: '',
+      maritalStatus,
       nationality: '',
-      religion: '',
-      occupation: '',
+      religion: extractPatientExtensionDisplay(patient.extension, 'religion'),
+      occupation: extractPatientExtensionDisplay(patient.extension, 'occupation'),
       genderIdentity: '',
+      indigenousPeople,
+      indigenousGroup,
+      race,
+      educationalAttainment,
+      sexAtBirth,
+      pwdIdNumber: pwd.idNumber,
+      pwdDisabilityType: pwd.disabilityType,
+      pwdIdExpirationDate: pwd.idExpirationDate,
+      pwdIssuingLgu: pwd.issuingLgu,
       emergencyContactName: '',
       emergencyContactPhone: '',
       syncLocked: true,
@@ -138,6 +177,194 @@ export function extractPatientProfilePatch(
   } satisfies FhirPatientProfilePatch;
 }
 
+function extractAddressExtensionDisplay(
+  extensions: Array<Record<string, unknown>>,
+  sliceToken: string,
+): string {
+  for (const extension of extensions) {
+    const url = typeof extension['url'] === 'string' ? extension['url'] : '';
+    if (!url.includes(sliceToken)) {
+      continue;
+    }
+    const coding = asRecord(extension['valueCoding']);
+    if (coding !== null && typeof coding['display'] === 'string') {
+      return coding['display'].trim();
+    }
+  }
+  return '';
+}
+
+function extractPatientExtensionDisplay(
+  extensions: Array<Record<string, unknown>> | undefined,
+  sliceToken: string,
+): string {
+  if (extensions == null) {
+    return '';
+  }
+  for (const extension of extensions) {
+    const url = typeof extension['url'] === 'string' ? extension['url'] : '';
+    if (!url.includes(sliceToken)) {
+      continue;
+    }
+    const directValue = extractExtensionDisplayValue(extension);
+    if (directValue.length > 0) {
+      return directValue;
+    }
+
+    const nestedExtensions = Array.isArray(extension['extension'])
+      ? extension['extension'].filter(isRecord)
+      : [];
+    for (const nestedExtension of nestedExtensions) {
+      const nestedValue = extractExtensionDisplayValue(nestedExtension);
+      if (nestedValue.length > 0) {
+        return nestedValue;
+      }
+    }
+  }
+  return '';
+}
+
+function extractExtensionDisplayValue(extension: Record<string, unknown>): string {
+  const coding = asRecord(extension['valueCoding']);
+  if (coding !== null && typeof coding['display'] === 'string') {
+    return coding['display'].trim();
+  }
+
+  const concept = asRecord(extension['valueCodeableConcept']);
+  if (concept !== null) {
+    const conceptValue = extractCodeableConceptDisplay({
+      text: typeof concept['text'] === 'string' ? concept['text'] : undefined,
+      coding: Array.isArray(concept['coding'])
+        ? concept['coding']
+            .filter(isRecord)
+            .map((entry) => ({
+              display: typeof entry['display'] === 'string' ? entry['display'] : undefined,
+              code: typeof entry['code'] === 'string' ? entry['code'] : undefined,
+            }))
+        : undefined,
+    });
+    if (conceptValue.length > 0) {
+      return conceptValue;
+    }
+  }
+
+  if (typeof extension['valueString'] === 'string') {
+    return extension['valueString'].trim();
+  }
+
+  return '';
+}
+
+function extractBooleanExtension(
+  extensions: Array<Record<string, unknown>> | undefined,
+  sliceToken: string,
+): boolean {
+  if (extensions == null) {
+    return false;
+  }
+  for (const extension of extensions) {
+    const url = typeof extension['url'] === 'string' ? extension['url'] : '';
+    if (url.includes(sliceToken) && extension['valueBoolean'] === true) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function extractCodeableConceptDisplay(
+  concept: { text?: string; coding?: Array<{ display?: string; code?: string }> } | undefined,
+): string {
+  if (concept == null) {
+    return '';
+  }
+  if ((concept.text?.trim().length ?? 0) > 0) {
+    return concept.text!.trim();
+  }
+  for (const coding of concept.coding ?? []) {
+    if ((coding.display?.trim().length ?? 0) > 0) {
+      return coding.display!.trim();
+    }
+    if ((coding.code?.trim().length ?? 0) > 0) {
+      return coding.code!.trim();
+    }
+  }
+  return '';
+}
+
+function extractPwdDisability(
+  extensions: Array<Record<string, unknown>> | undefined,
+): {
+  idNumber: string;
+  disabilityType: string;
+  idExpirationDate: string;
+  issuingLgu: string;
+} {
+  if (extensions == null) {
+    return { idNumber: '', disabilityType: '', idExpirationDate: '', issuingLgu: '' };
+  }
+
+  const flatDisabilityType = extractPatientExtensionDisplay(extensions, 'pwd-disability-type');
+  if (flatDisabilityType.length > 0) {
+    return {
+      idNumber: '',
+      disabilityType: flatDisabilityType,
+      idExpirationDate: '',
+      issuingLgu: '',
+    };
+  }
+
+  for (const extension of extensions) {
+    const url = typeof extension['url'] === 'string' ? extension['url'] : '';
+    if (!url.includes('ph-core-pwd-disability')) {
+      continue;
+    }
+    const nested = Array.isArray(extension['extension'])
+      ? extension['extension'].filter(isRecord)
+      : [];
+    let idNumber = '';
+    let disabilityType = '';
+    let idExpirationDate = '';
+    let issuingLgu = '';
+    for (const child of nested) {
+      const childUrl = typeof child['url'] === 'string' ? child['url'] : '';
+      if (childUrl == 'pwdIdNumber' && typeof child['valueString'] === 'string') {
+        idNumber = child['valueString'].trim();
+      }
+      if (childUrl == 'disabilityType') {
+        const concept = asRecord(child['valueCodeableConcept']);
+        if (concept != null) {
+          const codingList = concept['coding'];
+          if (Array.isArray(codingList) && codingList.length > 0) {
+            const firstCoding = codingList.find((item) => isRecord(item));
+            if (firstCoding != null) {
+              const display = firstCoding['display'];
+              const code = firstCoding['code'];
+              if (typeof display === 'string' && display.trim().length > 0) {
+                disabilityType = display.trim();
+              } else if (typeof code === 'string' && code.trim().length > 0) {
+                disabilityType = code.trim();
+              }
+            }
+          }
+        }
+      }
+      if (childUrl == 'idExpirationDate' && typeof child['valueDate'] === 'string') {
+        idExpirationDate = child['valueDate'].trim();
+      }
+      if (childUrl == 'issuingLGU') {
+        const coding = asRecord(child['valueCoding']);
+        if (coding != null && typeof coding['display'] === 'string') {
+          issuingLgu = coding['display'].trim();
+        }
+      }
+    }
+
+    return { idNumber, disabilityType, idExpirationDate, issuingLgu };
+  }
+
+  return { idNumber: '', disabilityType: '', idExpirationDate: '', issuingLgu: '' };
+}
+
 function extractIdentifierValueBySystem(
   identifiers: NormalizedIdentifier[],
   targetSystem: string,
@@ -148,6 +375,8 @@ function extractIdentifierValueBySystem(
           PHILHEALTH_IDENTIFIER_SYSTEM,
           LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM,
         ]
+      : targetSystem === PHILSYS_IDENTIFIER_SYSTEM
+        ? [PHILSYS_IDENTIFIER_SYSTEM, PHILSYS_IDENTIFIER_SYSTEM_HTTPS]
       : [targetSystem];
 
   for (const identifier of identifiers) {
@@ -775,6 +1004,10 @@ function readBoolean(value: unknown): boolean {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return isRecord(value) ? value : null;
 }
 
 function firstValue<T>(values: T[] | undefined): T | undefined {

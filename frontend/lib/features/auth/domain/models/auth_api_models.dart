@@ -1,3 +1,5 @@
+import '../../../profile/domain/marital_status_formatter.dart';
+
 class RegistrationPersonalDetailsArguments {
   const RegistrationPersonalDetailsArguments({
     required this.email,
@@ -43,6 +45,8 @@ class PatientProfileDraft {
     required this.addressLine2,
     required this.city,
     required this.province,
+    this.region = '',
+    this.barangay = '',
     required this.postalCode,
     required this.country,
     required this.maritalStatus,
@@ -50,6 +54,15 @@ class PatientProfileDraft {
     required this.religion,
     required this.occupation,
     required this.genderIdentity,
+    this.indigenousPeople = false,
+    this.indigenousGroup = '',
+    this.race = '',
+    this.educationalAttainment = '',
+    this.sexAtBirth = '',
+    this.pwdIdNumber = '',
+    this.pwdDisabilityType = '',
+    this.pwdIdExpirationDate = '',
+    this.pwdIssuingLgu = '',
     required this.emergencyContactName,
     required this.emergencyContactPhone,
   });
@@ -67,6 +80,8 @@ class PatientProfileDraft {
   final String addressLine2;
   final String city;
   final String province;
+  final String region;
+  final String barangay;
   final String postalCode;
   final String country;
   final String maritalStatus;
@@ -74,6 +89,15 @@ class PatientProfileDraft {
   final String religion;
   final String occupation;
   final String genderIdentity;
+  final bool indigenousPeople;
+  final String indigenousGroup;
+  final String race;
+  final String educationalAttainment;
+  final String sexAtBirth;
+  final String pwdIdNumber;
+  final String pwdDisabilityType;
+  final String pwdIdExpirationDate;
+  final String pwdIssuingLgu;
   final String emergencyContactName;
   final String emergencyContactPhone;
 
@@ -179,6 +203,8 @@ class UserProfileSummary {
     required this.addressLine2,
     required this.city,
     required this.province,
+    this.region = '',
+    this.barangay = '',
     required this.postalCode,
     required this.country,
     required this.maritalStatus,
@@ -186,6 +212,15 @@ class UserProfileSummary {
     required this.religion,
     required this.occupation,
     required this.genderIdentity,
+    this.indigenousPeople = false,
+    this.indigenousGroup = '',
+    this.race = '',
+    this.educationalAttainment = '',
+    this.sexAtBirth = '',
+    this.pwdIdNumber = '',
+    this.pwdDisabilityType = '',
+    this.pwdIdExpirationDate = '',
+    this.pwdIssuingLgu = '',
     required this.emergencyContactName,
     required this.emergencyContactPhone,
     required this.isSyncLocked,
@@ -206,6 +241,8 @@ class UserProfileSummary {
   final String addressLine2;
   final String city;
   final String province;
+  final String region;
+  final String barangay;
   final String postalCode;
   final String country;
   final String maritalStatus;
@@ -213,6 +250,15 @@ class UserProfileSummary {
   final String religion;
   final String occupation;
   final String genderIdentity;
+  final bool indigenousPeople;
+  final String indigenousGroup;
+  final String race;
+  final String educationalAttainment;
+  final String sexAtBirth;
+  final String pwdIdNumber;
+  final String pwdDisabilityType;
+  final String pwdIdExpirationDate;
+  final String pwdIssuingLgu;
   final String emergencyContactName;
   final String emergencyContactPhone;
   final bool isSyncLocked;
@@ -243,13 +289,24 @@ class UserProfileSummary {
       addressLine2: _readString(json['addressLine2']),
       city: _readString(json['city']),
       province: _readString(json['province']),
+      region: _readString(json['region']),
+      barangay: _readString(json['barangay']),
       postalCode: _readString(json['postalCode']),
       country: _readString(json['country']),
-      maritalStatus: _readString(json['maritalStatus']),
+      maritalStatus: displayMaritalStatusLabel(_readString(json['maritalStatus'])),
       nationality: _readString(json['nationality']),
       religion: _readString(json['religion']),
       occupation: _readString(json['occupation']),
       genderIdentity: _readString(json['genderIdentity']),
+      indigenousPeople: json['indigenousPeople'] == true,
+      indigenousGroup: _readString(json['indigenousGroup']),
+      race: _readString(json['race']),
+      educationalAttainment: _readString(json['educationalAttainment']),
+      sexAtBirth: _readString(json['sexAtBirth']),
+      pwdIdNumber: _readString(json['pwdIdNumber']),
+      pwdDisabilityType: _readString(json['pwdDisabilityType']),
+      pwdIdExpirationDate: _readString(json['pwdIdExpirationDate']),
+      pwdIssuingLgu: _readString(json['pwdIssuingLgu']),
       emergencyContactName: _readString(json['emergencyContactName']),
       emergencyContactPhone: _readString(json['emergencyContactPhone']),
       isSyncLocked: json['isSyncLocked'] == true,
@@ -273,6 +330,8 @@ class UserProfileSummary {
       addressLine2: '',
       city: '',
       province: '',
+      region: '',
+      barangay: '',
       postalCode: '',
       country: '',
       maritalStatus: '',
@@ -280,6 +339,15 @@ class UserProfileSummary {
       religion: '',
       occupation: '',
       genderIdentity: '',
+      indigenousPeople: false,
+      indigenousGroup: '',
+      race: '',
+      educationalAttainment: '',
+      sexAtBirth: '',
+      pwdIdNumber: '',
+      pwdDisabilityType: '',
+      pwdIdExpirationDate: '',
+      pwdIssuingLgu: '',
       emergencyContactName: '',
       emergencyContactPhone: '',
       isSyncLocked: false,
@@ -303,6 +371,8 @@ class UserProfileSummary {
       'addressLine2': addressLine2,
       'city': city,
       'province': province,
+      'region': region,
+      'barangay': barangay,
       'postalCode': postalCode,
       'country': country,
       'maritalStatus': maritalStatus,
@@ -310,6 +380,15 @@ class UserProfileSummary {
       'religion': religion,
       'occupation': occupation,
       'genderIdentity': genderIdentity,
+      'indigenousPeople': indigenousPeople,
+      'indigenousGroup': indigenousGroup,
+      'race': race,
+      'educationalAttainment': educationalAttainment,
+      'sexAtBirth': sexAtBirth,
+      'pwdIdNumber': pwdIdNumber,
+      'pwdDisabilityType': pwdDisabilityType,
+      'pwdIdExpirationDate': pwdIdExpirationDate,
+      'pwdIssuingLgu': pwdIssuingLgu,
       'emergencyContactName': emergencyContactName,
       'emergencyContactPhone': emergencyContactPhone,
       'isSyncLocked': isSyncLocked,

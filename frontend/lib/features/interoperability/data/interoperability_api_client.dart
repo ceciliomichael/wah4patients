@@ -195,13 +195,22 @@ class InteroperabilityApiClient implements InteroperabilityClient {
   }
 
   Map<String, dynamic> _decodeResponseBody(String body) {
-    if (body.trim().isEmpty) {
+    final trimmed = body.trim();
+    if (trimmed.isEmpty) {
       return <String, dynamic>{};
     }
 
-    final decoded = jsonDecode(body);
-    if (decoded is Map<String, dynamic>) {
-      return decoded;
+    try {
+      final decoded = jsonDecode(trimmed);
+      if (decoded is Map<String, dynamic>) {
+        return decoded;
+      }
+
+      if (decoded is List) {
+        return <String, dynamic>{'data': decoded};
+      }
+    } on FormatException {
+      return <String, dynamic>{'message': trimmed};
     }
 
     return <String, dynamic>{};

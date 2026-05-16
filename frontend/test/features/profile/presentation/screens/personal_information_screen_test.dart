@@ -93,7 +93,10 @@ void main() {
       expect(find.text('Second name'), findsNothing);
       expect(find.text('Identifiers'), findsOneWidget);
       expect(find.text('Address'), findsOneWidget);
-      expect(find.text('Optional details'), findsOneWidget);
+      expect(find.text('Demographics'), findsOneWidget);
+      expect(find.text('Background'), findsOneWidget);
+      expect(find.text('Identity and support'), findsOneWidget);
+      expect(find.text('Support contacts'), findsOneWidget);
       expect(find.text('WAH facility sync coming soon'), findsNothing);
       expect(find.text('Sync records'), findsOneWidget);
       expect(find.text('Save Changes'), findsOneWidget);
@@ -113,49 +116,51 @@ void main() {
         resetButton.style?.foregroundColor?.resolve(<WidgetState>{}),
         AppColors.textPrimary,
       );
-      expect(find.text('First name'), findsWidgets);
-      expect(find.text('Last name'), findsWidgets);
+      expect(find.text('First name *'), findsWidgets);
+      expect(find.text('Last name *'), findsWidgets);
       expect(find.textContaining('Birth date'), findsWidgets);
       expect(find.textContaining('Optional'), findsWidgets);
-      expect(find.text('Gender'), findsWidgets);
-      expect(find.text('Phone number'), findsWidgets);
+      expect(find.text('Gender *'), findsWidgets);
+      expect(find.text('Phone number *'), findsWidgets);
       expect(find.text('PhilHealth ID'), findsOneWidget);
       expect(find.text('PhilSys ID'), findsOneWidget);
-      expect(find.text('Address line 1'), findsWidgets);
-      expect(find.text('City / municipality'), findsWidgets);
-      expect(find.text('Province'), findsWidgets);
-      expect(find.text('Postal code'), findsWidgets);
-      expect(find.text('Country'), findsWidgets);
-      expect(find.text('Emergency contact phone'), findsOneWidget);
+      expect(find.text('Address line 1 *'), findsWidgets);
+      expect(find.text('City / municipality *'), findsWidgets);
+      expect(find.text('Province *'), findsWidgets);
+      expect(find.text('Postal code *'), findsWidgets);
+      expect(find.text('Country *'), findsWidgets);
+      expect(find.textContaining('Emergency contact phone'), findsOneWidget);
     },
   );
 
-  testWidgets(
-    'refreshes synced profile data when the screen opens',
-    (WidgetTester tester) async {
-      AuthSession.setProfile(_staleProfile());
+  testWidgets('refreshes synced profile data when the screen opens', (
+    WidgetTester tester,
+  ) async {
+    AuthSession.setProfile(_staleProfile());
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: PersonalInformationScreen(
-            profileRefresh: () async {
-              AuthSession.setProfile(_syncedProfile());
-              return true;
-            },
-          ),
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PersonalInformationScreen(
+          profileRefresh: () async {
+            AuthSession.setProfile(_syncedProfile());
+            return true;
+          },
         ),
-      );
+      ),
+    );
 
-      await tester.pumpAndSettle();
+    await tester.pumpAndSettle();
 
-      expect(find.text('Mariel Atienza'), findsOneWidget);
-      expect(
-        find.text('Synced profile data is locked and can no longer be edited.'),
-        findsOneWidget,
-      );
-      expect(find.text('Michael Robert'), findsNothing);
-    },
-  );
+    expect(find.text('Mariel Atienza'), findsOneWidget);
+    expect(find.byType(TextFormField), findsWidgets);
+    expect(
+      tester
+          .widgetList<TextFormField>(find.byType(TextFormField))
+          .every((field) => field.controller == null),
+      isTrue,
+    );
+    expect(find.text('Michael Robert'), findsNothing);
+  });
 
   testWidgets('opens the sync wizard when sync readiness is complete', (
     WidgetTester tester,

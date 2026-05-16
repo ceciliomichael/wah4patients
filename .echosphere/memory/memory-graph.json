@@ -14585,6 +14585,1288 @@
       ],
       "createdAt": "2026-05-15T09:38:36.653Z",
       "updatedAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "memoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "rootMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "2416da44-d776-48db-a81e-bc777dc381ec"
+      ],
+      "childMemoryIds": [
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a broad PH Core patient-alignment update across backend sync mapping and frontend personal information profile contracts. Added PH Core demographic/address extension fields (region, barangay, indigenous indicators, race, educational attainment, sex at birth, and PWD details) to backend/ frontend profile models, API payloads, and personal information form bindings. Updated FHIR sync mapper to parse PH Core address extensions and marital status, plus selected patient extensions, so synced profile data is no longer limited to legacy fields.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Extended PatientProfileResponse contract with PH Core aligned demographic and address extension fields.",
+          "notes": "Adds region/barangay, indigenous flags/details, race/education/sex-at-birth, and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Expanded profile update DTO validation surface for new PH Core aligned fields.",
+          "notes": "Added optional string/date/boolean validators for new demographics and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile merge/normalization/toPatientProfile logic to include new fields end-to-end.",
+          "notes": "Handles merge defaults and normalization for new fields."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Expanded profile response mapping and normalization to include new fields in API responses.",
+          "notes": "Includes conversions for boolean/string profile record shape."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Updated EMPTY_PATIENT_PROFILE_RESPONSE fallback object to satisfy expanded PatientProfileResponse shape.",
+          "notes": "Prevents incomplete fallback profile structure."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended FHIR types to include Patient/Address extension and maritalStatus support used by mapper.",
+          "notes": "Adds extension arrays and maritalStatus typing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Implemented PH Core address/demographic extension extraction and marital status mapping for synced patient profile patches.",
+          "notes": "Now maps province/region/city/barangay from address extensions and selected patient extensions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Extended PatientProfileDraft and UserProfileSummary with PH Core aligned fields and serialization mappings.",
+          "notes": "Added defaults for new constructor params to reduce breakages."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Included new PH Core aligned fields in profile PATCH payload sent to backend.",
+          "notes": "Ensures frontend can persist expanded personal info fields."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Expanded personal information form to display, hydrate, and save new PH Core-aligned fields.",
+          "notes": "Added region/barangay, indigenous, race, educational attainment, sex at birth, and PWD controls."
+        }
+      ],
+      "createdAt": "2026-05-15T13:03:23.889Z",
+      "updatedAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "memoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "rootMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "parentMemoryIds": [
+        "a9c47676-8067-476e-89f8-46ef54b2757e"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "2416da44-d776-48db-a81e-bc777dc381ec"
+      ],
+      "childMemoryIds": [
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a broad PH Core patient-alignment update across backend sync mapping and frontend personal information profile contracts. Added PH Core demographic/address extension fields (region, barangay, indigenous indicators, race, educational attainment, sex at birth, and PWD details) to backend/ frontend profile models, API payloads, and personal information form bindings. Updated FHIR sync mapper to parse PH Core address extensions and marital status, plus selected patient extensions, so synced profile data is no longer limited to legacy fields.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Extended PatientProfileResponse contract with PH Core aligned demographic and address extension fields.",
+          "notes": "Adds region/barangay, indigenous flags/details, race/education/sex-at-birth, and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Expanded profile update DTO validation surface for new PH Core aligned fields.",
+          "notes": "Added optional string/date/boolean validators for new demographics and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile merge/normalization/toPatientProfile logic to include new fields end-to-end.",
+          "notes": "Handles merge defaults and normalization for new fields."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Expanded profile response mapping and normalization to include new fields in API responses.",
+          "notes": "Includes conversions for boolean/string profile record shape."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Updated EMPTY_PATIENT_PROFILE_RESPONSE fallback object to satisfy expanded PatientProfileResponse shape.",
+          "notes": "Prevents incomplete fallback profile structure."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended FHIR types to include Patient/Address extension and maritalStatus support used by mapper.",
+          "notes": "Adds extension arrays and maritalStatus typing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Implemented PH Core address/demographic extension extraction and marital status mapping for synced patient profile patches.",
+          "notes": "Now maps province/region/city/barangay from address extensions and selected patient extensions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Extended PatientProfileDraft and UserProfileSummary with PH Core aligned fields and serialization mappings.",
+          "notes": "Added defaults for new constructor params to reduce breakages."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Included new PH Core aligned fields in profile PATCH payload sent to backend.",
+          "notes": "Ensures frontend can persist expanded personal info fields."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Expanded personal information form to display, hydrate, and save new PH Core-aligned fields.",
+          "notes": "Added region/barangay, indigenous, race, educational attainment, sex at birth, and PWD controls."
+        }
+      ],
+      "createdAt": "2026-05-15T13:03:24.036Z",
+      "updatedAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "memoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "rootMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "parentMemoryIds": [
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "2416da44-d776-48db-a81e-bc777dc381ec"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a broad PH Core patient-alignment update across backend sync mapping and frontend personal information profile contracts. Added PH Core demographic/address extension fields (region, barangay, indigenous indicators, race, educational attainment, sex at birth, and PWD details) to backend/ frontend profile models, API payloads, and personal information form bindings. Updated FHIR sync mapper to parse PH Core address extensions and marital status, plus selected patient extensions, so synced profile data is no longer limited to legacy fields.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth.types.ts",
+          "action": "modified",
+          "reason": "Extended PatientProfileResponse contract with PH Core aligned demographic and address extension fields.",
+          "notes": "Adds region/barangay, indigenous flags/details, race/education/sex-at-birth, and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/dto/update-profile.dto.ts",
+          "action": "modified",
+          "reason": "Expanded profile update DTO validation surface for new PH Core aligned fields.",
+          "notes": "Added optional string/date/boolean validators for new demographics and PWD fields."
+        },
+        {
+          "path": "backend/src/auth/profile.service.ts",
+          "action": "modified",
+          "reason": "Updated profile merge/normalization/toPatientProfile logic to include new fields end-to-end.",
+          "notes": "Handles merge defaults and normalization for new fields."
+        },
+        {
+          "path": "backend/src/auth/profile.repository.ts",
+          "action": "modified",
+          "reason": "Expanded profile response mapping and normalization to include new fields in API responses.",
+          "notes": "Includes conversions for boolean/string profile record shape."
+        },
+        {
+          "path": "backend/src/auth/login-auth.service.ts",
+          "action": "modified",
+          "reason": "Updated EMPTY_PATIENT_PROFILE_RESPONSE fallback object to satisfy expanded PatientProfileResponse shape.",
+          "notes": "Prevents incomplete fallback profile structure."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended FHIR types to include Patient/Address extension and maritalStatus support used by mapper.",
+          "notes": "Adds extension arrays and maritalStatus typing."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Implemented PH Core address/demographic extension extraction and marital status mapping for synced patient profile patches.",
+          "notes": "Now maps province/region/city/barangay from address extensions and selected patient extensions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "modified",
+          "reason": "Extended PatientProfileDraft and UserProfileSummary with PH Core aligned fields and serialization mappings.",
+          "notes": "Added defaults for new constructor params to reduce breakages."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "modified",
+          "reason": "Included new PH Core aligned fields in profile PATCH payload sent to backend.",
+          "notes": "Ensures frontend can persist expanded personal info fields."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Expanded personal information form to display, hydrate, and save new PH Core-aligned fields.",
+          "notes": "Added region/barangay, indigenous, race, educational attainment, sex at birth, and PWD controls."
+        }
+      ],
+      "createdAt": "2026-05-15T13:03:24.178Z",
+      "updatedAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "memoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "rootMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "parentMemoryIds": [
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1"
+      ],
+      "relatedMemoryIds": [
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "a9c47676-8067-476e-89f8-46ef54b2757e"
+      ],
+      "childMemoryIds": [
+        "b074379b-ccaa-4603-938d-bfe1d4e8e240"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed inbound FHIR receive-results patient mapping gaps that caused several PH Core fields to remain empty in Supabase patient_profile despite being present in payloads. Updated mapper extraction logic for valueCodeableConcept and nested extension payloads, added religion mapping, added flat pwd-disability-type support, and normalized PhilSys identifier system handling for both http/https in mapper and repository lookup/upsert paths. Added service-level test assertions to lock behavior and verified with targeted Jest run.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Core inbound patient mapping logic was updated to correctly parse PH Core extension structures and identifier variants.",
+          "notes": "Added extension helper extraction, religion mapping, flat pwd-disability-type fallback, and PhilSys https candidate handling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Identifier normalization/lookup needed PhilSys http/https compatibility to avoid profile resolution misses.",
+          "notes": "Added PhilSys constants and lookup/normalization branches."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Test coverage was expanded to validate the repaired mapping path and identifier behavior in receive-results.",
+          "notes": "Added fixture mutations and assertions for philSysId, religion, occupation, race, educationalAttainment, and pwdDisabilityType."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\resources\\examples\\ph-core\\Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Fixture contents were inspected to align test expectations with actual extension/identifier data shapes.",
+          "notes": "No file content changes made."
+        }
+      ],
+      "createdAt": "2026-05-16T05:38:59.448Z",
+      "updatedAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "memoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "rootMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "parentMemoryIds": [
+        "9a39a5d7-71d4-48de-8fef-2e49fb0d0519"
+      ],
+      "relatedMemoryIds": [
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "a9c47676-8067-476e-89f8-46ef54b2757e"
+      ],
+      "childMemoryIds": [
+        "a50c879d-d3da-4d76-aab9-ec4ed5faa53c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed inbound FHIR receive-results patient mapping gaps that caused several PH Core fields to remain empty in Supabase patient_profile despite being present in payloads. Updated mapper extraction logic for valueCodeableConcept and nested extension payloads, added religion mapping, added flat pwd-disability-type support, and normalized PhilSys identifier system handling for both http/https in mapper and repository lookup/upsert paths. Added service-level test assertions to lock behavior and verified with targeted Jest run.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Core inbound patient mapping logic was updated to correctly parse PH Core extension structures and identifier variants.",
+          "notes": "Added extension helper extraction, religion mapping, flat pwd-disability-type fallback, and PhilSys https candidate handling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Identifier normalization/lookup needed PhilSys http/https compatibility to avoid profile resolution misses.",
+          "notes": "Added PhilSys constants and lookup/normalization branches."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Test coverage was expanded to validate the repaired mapping path and identifier behavior in receive-results.",
+          "notes": "Added fixture mutations and assertions for philSysId, religion, occupation, race, educationalAttainment, and pwdDisabilityType."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\resources\\examples\\ph-core\\Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Fixture contents were inspected to align test expectations with actual extension/identifier data shapes.",
+          "notes": "No file content changes made."
+        }
+      ],
+      "createdAt": "2026-05-16T05:38:59.568Z",
+      "updatedAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "memoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "rootMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "parentMemoryIds": [
+        "b074379b-ccaa-4603-938d-bfe1d4e8e240"
+      ],
+      "relatedMemoryIds": [
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "a9c47676-8067-476e-89f8-46ef54b2757e"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed inbound FHIR receive-results patient mapping gaps that caused several PH Core fields to remain empty in Supabase patient_profile despite being present in payloads. Updated mapper extraction logic for valueCodeableConcept and nested extension payloads, added religion mapping, added flat pwd-disability-type support, and normalized PhilSys identifier system handling for both http/https in mapper and repository lookup/upsert paths. Added service-level test assertions to lock behavior and verified with targeted Jest run.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.mapper.ts",
+          "action": "modified",
+          "reason": "Core inbound patient mapping logic was updated to correctly parse PH Core extension structures and identifier variants.",
+          "notes": "Added extension helper extraction, religion mapping, flat pwd-disability-type fallback, and PhilSys https candidate handling."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Identifier normalization/lookup needed PhilSys http/https compatibility to avoid profile resolution misses.",
+          "notes": "Added PhilSys constants and lookup/normalization branches."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Test coverage was expanded to validate the repaired mapping path and identifier behavior in receive-results.",
+          "notes": "Added fixture mutations and assertions for philSysId, religion, occupation, race, educationalAttainment, and pwdDisabilityType."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\resources\\examples\\ph-core\\Patient-patient-single-example.json",
+          "action": "inspected",
+          "reason": "Fixture contents were inspected to align test expectations with actual extension/identifier data shapes.",
+          "notes": "No file content changes made."
+        }
+      ],
+      "createdAt": "2026-05-16T05:38:59.683Z",
+      "updatedAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "memoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "rootMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "parentMemoryIds": [
+        "b074379b-ccaa-4603-938d-bfe1d4e8e240"
+      ],
+      "relatedMemoryIds": [
+        "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "9a39a5d7-71d4-48de-8fef-2e49fb0d0519"
+      ],
+      "childMemoryIds": [
+        "3072d716-baed-42b4-ba1c-b3e770432b31"
+      ],
+      "sectionKind": "fact",
+      "summary": "Investigated persistent receive-results field gaps and prepare-request crash. Confirmed local mapper handles the user’s exact payload shape by adding a dedicated receive-results test with ph-core/fhir extensions and https PhilSys identifier. Implemented interoperability hardening by normalizing https PhilSys identifiers to canonical http before gateway sync prepare calls and by making Flutter API response decoding tolerant of non-JSON response bodies (e.g., plain-text 502) to avoid FormatException crashes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added a new receive-results test case matching the reported callback payload shape and asserting mapped patient_profile fields.",
+          "notes": "This test demonstrates local mapping correctness for the user-provided log structure."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.ts",
+          "action": "modified",
+          "reason": "Added PhilSys https-to-http normalization to reduce gateway compatibility failures during sync prepare.",
+          "notes": "Only normalization behavior was changed; existing flow remains intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test to assert normalized PhilSys identifier system is returned and sent in gateway request body.",
+          "notes": "Strengthens regression coverage for outbound identifier system formatting."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Made response decoding tolerant of non-JSON bodies to avoid runtime FormatException and surface meaningful API errors.",
+          "notes": "Non-JSON payloads now map to {message: <raw text>} for existing error extraction."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\.env",
+          "action": "inspected",
+          "reason": "Verified Flutter app backend target base URL during diagnosis of why local backend restarts did not affect observed remote behavior.",
+          "notes": "Found frontend points to https://wah4p-test.echosphere.cfd/api/v1."
+        }
+      ],
+      "createdAt": "2026-05-16T07:20:37.709Z",
+      "updatedAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "memoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "rootMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "parentMemoryIds": [
+        "192ad8a9-57e8-4624-886f-3f030a903aaf"
+      ],
+      "relatedMemoryIds": [
+        "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "9a39a5d7-71d4-48de-8fef-2e49fb0d0519"
+      ],
+      "childMemoryIds": [
+        "a62473f9-fc1f-413b-b304-61846a16edf5"
+      ],
+      "sectionKind": "decision",
+      "summary": "Investigated persistent receive-results field gaps and prepare-request crash. Confirmed local mapper handles the user’s exact payload shape by adding a dedicated receive-results test with ph-core/fhir extensions and https PhilSys identifier. Implemented interoperability hardening by normalizing https PhilSys identifiers to canonical http before gateway sync prepare calls and by making Flutter API response decoding tolerant of non-JSON response bodies (e.g., plain-text 502) to avoid FormatException crashes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added a new receive-results test case matching the reported callback payload shape and asserting mapped patient_profile fields.",
+          "notes": "This test demonstrates local mapping correctness for the user-provided log structure."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.ts",
+          "action": "modified",
+          "reason": "Added PhilSys https-to-http normalization to reduce gateway compatibility failures during sync prepare.",
+          "notes": "Only normalization behavior was changed; existing flow remains intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test to assert normalized PhilSys identifier system is returned and sent in gateway request body.",
+          "notes": "Strengthens regression coverage for outbound identifier system formatting."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Made response decoding tolerant of non-JSON bodies to avoid runtime FormatException and surface meaningful API errors.",
+          "notes": "Non-JSON payloads now map to {message: <raw text>} for existing error extraction."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\.env",
+          "action": "inspected",
+          "reason": "Verified Flutter app backend target base URL during diagnosis of why local backend restarts did not affect observed remote behavior.",
+          "notes": "Found frontend points to https://wah4p-test.echosphere.cfd/api/v1."
+        }
+      ],
+      "createdAt": "2026-05-16T07:20:37.844Z",
+      "updatedAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "memoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "rootMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "parentMemoryIds": [
+        "3072d716-baed-42b4-ba1c-b3e770432b31"
+      ],
+      "relatedMemoryIds": [
+        "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+        "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+        "74535931-abdf-4aeb-b4f3-169b79f88458",
+        "9a39a5d7-71d4-48de-8fef-2e49fb0d0519"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Investigated persistent receive-results field gaps and prepare-request crash. Confirmed local mapper handles the user’s exact payload shape by adding a dedicated receive-results test with ph-core/fhir extensions and https PhilSys identifier. Implemented interoperability hardening by normalizing https PhilSys identifiers to canonical http before gateway sync prepare calls and by making Flutter API response decoding tolerant of non-JSON response bodies (e.g., plain-text 502) to avoid FormatException crashes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added a new receive-results test case matching the reported callback payload shape and asserting mapped patient_profile fields.",
+          "notes": "This test demonstrates local mapping correctness for the user-provided log structure."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.ts",
+          "action": "modified",
+          "reason": "Added PhilSys https-to-http normalization to reduce gateway compatibility failures during sync prepare.",
+          "notes": "Only normalization behavior was changed; existing flow remains intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test to assert normalized PhilSys identifier system is returned and sent in gateway request body.",
+          "notes": "Strengthens regression coverage for outbound identifier system formatting."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Made response decoding tolerant of non-JSON bodies to avoid runtime FormatException and surface meaningful API errors.",
+          "notes": "Non-JSON payloads now map to {message: <raw text>} for existing error extraction."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\.env",
+          "action": "inspected",
+          "reason": "Verified Flutter app backend target base URL during diagnosis of why local backend restarts did not affect observed remote behavior.",
+          "notes": "Found frontend points to https://wah4p-test.echosphere.cfd/api/v1."
+        }
+      ],
+      "createdAt": "2026-05-16T07:20:37.971Z",
+      "updatedAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "memoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "rootMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "a9c47676-8067-476e-89f8-46ef54b2757e",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9fa3be2c-8dda-4f3e-b596-3307f3547352"
+      ],
+      "childMemoryIds": [
+        "ebe90b1b-2972-4b4a-9272-d53c22e3263d"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented display-only marital status normalization in the frontend profile form. A new reusable formatter maps codes to readable labels (S/Single, M/Married, D/Divorced, W/Widowed) and maps labels back to canonical codes on save so storage remains interoperable. Updated the patient profile form to hydrate with human-readable marital status text while preserving code values when submitting. Added formatter unit tests and widget coverage for label hydration.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\domain\\marital_status_formatter.dart",
+          "action": "created",
+          "reason": "Centralizes the marital status mapping logic so the UI can display labels and preserve canonical save values.",
+          "notes": "Contains the S/M/D/W label map plus normalization helpers."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "The profile form needed to hydrate marital status in readable form and convert it back to a code on save.",
+          "notes": "Imported the formatter and used it in _hydrateFromProfile and _handleSave."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\domain\\marital_status_formatter_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the pure label/code mapping helpers.",
+          "notes": "Verifies both display and save normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added UI coverage proving the profile form shows a readable marital status label when the stored value is a code.",
+          "notes": "Also made the test fixture accept a maritalStatus override."
+        }
+      ],
+      "createdAt": "2026-05-16T07:47:04.321Z",
+      "updatedAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "memoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "rootMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "parentMemoryIds": [
+        "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7"
+      ],
+      "relatedMemoryIds": [
+        "a9c47676-8067-476e-89f8-46ef54b2757e",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9fa3be2c-8dda-4f3e-b596-3307f3547352"
+      ],
+      "childMemoryIds": [
+        "d248d529-5ab2-46be-96fb-b9f3d6752610"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented display-only marital status normalization in the frontend profile form. A new reusable formatter maps codes to readable labels (S/Single, M/Married, D/Divorced, W/Widowed) and maps labels back to canonical codes on save so storage remains interoperable. Updated the patient profile form to hydrate with human-readable marital status text while preserving code values when submitting. Added formatter unit tests and widget coverage for label hydration.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\domain\\marital_status_formatter.dart",
+          "action": "created",
+          "reason": "Centralizes the marital status mapping logic so the UI can display labels and preserve canonical save values.",
+          "notes": "Contains the S/M/D/W label map plus normalization helpers."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "The profile form needed to hydrate marital status in readable form and convert it back to a code on save.",
+          "notes": "Imported the formatter and used it in _hydrateFromProfile and _handleSave."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\domain\\marital_status_formatter_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the pure label/code mapping helpers.",
+          "notes": "Verifies both display and save normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added UI coverage proving the profile form shows a readable marital status label when the stored value is a code.",
+          "notes": "Also made the test fixture accept a maritalStatus override."
+        }
+      ],
+      "createdAt": "2026-05-16T07:47:04.449Z",
+      "updatedAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "memoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "rootMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "parentMemoryIds": [
+        "ebe90b1b-2972-4b4a-9272-d53c22e3263d"
+      ],
+      "relatedMemoryIds": [
+        "a9c47676-8067-476e-89f8-46ef54b2757e",
+        "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+        "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9fa3be2c-8dda-4f3e-b596-3307f3547352"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented display-only marital status normalization in the frontend profile form. A new reusable formatter maps codes to readable labels (S/Single, M/Married, D/Divorced, W/Widowed) and maps labels back to canonical codes on save so storage remains interoperable. Updated the patient profile form to hydrate with human-readable marital status text while preserving code values when submitting. Added formatter unit tests and widget coverage for label hydration.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\domain\\marital_status_formatter.dart",
+          "action": "created",
+          "reason": "Centralizes the marital status mapping logic so the UI can display labels and preserve canonical save values.",
+          "notes": "Contains the S/M/D/W label map plus normalization helpers."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "The profile form needed to hydrate marital status in readable form and convert it back to a code on save.",
+          "notes": "Imported the formatter and used it in _hydrateFromProfile and _handleSave."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\domain\\marital_status_formatter_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the pure label/code mapping helpers.",
+          "notes": "Verifies both display and save normalization."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added UI coverage proving the profile form shows a readable marital status label when the stored value is a code.",
+          "notes": "Also made the test fixture accept a maritalStatus override."
+        }
+      ],
+      "createdAt": "2026-05-16T07:47:04.574Z",
+      "updatedAt": "2026-05-16T07:47:04.574Z"
+    },
+    {
+      "memoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+        "d248d529-5ab2-46be-96fb-b9f3d6752610"
+      ],
+      "childMemoryIds": [
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11"
+      ],
+      "sectionKind": "fact",
+      "summary": "Refined the frontend patient profile form so Indigenous membership is now a Yes/No choice with a conditional Indigenous group field shown only when Yes is selected. The optional details area was reorganized into clearer grouped panels for background, identity/support, and support contacts, while save behavior continues to preserve canonical storage by blanking indigenousGroup when Indigenous is No. Added widget tests for the new toggle flow and save behavior, and verified the updated profile form and personal information screen tests pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Implemented the Yes/No Indigenous control, conditional Indigenous group field, grouped optional details layout, and canonical save handling.",
+          "notes": "Also kept the rest of the profile form behavior intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the new Indigenous toggle flow and save semantics, and extended the profile helper with Indigenous fields.",
+          "notes": "Existing hydration and input filtering assertions were preserved."
+        }
+      ],
+      "createdAt": "2026-05-16T08:45:57.532Z",
+      "updatedAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "memoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [
+        "649ca429-7164-45cd-a2fd-b3857c6a27cb"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+        "d248d529-5ab2-46be-96fb-b9f3d6752610"
+      ],
+      "childMemoryIds": [
+        "ebfffba4-cd74-4226-937c-9627a93c5508"
+      ],
+      "sectionKind": "decision",
+      "summary": "Refined the frontend patient profile form so Indigenous membership is now a Yes/No choice with a conditional Indigenous group field shown only when Yes is selected. The optional details area was reorganized into clearer grouped panels for background, identity/support, and support contacts, while save behavior continues to preserve canonical storage by blanking indigenousGroup when Indigenous is No. Added widget tests for the new toggle flow and save behavior, and verified the updated profile form and personal information screen tests pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Implemented the Yes/No Indigenous control, conditional Indigenous group field, grouped optional details layout, and canonical save handling.",
+          "notes": "Also kept the rest of the profile form behavior intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the new Indigenous toggle flow and save semantics, and extended the profile helper with Indigenous fields.",
+          "notes": "Existing hydration and input filtering assertions were preserved."
+        }
+      ],
+      "createdAt": "2026-05-16T08:45:57.644Z",
+      "updatedAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "memoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11"
+      ],
+      "relatedMemoryIds": [
+        "4af16003-487f-4180-a6eb-1885ca493f15",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+        "d248d529-5ab2-46be-96fb-b9f3d6752610"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Refined the frontend patient profile form so Indigenous membership is now a Yes/No choice with a conditional Indigenous group field shown only when Yes is selected. The optional details area was reorganized into clearer grouped panels for background, identity/support, and support contacts, while save behavior continues to preserve canonical storage by blanking indigenousGroup when Indigenous is No. Added widget tests for the new toggle flow and save behavior, and verified the updated profile form and personal information screen tests pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Implemented the Yes/No Indigenous control, conditional Indigenous group field, grouped optional details layout, and canonical save handling.",
+          "notes": "Also kept the rest of the profile form behavior intact."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the new Indigenous toggle flow and save semantics, and extended the profile helper with Indigenous fields.",
+          "notes": "Existing hydration and input filtering assertions were preserved."
+        }
+      ],
+      "createdAt": "2026-05-16T08:45:57.748Z",
+      "updatedAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "memoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [
+        "649ca429-7164-45cd-a2fd-b3857c6a27cb"
+      ],
+      "relatedMemoryIds": [
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "ebfffba4-cd74-4226-937c-9627a93c5508",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "9d9c9507-dd16-4063-bfcc-c668c77eb623"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted the patient profile form again so Indigenous membership is now a select-style input field rather than buttons, and the demographics block no longer uses a card container. The optional details layout remains grouped for readability, while save behavior still preserves canonical values and clears indigenousGroup when Indigenous is No. Updated tests to exercise the bottom-sheet select flow and verified the profile widget suite and personal information screen suite pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Replaced the button-based Indigenous UI with a select-style input field and removed the card wrapper from that section while keeping the conditional follow-up field.",
+          "notes": "Also cleared the Indigenous group when switching to No and preserved canonical save behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget tests to use the bottom-sheet select control and verify the new Indigenous input flow and save semantics.",
+          "notes": "Added the required bottom-sheet select import for the test file."
+        }
+      ],
+      "createdAt": "2026-05-16T11:20:16.297Z",
+      "updatedAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "memoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f"
+      ],
+      "relatedMemoryIds": [
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "ebfffba4-cd74-4226-937c-9627a93c5508",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "14485816-ec01-409f-b2a3-097af8e47b3f"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted the patient profile form again so Indigenous membership is now a select-style input field rather than buttons, and the demographics block no longer uses a card container. The optional details layout remains grouped for readability, while save behavior still preserves canonical values and clears indigenousGroup when Indigenous is No. Updated tests to exercise the bottom-sheet select flow and verified the profile widget suite and personal information screen suite pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Replaced the button-based Indigenous UI with a select-style input field and removed the card wrapper from that section while keeping the conditional follow-up field.",
+          "notes": "Also cleared the Indigenous group when switching to No and preserved canonical save behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget tests to use the bottom-sheet select control and verify the new Indigenous input flow and save semantics.",
+          "notes": "Added the required bottom-sheet select import for the test file."
+        }
+      ],
+      "createdAt": "2026-05-16T11:20:16.407Z",
+      "updatedAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "memoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "rootMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "parentMemoryIds": [
+        "9d9c9507-dd16-4063-bfcc-c668c77eb623"
+      ],
+      "relatedMemoryIds": [
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "ebfffba4-cd74-4226-937c-9627a93c5508",
+        "9eae6220-2959-446f-b020-cb066704dbfa",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted the patient profile form again so Indigenous membership is now a select-style input field rather than buttons, and the demographics block no longer uses a card container. The optional details layout remains grouped for readability, while save behavior still preserves canonical values and clears indigenousGroup when Indigenous is No. Updated tests to exercise the bottom-sheet select flow and verified the profile widget suite and personal information screen suite pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Replaced the button-based Indigenous UI with a select-style input field and removed the card wrapper from that section while keeping the conditional follow-up field.",
+          "notes": "Also cleared the Indigenous group when switching to No and preserved canonical save behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Updated the widget tests to use the bottom-sheet select control and verify the new Indigenous input flow and save semantics.",
+          "notes": "Added the required bottom-sheet select import for the test file."
+        }
+      ],
+      "createdAt": "2026-05-16T11:20:16.507Z",
+      "updatedAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "memoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "rootMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "parentMemoryIds": [
+        "14485816-ec01-409f-b2a3-097af8e47b3f"
+      ],
+      "relatedMemoryIds": [
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "649ca429-7164-45cd-a2fd-b3857c6a27cb"
+      ],
+      "childMemoryIds": [
+        "4a489192-5f92-45b4-9fa0-f21d9c474929"
+      ],
+      "sectionKind": "fact",
+      "summary": "Flattened the patient profile form further after the user requested no cards for the fields below the Indigenous section. The Indigenous membership control remains a bottom-sheet select input, while the optional details section now renders as plain section headers and fields without any boxed/card containers. Canonical save behavior remains unchanged and the targeted profile widget + personal information screen tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Flattened the optional detail sections by removing card wrappers and keeping only plain section headers and fields.",
+          "notes": "Indigenous select behavior and canonical save logic were preserved."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Touched earlier in the Indigenous UI flow refactor; tests remain relevant for the current flattened form behavior.",
+          "notes": "The suite still covers the select input and save semantics."
+        }
+      ],
+      "createdAt": "2026-05-16T11:23:46.215Z",
+      "updatedAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "memoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "rootMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "parentMemoryIds": [
+        "00884fbf-4f7e-4c77-ad42-952f6007841b"
+      ],
+      "relatedMemoryIds": [
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "649ca429-7164-45cd-a2fd-b3857c6a27cb"
+      ],
+      "childMemoryIds": [
+        "223499b2-b6aa-4785-8dbe-ba440fa903f2"
+      ],
+      "sectionKind": "decision",
+      "summary": "Flattened the patient profile form further after the user requested no cards for the fields below the Indigenous section. The Indigenous membership control remains a bottom-sheet select input, while the optional details section now renders as plain section headers and fields without any boxed/card containers. Canonical save behavior remains unchanged and the targeted profile widget + personal information screen tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Flattened the optional detail sections by removing card wrappers and keeping only plain section headers and fields.",
+          "notes": "Indigenous select behavior and canonical save logic were preserved."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Touched earlier in the Indigenous UI flow refactor; tests remain relevant for the current flattened form behavior.",
+          "notes": "The suite still covers the select input and save semantics."
+        }
+      ],
+      "createdAt": "2026-05-16T11:23:46.345Z",
+      "updatedAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "memoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "rootMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "parentMemoryIds": [
+        "4a489192-5f92-45b4-9fa0-f21d9c474929"
+      ],
+      "relatedMemoryIds": [
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+        "649ca429-7164-45cd-a2fd-b3857c6a27cb"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Flattened the patient profile form further after the user requested no cards for the fields below the Indigenous section. The Indigenous membership control remains a bottom-sheet select input, while the optional details section now renders as plain section headers and fields without any boxed/card containers. Canonical save behavior remains unchanged and the targeted profile widget + personal information screen tests still pass.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Flattened the optional detail sections by removing card wrappers and keeping only plain section headers and fields.",
+          "notes": "Indigenous select behavior and canonical save logic were preserved."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test\\features\\profile\\presentation\\widgets\\patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Touched earlier in the Indigenous UI flow refactor; tests remain relevant for the current flattened form behavior.",
+          "notes": "The suite still covers the select input and save semantics."
+        }
+      ],
+      "createdAt": "2026-05-16T11:23:46.455Z",
+      "updatedAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "memoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "rootMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "parentMemoryIds": [
+        "4a489192-5f92-45b4-9fa0-f21d9c474929"
+      ],
+      "relatedMemoryIds": [
+        "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "14485816-ec01-409f-b2a3-097af8e47b3f",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11"
+      ],
+      "childMemoryIds": [
+        "8862dd61-0549-4a13-971f-050931146842"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the top 'Optional details' header from the patient profile form so the optional field groups now begin directly with their subsection headings. This was a layout-only change that kept the flattened form structure and all save behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed the top-level optional details header block from the profile form layout.",
+          "notes": "No behavior changes were made."
+        }
+      ],
+      "createdAt": "2026-05-16T11:31:03.983Z",
+      "updatedAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "memoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "rootMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "parentMemoryIds": [
+        "de645d1d-6c06-4aac-b702-92d4ad023225"
+      ],
+      "relatedMemoryIds": [
+        "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "14485816-ec01-409f-b2a3-097af8e47b3f",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11"
+      ],
+      "childMemoryIds": [
+        "4441ca46-3c23-4cb6-b587-7777c81f4b2d"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the top 'Optional details' header from the patient profile form so the optional field groups now begin directly with their subsection headings. This was a layout-only change that kept the flattened form structure and all save behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed the top-level optional details header block from the profile form layout.",
+          "notes": "No behavior changes were made."
+        }
+      ],
+      "createdAt": "2026-05-16T11:31:04.078Z",
+      "updatedAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "memoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "rootMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "parentMemoryIds": [
+        "8862dd61-0549-4a13-971f-050931146842"
+      ],
+      "relatedMemoryIds": [
+        "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "14485816-ec01-409f-b2a3-097af8e47b3f",
+        "b6b73fb2-8b8b-431e-868d-594c712bfc11"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the top 'Optional details' header from the patient profile form so the optional field groups now begin directly with their subsection headings. This was a layout-only change that kept the flattened form structure and all save behavior intact.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\widgets\\patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Removed the top-level optional details header block from the profile form layout.",
+          "notes": "No behavior changes were made."
+        }
+      ],
+      "createdAt": "2026-05-16T11:31:04.159Z",
+      "updatedAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "memoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "rootMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [
+        "fee86986-206a-4df3-9a3a-61c78d6621d5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a locked-profile summary mode for the patient profile widget so synced/read-only profiles only render populated fields and hide empty sections. Edit mode, save behavior, and existing lock semantics were preserved. Updated the relevant widget tests and screen tests to match the new read-only copy and section names, and verified the targeted profile tests pass.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added the locked-summary rendering path and helper methods that filter out empty fields while leaving edit behavior intact.",
+          "notes": "Also introduced the read-only summary card and supporting helpers for visible section rendering."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the locked summary hiding empty fields and updated the local profile helper to support new optional test values.",
+          "notes": "This test file now validates the read-only summary behavior directly."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated expectations for the new locked copy and the renamed/visible section headings in the profile screen.",
+          "notes": "Keeps the screen-level integration test aligned with the new read-only presentation."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed the screen still passes the locked-state flag through to the profile form and did not need logic changes for this UI update.",
+          "notes": "No code changes required in the screen itself."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Checked the profile summary model fields and defaults to determine which values can be hidden safely in the locked summary.",
+          "notes": "Used to confirm string fields vs. boolean defaults."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/marital_status_formatter.dart",
+          "action": "inspected",
+          "reason": "Verified marital status display formatting so the locked summary could rely on the formatted profile value.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-16T11:59:44.017Z",
+      "updatedAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "memoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "rootMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "parentMemoryIds": [
+        "985660e6-5525-477a-ab02-aaf259c56a0c"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [
+        "44060012-7aaa-4dbe-ab15-52f0df73f708"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a locked-profile summary mode for the patient profile widget so synced/read-only profiles only render populated fields and hide empty sections. Edit mode, save behavior, and existing lock semantics were preserved. Updated the relevant widget tests and screen tests to match the new read-only copy and section names, and verified the targeted profile tests pass.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added the locked-summary rendering path and helper methods that filter out empty fields while leaving edit behavior intact.",
+          "notes": "Also introduced the read-only summary card and supporting helpers for visible section rendering."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the locked summary hiding empty fields and updated the local profile helper to support new optional test values.",
+          "notes": "This test file now validates the read-only summary behavior directly."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated expectations for the new locked copy and the renamed/visible section headings in the profile screen.",
+          "notes": "Keeps the screen-level integration test aligned with the new read-only presentation."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed the screen still passes the locked-state flag through to the profile form and did not need logic changes for this UI update.",
+          "notes": "No code changes required in the screen itself."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Checked the profile summary model fields and defaults to determine which values can be hidden safely in the locked summary.",
+          "notes": "Used to confirm string fields vs. boolean defaults."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/marital_status_formatter.dart",
+          "action": "inspected",
+          "reason": "Verified marital status display formatting so the locked summary could rely on the formatted profile value.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-16T11:59:44.144Z",
+      "updatedAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "memoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "rootMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "parentMemoryIds": [
+        "fee86986-206a-4df3-9a3a-61c78d6621d5"
+      ],
+      "relatedMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "00884fbf-4f7e-4c77-ad42-952f6007841b",
+        "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+        "6147a68c-affa-45bb-a292-02707b979d69"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a locked-profile summary mode for the patient profile widget so synced/read-only profiles only render populated fields and hide empty sections. Edit mode, save behavior, and existing lock semantics were preserved. Updated the relevant widget tests and screen tests to match the new read-only copy and section names, and verified the targeted profile tests pass.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added the locked-summary rendering path and helper methods that filter out empty fields while leaving edit behavior intact.",
+          "notes": "Also introduced the read-only summary card and supporting helpers for visible section rendering."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/widgets/patient_profile_form_widget_test.dart",
+          "action": "modified",
+          "reason": "Added coverage for the locked summary hiding empty fields and updated the local profile helper to support new optional test values.",
+          "notes": "This test file now validates the read-only summary behavior directly."
+        },
+        {
+          "path": "frontend/test/features/profile/presentation/screens/personal_information_screen_test.dart",
+          "action": "modified",
+          "reason": "Updated expectations for the new locked copy and the renamed/visible section headings in the profile screen.",
+          "notes": "Keeps the screen-level integration test aligned with the new read-only presentation."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed the screen still passes the locked-state flag through to the profile form and did not need logic changes for this UI update.",
+          "notes": "No code changes required in the screen itself."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Checked the profile summary model fields and defaults to determine which values can be hidden safely in the locked summary.",
+          "notes": "Used to confirm string fields vs. boolean defaults."
+        },
+        {
+          "path": "frontend/lib/features/profile/domain/marital_status_formatter.dart",
+          "action": "inspected",
+          "reason": "Verified marital status display formatting so the locked summary could rely on the formatted profile value.",
+          "notes": "No changes were needed."
+        }
+      ],
+      "createdAt": "2026-05-16T11:59:44.256Z",
+      "updatedAt": "2026-05-16T11:59:44.256Z"
     }
   ],
   "edges": [
@@ -23722,7 +25004,1134 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-15T09:38:36.653Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:23.889Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.036Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-15T13:03:24.178Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "toMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.448Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "toMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.568Z"
+    },
+    {
+      "fromMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "toMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "fromMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "fromMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "fromMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "fromMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T05:38:59.683Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "b074379b-ccaa-4603-938d-bfe1d4e8e240",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.709Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.844Z"
+    },
+    {
+      "fromMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "fromMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "toMemoryId": "a50c879d-d3da-4d76-aab9-ec4ed5faa53c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "fromMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "toMemoryId": "516f11be-bb6f-4cce-8f1e-7c873f5549c0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "fromMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "toMemoryId": "74535931-abdf-4aeb-b4f3-169b79f88458",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "fromMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "toMemoryId": "9a39a5d7-71d4-48de-8fef-2e49fb0d0519",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:20:37.971Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "toMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.321Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "f2c9bffd-651a-4c09-a99f-3bd7b38c66c7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "toMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.449Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "a9c47676-8067-476e-89f8-46ef54b2757e",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "a3869fb6-c13a-47ea-8907-c8c7f15633f0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "e7db1d31-bd80-4e29-8d45-b21a739ac5e1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "toMemoryId": "9fa3be2c-8dda-4f3e-b596-3307f3547352",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T07:47:04.575Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.532Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "toMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.644Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "ebe90b1b-2972-4b4a-9272-d53c22e3263d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "toMemoryId": "d248d529-5ab2-46be-96fb-b9f3d6752610",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T08:45:57.748Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "toMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.297Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "toMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.407Z"
+    },
+    {
+      "fromMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "toMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "fromMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "fromMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "toMemoryId": "ebfffba4-cd74-4226-937c-9627a93c5508",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "fromMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "toMemoryId": "9eae6220-2959-446f-b020-cb066704dbfa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "fromMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:20:16.507Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "toMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.215Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "toMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.345Z"
+    },
+    {
+      "fromMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "toMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "fromMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "fromMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "toMemoryId": "9d9c9507-dd16-4063-bfcc-c668c77eb623",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "fromMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "fromMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "toMemoryId": "649ca429-7164-45cd-a2fd-b3857c6a27cb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:23:46.455Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "4a489192-5f92-45b4-9fa0-f21d9c474929",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "toMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:03.983Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "de645d1d-6c06-4aac-b702-92d4ad023225",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "toMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.078Z"
+    },
+    {
+      "fromMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "toMemoryId": "8862dd61-0549-4a13-971f-050931146842",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "fromMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "toMemoryId": "223499b2-b6aa-4785-8dbe-ba440fa903f2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "fromMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "fromMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "toMemoryId": "14485816-ec01-409f-b2a3-097af8e47b3f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "fromMemoryId": "4441ca46-3c23-4cb6-b587-7777c81f4b2d",
+      "toMemoryId": "b6b73fb2-8b8b-431e-868d-594c712bfc11",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:31:04.159Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "toMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.017Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "985660e6-5525-477a-ab02-aaf259c56a0c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "toMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.144Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "fee86986-206a-4df3-9a3a-61c78d6621d5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "00884fbf-4f7e-4c77-ad42-952f6007841b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "8264bb41-ae95-4b36-9f99-806e43b9d68f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "44060012-7aaa-4dbe-ab15-52f0df73f708",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T11:59:44.256Z"
     }
   ],
-  "updatedAt": "2026-05-15T09:38:36.661Z"
+  "updatedAt": "2026-05-16T11:59:44.262Z"
 }

@@ -55,6 +55,8 @@ export interface PatientProfileResponse {
   addressLine2: string;
   city: string;
   province: string;
+  region: string;
+  barangay: string;
   postalCode: string;
   country: string;
   maritalStatus: string;
@@ -62,6 +64,15 @@ export interface PatientProfileResponse {
   religion: string;
   occupation: string;
   genderIdentity: string;
+  indigenousPeople: boolean;
+  indigenousGroup: string;
+  race: string;
+  educationalAttainment: string;
+  sexAtBirth: string;
+  pwdIdNumber: string;
+  pwdDisabilityType: string;
+  pwdIdExpirationDate: string;
+  pwdIssuingLgu: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
   isSyncLocked: boolean;

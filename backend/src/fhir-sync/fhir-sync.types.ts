@@ -65,6 +65,7 @@ export interface FhirHumanName {
 }
 
 export interface FhirAddress {
+  extension?: Array<Record<string, unknown>>;
   text?: string;
   line?: string[];
   city?: string;
@@ -86,6 +87,8 @@ export interface FhirPatientResource {
   name?: FhirHumanName[];
   birthDate?: string;
   gender?: string;
+  maritalStatus?: FhirCodeableConcept;
+  extension?: Array<Record<string, unknown>>;
   telecom?: FhirTelecom[];
   address?: FhirAddress[];
 }

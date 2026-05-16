@@ -29,6 +29,8 @@ const LIST_LIMIT = 100;
 const PHILHEALTH_IDENTIFIER_SYSTEM =
   'http://philhealth.gov.ph/fhir/Identifier/philhealth-id';
 const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
+const PHILSYS_IDENTIFIER_SYSTEM = 'http://philsys.gov.ph/fhir/Identifier/philsys-id';
+const PHILSYS_IDENTIFIER_SYSTEM_HTTPS = 'https://philsys.gov.ph/fhir/Identifier/philsys-id';
 
 @Injectable()
 export class FhirSyncRepository {
@@ -316,12 +318,24 @@ export class FhirSyncRepository {
       return [LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM, PHILHEALTH_IDENTIFIER_SYSTEM];
     }
 
+    if (system === PHILSYS_IDENTIFIER_SYSTEM) {
+      return [PHILSYS_IDENTIFIER_SYSTEM, PHILSYS_IDENTIFIER_SYSTEM_HTTPS];
+    }
+
+    if (system === PHILSYS_IDENTIFIER_SYSTEM_HTTPS) {
+      return [PHILSYS_IDENTIFIER_SYSTEM_HTTPS, PHILSYS_IDENTIFIER_SYSTEM];
+    }
+
     return [system];
   }
 
   private normalizeIdentifierSystem(system: string): string {
     if (system === LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM) {
       return PHILHEALTH_IDENTIFIER_SYSTEM;
+    }
+
+    if (system === PHILSYS_IDENTIFIER_SYSTEM_HTTPS) {
+      return PHILSYS_IDENTIFIER_SYSTEM;
     }
 
     return system;

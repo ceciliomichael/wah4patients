@@ -19,6 +19,8 @@ const PHILHEALTH_IDENTIFIER_SYSTEM =
 const LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM = 'http://philhealth.gov.ph';
 const PHILSYS_IDENTIFIER_SYSTEM =
   'http://philsys.gov.ph/fhir/Identifier/philsys-id';
+const PHILSYS_IDENTIFIER_SYSTEM_HTTPS =
+  'https://philsys.gov.ph/fhir/Identifier/philsys-id';
 const GATEWAY_PROVIDER_LIST_PATH = '/providers';
 const GATEWAY_FHIR_REQUEST_PATIENT_PATH = '/fhir/request/Patient';
 
@@ -300,6 +302,10 @@ export class IntegrationService {
     const normalized = identifierSystem.trim();
     if (normalized === LEGACY_PHILHEALTH_IDENTIFIER_SYSTEM) {
       return PHILHEALTH_IDENTIFIER_SYSTEM;
+    }
+
+    if (normalized === PHILSYS_IDENTIFIER_SYSTEM_HTTPS) {
+      return PHILSYS_IDENTIFIER_SYSTEM;
     }
 
     return normalized;

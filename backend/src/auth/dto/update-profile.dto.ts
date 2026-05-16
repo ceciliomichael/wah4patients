@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDateString,
   IsIn,
   IsOptional,
@@ -104,6 +105,18 @@ export class UpdateProfileDto {
   @IsOptional()
   @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
   @IsString()
+  @MaxLength(120)
+  region?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  barangay?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
   @MaxLength(20)
   @Matches(POSTAL_CODE_PATTERN, {
     message: 'postalCode must be a 4-digit code',
@@ -145,6 +158,57 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(80)
   genderIdentity?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  indigenousPeople?: boolean;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  indigenousGroup?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  race?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  educationalAttainment?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  sexAtBirth?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  pwdIdNumber?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  pwdDisabilityType?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsDateString()
+  pwdIdExpirationDate?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)
+  @IsString()
+  @MaxLength(120)
+  pwdIssuingLgu?: string;
 
   @IsOptional()
   @ValidateIf((_, value) => typeof value === 'string' && value.trim().length > 0)

@@ -109,7 +109,7 @@ describe('IntegrationService', () => {
     const service = new IntegrationService(createConfigService());
     const result = await service.prepareSyncRequest({
       providerId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-      identifierSystem: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
+      identifierSystem: 'https://philsys.gov.ph/fhir/Identifier/philsys-id',
       identifierValue: '1234-1234567-1',
       reason: 'Record sync',
       notes: 'Prepared from mobile app',
@@ -123,10 +123,15 @@ describe('IntegrationService', () => {
     );
     expect(result.patientIdentifiers).toEqual([
       {
-        system: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
+        system: 'http://philsys.gov.ph/fhir/Identifier/philsys-id',
         value: '1234-1234567-1',
       },
     ]);
+    const requestCall = fetchSpy.mock.calls[1];
+    const requestInit = requestCall?.[1] as RequestInit | undefined;
+    expect(requestInit?.body).toContain(
+      '"system":"http://philsys.gov.ph/fhir/Identifier/philsys-id"',
+    );
     expect(result.gatewayUrl).toBe(baseConfig.WAH4PC_GATEWAY_URL);
   });
 

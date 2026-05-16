@@ -25,6 +25,8 @@ interface ProfileDraftInput {
   addressLine2?: string;
   city?: string;
   province?: string;
+  region?: string;
+  barangay?: string;
   postalCode?: string;
   country?: string;
   maritalStatus?: string;
@@ -32,6 +34,15 @@ interface ProfileDraftInput {
   religion?: string;
   occupation?: string;
   genderIdentity?: string;
+  indigenousPeople?: boolean;
+  indigenousGroup?: string;
+  race?: string;
+  educationalAttainment?: string;
+  sexAtBirth?: string;
+  pwdIdNumber?: string;
+  pwdDisabilityType?: string;
+  pwdIdExpirationDate?: string;
+  pwdIssuingLgu?: string;
   emergencyContactName?: string;
   emergencyContactPhone?: string;
 }
@@ -122,6 +133,8 @@ export class ProfileService {
       addressLine2: string;
       city: string;
       province: string;
+      region: string;
+      barangay: string;
       postalCode: string;
       country: string;
       maritalStatus: string;
@@ -129,6 +142,15 @@ export class ProfileService {
       religion: string;
       occupation: string;
       genderIdentity: string;
+      indigenousPeople: boolean;
+      indigenousGroup: string;
+      race: string;
+      educationalAttainment: string;
+      sexAtBirth: string;
+      pwdIdNumber: string;
+      pwdDisabilityType: string;
+      pwdIdExpirationDate: string;
+      pwdIssuingLgu: string;
       emergencyContactName: string;
       emergencyContactPhone: string;
     };
@@ -171,6 +193,8 @@ export class ProfileService {
         ),
         city: this.mergeField(dto.city, existingPatientProfile.city),
         province: this.mergeField(dto.province, existingPatientProfile.province),
+        region: this.mergeField(dto.region, existingPatientProfile.region),
+        barangay: this.mergeField(dto.barangay, existingPatientProfile.barangay),
         postalCode: this.mergeField(
           dto.postalCode,
           existingPatientProfile.postalCode,
@@ -189,6 +213,37 @@ export class ProfileService {
         genderIdentity: this.mergeField(
           dto.genderIdentity,
           existingPatientProfile.genderIdentity,
+        ),
+        indigenousPeople:
+          dto.indigenousPeople ?? existingPatientProfile.indigenousPeople,
+        indigenousGroup: this.mergeField(
+          dto.indigenousGroup,
+          existingPatientProfile.indigenousGroup,
+        ),
+        race: this.mergeField(dto.race, existingPatientProfile.race),
+        educationalAttainment: this.mergeField(
+          dto.educationalAttainment,
+          existingPatientProfile.educationalAttainment,
+        ),
+        sexAtBirth: this.mergeField(
+          dto.sexAtBirth,
+          existingPatientProfile.sexAtBirth,
+        ),
+        pwdIdNumber: this.mergeField(
+          dto.pwdIdNumber,
+          existingPatientProfile.pwdIdNumber,
+        ),
+        pwdDisabilityType: this.mergeField(
+          dto.pwdDisabilityType,
+          existingPatientProfile.pwdDisabilityType,
+        ),
+        pwdIdExpirationDate: this.mergeField(
+          dto.pwdIdExpirationDate,
+          existingPatientProfile.pwdIdExpirationDate,
+        ),
+        pwdIssuingLgu: this.mergeField(
+          dto.pwdIssuingLgu,
+          existingPatientProfile.pwdIssuingLgu,
         ),
         emergencyContactName: this.mergeField(
           dto.emergencyContactName,
@@ -244,6 +299,8 @@ export class ProfileService {
     addressLine2: string;
     city: string;
     province: string;
+    region: string;
+    barangay: string;
     postalCode: string;
     country: string;
     maritalStatus: string;
@@ -251,6 +308,15 @@ export class ProfileService {
     religion: string;
     occupation: string;
     genderIdentity: string;
+    indigenousPeople: boolean;
+    indigenousGroup: string;
+    race: string;
+    educationalAttainment: string;
+    sexAtBirth: string;
+    pwdIdNumber: string;
+    pwdDisabilityType: string;
+    pwdIdExpirationDate: string;
+    pwdIssuingLgu: string;
     emergencyContactName: string;
     emergencyContactPhone: string;
   } {
@@ -272,6 +338,8 @@ export class ProfileService {
       addressLine2: this.normalizeOptional(record.addressLine2 as string | undefined),
       city: this.normalizeOptional(record.city as string | undefined),
       province: this.normalizeOptional(record.province as string | undefined),
+      region: this.normalizeOptional(record.region as string | undefined),
+      barangay: this.normalizeOptional(record.barangay as string | undefined),
       postalCode: this.normalizeOptional(record.postalCode as string | undefined),
       country: this.normalizeOptional(record.country as string | undefined),
       maritalStatus: this.normalizeOptional(record.maritalStatus as string | undefined),
@@ -279,6 +347,25 @@ export class ProfileService {
       religion: this.normalizeOptional(record.religion as string | undefined),
       occupation: this.normalizeOptional(record.occupation as string | undefined),
       genderIdentity: this.normalizeOptional(record.genderIdentity as string | undefined),
+      indigenousPeople: record.indigenousPeople === true,
+      indigenousGroup: this.normalizeOptional(
+        record.indigenousGroup as string | undefined,
+      ),
+      race: this.normalizeOptional(record.race as string | undefined),
+      educationalAttainment: this.normalizeOptional(
+        record.educationalAttainment as string | undefined,
+      ),
+      sexAtBirth: this.normalizeOptional(record.sexAtBirth as string | undefined),
+      pwdIdNumber: this.normalizeOptional(record.pwdIdNumber as string | undefined),
+      pwdDisabilityType: this.normalizeOptional(
+        record.pwdDisabilityType as string | undefined,
+      ),
+      pwdIdExpirationDate: this.normalizeOptional(
+        record.pwdIdExpirationDate as string | undefined,
+      ),
+      pwdIssuingLgu: this.normalizeOptional(
+        record.pwdIssuingLgu as string | undefined,
+      ),
       emergencyContactName: this.normalizeOptional(
         record.emergencyContactName as string | undefined,
       ),
@@ -299,6 +386,8 @@ export class ProfileService {
     addressLine2: string;
     city: string;
     province: string;
+    region: string;
+    barangay: string;
     postalCode: string;
     country: string;
     maritalStatus: string;
@@ -306,6 +395,15 @@ export class ProfileService {
     religion: string;
     occupation: string;
     genderIdentity: string;
+    indigenousPeople: boolean;
+    indigenousGroup: string;
+    race: string;
+    educationalAttainment: string;
+    sexAtBirth: string;
+    pwdIdNumber: string;
+    pwdDisabilityType: string;
+    pwdIdExpirationDate: string;
+    pwdIssuingLgu: string;
     emergencyContactName: string;
     emergencyContactPhone: string;
   } {
@@ -320,6 +418,8 @@ export class ProfileService {
       addressLine2: this.normalizeOptional(dto.addressLine2),
       city: this.normalizeOptional(dto.city),
       province: this.normalizeOptional(dto.province),
+      region: this.normalizeOptional(dto.region),
+      barangay: this.normalizeOptional(dto.barangay),
       postalCode: this.normalizeOptional(dto.postalCode),
       country: this.normalizeOptional(dto.country),
       maritalStatus: this.normalizeOptional(dto.maritalStatus),
@@ -327,6 +427,15 @@ export class ProfileService {
       religion: this.normalizeOptional(dto.religion),
       occupation: this.normalizeOptional(dto.occupation),
       genderIdentity: this.normalizeOptional(dto.genderIdentity),
+      indigenousPeople: dto.indigenousPeople === true,
+      indigenousGroup: this.normalizeOptional(dto.indigenousGroup),
+      race: this.normalizeOptional(dto.race),
+      educationalAttainment: this.normalizeOptional(dto.educationalAttainment),
+      sexAtBirth: this.normalizeOptional(dto.sexAtBirth),
+      pwdIdNumber: this.normalizeOptional(dto.pwdIdNumber),
+      pwdDisabilityType: this.normalizeOptional(dto.pwdDisabilityType),
+      pwdIdExpirationDate: this.normalizeOptional(dto.pwdIdExpirationDate),
+      pwdIssuingLgu: this.normalizeOptional(dto.pwdIssuingLgu),
       emergencyContactName: this.normalizeOptional(dto.emergencyContactName),
       emergencyContactPhone: this.normalizeOptional(dto.emergencyContactPhone),
     };

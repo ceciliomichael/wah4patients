@@ -42,6 +42,27 @@ describe('FhirSyncService', () => {
     const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
 
     const patient = readFixture('Patient-patient-single-example.json') as FhirPatientResource;
+    patient.identifier = [
+      ...(patient.identifier ?? []),
+      {
+        system: 'https://philsys.gov.ph/fhir/Identifier/philsys-id',
+        value: '123456789012',
+      },
+    ];
+    patient.extension = [
+      ...(patient.extension ?? []),
+      {
+        url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/pwd-disability-type',
+        valueCodeableConcept: {
+          coding: [
+            {
+              code: 'visual',
+              display: 'Visual Disability',
+            },
+          ],
+        },
+      },
+    ];
     const bundle = {
       resourceType: 'Bundle',
       entry: [
@@ -74,18 +95,34 @@ describe('FhirSyncService', () => {
         system: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
         value: '63-584789845-5',
       },
+      {
+        system: 'https://philsys.gov.ph/fhir/Identifier/philsys-id',
+        value: '123456789012',
+      },
     ]);
     expect(repositoryMock.updateProfile).toHaveBeenCalledWith(
       'profile-123',
       expect.objectContaining({
         givenNames: ['Juan Jane', 'Dela Fuente'],
         familyName: 'Dela Cruz',
+        patientProfile: expect.objectContaining({
+          philSysId: '123456789012',
+          religion: 'Atheism',
+          occupation: 'Hospital Administrator',
+          race: 'Filipino',
+          educationalAttainment: 'Elementary Graduate',
+          pwdDisabilityType: 'Visual Disability',
+        }),
       }),
     );
     expect(repositoryMock.upsertPatientIdentifiers).toHaveBeenCalledWith('profile-123', [
       {
         system: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
         value: '63-584789845-5',
+      },
+      {
+        system: 'https://philsys.gov.ph/fhir/Identifier/philsys-id',
+        value: '123456789012',
       },
     ]);
     expect(repositoryMock.insertClinicalRecord).toHaveBeenCalledWith(
@@ -161,5 +198,160 @@ describe('FhirSyncService', () => {
         value: '63-584789845-5',
       },
     ]);
+  });
+
+  it('maps PH Core gateway payload fields from receive-results into patient profile patch', async () => {
+    const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
+
+    const bundle = {
+      resourceType: 'Bundle',
+      type: 'collection',
+      entry: [
+        {
+          resource: {
+            resourceType: 'Patient',
+            meta: {
+              profile: ['https://wah-fhir-ph-core.echosphere.cfd/phcore/StructureDefinition/ph-core-patient'],
+            },
+            identifier: [
+              {
+                system: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
+                value: '123456789016',
+              },
+              {
+                system: 'https://philsys.gov.ph/fhir/Identifier/philsys-id',
+                value: '123456789012',
+              },
+            ],
+            name: [
+              {
+                family: 'Dela Cruz',
+                given: ['Christianity', 'Eugenio'],
+              },
+            ],
+            gender: 'male',
+            birthDate: '2000-06-20',
+            maritalStatus: {
+              coding: [
+                {
+                  code: 'S',
+                  system: 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus',
+                },
+              ],
+            },
+            telecom: [
+              {
+                system: 'phone',
+                use: 'mobile',
+                value: '09171234567',
+              },
+            ],
+            address: [
+              {
+                line: ['123 Sampaguita Street'],
+                city: 'Bangued',
+                postalCode: '1870',
+                country: 'PH',
+                extension: [
+                  {
+                    url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/region',
+                    valueCoding: { display: 'Cordillera Administrative Region (CAR)' },
+                  },
+                  {
+                    url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/province',
+                    valueCoding: { display: 'Abra' },
+                  },
+                  {
+                    url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/city-municipality',
+                    valueCoding: { display: 'Bangued' },
+                  },
+                  {
+                    url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/barangay',
+                    valueCoding: { display: 'Agtangao' },
+                  },
+                ],
+              },
+            ],
+            extension: [
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/religion',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Roman Catholic' }],
+                },
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/race',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Bisaya/Binisaya' }],
+                },
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/educational-attainment',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Bachelor\'s Degree or Equivalent' }],
+                },
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/occupation',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Congressman' }],
+                },
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/indigenous-people',
+                valueBoolean: true,
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/indigenous-group',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Aetas' }],
+                },
+              },
+              {
+                url: 'https://fhir-ph-core.wah.ph/ph-core/fhir/StructureDefinition/pwd-disability-type',
+                valueCodeableConcept: {
+                  coding: [{ display: 'Visual Disability' }],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    repositoryMock.findProfileIdByIdentifiers = jest.fn().mockResolvedValue('profile-abc');
+    repositoryMock.updateProfile = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.insertMedicationResupplyRecord = jest.fn().mockResolvedValue(undefined);
+
+    await expect(
+      service.receiveResults({
+        transactionId: 'txn-log-shape-001',
+        status: 'SUCCESS',
+        data: bundle,
+      }),
+    ).resolves.toEqual({ message: 'Data received successfully' });
+
+    expect(repositoryMock.updateProfile).toHaveBeenCalledWith(
+      'profile-abc',
+      expect.objectContaining({
+        patientProfile: expect.objectContaining({
+          philHealthId: '123456789016',
+          philSysId: '123456789012',
+          province: 'Abra',
+          region: 'Cordillera Administrative Region (CAR)',
+          barangay: 'Agtangao',
+          religion: 'Roman Catholic',
+          occupation: 'Congressman',
+          race: 'Bisaya/Binisaya',
+          educationalAttainment: 'Bachelor\'s Degree or Equivalent',
+          indigenousPeople: true,
+          indigenousGroup: 'Aetas',
+          maritalStatus: 'S',
+          pwdDisabilityType: 'Visual Disability',
+        }),
+      }),
+    );
   });
 });
