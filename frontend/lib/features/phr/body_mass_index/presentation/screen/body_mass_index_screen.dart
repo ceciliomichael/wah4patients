@@ -6,6 +6,7 @@ import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
+import '../../../data/personal_records_change_notifier.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../models/body_mass_index_models.dart';
 import '../utils/body_mass_index_calculations.dart';
@@ -190,6 +191,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
         _weightController.clear();
         _heightController.clear();
       });
+      PersonalRecordsChangeNotifier.notifyRecordSaved();
 
       _showResultDialog(entry);
     } on PersonalRecordsApiException catch (error) {

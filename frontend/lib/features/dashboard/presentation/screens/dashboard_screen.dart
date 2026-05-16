@@ -11,6 +11,7 @@ import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../auth/data/auth_local_store.dart';
 import '../../../auth/domain/auth_session.dart';
 import '../../../phr/data/personal_records_api_client.dart';
+import '../../../phr/data/personal_records_change_notifier.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
 import '../../../profile/presentation/widgets/profile_completion_prompt_dialog.dart';
 import '../../data/weekly_health_report_repository.dart';
@@ -136,6 +137,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     AuthSession.notifier.addListener(_syncWeeklyHealthReportWithSession);
+    PersonalRecordsChangeNotifier.notifier.addListener(
+      _refreshWeeklyHealthReportAfterRecordWrite,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _syncWeeklyHealthReportWithSession();
       _maybeShowProfileCompletionPrompt();
@@ -145,16 +149,48 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void dispose() {
     AuthSession.notifier.removeListener(_syncWeeklyHealthReportWithSession);
+    PersonalRecordsChangeNotifier.notifier.removeListener(
+      _refreshWeeklyHealthReportAfterRecordWrite,
+    );
     super.dispose();
   }
 
   void _syncWeeklyHealthReportWithSession() {
     final token = AuthSession.accessToken?.trim() ?? '';
+    final cacheKey = _weeklyHealthReportCacheKey();
     if (_loadedHealthReportToken == token) {
+      unawaited(_loadCachedWeeklyHealthReport(cacheKey));
       return;
     }
 
+    unawaited(_loadCachedWeeklyHealthReport(cacheKey));
     _loadWeeklyHealthReport(token);
+  }
+
+  void _refreshWeeklyHealthReportAfterRecordWrite() {
+    final accessToken = AuthSession.accessToken?.trim() ?? '';
+    unawaited(_loadCachedWeeklyHealthReport(_weeklyHealthReportCacheKey()));
+    _loadWeeklyHealthReport(accessToken);
+  }
+
+  String _weeklyHealthReportCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    if (userId.isNotEmpty) {
+      return userId;
+    }
+    return 'anonymous';
+  }
+
+  Future<void> _loadCachedWeeklyHealthReport(String cacheKey) async {
+    final cachedReport = await _weeklyHealthReportRepository
+        .loadCachedWeeklyHealthReport(cacheKey: cacheKey);
+    if (!mounted || cachedReport == null) {
+      return;
+    }
+
+    setState(() {
+      _healthReportMetrics = _buildHealthReportMetrics(cachedReport);
+    });
   }
 
   Future<void> _loadWeeklyHealthReport(String accessToken) async {
@@ -168,6 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     try {
       final report = await _weeklyHealthReportRepository.loadWeeklyHealthReport(
         accessToken: accessToken,
+        cacheKey: _weeklyHealthReportCacheKey(),
       );
       _applyHealthReportIfCurrent(accessToken, report);
     } on PersonalRecordsApiException {
@@ -262,7 +299,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Navigator.of(context).pushNamed(AppRoutes.healthRecords);
         return;
       case 'Personal Records':
-        Navigator.of(context).pushNamed(AppRoutes.personalRecords);
+        unawaited(_openRouteAndRefreshOnReturn(AppRoutes.personalRecords));
         return;
       case 'Appointments':
         Navigator.of(context).pushNamed(AppRoutes.appointments);
@@ -271,6 +308,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Navigator.of(context).pushNamed(AppRoutes.medicationResupply);
         return;
     }
+  }
+
+  Future<void> _openRouteAndRefreshOnReturn(String routeName) async {
+    await Navigator.of(context).pushNamed(routeName);
+    if (!mounted) {
+      return;
+    }
+    _refreshWeeklyHealthReportAfterRecordWrite();
   }
 
   Widget _buildHomeTab(bool isTablet) {
@@ -393,7 +438,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         return;
                       }
 
-                      Navigator.of(context).pushNamed(routeName);
+                      unawaited(_openRouteAndRefreshOnReturn(routeName));
                     },
                   ),
                 ),

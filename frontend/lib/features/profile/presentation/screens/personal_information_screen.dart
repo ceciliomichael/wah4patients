@@ -36,6 +36,7 @@ class PersonalInformationScreen extends StatefulWidget {
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   bool _isSubmitting = false;
+  final GlobalKey _identifiersSectionKey = GlobalKey();
 
   void _goBack() {
     Navigator.of(context).pop();
@@ -148,16 +149,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    _SyncReadinessCard(readiness: readiness),
-                    const SizedBox(height: 20),
                     _SyncRecordsButton(
-                      onPressed: readiness.isReady ? _openSyncWizard : null,
+                      onPressed: () => _handleSyncRecordsPressed(readiness),
                     ),
                     const SizedBox(height: 20),
                     PatientProfileFormWidget(
                       initialProfile: AuthSession.profile,
                       isSubmitting: _isSubmitting,
                       isReadOnly: AuthSession.profile.isSyncLocked,
+                      identifiersSectionKey: _identifiersSectionKey,
                       onSave: _saveProfile,
                       onReset: () {},
                     ),
@@ -195,6 +195,29 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   Future<void> _openSyncWizard() async {
     await Navigator.of(context).pushNamed(AppRoutes.syncRecords);
+  }
+
+  Future<void> _handleSyncRecordsPressed(ProfileSyncReadiness readiness) async {
+    if (readiness.isReady) {
+      await _openSyncWizard();
+      return;
+    }
+
+    await _scrollToIdentifiersSection();
+  }
+
+  Future<void> _scrollToIdentifiersSection() async {
+    final sectionContext = _identifiersSectionKey.currentContext;
+    if (sectionContext == null) {
+      return;
+    }
+
+    await Scrollable.ensureVisible(
+      sectionContext,
+      alignment: 0.12,
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeInOut,
+    );
   }
 }
 
@@ -234,99 +257,6 @@ class _ProfileHeader extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SyncReadinessCard extends StatelessWidget {
-  const _SyncReadinessCard({required this.readiness});
-
-  final ProfileSyncReadiness readiness;
-
-  @override
-  Widget build(BuildContext context) {
-    final isReady = readiness.isReady;
-    final title = isReady ? 'Ready for sync records' : 'Sync records locked';
-    final description = readiness.isReady
-        ? 'Your identifier is ready. You can continue with sync records.'
-        : 'Add PhilHealth ID or PhilSys ID to unlock sync records.';
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.large,
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: AppRadii.medium,
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: Icon(
-                  isReady ? Icons.verified_outlined : Icons.info_outline,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.titleLarge.copyWith(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      description,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          if (readiness.missingRequirements.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: readiness.missingRequirements
-                  .map((requirement) => _RequirementChip(label: requirement))
-                  .toList(growable: false),
-            ),
-          ] else ...[
-            const SizedBox(height: 14),
-            Text(
-              'No additional fields are blocking sync records.',
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ],
-      ),
     );
   }
 }
@@ -400,31 +330,6 @@ class _ProfileSummaryRow extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _RequirementChip extends StatelessWidget {
-  const _RequirementChip({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.labelMedium.copyWith(
-          color: AppColors.textPrimary,
-          fontWeight: FontWeight.w600,
-        ),
       ),
     );
   }

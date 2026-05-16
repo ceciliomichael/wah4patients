@@ -14,6 +14,7 @@ class PatientProfileFormWidget extends StatefulWidget {
     required this.initialProfile,
     required this.isSubmitting,
     this.isReadOnly = false,
+    this.identifiersSectionKey,
     required this.onSave,
     required this.onReset,
   });
@@ -21,6 +22,7 @@ class PatientProfileFormWidget extends StatefulWidget {
   final UserProfileSummary initialProfile;
   final bool isSubmitting;
   final bool isReadOnly;
+  final GlobalKey? identifiersSectionKey;
   final Future<void> Function(PatientProfileDraft draft) onSave;
   final VoidCallback onReset;
 
@@ -647,6 +649,7 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
         ),
         const SizedBox(height: 20),
         _SectionHeader(
+          key: widget.identifiersSectionKey,
           title: 'Identifiers',
           description:
               'Required to save: add at least one identifier (PhilHealth ID or PhilSys ID).',
@@ -1258,7 +1261,11 @@ class _LockedField {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title, required this.description});
+  const _SectionHeader({
+    super.key,
+    required this.title,
+    required this.description,
+  });
 
   final String title;
   final String description;

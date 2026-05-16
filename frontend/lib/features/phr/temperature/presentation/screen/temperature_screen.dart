@@ -11,6 +11,7 @@ import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
+import '../../../data/personal_records_change_notifier.dart';
 
 enum TemperatureUnitSystem { celsius, fahrenheit }
 
@@ -189,6 +190,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
         _history.insert(0, entry);
         _temperatureController.clear();
       });
+      PersonalRecordsChangeNotifier.notifyRecordSaved();
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
         return;

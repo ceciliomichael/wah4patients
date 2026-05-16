@@ -11,6 +11,7 @@ import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
+import '../../../data/personal_records_change_notifier.dart';
 
 class BloodPressureScreen extends StatefulWidget {
   const BloodPressureScreen({super.key});
@@ -164,6 +165,7 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         _systolicController.clear();
         _diastolicController.clear();
       });
+      PersonalRecordsChangeNotifier.notifyRecordSaved();
 
       AppNotificationCenter.instance.showSuccess(
         'Blood pressure entry saved to the database.',

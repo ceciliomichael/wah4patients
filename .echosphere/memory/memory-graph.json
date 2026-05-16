@@ -15867,6 +15867,805 @@
       ],
       "createdAt": "2026-05-16T11:59:44.256Z",
       "updatedAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "memoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "rootMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "2416da44-d776-48db-a81e-bc777dc381ec",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17"
+      ],
+      "childMemoryIds": [
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512"
+      ],
+      "sectionKind": "fact",
+      "summary": "Improved frontend auth-session UX so access tokens refresh proactively before expiry and sessions are not dropped immediately on transient refresh failures. Also refreshed session state on app resume before MPIN/security checks, reducing surprise logouts while keeping auth boundaries intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit expiry helpers to the persisted session model so the auth layer can decide when to refresh before a token actually expires.",
+          "notes": "Added isExpiredAt and isExpiringSoon logic plus an expiresAt getter."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized proactive session refresh, retry scheduling, and timer cleanup so token lifecycle is handled in one place.",
+          "notes": "Refresh is now scheduled after restore/login and transient failures are retried instead of hard-clearing immediately."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume flow now refreshes the session before resolving MPIN/security state, reducing surprise expirations after backgrounding.",
+          "notes": "This keeps resume behavior aligned with the new auth-session lifecycle."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Added coverage for the new expiry and proactive-refresh window helpers to protect the auth-session timing logic.",
+          "notes": "Tests cover absolute expiry and the 5-minute refresh buffer."
+        }
+      ],
+      "createdAt": "2026-05-16T15:50:56.018Z",
+      "updatedAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "memoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "rootMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "parentMemoryIds": [
+        "2d06cf81-07cf-4da0-8d95-3929d623c764"
+      ],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "2416da44-d776-48db-a81e-bc777dc381ec",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17"
+      ],
+      "childMemoryIds": [
+        "fb7bd3ec-4219-453e-8dc6-bb41783182ff"
+      ],
+      "sectionKind": "decision",
+      "summary": "Improved frontend auth-session UX so access tokens refresh proactively before expiry and sessions are not dropped immediately on transient refresh failures. Also refreshed session state on app resume before MPIN/security checks, reducing surprise logouts while keeping auth boundaries intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit expiry helpers to the persisted session model so the auth layer can decide when to refresh before a token actually expires.",
+          "notes": "Added isExpiredAt and isExpiringSoon logic plus an expiresAt getter."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized proactive session refresh, retry scheduling, and timer cleanup so token lifecycle is handled in one place.",
+          "notes": "Refresh is now scheduled after restore/login and transient failures are retried instead of hard-clearing immediately."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume flow now refreshes the session before resolving MPIN/security state, reducing surprise expirations after backgrounding.",
+          "notes": "This keeps resume behavior aligned with the new auth-session lifecycle."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Added coverage for the new expiry and proactive-refresh window helpers to protect the auth-session timing logic.",
+          "notes": "Tests cover absolute expiry and the 5-minute refresh buffer."
+        }
+      ],
+      "createdAt": "2026-05-16T15:50:56.141Z",
+      "updatedAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "memoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "rootMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "parentMemoryIds": [
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512"
+      ],
+      "relatedMemoryIds": [
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "2416da44-d776-48db-a81e-bc777dc381ec",
+        "9213a924-35a1-46cd-85d2-7c4207be70ef",
+        "664404fd-d619-4161-a5a2-ad443aa3bc17"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Improved frontend auth-session UX so access tokens refresh proactively before expiry and sessions are not dropped immediately on transient refresh failures. Also refreshed session state on app resume before MPIN/security checks, reducing surprise logouts while keeping auth boundaries intact.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit expiry helpers to the persisted session model so the auth layer can decide when to refresh before a token actually expires.",
+          "notes": "Added isExpiredAt and isExpiringSoon logic plus an expiresAt getter."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized proactive session refresh, retry scheduling, and timer cleanup so token lifecycle is handled in one place.",
+          "notes": "Refresh is now scheduled after restore/login and transient failures are retried instead of hard-clearing immediately."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume flow now refreshes the session before resolving MPIN/security state, reducing surprise expirations after backgrounding.",
+          "notes": "This keeps resume behavior aligned with the new auth-session lifecycle."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Added coverage for the new expiry and proactive-refresh window helpers to protect the auth-session timing logic.",
+          "notes": "Tests cover absolute expiry and the 5-minute refresh buffer."
+        }
+      ],
+      "createdAt": "2026-05-16T15:50:56.259Z",
+      "updatedAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "memoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "rootMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "parentMemoryIds": [
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512"
+      ],
+      "relatedMemoryIds": [
+        "2d06cf81-07cf-4da0-8d95-3929d623c764",
+        "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "childMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted frontend auth UX so expired but refreshable sessions route into the MPIN unlock flow instead of logging the user out. Session refresh now distinguishes between transient refresh failures and hard refresh-token failures, preserving locked state for the former and forcing login only for invalid/expired refresh tokens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized refresh/session expiry detection and preserved expired-but-refreshable sessions so the app can route them into the MPIN lock flow.",
+          "notes": "Added savedAt tracking, isAccessTokenExpired, and refresh-failure handling that differentiates transient and hard failures."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Startup route selection now sends expired authenticated sessions to MPIN unlock instead of login when MPIN is available.",
+          "notes": "This is the main entrypoint change for the new lock-state UX."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume handling now checks for expired sessions and can push the MPIN unlock route directly.",
+          "notes": "This complements startup routing and keeps the UX consistent after backgrounding."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "The unlock screen now refreshes the session before MPIN verification, so an expired access token can be renewed as part of the unlock flow.",
+          "notes": "This keeps MPIN unlock functional after access-token expiry."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "The persisted session model already gained expiry helpers needed by the refresh/lock flow and continues to back the new logic.",
+          "notes": "Existing helper coverage remains in the auth local store test file."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for session expiry helpers remains relevant to the new lock-before-login behavior.",
+          "notes": "The test still validates expiry timing logic."
+        }
+      ],
+      "createdAt": "2026-05-16T16:00:45.074Z",
+      "updatedAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "memoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "rootMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "parentMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "relatedMemoryIds": [
+        "2d06cf81-07cf-4da0-8d95-3929d623c764",
+        "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "childMemoryIds": [
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted frontend auth UX so expired but refreshable sessions route into the MPIN unlock flow instead of logging the user out. Session refresh now distinguishes between transient refresh failures and hard refresh-token failures, preserving locked state for the former and forcing login only for invalid/expired refresh tokens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized refresh/session expiry detection and preserved expired-but-refreshable sessions so the app can route them into the MPIN lock flow.",
+          "notes": "Added savedAt tracking, isAccessTokenExpired, and refresh-failure handling that differentiates transient and hard failures."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Startup route selection now sends expired authenticated sessions to MPIN unlock instead of login when MPIN is available.",
+          "notes": "This is the main entrypoint change for the new lock-state UX."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume handling now checks for expired sessions and can push the MPIN unlock route directly.",
+          "notes": "This complements startup routing and keeps the UX consistent after backgrounding."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "The unlock screen now refreshes the session before MPIN verification, so an expired access token can be renewed as part of the unlock flow.",
+          "notes": "This keeps MPIN unlock functional after access-token expiry."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "The persisted session model already gained expiry helpers needed by the refresh/lock flow and continues to back the new logic.",
+          "notes": "Existing helper coverage remains in the auth local store test file."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for session expiry helpers remains relevant to the new lock-before-login behavior.",
+          "notes": "The test still validates expiry timing logic."
+        }
+      ],
+      "createdAt": "2026-05-16T16:00:45.190Z",
+      "updatedAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "memoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "rootMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "parentMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "relatedMemoryIds": [
+        "2d06cf81-07cf-4da0-8d95-3929d623c764",
+        "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted frontend auth UX so expired but refreshable sessions route into the MPIN unlock flow instead of logging the user out. Session refresh now distinguishes between transient refresh failures and hard refresh-token failures, preserving locked state for the former and forcing login only for invalid/expired refresh tokens.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Centralized refresh/session expiry detection and preserved expired-but-refreshable sessions so the app can route them into the MPIN lock flow.",
+          "notes": "Added savedAt tracking, isAccessTokenExpired, and refresh-failure handling that differentiates transient and hard failures."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Startup route selection now sends expired authenticated sessions to MPIN unlock instead of login when MPIN is available.",
+          "notes": "This is the main entrypoint change for the new lock-state UX."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "App resume handling now checks for expired sessions and can push the MPIN unlock route directly.",
+          "notes": "This complements startup routing and keeps the UX consistent after backgrounding."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "The unlock screen now refreshes the session before MPIN verification, so an expired access token can be renewed as part of the unlock flow.",
+          "notes": "This keeps MPIN unlock functional after access-token expiry."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_local_store.dart",
+          "action": "modified",
+          "reason": "The persisted session model already gained expiry helpers needed by the refresh/lock flow and continues to back the new logic.",
+          "notes": "Existing helper coverage remains in the auth local store test file."
+        },
+        {
+          "path": "frontend/test/features/auth/data/auth_local_store_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for session expiry helpers remains relevant to the new lock-before-login behavior.",
+          "notes": "The test still validates expiry timing logic."
+        }
+      ],
+      "createdAt": "2026-05-16T16:00:45.317Z",
+      "updatedAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "memoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54"
+      ],
+      "relatedMemoryIds": [
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the readiness card from the personal information screen and changed the Sync Records button flow so it always remains clickable. When the profile already has an identifier, the button opens the sync wizard; otherwise it scrolls the user to the identifiers section in the profile form. Added an anchor key to the identifiers section so the screen can jump there cleanly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the readiness card and added the button click flow that opens sync or scrolls to identifiers depending on readiness.",
+          "notes": "Also added the scroll helper and imported the identifiers readiness type already in use."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added a section anchor so the screen can scroll directly to the identifiers section when sync is not ready.",
+          "notes": "The section header now accepts an optional key."
+        }
+      ],
+      "createdAt": "2026-05-16T16:24:14.374Z",
+      "updatedAt": "2026-05-16T16:24:14.374Z"
+    },
+    {
+      "memoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "12507a2a-ffb1-4d6f-99e7-a9db78b3f402"
+      ],
+      "relatedMemoryIds": [
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [
+        "9cbb6b43-15f9-4de9-a980-b77140a4b7b5"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the readiness card from the personal information screen and changed the Sync Records button flow so it always remains clickable. When the profile already has an identifier, the button opens the sync wizard; otherwise it scrolls the user to the identifiers section in the profile form. Added an anchor key to the identifiers section so the screen can jump there cleanly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the readiness card and added the button click flow that opens sync or scrolls to identifiers depending on readiness.",
+          "notes": "Also added the scroll helper and imported the identifiers readiness type already in use."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added a section anchor so the screen can scroll directly to the identifiers section when sync is not ready.",
+          "notes": "The section header now accepts an optional key."
+        }
+      ],
+      "createdAt": "2026-05-16T16:24:14.480Z",
+      "updatedAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "memoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "rootMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "parentMemoryIds": [
+        "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626"
+      ],
+      "relatedMemoryIds": [
+        "7566812a-d227-41f4-9531-511a90fa2449",
+        "6147a68c-affa-45bb-a292-02707b979d69",
+        "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+        "4af16003-487f-4180-a6eb-1885ca493f15"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the readiness card from the personal information screen and changed the Sync Records button flow so it always remains clickable. When the profile already has an identifier, the button opens the sync wizard; otherwise it scrolls the user to the identifiers section in the profile form. Added an anchor key to the identifiers section so the screen can jump there cleanly.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the readiness card and added the button click flow that opens sync or scrolls to identifiers depending on readiness.",
+          "notes": "Also added the scroll helper and imported the identifiers readiness type already in use."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/widgets/patient_profile_form_widget.dart",
+          "action": "modified",
+          "reason": "Added a section anchor so the screen can scroll directly to the identifiers section when sync is not ready.",
+          "notes": "The section header now accepts an optional key."
+        }
+      ],
+      "createdAt": "2026-05-16T16:24:14.582Z",
+      "updatedAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "memoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138"
+      ],
+      "relatedMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented live dashboard weekly-health refresh after successful personal record writes for BMI, blood pressure, and temperature. Added a shared personal-records change notifier and wired dashboard to refetch weekly health report whenever a record is saved, without requiring manual screen refresh.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_change_notifier.dart",
+          "action": "created",
+          "reason": "Introduces shared event notifier for personal record save events needed to trigger dashboard live refresh.",
+          "notes": "Contains ValueNotifier<int> and notifyRecordSaved()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now listens to record-save events and refetches weekly report instantly when personal records are added.",
+          "notes": "Added import, listener registration/removal, and _refreshWeeklyHealthReportAfterRecordWrite()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "BMI save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Blood pressure save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Temperature save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        }
+      ],
+      "createdAt": "2026-05-16T16:44:39.507Z",
+      "updatedAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "memoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7"
+      ],
+      "relatedMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented live dashboard weekly-health refresh after successful personal record writes for BMI, blood pressure, and temperature. Added a shared personal-records change notifier and wired dashboard to refetch weekly health report whenever a record is saved, without requiring manual screen refresh.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_change_notifier.dart",
+          "action": "created",
+          "reason": "Introduces shared event notifier for personal record save events needed to trigger dashboard live refresh.",
+          "notes": "Contains ValueNotifier<int> and notifyRecordSaved()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now listens to record-save events and refetches weekly report instantly when personal records are added.",
+          "notes": "Added import, listener registration/removal, and _refreshWeeklyHealthReportAfterRecordWrite()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "BMI save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Blood pressure save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Temperature save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        }
+      ],
+      "createdAt": "2026-05-16T16:44:39.646Z",
+      "updatedAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "memoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "rootMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "parentMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6"
+      ],
+      "relatedMemoryIds": [
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+        "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+        "199844f8-7bab-4545-bb0e-b8765822433b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented live dashboard weekly-health refresh after successful personal record writes for BMI, blood pressure, and temperature. Added a shared personal-records change notifier and wired dashboard to refetch weekly health report whenever a record is saved, without requiring manual screen refresh.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_change_notifier.dart",
+          "action": "created",
+          "reason": "Introduces shared event notifier for personal record save events needed to trigger dashboard live refresh.",
+          "notes": "Contains ValueNotifier<int> and notifyRecordSaved()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now listens to record-save events and refetches weekly report instantly when personal records are added.",
+          "notes": "Added import, listener registration/removal, and _refreshWeeklyHealthReportAfterRecordWrite()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "BMI save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Blood pressure save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Temperature save flow now emits shared record-saved event after successful create operation.",
+          "notes": "Added notifier import and notifyRecordSaved() call."
+        }
+      ],
+      "createdAt": "2026-05-16T16:44:39.772Z",
+      "updatedAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "memoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "rootMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "parentMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6"
+      ],
+      "relatedMemoryIds": [
+        "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "e6644898-bfb4-4b44-a108-c3e72b23baa1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Patched dashboard navigation flow to guarantee weekly health report refresh when returning from personal record routes, fixing stale blood pressure display after save-and-back behavior.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Added route-return refresh helper and updated navigation taps so weekly health report reloads when users come back from personal-record entry flows.",
+          "notes": "Fix targets stale blood pressure/BMI/temperature weekly report values after save and back navigation."
+        }
+      ],
+      "createdAt": "2026-05-16T16:47:30.174Z",
+      "updatedAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "memoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "rootMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "parentMemoryIds": [
+        "4f9a1920-a208-41df-adbb-d31fb614e594"
+      ],
+      "relatedMemoryIds": [
+        "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [
+        "b69ebf66-cdea-4791-91d1-72b487e2f53e"
+      ],
+      "sectionKind": "decision",
+      "summary": "Patched dashboard navigation flow to guarantee weekly health report refresh when returning from personal record routes, fixing stale blood pressure display after save-and-back behavior.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Added route-return refresh helper and updated navigation taps so weekly health report reloads when users come back from personal-record entry flows.",
+          "notes": "Fix targets stale blood pressure/BMI/temperature weekly report values after save and back navigation."
+        }
+      ],
+      "createdAt": "2026-05-16T16:47:30.264Z",
+      "updatedAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "memoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "rootMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "parentMemoryIds": [
+        "e6644898-bfb4-4b44-a108-c3e72b23baa1"
+      ],
+      "relatedMemoryIds": [
+        "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Patched dashboard navigation flow to guarantee weekly health report refresh when returning from personal record routes, fixing stale blood pressure display after save-and-back behavior.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Added route-return refresh helper and updated navigation taps so weekly health report reloads when users come back from personal-record entry flows.",
+          "notes": "Fix targets stale blood pressure/BMI/temperature weekly report values after save and back navigation."
+        }
+      ],
+      "createdAt": "2026-05-16T16:47:30.350Z",
+      "updatedAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "memoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "rootMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "parentMemoryIds": [
+        "b69ebf66-cdea-4791-91d1-72b487e2f53e"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "childMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented local caching for dashboard Weekly Health Report with stale-while-revalidate behavior. Dashboard now reads cached BMI/BP/temperature summaries instantly per user and then refreshes from backend, updating both UI and cache.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "created",
+          "reason": "Introduces local cache read/write layer for weekly health report metric summaries.",
+          "notes": "Uses keyed JSON payloads in FlutterSecureStorage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_repository.dart",
+          "action": "modified",
+          "reason": "Repository now supports cached report reads and writes fresh backend-calculated report into cache.",
+          "notes": "Added loadCachedWeeklyHealthReport and cacheKey requirement in loadWeeklyHealthReport."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now hydrates weekly report from cache instantly and revalidates with backend data.",
+          "notes": "Added cache key builder and cached-load method in sync and refresh flows."
+        }
+      ],
+      "createdAt": "2026-05-16T16:58:32.367Z",
+      "updatedAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "memoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "rootMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "parentMemoryIds": [
+        "59f5b01f-5618-4f90-91e1-97ce3089c824"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "childMemoryIds": [
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented local caching for dashboard Weekly Health Report with stale-while-revalidate behavior. Dashboard now reads cached BMI/BP/temperature summaries instantly per user and then refreshes from backend, updating both UI and cache.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "created",
+          "reason": "Introduces local cache read/write layer for weekly health report metric summaries.",
+          "notes": "Uses keyed JSON payloads in FlutterSecureStorage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_repository.dart",
+          "action": "modified",
+          "reason": "Repository now supports cached report reads and writes fresh backend-calculated report into cache.",
+          "notes": "Added loadCachedWeeklyHealthReport and cacheKey requirement in loadWeeklyHealthReport."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now hydrates weekly report from cache instantly and revalidates with backend data.",
+          "notes": "Added cache key builder and cached-load method in sync and refresh flows."
+        }
+      ],
+      "createdAt": "2026-05-16T16:58:32.482Z",
+      "updatedAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "memoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "rootMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "parentMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f"
+      ],
+      "relatedMemoryIds": [
+        "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+        "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+        "199844f8-7bab-4545-bb0e-b8765822433b",
+        "8fbeacde-8847-4f15-a7a8-7ddcd778f57d"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented local caching for dashboard Weekly Health Report with stale-while-revalidate behavior. Dashboard now reads cached BMI/BP/temperature summaries instantly per user and then refreshes from backend, updating both UI and cache.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "created",
+          "reason": "Introduces local cache read/write layer for weekly health report metric summaries.",
+          "notes": "Uses keyed JSON payloads in FlutterSecureStorage."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_repository.dart",
+          "action": "modified",
+          "reason": "Repository now supports cached report reads and writes fresh backend-calculated report into cache.",
+          "notes": "Added loadCachedWeeklyHealthReport and cacheKey requirement in loadWeeklyHealthReport."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\presentation\\screens\\dashboard_screen.dart",
+          "action": "modified",
+          "reason": "Dashboard now hydrates weekly report from cache instantly and revalidates with backend data.",
+          "notes": "Added cache key builder and cached-load method in sync and refresh flows."
+        }
+      ],
+      "createdAt": "2026-05-16T16:58:32.592Z",
+      "updatedAt": "2026-05-16T16:58:32.592Z"
     }
   ],
   "edges": [
@@ -26131,7 +26930,735 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-16T11:59:44.256Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.018Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "toMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.141Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "2416da44-d776-48db-a81e-bc777dc381ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "9213a924-35a1-46cd-85d2-7c4207be70ef",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T15:50:56.259Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.074Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.190Z"
+    },
+    {
+      "fromMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "fromMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "toMemoryId": "2d06cf81-07cf-4da0-8d95-3929d623c764",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "fromMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "toMemoryId": "fb7bd3ec-4219-453e-8dc6-bb41783182ff",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "fromMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "fromMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:00:45.317Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "8fc8b32e-1e14-4fb9-ad27-b8c04b5dea54",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "toMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.375Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "12507a2a-ffb1-4d6f-99e7-a9db78b3f402",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "toMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.480Z"
+    },
+    {
+      "fromMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "toMemoryId": "8fc3a1b1-d4b8-4cd5-8f62-c647ced1b626",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "fromMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "toMemoryId": "7566812a-d227-41f4-9531-511a90fa2449",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "fromMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "toMemoryId": "6147a68c-affa-45bb-a292-02707b979d69",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "fromMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "toMemoryId": "2a6452c1-5ae9-421c-9d35-494ccd240c78",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "fromMemoryId": "9cbb6b43-15f9-4de9-a980-b77140a4b7b5",
+      "toMemoryId": "4af16003-487f-4180-a6eb-1885ca493f15",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:24:14.582Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.507Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.646Z"
+    },
+    {
+      "fromMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "fromMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "fromMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "toMemoryId": "829a6f20-ee5d-4262-83ce-424b77c34cb1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "fromMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "toMemoryId": "5733c6de-f0e9-431c-a53b-5c6fa2f721a6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "fromMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:44:39.772Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "toMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.174Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "4f9a1920-a208-41df-adbb-d31fb614e594",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "toMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.264Z"
+    },
+    {
+      "fromMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "toMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "fromMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "toMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "fromMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "fromMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "fromMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:47:30.350Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "b69ebf66-cdea-4791-91d1-72b487e2f53e",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.367Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.482Z"
+    },
+    {
+      "fromMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "fromMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "toMemoryId": "b69be73e-e2ea-477b-b24c-86f0bedf3138",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "fromMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "toMemoryId": "c63c0505-dc64-4fc9-9d19-8a4119746a37",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "fromMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "toMemoryId": "199844f8-7bab-4545-bb0e-b8765822433b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "fromMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "toMemoryId": "8fbeacde-8847-4f15-a7a8-7ddcd778f57d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T16:58:32.592Z"
     }
   ],
-  "updatedAt": "2026-05-16T11:59:44.262Z"
+  "updatedAt": "2026-05-16T16:58:32.597Z"
 }

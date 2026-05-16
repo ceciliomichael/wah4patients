@@ -132,13 +132,36 @@ class AuthSessionData {
   final UserProfileSummary profile;
   final DateTime savedAt;
 
+  DateTime get expiresAt => savedAt.add(Duration(seconds: expiresIn));
+
   bool get isExpired {
+    return isExpiredAt();
+  }
+
+  bool isExpiredAt([DateTime? now]) {
     if (expiresIn <= 0) {
       return true;
     }
 
-    final expiresAt = savedAt.add(Duration(seconds: expiresIn));
-    return DateTime.now().toUtc().isAfter(expiresAt);
+    final currentTime = (now ?? DateTime.now()).toUtc();
+    return !currentTime.isBefore(expiresAt);
+  }
+
+  bool isExpiringSoon({
+    Duration buffer = const Duration(minutes: 5),
+    DateTime? now,
+  }) {
+    if (expiresIn <= 0) {
+      return true;
+    }
+
+    if (buffer <= Duration.zero) {
+      return isExpiredAt(now);
+    }
+
+    final currentTime = (now ?? DateTime.now()).toUtc();
+    final refreshDeadline = expiresAt.subtract(buffer);
+    return !currentTime.isBefore(refreshDeadline);
   }
 
   AuthSessionData copyWith({

@@ -58,6 +58,32 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       return;
     }
 
+    final hasFreshSession = await AuthSession.refreshIfNeeded();
+    if (!hasFreshSession || !AuthSession.isAuthenticated) {
+      return;
+    }
+
+    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+    if (AuthSession.isAccessTokenExpired) {
+      if (!isMpinEnabled ||
+          _routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {
+        return;
+      }
+
+      final navigator = _navigatorKey.currentState;
+      if (navigator == null || !mounted) {
+        return;
+      }
+
+      _isLockRouteVisible = true;
+      try {
+        await navigator.pushNamed(AppRoutes.mpinUnlock);
+      } finally {
+        _isLockRouteVisible = false;
+      }
+      return;
+    }
+
     try {
       final deviceId = await MpinLocalStore.readOrCreateDeviceId();
       final accessToken = AuthSession.accessToken?.trim() ?? '';
@@ -79,7 +105,6 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       // Keep the local device state as the fallback when security status cannot be resolved.
     }
 
-    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
     if (!isMpinEnabled ||
         !AppLockStateService.shouldRequireUnlockOnResume() ||
         _routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {

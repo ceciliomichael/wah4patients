@@ -9,6 +9,9 @@ import 'models/auth_api_models.dart';
 class AuthSession {
   AuthSession._();
 
+  static const Duration _refreshBuffer = Duration(minutes: 5);
+  static const Duration _transientRefreshRetryDelay = Duration(minutes: 1);
+
   static final ValueNotifier<int> notifier = ValueNotifier<int>(0);
 
   static String? _accessToken;
@@ -17,7 +20,9 @@ class AuthSession {
   static String? _tokenType;
   static String? _userId;
   static String? _userEmail;
+  static DateTime? _savedAt;
   static UserProfileSummary _profile = UserProfileSummary.empty();
+  static Timer? _refreshTimer;
 
   static String? get accessToken => _accessToken;
   static String? get refreshToken => _refreshToken;
@@ -39,23 +44,26 @@ class AuthSession {
   static bool get isAuthenticated =>
       (_accessToken?.trim().isNotEmpty ?? false) &&
       (_userId?.trim().isNotEmpty ?? false);
+  static bool get isAccessTokenExpired {
+    final savedAt = _savedAt;
+    final expiresIn = _expiresIn;
+    if (savedAt == null || expiresIn == null || expiresIn <= 0) {
+      return true;
+    }
+
+    final expiresAt = savedAt.add(Duration(seconds: expiresIn));
+    return !DateTime.now().toUtc().isBefore(expiresAt);
+  }
 
   static Future<void> restoreFromStorage() async {
     final storedSession = await AuthLocalStore.readSession();
-    if (storedSession == null || storedSession.isExpired) {
+    if (storedSession == null) {
       await AuthLocalStore.clearSession();
       clear();
       return;
     }
 
-    _accessToken = storedSession.accessToken.trim();
-    _refreshToken = storedSession.refreshToken.trim();
-    _expiresIn = storedSession.expiresIn;
-    _tokenType = storedSession.tokenType.trim();
-    _userId = storedSession.userId.trim();
-    _userEmail = storedSession.userEmail.trim();
-    _profile = storedSession.profile;
-    _notifyChanged();
+    _setFromStoredSession(storedSession);
   }
 
   static Future<bool> refreshIfNeeded() async {
@@ -65,8 +73,8 @@ class AuthSession {
       return false;
     }
 
-    if (!storedSession.isExpired) {
-      await restoreFromStorage();
+    if (!storedSession.isExpiringSoon(buffer: _refreshBuffer)) {
+      _setFromStoredSession(storedSession);
       return true;
     }
 
@@ -82,17 +90,26 @@ class AuthSession {
         refreshToken: refreshToken,
       );
       await AuthLocalStore.saveSession(refreshed);
-      setFromLoginResult(refreshed);
+      _setFromLoginResult(refreshed);
       return true;
-    } on AuthApiException {
-      await AuthLocalStore.clearSession();
-      clear();
-      return false;
+    } on AuthApiException catch (error) {
+      final statusCode = error.statusCode;
+      final shouldSignOut =
+          statusCode == 400 || statusCode == 401 || statusCode == 403;
+      if (shouldSignOut) {
+        await AuthLocalStore.clearSession();
+        clear();
+        return false;
+      }
+
+      _setFromStoredSession(storedSession);
+      _scheduleRefreshRetry();
+      return true;
     }
   }
 
   static Future<void> persist(LoginResult result) async {
-    setFromLoginResult(result);
+    _setFromLoginResult(result);
     await AuthLocalStore.saveSession(result);
   }
 
@@ -101,14 +118,7 @@ class AuthSession {
   }
 
   static void setFromLoginResult(LoginResult result) {
-    _accessToken = result.accessToken.trim();
-    _refreshToken = result.refreshToken.trim();
-    _expiresIn = result.expiresIn;
-    _tokenType = result.tokenType.trim();
-    _userId = result.userId.trim();
-    _userEmail = result.userEmail.trim();
-    _profile = result.profile;
-    _notifyChanged();
+    _setFromLoginResult(result);
   }
 
   static void setProfile(UserProfileSummary profile) {
@@ -138,16 +148,45 @@ class AuthSession {
   }
 
   static void clear() {
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
     _accessToken = null;
     _refreshToken = null;
     _expiresIn = null;
     _tokenType = null;
     _userId = null;
     _userEmail = null;
+    _savedAt = null;
     _profile = UserProfileSummary.empty();
     _notifyChanged();
 
     unawaited(AuthLocalStore.clearSession());
+  }
+
+  static void _setFromStoredSession(AuthSessionData storedSession) {
+    _accessToken = storedSession.accessToken.trim();
+    _refreshToken = storedSession.refreshToken.trim();
+    _expiresIn = storedSession.expiresIn;
+    _tokenType = storedSession.tokenType.trim();
+    _userId = storedSession.userId.trim();
+    _userEmail = storedSession.userEmail.trim();
+    _savedAt = storedSession.savedAt.toUtc();
+    _profile = storedSession.profile;
+    _notifyChanged();
+    _scheduleRefreshTimer(storedSession);
+  }
+
+  static void _setFromLoginResult(LoginResult result) {
+    _accessToken = result.accessToken.trim();
+    _refreshToken = result.refreshToken.trim();
+    _expiresIn = result.expiresIn;
+    _tokenType = result.tokenType.trim();
+    _userId = result.userId.trim();
+    _userEmail = result.userEmail.trim();
+    _savedAt = DateTime.now().toUtc();
+    _profile = result.profile;
+    _notifyChanged();
+    _scheduleRefreshTimer(_loginResultToSession(result));
   }
 
   static String _composeGreetingName(
@@ -196,5 +235,61 @@ class AuthSession {
 
   static void _notifyChanged() {
     notifier.value++;
+  }
+
+  static AuthSessionData _loginResultToSession(LoginResult result) {
+    return AuthSessionData(
+      accessToken: result.accessToken.trim(),
+      refreshToken: result.refreshToken.trim(),
+      expiresIn: result.expiresIn,
+      tokenType: result.tokenType.trim(),
+      userId: result.userId.trim(),
+      userEmail: result.userEmail.trim(),
+      profile: result.profile,
+      savedAt: DateTime.now().toUtc(),
+    );
+  }
+
+  static void _scheduleRefreshTimer(AuthSessionData session) {
+    _refreshTimer?.cancel();
+
+    final delay = _timeUntilRefresh(session);
+    if (delay == null) {
+      return;
+    }
+
+    _refreshTimer = Timer(delay, () {
+      unawaited(_refreshSilently());
+    });
+  }
+
+  static Duration? _timeUntilRefresh(AuthSessionData session) {
+    if (session.expiresIn <= 0) {
+      return Duration.zero;
+    }
+
+    final refreshAt = session.expiresAt.subtract(_refreshBuffer);
+    final now = DateTime.now().toUtc();
+    if (!refreshAt.isAfter(now)) {
+      return Duration.zero;
+    }
+
+    return refreshAt.difference(now);
+  }
+
+  static void _scheduleRefreshRetry() {
+    _refreshTimer?.cancel();
+    _refreshTimer = Timer(_transientRefreshRetryDelay, () {
+      unawaited(_refreshSilently());
+    });
+  }
+
+  static Future<void> _refreshSilently() async {
+    try {
+      await refreshIfNeeded();
+    } catch (_) {
+      // Keep the existing session state so the app can retry on the next
+      // foreground/resume cycle instead of forcing a hard logout.
+    }
   }
 }

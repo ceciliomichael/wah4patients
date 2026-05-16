@@ -1,14 +1,26 @@
 import '../../phr/data/personal_records_api_client.dart';
+import 'weekly_health_report_local_store.dart';
 import '../domain/weekly_health_report_calculator.dart';
 
 class WeeklyHealthReportRepository {
-  WeeklyHealthReportRepository({PersonalRecordsApiClient? apiClient})
-    : _apiClient = apiClient ?? PersonalRecordsApiClient.instance;
+  WeeklyHealthReportRepository({
+    PersonalRecordsApiClient? apiClient,
+    WeeklyHealthReportLocalStore? localStore,
+  }) : _apiClient = apiClient ?? PersonalRecordsApiClient.instance,
+       _localStore = localStore ?? WeeklyHealthReportLocalStore();
 
   final PersonalRecordsApiClient _apiClient;
+  final WeeklyHealthReportLocalStore _localStore;
+
+  Future<WeeklyHealthReport?> loadCachedWeeklyHealthReport({
+    required String cacheKey,
+  }) {
+    return _localStore.read(cacheKey: cacheKey);
+  }
 
   Future<WeeklyHealthReport> loadWeeklyHealthReport({
     required String accessToken,
+    required String cacheKey,
     DateTime? now,
   }) async {
     final bmiResponse = await _apiClient.getBmiRecords(
@@ -21,7 +33,7 @@ class WeeklyHealthReportRepository {
       accessToken: accessToken,
     );
 
-    return calculateWeeklyHealthReport(
+    final report = calculateWeeklyHealthReport(
       bmiReadings: bmiResponse.records
           .map(
             (record) => WeeklyBmiReading(
@@ -49,5 +61,8 @@ class WeeklyHealthReportRepository {
           .toList(growable: false),
       now: now,
     );
+
+    await _localStore.write(cacheKey: cacheKey, report: report);
+    return report;
   }
 }

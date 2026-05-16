@@ -22,8 +22,17 @@ class AppStartupService {
   AppStartupService._();
 
   static Future<AppStartupResult> resolveInitialRoute() async {
-    final hasValidSession = await AuthSession.refreshIfNeeded();
-    if (hasValidSession && AuthSession.isAuthenticated) {
+    await AuthSession.refreshIfNeeded();
+    if (AuthSession.isAuthenticated) {
+      final isAccessTokenExpired = AuthSession.isAccessTokenExpired;
+      final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+
+      if (isAccessTokenExpired) {
+        return isMpinEnabled
+            ? AppStartupResult.mpinUnlock
+            : AppStartupResult.login;
+      }
+
       try {
         final deviceId = await MpinLocalStore.readOrCreateDeviceId();
         final accessToken = AuthSession.accessToken?.trim() ?? '';
@@ -46,8 +55,8 @@ class AppStartupService {
         // Keep the local device state as the fallback if security status cannot be resolved.
       }
 
-      final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
-      return isMpinEnabled
+      final refreshedMpinEnabled = await MpinLocalStore.isMpinEnabled();
+      return refreshedMpinEnabled
           ? AppStartupResult.mpinUnlock
           : AppStartupResult.dashboard;
     }
