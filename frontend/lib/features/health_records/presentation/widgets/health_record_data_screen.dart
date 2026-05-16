@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../auth/domain/auth_session.dart';
 import '../../data/health_records_api_client.dart';
+import '../../data/health_records_repository.dart';
 import '../mappers/health_record_entry_mapper.dart';
 import '../models/health_record_models.dart';
 import 'health_record_screen_template.dart';
@@ -23,6 +24,7 @@ class HealthRecordDataScreen extends StatefulWidget {
 }
 
 class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
+  final HealthRecordsRepository _repository = HealthRecordsRepository();
   late HealthRecordScreenContent _content;
   bool _isLoading = true;
   String? _loadErrorMessage;
@@ -35,8 +37,25 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
   }
 
   Future<void> _loadContent() async {
+    final cacheKey = _healthRecordsCacheKey();
+    final cachedRecords = await _repository.loadCachedRecords(
+      cacheKey: cacheKey,
+      section: widget.section,
+    );
+    if (mounted && cachedRecords != null) {
+      setState(() {
+        _content = _contentWithRecords(cachedRecords);
+        _isLoading = false;
+        _loadErrorMessage = null;
+      });
+    }
+
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
-      _isLoading = true;
+      _isLoading = cachedRecords == null;
       _loadErrorMessage = null;
     });
 
@@ -48,9 +67,10 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
         );
       }
 
-      final response = await HealthRecordsApiClient.instance.getRecords(
+      final records = await _repository.loadRecords(
         section: widget.section,
         accessToken: accessToken,
+        cacheKey: cacheKey,
       );
 
       if (!mounted) {
@@ -58,18 +78,7 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
       }
 
       setState(() {
-        _content = HealthRecordScreenContent(
-          title: widget.content.title,
-          searchHint: widget.content.searchHint,
-          filterOptions: widget.content.filterOptions,
-          helpTitle: widget.content.helpTitle,
-          helpMessages: widget.content.helpMessages,
-          emptyTitle: widget.content.emptyTitle,
-          emptyMessage: widget.content.emptyMessage,
-          entries: response.records
-              .map(mapHealthRecordResponseToEntry)
-              .toList(growable: false),
-        );
+        _content = _contentWithRecords(records);
         _isLoading = false;
       });
     } on HealthRecordsApiException catch (error) {
@@ -77,6 +86,29 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
     } catch (_) {
       _handleLoadFailure('Unable to load health records. Please try again.');
     }
+  }
+
+  String _healthRecordsCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    if (userId.isNotEmpty) {
+      return userId;
+    }
+    return 'anonymous';
+  }
+
+  HealthRecordScreenContent _contentWithRecords(
+    List<HealthRecordResponse> records,
+  ) {
+    return HealthRecordScreenContent(
+      title: widget.content.title,
+      searchHint: widget.content.searchHint,
+      filterOptions: widget.content.filterOptions,
+      helpTitle: widget.content.helpTitle,
+      helpMessages: widget.content.helpMessages,
+      emptyTitle: widget.content.emptyTitle,
+      emptyMessage: widget.content.emptyMessage,
+      entries: records.map(mapHealthRecordResponseToEntry).toList(growable: false),
+    );
   }
 
   void _retry() {

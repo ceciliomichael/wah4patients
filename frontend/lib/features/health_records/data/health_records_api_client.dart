@@ -35,6 +35,10 @@ class HealthRecordDetailResponse {
       value: _readString(json['value']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{'label': label, 'value': value};
+  }
 }
 
 class HealthRecordResponse {
@@ -101,6 +105,27 @@ class HealthRecordResponse {
       createdAt: _readDateTime(json['createdAt']),
       updatedAt: _readDateTime(json['updatedAt']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profileId': profileId,
+      'title': title,
+      'subtitle': subtitle,
+      'summaryLabel': summaryLabel,
+      'summaryValue': summaryValue,
+      'filterValue': filterValue,
+      'statusLabel': statusLabel,
+      'statusColorKey': statusColorKey,
+      'accentColorKey': accentColorKey,
+      'iconKey': iconKey,
+      'details': details.map((detail) => detail.toJson()).toList(growable: false),
+      'recordedAt': recordedAt.toUtc().toIso8601String(),
+      'displayOrder': displayOrder,
+      'createdAt': createdAt.toUtc().toIso8601String(),
+      'updatedAt': updatedAt.toUtc().toIso8601String(),
+    };
   }
 }
 
