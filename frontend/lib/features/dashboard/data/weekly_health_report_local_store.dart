@@ -51,6 +51,14 @@ class WeeklyHealthReportLocalStore {
     );
   }
 
+  Future<void> clear({required String cacheKey}) async {
+    final normalizedKey = cacheKey.trim();
+    if (normalizedKey.isEmpty) {
+      return;
+    }
+    await _storage.delete(key: _storageKeyFor(normalizedKey));
+  }
+
   String _storageKeyFor(String cacheKey) => '$_keyPrefix.$cacheKey';
 }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../app/app_local_cache_invalidator.dart';
 import '../data/auth_api_client.dart';
 import '../data/auth_local_store.dart';
 import 'models/auth_api_models.dart';
@@ -148,6 +149,7 @@ class AuthSession {
   }
 
   static void clear() {
+    final previousUserId = _userId?.trim() ?? '';
     _refreshTimer?.cancel();
     _refreshTimer = null;
     _accessToken = null;
@@ -161,9 +163,11 @@ class AuthSession {
     _notifyChanged();
 
     unawaited(AuthLocalStore.clearSession());
+    unawaited(_invalidateCachesForAccountTransition(previousUserId, ''));
   }
 
   static void _setFromStoredSession(AuthSessionData storedSession) {
+    final previousUserId = _userId?.trim() ?? '';
     _accessToken = storedSession.accessToken.trim();
     _refreshToken = storedSession.refreshToken.trim();
     _expiresIn = storedSession.expiresIn;
@@ -172,11 +176,14 @@ class AuthSession {
     _userEmail = storedSession.userEmail.trim();
     _savedAt = storedSession.savedAt.toUtc();
     _profile = storedSession.profile;
+    final nextUserId = _userId?.trim() ?? '';
+    unawaited(_invalidateCachesForAccountTransition(previousUserId, nextUserId));
     _notifyChanged();
     _scheduleRefreshTimer(storedSession);
   }
 
   static void _setFromLoginResult(LoginResult result) {
+    final previousUserId = _userId?.trim() ?? '';
     _accessToken = result.accessToken.trim();
     _refreshToken = result.refreshToken.trim();
     _expiresIn = result.expiresIn;
@@ -185,8 +192,23 @@ class AuthSession {
     _userEmail = result.userEmail.trim();
     _savedAt = DateTime.now().toUtc();
     _profile = result.profile;
+    final nextUserId = _userId?.trim() ?? '';
+    unawaited(_invalidateCachesForAccountTransition(previousUserId, nextUserId));
     _notifyChanged();
     _scheduleRefreshTimer(_loginResultToSession(result));
+  }
+
+  static Future<void> _invalidateCachesForAccountTransition(
+    String previousUserId,
+    String nextUserId,
+  ) async {
+    if (previousUserId.isNotEmpty && previousUserId != nextUserId) {
+      await AppLocalCacheInvalidator.clearUserScopedCaches(previousUserId);
+    }
+
+    if (nextUserId.isNotEmpty) {
+      await AppLocalCacheInvalidator.clearUserScopedCaches(nextUserId);
+    }
   }
 
   static String _composeGreetingName(

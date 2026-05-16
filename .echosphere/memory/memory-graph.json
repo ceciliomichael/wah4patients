@@ -16666,6 +16666,326 @@
       ],
       "createdAt": "2026-05-16T16:58:32.592Z",
       "updatedAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "memoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "8d35f088-0173-4db1-8761-0278321622c7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added reusable technical documentation for the local cache architecture (cache-first stale-while-revalidate) in docs/, including definitions, flow, responsibilities, implementation blueprint, invalidation, error handling, and where it is implemented in this repository.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "created",
+          "reason": "New canonical technical documentation for reusable local caching implementation patterns used by this project.",
+          "notes": "Covers definition, architecture, flow, invalidation, security, and practical checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:20:35.876Z",
+      "updatedAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "memoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [
+        "511a2c8c-29e6-46af-b4bf-f007439b4200"
+      ],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [
+        "be2a867b-3612-47c1-b3ac-e36bdc42cc7b"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added reusable technical documentation for the local cache architecture (cache-first stale-while-revalidate) in docs/, including definitions, flow, responsibilities, implementation blueprint, invalidation, error handling, and where it is implemented in this repository.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "created",
+          "reason": "New canonical technical documentation for reusable local caching implementation patterns used by this project.",
+          "notes": "Covers definition, architecture, flow, invalidation, security, and practical checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:20:35.965Z",
+      "updatedAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "memoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [
+        "8d35f088-0173-4db1-8761-0278321622c7"
+      ],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "17499495-2583-445a-817f-32239deb57ec",
+        "376747c3-cccf-427f-b234-119486b3f878"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added reusable technical documentation for the local cache architecture (cache-first stale-while-revalidate) in docs/, including definitions, flow, responsibilities, implementation blueprint, invalidation, error handling, and where it is implemented in this repository.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "created",
+          "reason": "New canonical technical documentation for reusable local caching implementation patterns used by this project.",
+          "notes": "Covers definition, architecture, flow, invalidation, security, and practical checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:20:36.053Z",
+      "updatedAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "memoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [
+        "511a2c8c-29e6-46af-b4bf-f007439b4200"
+      ],
+      "relatedMemoryIds": [
+        "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+        "8d35f088-0173-4db1-8761-0278321622c7",
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824"
+      ],
+      "childMemoryIds": [
+        "a6faaf8b-c5ec-4cdf-881e-64d560806a94"
+      ],
+      "sectionKind": "fact",
+      "summary": "Simplified the local cache documentation language and retained a clear technical flow diagram so non-technical readers can understand the concept while engineers still see the backend/cache/UI sequence.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "modified",
+          "reason": "Updated documentation tone and structure to be simple and practical while retaining technical flow clarity.",
+          "notes": "Replaced long technical sections with concise explanations, flow, and checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:28:13.837Z",
+      "updatedAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "memoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [
+        "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d"
+      ],
+      "relatedMemoryIds": [
+        "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+        "8d35f088-0173-4db1-8761-0278321622c7",
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824"
+      ],
+      "childMemoryIds": [
+        "5592c136-f9e7-46c9-923c-5cb2b7fb25f7"
+      ],
+      "sectionKind": "decision",
+      "summary": "Simplified the local cache documentation language and retained a clear technical flow diagram so non-technical readers can understand the concept while engineers still see the backend/cache/UI sequence.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "modified",
+          "reason": "Updated documentation tone and structure to be simple and practical while retaining technical flow clarity.",
+          "notes": "Replaced long technical sections with concise explanations, flow, and checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:28:13.926Z",
+      "updatedAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "memoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "rootMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "parentMemoryIds": [
+        "a6faaf8b-c5ec-4cdf-881e-64d560806a94"
+      ],
+      "relatedMemoryIds": [
+        "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+        "8d35f088-0173-4db1-8761-0278321622c7",
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Simplified the local cache documentation language and retained a clear technical flow diagram so non-technical readers can understand the concept while engineers still see the backend/cache/UI sequence.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\docs\\local-cache-pattern.md",
+          "action": "modified",
+          "reason": "Updated documentation tone and structure to be simple and practical while retaining technical flow clarity.",
+          "notes": "Replaced long technical sections with concise explanations, flow, and checklist."
+        }
+      ],
+      "createdAt": "2026-05-16T18:28:14.015Z",
+      "updatedAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "memoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "rootMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "511a2c8c-29e6-46af-b4bf-f007439b4200",
+        "e6644898-bfb4-4b44-a108-c3e72b23baa1"
+      ],
+      "childMemoryIds": [
+        "15ee33b1-5e41-466c-bfda-713f2f65d107"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented account-switch cache invalidation to prevent cross-user stale health data in local cache. Auth session transitions now clear user-scoped dashboard and health-record caches when user changes or signs out.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "created",
+          "reason": "Central cache invalidation helper for user-scoped feature caches.",
+          "notes": "Clears dashboard weekly-health and all health-record sections for a cache key."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit cache deletion method for user-scoped weekly-health entries.",
+          "notes": "New clear(cacheKey) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit section cache deletion support for user-scoped health-record caches.",
+          "notes": "New clearSection(cacheKey, section) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Now triggers cache invalidation when user identity changes or session clears.",
+          "notes": "Handles previous/next user transition and sign-out invalidation asynchronously."
+        }
+      ],
+      "createdAt": "2026-05-16T18:43:50.261Z",
+      "updatedAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "memoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "rootMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "parentMemoryIds": [
+        "b956026a-1c08-4316-a012-b3d656b470a2"
+      ],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "511a2c8c-29e6-46af-b4bf-f007439b4200",
+        "e6644898-bfb4-4b44-a108-c3e72b23baa1"
+      ],
+      "childMemoryIds": [
+        "a265d276-0a47-4072-8e71-5c87a53728f4"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented account-switch cache invalidation to prevent cross-user stale health data in local cache. Auth session transitions now clear user-scoped dashboard and health-record caches when user changes or signs out.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "created",
+          "reason": "Central cache invalidation helper for user-scoped feature caches.",
+          "notes": "Clears dashboard weekly-health and all health-record sections for a cache key."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit cache deletion method for user-scoped weekly-health entries.",
+          "notes": "New clear(cacheKey) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit section cache deletion support for user-scoped health-record caches.",
+          "notes": "New clearSection(cacheKey, section) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Now triggers cache invalidation when user identity changes or session clears.",
+          "notes": "Handles previous/next user transition and sign-out invalidation asynchronously."
+        }
+      ],
+      "createdAt": "2026-05-16T18:43:50.377Z",
+      "updatedAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "memoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "rootMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "parentMemoryIds": [
+        "15ee33b1-5e41-466c-bfda-713f2f65d107"
+      ],
+      "relatedMemoryIds": [
+        "60cea514-47ee-4070-bd72-abeb54b5529f",
+        "59f5b01f-5618-4f90-91e1-97ce3089c824",
+        "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+        "511a2c8c-29e6-46af-b4bf-f007439b4200",
+        "e6644898-bfb4-4b44-a108-c3e72b23baa1"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented account-switch cache invalidation to prevent cross-user stale health data in local cache. Auth session transitions now clear user-scoped dashboard and health-record caches when user changes or signs out.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "created",
+          "reason": "Central cache invalidation helper for user-scoped feature caches.",
+          "notes": "Clears dashboard weekly-health and all health-record sections for a cache key."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\dashboard\\data\\weekly_health_report_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit cache deletion method for user-scoped weekly-health entries.",
+          "notes": "New clear(cacheKey) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_local_store.dart",
+          "action": "modified",
+          "reason": "Added explicit section cache deletion support for user-scoped health-record caches.",
+          "notes": "New clearSection(cacheKey, section) API."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Now triggers cache invalidation when user identity changes or session clears.",
+          "notes": "Handles previous/next user transition and sign-out invalidation asynchronously."
+        }
+      ],
+      "createdAt": "2026-05-16T18:43:50.487Z",
+      "updatedAt": "2026-05-16T18:43:50.487Z"
     }
   ],
   "edges": [
@@ -27658,7 +27978,392 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-16T16:58:32.592Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "toMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.876Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "toMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:35.965Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "17499495-2583-445a-817f-32239deb57ec",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:20:36.053Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "toMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.837Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "e239f5c4-7ba6-49dd-bfe6-7976fb15eb3d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "toMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:13.926Z"
+    },
+    {
+      "fromMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "toMemoryId": "a6faaf8b-c5ec-4cdf-881e-64d560806a94",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "fromMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "toMemoryId": "be2a867b-3612-47c1-b3ac-e36bdc42cc7b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "fromMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "toMemoryId": "8d35f088-0173-4db1-8761-0278321622c7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "fromMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "fromMemoryId": "5592c136-f9e7-46c9-923c-5cb2b7fb25f7",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:28:14.015Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "toMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.261Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "b956026a-1c08-4316-a012-b3d656b470a2",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "toMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.377Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "15ee33b1-5e41-466c-bfda-713f2f65d107",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "59f5b01f-5618-4f90-91e1-97ce3089c824",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "437f2304-b3e0-4735-bfa9-5433cb7c05f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "511a2c8c-29e6-46af-b4bf-f007439b4200",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
+    },
+    {
+      "fromMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "toMemoryId": "e6644898-bfb4-4b44-a108-c3e72b23baa1",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-16T18:43:50.487Z"
     }
   ],
-  "updatedAt": "2026-05-16T16:58:32.597Z"
+  "updatedAt": "2026-05-16T18:43:50.491Z"
 }

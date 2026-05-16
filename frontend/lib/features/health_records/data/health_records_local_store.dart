@@ -63,6 +63,17 @@ class HealthRecordsLocalStore {
     await _storage.write(key: key, value: jsonEncode(payload));
   }
 
+  Future<void> clearSection({
+    required String cacheKey,
+    required HealthRecordSection section,
+  }) async {
+    final key = _storageKey(cacheKey: cacheKey, section: section);
+    if (key == null) {
+      return;
+    }
+    await _storage.delete(key: key);
+  }
+
   String? _storageKey({
     required String cacheKey,
     required HealthRecordSection section,
