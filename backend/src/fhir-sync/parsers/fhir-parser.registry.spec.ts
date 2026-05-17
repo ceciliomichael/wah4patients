@@ -49,6 +49,27 @@ describe('FHIR inbound parsers', () => {
     }
   });
 
+  it('accepts gateway Condition payloads that declare the base FHIR Condition profile', () => {
+    const condition = readFixture('Condition-condition-single-example.json');
+    condition.meta = {
+      profile: ['http://hl7.org/fhir/StructureDefinition/Condition'],
+    };
+
+    const parsed = parseInboundResource(condition);
+    if (parsed.kind !== 'clinical') {
+      throw new Error('Expected clinical parser output.');
+    }
+
+    expect(parsed.resourceType).toBe('Condition');
+    expect(parsed.profile).toBe('http://hl7.org/fhir/StructureDefinition/Condition');
+    expect(parsed.insert).toEqual(
+      expect.objectContaining({
+        title: 'Type 2 Diabetes Mellitus',
+        recordedAt: '2020-03-15T10:30:00Z',
+      }),
+    );
+  });
+
   it('rejects resources that do not declare the required PH Core profile', () => {
     const patient = readFixture('Patient-patient-single-example.json');
     delete patient.meta;

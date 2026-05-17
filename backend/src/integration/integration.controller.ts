@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  BadRequestException,
   Get,
   HttpCode,
   HttpStatus,
@@ -35,9 +36,14 @@ export class IntegrationController {
   @HttpCode(HttpStatus.OK)
   @Throttle({ default: { ttl: 60_000, limit: 20 } })
   prepareSyncRequest(
+    @Headers('x-user-id') userId: string | undefined,
     @Body() dto: PrepareSyncRequestDto,
   ): Promise<PreparedSyncRequestResponse> {
-    return this.integrationService.prepareSyncRequest(dto);
+    if (typeof userId !== 'string' || userId.trim().length === 0) {
+      throw new BadRequestException('Missing authenticated account context.');
+    }
+
+    return this.integrationService.prepareSyncRequest(dto, userId);
   }
 
   @Post('sync/simulate')

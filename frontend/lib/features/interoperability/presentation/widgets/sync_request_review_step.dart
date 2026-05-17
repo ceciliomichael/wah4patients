@@ -58,7 +58,7 @@ class SyncRequestReviewStep extends StatelessWidget {
             border: Border.all(color: AppColors.border),
           ),
           child: Text(
-            'The backend will validate the selected provider and prepare the WAH4PC sync request draft. The Simulate request action posts checked-in PH Core sample resources into your current account for testing.',
+            'The backend will validate the selected provider and prepare the WAH4PC sync request draft for the patient record plus the related health-record resources. The Simulate request action posts checked-in PH Core sample resources into your current account for testing.',
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),

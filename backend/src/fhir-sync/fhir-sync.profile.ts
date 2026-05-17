@@ -12,6 +12,10 @@ const PH_CORE_PROFILE_SUFFIXES = {
 
 export type SupportedPhCoreProfileResourceType = keyof typeof PH_CORE_PROFILE_SUFFIXES;
 
+const COMPATIBLE_PROFILE_URLS: Partial<Record<SupportedPhCoreProfileResourceType, readonly string[]>> = {
+  Condition: ['http://hl7.org/fhir/StructureDefinition/Condition'],
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -32,11 +36,18 @@ export function requirePhCoreProfile(
   const profiles = readProfileList(resource);
   const matchedProfile = profiles.find((profile) => profile.endsWith(expectedSuffix));
 
-  if (matchedProfile === undefined) {
+  if (matchedProfile !== undefined) {
+    return matchedProfile;
+  }
+
+  const compatibleProfiles = COMPATIBLE_PROFILE_URLS[resourceType] ?? [];
+  const compatibleProfile = profiles.find((profile) => compatibleProfiles.includes(profile));
+
+  if (compatibleProfile === undefined) {
     throw new BadRequestException(
       `Expected PH Core profile ending with "${expectedSuffix}" for ${resourceType} payload.`,
     );
   }
 
-  return matchedProfile;
+  return compatibleProfile;
 }

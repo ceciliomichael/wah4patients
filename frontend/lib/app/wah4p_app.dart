@@ -32,12 +32,43 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _routeTrackerObserver = _RouteTrackerObserver();
+    AuthSession.notifier.addListener(_handleSessionStateChange);
   }
 
   @override
   void dispose() {
+    AuthSession.notifier.removeListener(_handleSessionStateChange);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void _handleSessionStateChange() {
+    _redirectToReauthenticationIfNeeded();
+  }
+
+  Future<void> _redirectToReauthenticationIfNeeded() async {
+    final currentRoute = _routeTrackerObserver.currentRoute;
+    if (currentRoute == AppRoutes.login || currentRoute == AppRoutes.mpinUnlock) {
+      return;
+    }
+
+    if (AuthSession.isAuthenticated && !AuthSession.isAccessTokenExpired) {
+      return;
+    }
+
+    final navigator = _navigatorKey.currentState;
+    if (navigator == null || !mounted) {
+      return;
+    }
+
+    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+    final targetRoute = isMpinEnabled ? AppRoutes.mpinUnlock : AppRoutes.login;
+
+    if (!mounted || _routeTrackerObserver.currentRoute == targetRoute) {
+      return;
+    }
+
+    navigator.pushNamedAndRemoveUntil(targetRoute, (route) => false);
   }
 
   @override
@@ -60,6 +91,7 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
 
     final hasFreshSession = await AuthSession.refreshIfNeeded();
     if (!hasFreshSession || !AuthSession.isAuthenticated) {
+      await _redirectToReauthenticationIfNeeded();
       return;
     }
 

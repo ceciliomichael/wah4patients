@@ -97,6 +97,53 @@ export class FhirSyncRepository {
     }
   }
 
+  async upsertSyncTransaction(input: {
+    transactionId: string;
+    profileId: string;
+    requesterId: string;
+    targetProviderId: string;
+    resourceType: GatewayResourceType;
+  }): Promise<void> {
+    const { error } = await this.supabaseService.adminClient
+      .from('fhir_sync_transactions')
+      .upsert(
+        {
+          transaction_id: input.transactionId,
+          profile_id: input.profileId,
+          requester_id: input.requesterId,
+          target_provider_id: input.targetProviderId,
+          resource_type: input.resourceType,
+        },
+        {
+          onConflict: 'transaction_id',
+        },
+      );
+
+    if (error !== null) {
+      throw new InternalServerErrorException('Unable to store sync transaction');
+    }
+  }
+
+  async findProfileIdByTransactionId(
+    transactionId: string,
+  ): Promise<string | null> {
+    const { data, error } = await this.supabaseService.adminClient
+      .from('fhir_sync_transactions')
+      .select('profile_id')
+      .eq('transaction_id', transactionId)
+      .maybeSingle();
+
+    if (error !== null) {
+      throw new InternalServerErrorException('Unable to resolve sync transaction');
+    }
+
+    if (data === null) {
+      return null;
+    }
+
+    return data.profile_id;
+  }
+
   async getProfile(profileId: string): Promise<ProfileRow | null> {
     const { data, error } = await this.supabaseService.adminClient
       .from('profiles')

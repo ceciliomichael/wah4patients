@@ -10,6 +10,6 @@ import { SupabaseModule } from '../supabase/supabase.module';
   imports: [ConfigModule, SupabaseModule],
   controllers: [GatewayWebhookController],
   providers: [GatewayAuthGuard, FhirSyncRepository, FhirSyncService],
-  exports: [FhirSyncService],
+  exports: [FhirSyncRepository, FhirSyncService],
 })
 export class FhirSyncModule {}

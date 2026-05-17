@@ -82,7 +82,11 @@ export class FhirSyncService {
     }
 
     const bundle = this.extractBundle(request.data);
-    return this.persistReceiveResultsBundle(bundle);
+    const profileId = await this.repository.findProfileIdByTransactionId(
+      request.transactionId,
+    );
+
+    return this.persistReceiveResultsBundle(bundle, profileId ?? undefined);
   }
 
   async receiveResultsForProfile(

@@ -12,6 +12,8 @@ import {
   PrepareSyncRequestPayload,
   PreparedSyncRequestResponse,
 } from './integration.types';
+import { GatewayResourceType } from '../fhir-sync/fhir-sync.types';
+import { FhirSyncRepository } from '../fhir-sync/fhir-sync.repository';
 
 const DEFAULT_RESOURCE_TYPE = 'Patient';
 const PHILHEALTH_IDENTIFIER_SYSTEM =
@@ -22,11 +24,23 @@ const PHILSYS_IDENTIFIER_SYSTEM =
 const PHILSYS_IDENTIFIER_SYSTEM_HTTPS =
   'https://philsys.gov.ph/fhir/Identifier/philsys-id';
 const GATEWAY_PROVIDER_LIST_PATH = '/providers';
-const GATEWAY_FHIR_REQUEST_PATIENT_PATH = '/fhir/request/Patient';
+const GATEWAY_FHIR_REQUEST_PATH_PREFIX = '/fhir/request/';
+const SYNC_RESOURCE_TYPES: readonly GatewayResourceType[] = [
+  'Patient',
+  'Condition',
+  'Procedure',
+  'Immunization',
+  'Encounter',
+  'Observation',
+  'MedicationRequest',
+] as const;
 
 @Injectable()
 export class IntegrationService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly fhirSyncRepository: FhirSyncRepository,
+  ) {}
 
   async getProviders(): Promise<InteroperabilityProvidersResponse> {
     const response = await this.fetchGatewayJson(GATEWAY_PROVIDER_LIST_PATH);
@@ -40,6 +54,7 @@ export class IntegrationService {
 
   async prepareSyncRequest(
     payload: PrepareSyncRequestPayload,
+    requesterProfileId?: string,
   ): Promise<PreparedSyncRequestResponse> {
     const providerId = payload.providerId.trim();
     if (!providerId) {
@@ -71,18 +86,25 @@ export class IntegrationService {
       );
     }
 
-    await this.requestPatientSyncFromGateway({
-      requesterId: this.getRequiredConfig('WAH4PC_PROVIDER_ID'),
+    const requesterId = this.getRequiredConfig('WAH4PC_PROVIDER_ID');
+    const normalizedRequesterProfileId = requesterProfileId?.trim() ?? '';
+
+    await this.requestSyncResourcesFromGateway({
+      requesterId,
       targetId: selectedProvider.id,
       identifierSystem: this.normalizeIdentifierSystem(identifierSystem),
       identifierValue,
       reason: payload.reason?.trim(),
       notes: payload.notes?.trim(),
+      requesterProfileId:
+        normalizedRequesterProfileId.length > 0
+          ? normalizedRequesterProfileId
+          : undefined,
     });
 
     return {
       canSubmit: true,
-      requesterId: this.getRequiredConfig('WAH4PC_PROVIDER_ID'),
+      requesterId,
       targetProvider: selectedProvider,
       patientIdentifiers: [
         {
@@ -170,18 +192,46 @@ export class IntegrationService {
     return decodedBody;
   }
 
-  private async requestPatientSyncFromGateway(input: {
+  private async requestSyncResourcesFromGateway(input: {
     requesterId: string;
+    requesterProfileId?: string;
     targetId: string;
     identifierSystem: string;
     identifierValue: string;
     reason?: string;
     notes?: string;
   }): Promise<void> {
+    for (const resourceType of SYNC_RESOURCE_TYPES) {
+      const transactionId = await this.requestResourceSyncFromGateway({
+        resourceType,
+        ...input,
+      });
+
+      if (input.requesterProfileId !== undefined) {
+        await this.fhirSyncRepository.upsertSyncTransaction({
+          transactionId,
+          profileId: input.requesterProfileId,
+          requesterId: input.requesterId,
+          targetProviderId: input.targetId,
+          resourceType,
+        });
+      }
+    }
+  }
+
+  private async requestResourceSyncFromGateway(input: {
+    resourceType: GatewayResourceType;
+    requesterId: string;
+    targetId: string;
+    identifierSystem: string;
+    identifierValue: string;
+    reason?: string;
+    notes?: string;
+  }): Promise<string> {
     const reason = input.reason?.trim();
     const notes = input.notes?.trim();
 
-    await this.postGatewayJson(GATEWAY_FHIR_REQUEST_PATIENT_PATH, {
+    const response = await this.postGatewayJson(`${GATEWAY_FHIR_REQUEST_PATH_PREFIX}${input.resourceType}`, {
       requesterId: input.requesterId,
       targetId: input.targetId,
       patientIdentifiers: [
@@ -193,6 +243,36 @@ export class IntegrationService {
       reason: reason && reason.length > 0 ? reason : 'Patient requested sync records',
       notes: notes && notes.length > 0 ? notes : null,
     });
+
+    return this.extractGatewayTransactionId(response, input.resourceType);
+  }
+
+  private extractGatewayTransactionId(
+    response: unknown,
+    resourceType: GatewayResourceType,
+  ): string {
+    if (!this.isRecord(response)) {
+      throw new BadGatewayException(
+        `WAH4PC Gateway request for ${resourceType} did not return a transaction response.`,
+      );
+    }
+
+    const data = response['data'];
+    if (this.isRecord(data)) {
+      const nestedId = data['id'];
+      if (typeof nestedId === 'string' && nestedId.trim().length > 0) {
+        return nestedId.trim();
+      }
+    }
+
+    const directId = response['transactionId'];
+    if (typeof directId === 'string' && directId.trim().length > 0) {
+      return directId.trim();
+    }
+
+    throw new BadGatewayException(
+      `WAH4PC Gateway request for ${resourceType} did not include a transaction id.`,
+    );
   }
 
   private async safeParseJson(response: Response): Promise<unknown> {

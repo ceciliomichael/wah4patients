@@ -586,9 +586,9 @@ export function buildInternalRecordInsert(
     case 'Observation':
       return mapObservationResource(resource);
     case 'Condition':
-      return mapConditionResource(resource, 'Condition');
+      return mapConditionResource(resource);
     case 'Procedure':
-      return mapConditionResource(resource, 'Procedure');
+      return mapProcedureResource(resource);
     default:
       return null;
   }
@@ -789,35 +789,89 @@ function mapObservationResource(resource: Record<string, unknown>): InternalReco
   };
 }
 
-function mapConditionResource(
-  resource: Record<string, unknown>,
-  resourceLabel: 'Condition' | 'Procedure',
-): InternalRecordInsert {
-  const title = readCodeableConceptText(
-    resourceLabel === 'Condition' ? resource['code'] : resource['code'],
-    resourceLabel,
-  );
-  const status = readString(resource['clinicalStatus'] ?? resource['status']) || 'active';
-  const recordedAt =
-    readPeriodStart(resource['onsetPeriod']) || readPeriodStart(resource['performedPeriod']) || new Date().toISOString();
+function mapConditionResource(resource: Record<string, unknown>): InternalRecordInsert {
+  const title = readCodeableConceptText(resource['code'], 'Condition');
+  const status = readCodeableConceptDisplay(resource['clinicalStatus']) || readString(resource['status']) || 'active';
+  const verificationStatus = readCodeableConceptDisplay(resource['verificationStatus']);
+  const diagnosedOnRaw =
+    readString(resource['recordedDate']) ||
+    readString(resource['onsetDateTime']) ||
+    readPeriodStart(resource['onsetPeriod']);
+  const resolvedOnRaw =
+    readString(resource['abatementDateTime']) ||
+    readPeriodStart(resource['abatementPeriod']);
+  const diagnosedOn = formatPatientDateTime(diagnosedOnRaw);
+  const resolvedOn = formatPatientDateTime(resolvedOnRaw);
+  const bodySite = readCodeableConceptDisplay(resource['bodySite']);
+  const severity = readCodeableConceptDisplay(resource['severity']);
+  const category = readCodeableConceptDisplay(resource['category']);
+  const provider = readReferenceDisplay(resource['asserter']);
   const notes = readNote(resource['note']);
-  const provider = readReferenceDisplay(resource['asserter'] ?? resource['performer']);
+  const recordedAt = diagnosedOnRaw || new Date().toISOString();
 
   return {
     title,
-    subtitle: [status, recordedAt, provider].filter(Boolean).join(' • '),
-    summaryLabel: resourceLabel,
+    subtitle: [status, diagnosedOn, provider].filter(Boolean).join(' • '),
+    summaryLabel: 'Condition',
     summaryValue: title,
-    filterValue: buildFilterValue(status, title, provider),
+    filterValue: buildFilterValue(status, verificationStatus, title, bodySite, provider),
     statusLabel: toTitleCase(status),
     statusColorKey: 'primary',
     accentColorKey: 'primary',
-    iconKey: resourceLabel === 'Condition' ? 'history' : 'assignment',
+    iconKey: 'history',
     detailsJson: [
-      detailJson('Provider', provider),
+      detailJson('Current status', status),
+      detailJson('Verification status', verificationStatus),
+      detailJson('Diagnosed on', diagnosedOn),
+      detailJson('Resolved on', resolvedOn),
+      detailJson('Category', category),
+      detailJson('Body site', bodySite),
+      detailJson('Severity', severity),
+      detailJson('Recorded by', provider),
       detailJson('Notes', notes),
     ].filter((detail): detail is Json => detail !== null) as Json,
     recordedAt,
+    displayOrder: 0,
+  };
+}
+
+function mapProcedureResource(resource: Record<string, unknown>): InternalRecordInsert {
+  const title = readCodeableConceptText(resource['code'], 'Procedure');
+  const status = readString(resource['status']) || 'completed';
+  const performedAt =
+    readPeriodDisplay(resource['performedPeriod']) ||
+    readString(resource['performedDateTime']) ||
+    readString(resource['performedString']) ||
+    readPeriodStart(resource['performedPeriod']) ||
+    new Date().toISOString();
+  const performer = readReferenceDisplay(resource['performer']);
+  const reason = readCodeableConceptText(resource['reasonCode'], 'Reason not provided');
+  const bodySite = readCodeableConceptDisplay(resource['bodySite']);
+  const outcome = readCodeableConceptDisplay(resource['outcome']);
+  const followUp = readCodeableConceptDisplay(resource['followUp']);
+  const notes = readNote(resource['note']);
+
+  return {
+    title,
+    subtitle: [status, performedAt, performer].filter(Boolean).join(' • '),
+    summaryLabel: 'Procedure',
+    summaryValue: title,
+    filterValue: buildFilterValue(status, title, performer, reason, bodySite, outcome),
+    statusLabel: toTitleCase(status),
+    statusColorKey: 'primary',
+    accentColorKey: 'primary',
+    iconKey: 'assignment',
+    detailsJson: [
+      detailJson('Current status', status),
+      detailJson('Performed on', performedAt),
+      detailJson('Performed by', performer),
+      detailJson('Reason', reason),
+      detailJson('Body site', bodySite),
+      detailJson('Outcome', outcome),
+      detailJson('Follow-up', followUp),
+      detailJson('Notes', notes),
+    ].filter((detail): detail is Json => detail !== null) as Json,
+    recordedAt: readPeriodStart(resource['performedPeriod']) || readString(resource['performedDateTime']) || new Date().toISOString(),
     displayOrder: 0,
   };
 }
@@ -867,12 +921,21 @@ function readReferenceDisplay(value: unknown): string {
   if (Array.isArray(value) && value.length > 0) {
     const first = value[0];
     if (isRecord(first)) {
+      const performerFunction = readCodeableConceptDisplay(first['function']);
       const actor = first['actor'];
       if (isRecord(actor)) {
-        return readString(actor['display']) || readString(actor['reference']);
+        return (
+          readString(actor['display']) ||
+          performerFunction ||
+          readString(actor['reference'])
+        );
       }
 
-      return readString(first['display']) || readString(first['reference']);
+      return (
+        readString(first['display']) ||
+        performerFunction ||
+        readString(first['reference'])
+      );
     }
   }
 
@@ -889,6 +952,35 @@ function readPeriodStart(value: unknown): string {
   }
 
   return readString(value['start']) || readString(value['date']) || '';
+}
+
+function readPeriodDisplay(value: unknown): string {
+  if (!isRecord(value)) {
+    return '';
+  }
+
+  const start = readString(value['start']);
+  const end = readString(value['end']);
+
+  if (start.length === 0 && end.length === 0) {
+    return '';
+  }
+
+  const startLabel = formatPatientDateTime(start);
+  if (end.length === 0) {
+    return startLabel;
+  }
+
+  const endLabel = formatPatientDateTime(end);
+  if (startLabel.length === 0) {
+    return endLabel;
+  }
+
+  if (startLabel === endLabel) {
+    return startLabel;
+  }
+
+  return `${startLabel} - ${endLabel}`;
 }
 
 function readCodeableConceptText(value: unknown, fallback: string): string {
@@ -1036,6 +1128,39 @@ function detailJson(label: string, value: string): Json | null {
     label: trimmedLabel,
     value: trimmedValue,
   };
+}
+
+function formatPatientDateTime(value: string): string {
+  const trimmedValue = value.trim();
+  if (trimmedValue.length === 0) {
+    return '';
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmedValue)) {
+    const [year, month, day] = trimmedValue.split('-').map((part) => Number.parseInt(part, 10));
+    const parsedDate = new Date(Date.UTC(year, month - 1, day));
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: '2-digit',
+        year: 'numeric',
+        timeZone: 'UTC',
+      }).format(parsedDate);
+    }
+  }
+
+  const parsedDateTime = new Date(trimmedValue);
+  if (Number.isNaN(parsedDateTime.getTime())) {
+    return trimmedValue;
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(parsedDateTime);
 }
 
 function buildFilterValue(...parts: string[]): string {

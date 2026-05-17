@@ -57,11 +57,12 @@ class _HealthRecordScreenTemplateState
 
   List<HealthRecordEntry> get _filteredEntries {
     final query = _searchController.text.trim().toLowerCase();
+    final selectedFilter = _normalizeFilterText(_selectedFilter);
 
     return widget.content.entries.where((entry) {
       final matchesFilter =
           _selectedFilter == widget.content.filterOptions.first ||
-          entry.filterValue == _selectedFilter;
+          _normalizeFilterText(entry.filterValue).contains(selectedFilter);
       final haystack = [
         entry.title,
         entry.subtitle,
@@ -337,5 +338,9 @@ class _HealthRecordScreenTemplateState
         ),
       ),
     );
+  }
+
+  String _normalizeFilterText(String value) {
+    return value.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '');
   }
 }

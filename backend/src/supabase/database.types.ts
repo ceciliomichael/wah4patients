@@ -326,6 +326,47 @@ export interface Database {
           },
         ];
       };
+      fhir_sync_transactions: {
+        Row: {
+          id: string;
+          transaction_id: string;
+          profile_id: string;
+          requester_id: string;
+          target_provider_id: string;
+          resource_type: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          transaction_id: string;
+          profile_id: string;
+          requester_id: string;
+          target_provider_id: string;
+          resource_type: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          transaction_id?: string;
+          profile_id?: string;
+          requester_id?: string;
+          target_provider_id?: string;
+          resource_type?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'fhir_sync_transactions_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       bmi_records: {
         Row: {
           id: string;

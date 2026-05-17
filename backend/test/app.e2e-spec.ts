@@ -5,6 +5,7 @@ import { App } from 'supertest/types';
 import { AuthSupportService } from '../src/auth/auth-support.service';
 import { AppModule } from '../src/app.module';
 import { FhirSyncService } from '../src/fhir-sync/fhir-sync.service';
+import { FhirSyncRepository } from '../src/fhir-sync/fhir-sync.repository';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
@@ -20,6 +21,9 @@ describe('AppController (e2e)', () => {
       email: 'patient@example.com',
     }),
   };
+  const fhirSyncRepositoryMock = {
+    upsertSyncTransaction: jest.fn().mockResolvedValue(undefined),
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,6 +31,8 @@ describe('AppController (e2e)', () => {
     })
       .overrideProvider(AuthSupportService)
       .useValue(authSupportServiceMock)
+      .overrideProvider(FhirSyncRepository)
+      .useValue(fhirSyncRepositoryMock)
       .overrideProvider(FhirSyncService)
       .useValue(fhirSyncServiceMock)
       .compile();
@@ -107,31 +113,53 @@ describe('AppController (e2e)', () => {
   });
 
   it('/api/v1/interoperability/sync/prepare (POST)', async () => {
-    jest.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(
-        JSON.stringify({
-          success: true,
-          data: [
-            {
-              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-              name: 'WAH for Clinics',
-              type: 'clinic',
-              facility_code: 'WAH4C',
-              location: 'Tarlac City',
-              isActive: true,
-            },
-          ],
-        }),
-        {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
+    const providerResponse = new Response(
+      JSON.stringify({
+        success: true,
+        data: [
+          {
+            id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+            name: 'WAH for Clinics',
+            type: 'clinic',
+            facility_code: 'WAH4C',
+            location: 'Tarlac City',
+            isActive: true,
+          },
+        ],
+      }),
+      {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      },
+    );
+    const requestResponse = new Response(
+      JSON.stringify({
+        success: true,
+        data: {
+          id: 'txn_sync_001',
+          status: 'PENDING',
         },
-      ) as Response,
+      }),
+      {
+        status: 202,
+        headers: { 'content-type': 'application/json' },
+      },
+    );
+    jest.spyOn(globalThis, 'fetch').mockImplementation(
+      async (input: RequestInfo | URL) => {
+        const requestUrl = input.toString();
+        if (requestUrl.endsWith('/providers')) {
+          return providerResponse.clone();
+        }
+
+        return requestResponse.clone();
+      },
     );
 
     await request(app.getHttpServer())
       .post('/api/v1/interoperability/sync/prepare')
       .set('x-api-key', 'test-api-key-12345678901234567890')
+      .set('x-user-id', '550e8400-e29b-41d4-a716-446655440000')
       .send({
         providerId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
         identifierSystem:
@@ -156,26 +184,47 @@ describe('AppController (e2e)', () => {
   });
 
   it('/api/v1/interoperability/sync/simulate (POST)', async () => {
-    jest.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(
-        JSON.stringify({
-          success: true,
-          data: [
-            {
-              id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
-              name: 'WAH for Clinics',
-              type: 'clinic',
-              facility_code: 'WAH4C',
-              location: 'Tarlac City',
-              isActive: true,
-            },
-          ],
-        }),
-        {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
+    const providerResponse = new Response(
+      JSON.stringify({
+        success: true,
+        data: [
+          {
+            id: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+            name: 'WAH for Clinics',
+            type: 'clinic',
+            facility_code: 'WAH4C',
+            location: 'Tarlac City',
+            isActive: true,
+          },
+        ],
+      }),
+      {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      },
+    );
+    const requestResponse = new Response(
+      JSON.stringify({
+        success: true,
+        data: {
+          id: 'txn_sync_001',
+          status: 'PENDING',
         },
-      ) as Response,
+      }),
+      {
+        status: 202,
+        headers: { 'content-type': 'application/json' },
+      },
+    );
+    jest.spyOn(globalThis, 'fetch').mockImplementation(
+      async (input: RequestInfo | URL) => {
+        const requestUrl = input.toString();
+        if (requestUrl.endsWith('/providers')) {
+          return providerResponse.clone();
+        }
+
+        return requestResponse.clone();
+      },
     );
 
     await request(app.getHttpServer())

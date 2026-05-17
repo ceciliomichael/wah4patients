@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../core/config/app_environment.dart';
+import '../../auth/domain/auth_session.dart';
 import '../domain/interoperability_models.dart';
 
 class InteroperabilityApiException implements Exception {
@@ -64,6 +65,13 @@ class InteroperabilityApiClient implements InteroperabilityClient {
     String? reason,
     String? notes,
   }) async {
+    final userId = AuthSession.userId?.trim() ?? '';
+    if (userId.isEmpty) {
+      throw const InteroperabilityApiException(
+        'Sign in again so the app can identify your sync request.',
+      );
+    }
+
     final response = await _post(
       path: '/interoperability/sync/prepare',
       body: <String, dynamic>{
@@ -73,6 +81,9 @@ class InteroperabilityApiClient implements InteroperabilityClient {
         'resourceType': 'Patient',
         if (reason != null && reason.trim().isNotEmpty) 'reason': reason.trim(),
         if (notes != null && notes.trim().isNotEmpty) 'notes': notes.trim(),
+      },
+      headers: <String, String>{
+        'x-user-id': userId,
       },
     );
 

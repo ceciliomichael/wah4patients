@@ -17,6 +17,7 @@ describe('FhirSyncService', () => {
 
   const repositoryMock = {
     findProfileIdByIdentifiers: jest.fn(),
+    findProfileIdByTransactionId: jest.fn(),
     getProfile: jest.fn(),
     listRecords: jest.fn(),
     updateProfile: jest.fn(),
@@ -26,6 +27,7 @@ describe('FhirSyncService', () => {
   } as Pick<
     FhirSyncRepository,
     | 'findProfileIdByIdentifiers'
+    | 'findProfileIdByTransactionId'
     | 'getProfile'
     | 'listRecords'
     | 'updateProfile'
@@ -77,6 +79,7 @@ describe('FhirSyncService', () => {
     };
 
     repositoryMock.findProfileIdByIdentifiers = jest.fn().mockResolvedValue('profile-123');
+    repositoryMock.findProfileIdByTransactionId = jest.fn().mockResolvedValue(null);
     repositoryMock.updateProfile = jest.fn().mockResolvedValue(undefined);
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
@@ -151,6 +154,24 @@ describe('FhirSyncService', () => {
       'profile-123',
       expect.objectContaining({
         title: 'Type 2 Diabetes Mellitus',
+        detailsJson: expect.arrayContaining([
+          expect.objectContaining({
+            label: 'Current status',
+            value: 'Active',
+          }),
+          expect.objectContaining({
+            label: 'Verification status',
+            value: 'Confirmed',
+          }),
+          expect.objectContaining({
+            label: 'Diagnosed on',
+            value: expect.stringContaining('March 15, 2020'),
+          }),
+          expect.objectContaining({
+            label: 'Notes',
+            value: expect.stringContaining('diet and exercise management'),
+          }),
+        ]),
       }),
     );
     expect(repositoryMock.insertClinicalRecord).toHaveBeenCalledWith(
@@ -158,6 +179,20 @@ describe('FhirSyncService', () => {
       'profile-123',
       expect.objectContaining({
         title: 'Laparoscopic appendectomy',
+        detailsJson: expect.arrayContaining([
+          expect.objectContaining({
+            label: 'Performed on',
+            value: expect.stringContaining('January 15, 2024'),
+          }),
+          expect.objectContaining({
+            label: 'Outcome',
+            value: 'Successful',
+          }),
+          expect.objectContaining({
+            label: 'Follow-up',
+            value: expect.stringContaining('wound care'),
+          }),
+        ]),
       }),
     );
     expect(repositoryMock.insertMedicationResupplyRecord).toHaveBeenCalledWith(
@@ -168,11 +203,60 @@ describe('FhirSyncService', () => {
     );
   });
 
+  it('uses transactionId to resolve gateway receive-results bundles without a patient resource', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+    );
+
+    const condition = readFixture('Condition-condition-single-example.json');
+    condition.meta = {
+      profile: ['http://hl7.org/fhir/StructureDefinition/Condition'],
+    };
+
+    repositoryMock.findProfileIdByTransactionId = jest
+      .fn()
+      .mockResolvedValue('profile-transaction-123');
+    repositoryMock.findProfileIdByIdentifiers = jest.fn();
+    repositoryMock.updateProfile = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.insertMedicationResupplyRecord = jest.fn().mockResolvedValue(undefined);
+
+    await expect(
+      service.receiveResults({
+        transactionId: 'txn-results-transaction-001',
+        status: 'SUCCESS',
+        data: {
+          resourceType: 'Bundle',
+          type: 'collection',
+          entry: [{ resource: condition }],
+        },
+      }),
+    ).resolves.toEqual({ message: 'Data received successfully' });
+
+    expect(repositoryMock.findProfileIdByTransactionId).toHaveBeenCalledWith(
+      'txn-results-transaction-001',
+    );
+    expect(repositoryMock.findProfileIdByIdentifiers).not.toHaveBeenCalled();
+    expect(repositoryMock.updateProfile).not.toHaveBeenCalled();
+    expect(repositoryMock.upsertPatientIdentifiers).not.toHaveBeenCalled();
+    expect(repositoryMock.insertClinicalRecord).toHaveBeenCalledWith(
+      'Condition',
+      'profile-transaction-123',
+      expect.objectContaining({
+        title: 'Type 2 Diabetes Mellitus',
+        recordedAt: '2020-03-15T10:30:00Z',
+      }),
+    );
+  });
+
   it('parses a receive-push patient payload and updates the profile', async () => {
     const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
     const patient = readFixture('Patient-patient-single-example.json') as FhirPatientResource;
 
     repositoryMock.findProfileIdByIdentifiers = jest.fn().mockResolvedValue('profile-123');
+    repositoryMock.findProfileIdByTransactionId = jest.fn().mockResolvedValue(null);
     repositoryMock.updateProfile = jest.fn().mockResolvedValue(undefined);
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
 
@@ -320,6 +404,7 @@ describe('FhirSyncService', () => {
     };
 
     repositoryMock.findProfileIdByIdentifiers = jest.fn().mockResolvedValue('profile-abc');
+    repositoryMock.findProfileIdByTransactionId = jest.fn().mockResolvedValue(null);
     repositoryMock.updateProfile = jest.fn().mockResolvedValue(undefined);
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
