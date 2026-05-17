@@ -219,6 +219,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         securityVerificationToken: token,
       );
 
+      AuthSession.clearReauthenticationRequirement();
       AuthSession.clear();
 
       if (!mounted) {
@@ -314,6 +315,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return;
       }
 
+      AuthSession.clearReauthenticationRequirement();
       AppNotificationCenter.instance.showWarning(
         'Please sign in again to access security settings.',
       );

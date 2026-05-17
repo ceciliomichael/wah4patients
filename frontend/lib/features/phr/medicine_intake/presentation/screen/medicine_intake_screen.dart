@@ -6,6 +6,8 @@ import '../../../../../../app/app_notification_center.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
+import '../../../data/personal_records_change_notifier.dart';
+import '../../../data/personal_records_repository.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../domain/medicine_status.dart';
@@ -24,12 +26,15 @@ class MedicineIntakeScreen extends StatefulWidget {
 }
 
 class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
+  final PersonalRecordsRepository _repository = PersonalRecordsRepository();
   final TextEditingController _searchController = TextEditingController();
 
   String _searchQuery = '';
   MedicineStatus? _selectedStatus;
   final Set<String> _expandedMedicineIds = <String>{};
 
+  final List<MedicationIntakeRecordResponse> _records =
+      <MedicationIntakeRecordResponse>[];
   final List<MedicineIntakeEntry> _medicines = <MedicineIntakeEntry>[];
   bool _isLoadingHistory = true;
   String? _historyError;
@@ -67,6 +72,14 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
   }
 
   Future<void> _loadMedicines() async {
+    final cacheKey = _personalRecordsCacheKey();
+    final cachedRecords = await _repository.loadCachedMedicationIntakeRecords(
+      cacheKey: cacheKey,
+    );
+    if (cachedRecords != null && mounted) {
+      _applyMedicinesFromRecords(cachedRecords);
+    }
+
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       if (!mounted) {
@@ -85,20 +98,12 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
     });
 
     try {
-      final response = await PersonalRecordsApiClient.instance
-          .getMedicationIntakeRecords(accessToken: accessToken);
-      final medicines = response.records
-          .map(MedicineIntakeEntry.fromRecord)
-          .toList(growable: false);
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _medicines
-          ..clear()
-          ..addAll(medicines);
-        _isLoadingHistory = false;
-      });
+      final records = await _repository.loadMedicationIntakeRecords(
+        accessToken: accessToken,
+        cacheKey: cacheKey,
+      );
+      if (!mounted) return;
+      _applyMedicinesFromRecords(records);
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
         return;
@@ -108,6 +113,27 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
         _isLoadingHistory = false;
       });
     }
+  }
+
+  String _personalRecordsCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    return userId.isNotEmpty ? userId : 'anonymous';
+  }
+
+  void _applyMedicinesFromRecords(List<MedicationIntakeRecordResponse> records) {
+    final medicines = records
+        .map(MedicineIntakeEntry.fromRecord)
+        .toList(growable: false);
+    setState(() {
+      _records
+        ..clear()
+        ..addAll(records);
+      _medicines
+        ..clear()
+        ..addAll(medicines);
+      _isLoadingHistory = false;
+      _historyError = null;
+    });
   }
 
   List<MedicineIntakeEntry> get _filteredMedicines {
@@ -181,8 +207,16 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
       }
 
       setState(() {
+        _records.insert(0, response);
         _medicines.insert(0, entry);
       });
+      unawaited(
+        _repository.cacheMedicationIntakeRecords(
+          cacheKey: _personalRecordsCacheKey(),
+          records: _records,
+        ),
+      );
+      PersonalRecordsChangeNotifier.notifyRecordSaved();
 
       AppNotificationCenter.instance.showSuccess(
         'Medicine saved to the database.',
@@ -244,7 +278,7 @@ class _MedicineIntakeScreenState extends State<MedicineIntakeScreen> {
                   ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: _isLoadingHistory
+                    child: _isLoadingHistory && _medicines.isEmpty
                         ? const Center(
                             child: CircularProgressIndicator(
                               color: AppColors.primary,

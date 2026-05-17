@@ -14,17 +14,19 @@ class HealthRecordDataScreen extends StatefulWidget {
     super.key,
     required this.section,
     required this.content,
+    this.repository,
   });
 
   final HealthRecordSection section;
   final HealthRecordScreenContent content;
+  final HealthRecordsRepository? repository;
 
   @override
   State<HealthRecordDataScreen> createState() => _HealthRecordDataScreenState();
 }
 
 class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
-  final HealthRecordsRepository _repository = HealthRecordsRepository();
+  late final HealthRecordsRepository _repository;
   late HealthRecordScreenContent _content;
   bool _isLoading = true;
   String? _loadErrorMessage;
@@ -32,6 +34,7 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
   @override
   void initState() {
     super.initState();
+    _repository = widget.repository ?? HealthRecordsRepository();
     _content = widget.content;
     unawaited(_loadContent());
   }
@@ -42,6 +45,7 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
       cacheKey: cacheKey,
       section: widget.section,
     );
+
     if (mounted && cachedRecords != null) {
       setState(() {
         _content = _contentWithRecords(cachedRecords);
@@ -78,7 +82,9 @@ class _HealthRecordDataScreenState extends State<HealthRecordDataScreen> {
       }
 
       setState(() {
-        _content = _contentWithRecords(records);
+        if (records.isNotEmpty || cachedRecords == null) {
+          _content = _contentWithRecords(records);
+        }
         _isLoading = false;
       });
     } on HealthRecordsApiException catch (error) {

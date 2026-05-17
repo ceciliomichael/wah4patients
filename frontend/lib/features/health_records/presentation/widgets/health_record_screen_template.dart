@@ -157,34 +157,19 @@ class _HealthRecordScreenTemplateState
       return _buildEmptyState();
     }
 
-    return Stack(
-      children: [
-        ListView.separated(
-          padding: const EdgeInsets.only(bottom: 24),
-          itemCount: entries.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            final entry = entries[index];
-            final isExpanded = _expandedEntryIds.contains(entry.id);
-            return HealthRecordListItem(
-              entry: entry,
-              isExpanded: isExpanded,
-              onTap: () => _toggleExpanded(entry.id),
-            );
-          },
-        ),
-        if (widget.isLoading)
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: LinearProgressIndicator(
-              minHeight: 2,
-              color: AppColors.primary,
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-      ],
+    return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 24),
+      itemCount: entries.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final entry = entries[index];
+        final isExpanded = _expandedEntryIds.contains(entry.id);
+        return HealthRecordListItem(
+          entry: entry,
+          isExpanded: isExpanded,
+          onTap: () => _toggleExpanded(entry.id),
+        );
+      },
     );
   }
 

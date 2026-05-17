@@ -143,6 +143,7 @@ class _PasswordRegistrationScreenState
       final navigator = Navigator.of(context);
 
       if (loginResult.mfaRequired) {
+        AuthSession.clearReauthenticationRequirement();
         AuthSession.clear();
         navigator.pushNamedAndRemoveUntil(
           AppRoutes.mfaChallenge,

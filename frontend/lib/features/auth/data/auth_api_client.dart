@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../core/config/app_environment.dart';
+import '../domain/auth_session.dart';
 import '../domain/models/auth_api_models.dart';
 
 class AuthApiException implements Exception {
@@ -437,6 +438,11 @@ class AuthApiClient {
       return decodedBody;
     }
 
+    if (trimmedBearerToken.isNotEmpty &&
+        (response.statusCode == 401 || response.statusCode == 403)) {
+      AuthSession.requireReauthentication();
+    }
+
     throw AuthApiException(
       _extractErrorMessage(decodedBody) ??
           'Request failed with status ${response.statusCode}',
@@ -485,6 +491,11 @@ class AuthApiClient {
     final decodedBody = _decodeResponseBody(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
+    }
+
+    if (trimmedBearerToken.isNotEmpty &&
+        (response.statusCode == 401 || response.statusCode == 403)) {
+      AuthSession.requireReauthentication();
     }
 
     throw AuthApiException(
@@ -536,6 +547,11 @@ class AuthApiClient {
     final decodedBody = _decodeResponseBody(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
+    }
+
+    if (trimmedBearerToken.isNotEmpty &&
+        (response.statusCode == 401 || response.statusCode == 403)) {
+      AuthSession.requireReauthentication();
     }
 
     throw AuthApiException(

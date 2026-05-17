@@ -170,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       if (result.mfaRequired) {
+        AuthSession.clearReauthenticationRequirement();
         AuthSession.clear();
         Navigator.of(context).pushNamed(
           AppRoutes.mfaChallenge,

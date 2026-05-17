@@ -5,6 +5,8 @@ class AppLockStateService {
 
   static DateTime? _backgroundedAt;
 
+  static bool get isBackgrounded => _backgroundedAt != null;
+
   static void markBackgrounded({DateTime? at}) {
     _backgroundedAt = at ?? DateTime.now();
   }

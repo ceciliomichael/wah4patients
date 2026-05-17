@@ -233,6 +233,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
   }
 
   void _forceSignOut() {
+    AuthSession.clearReauthenticationRequirement();
     AuthSession.clear();
     Navigator.of(
       context,

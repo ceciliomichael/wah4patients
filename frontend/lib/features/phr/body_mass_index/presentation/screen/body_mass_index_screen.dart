@@ -7,6 +7,7 @@ import '../../../../../../core/constants/app_colors.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
 import '../../../data/personal_records_change_notifier.dart';
+import '../../../data/personal_records_repository.dart';
 import '../../../../../../core/widgets/feature/help_modal_widget.dart';
 import '../models/body_mass_index_models.dart';
 import '../utils/body_mass_index_calculations.dart';
@@ -26,6 +27,7 @@ class BodyMassIndexScreen extends StatefulWidget {
 }
 
 class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
+  final PersonalRecordsRepository _repository = PersonalRecordsRepository();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
 
@@ -33,6 +35,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   BmiGender _selectedGender = BmiGender.female;
   int _age = 28;
 
+  final List<BmiRecordResponse> _records = <BmiRecordResponse>[];
   final List<BodyMassIndexHistoryEntry> _history = <BodyMassIndexHistoryEntry>[];
   bool _isLoadingHistory = true;
   String? _historyError;
@@ -79,6 +82,12 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   }
 
   Future<void> _loadHistory() async {
+    final cacheKey = _personalRecordsCacheKey();
+    final cachedRecords = await _repository.loadCachedBmiRecords(cacheKey: cacheKey);
+    if (cachedRecords != null && mounted) {
+      _applyHistoryFromRecords(cachedRecords);
+    }
+
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       if (!mounted) {
@@ -97,22 +106,12 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
     });
 
     try {
-      final response = await PersonalRecordsApiClient.instance.getBmiRecords(
+      final records = await _repository.loadBmiRecords(
         accessToken: accessToken,
+        cacheKey: cacheKey,
       );
-      final history = response.records
-          .map(BodyMassIndexHistoryEntry.fromRecord)
-          .toList()
-        ..sort((left, right) => right.recordedAt.compareTo(left.recordedAt));
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _history
-          ..clear()
-          ..addAll(history);
-        _isLoadingHistory = false;
-      });
+      if (!mounted) return;
+      _applyHistoryFromRecords(records);
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
         return;
@@ -122,6 +121,26 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
         _isLoadingHistory = false;
       });
     }
+  }
+
+  String _personalRecordsCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    return userId.isNotEmpty ? userId : 'anonymous';
+  }
+
+  void _applyHistoryFromRecords(List<BmiRecordResponse> records) {
+    final history = records.map(BodyMassIndexHistoryEntry.fromRecord).toList()
+      ..sort((left, right) => right.recordedAt.compareTo(left.recordedAt));
+    setState(() {
+      _records
+        ..clear()
+        ..addAll(records);
+      _history
+        ..clear()
+        ..addAll(history);
+      _isLoadingHistory = false;
+      _historyError = null;
+    });
   }
 
   void _toggleUnitSystem(BmiUnitSystem nextSystem) {
@@ -187,10 +206,17 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
       }
 
       setState(() {
+        _records.insert(0, response);
         _history.insert(0, entry);
         _weightController.clear();
         _heightController.clear();
       });
+      unawaited(
+        _repository.cacheBmiRecords(
+          cacheKey: _personalRecordsCacheKey(),
+          records: _records,
+        ),
+      );
       PersonalRecordsChangeNotifier.notifyRecordSaved();
 
       _showResultDialog(entry);
@@ -254,12 +280,6 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   }
 
   Widget _buildAddRecordTab() {
-    if (_isLoadingHistory) {
-      return const Center(
-        child: CircularProgressIndicator(color: AppColors.primary),
-      );
-    }
-
     final latestEntry = _latestEntry;
 
     if (_hasTodayEntry && latestEntry != null) {
@@ -288,7 +308,7 @@ class _BodyMassIndexScreenState extends State<BodyMassIndexScreen> {
   }
 
   Widget _buildHistoryTab() {
-    if (_isLoadingHistory) {
+    if (_isLoadingHistory && _history.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(color: AppColors.primary),
       );

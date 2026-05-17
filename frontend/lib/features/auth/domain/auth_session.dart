@@ -24,6 +24,7 @@ class AuthSession {
   static DateTime? _savedAt;
   static UserProfileSummary _profile = UserProfileSummary.empty();
   static Timer? _refreshTimer;
+  static bool _requiresReauthentication = false;
 
   static String? get accessToken => _accessToken;
   static String? get refreshToken => _refreshToken;
@@ -42,6 +43,7 @@ class AuthSession {
   static bool get isPatientProfileComplete => _profile.isComplete;
   static List<String> get missingPatientProfileFields =>
       List.unmodifiable(_profile.missingFields);
+  static bool get requiresReauthentication => _requiresReauthentication;
   static bool get isAuthenticated =>
       (_accessToken?.trim().isNotEmpty ?? false) &&
       (_userId?.trim().isNotEmpty ?? false);
@@ -71,6 +73,7 @@ class AuthSession {
     final storedSession = await AuthLocalStore.readSession();
     if (storedSession == null) {
       clear();
+      requireReauthentication();
       return false;
     }
 
@@ -81,9 +84,9 @@ class AuthSession {
 
     final refreshToken = storedSession.refreshToken.trim();
     if (refreshToken.isEmpty) {
-      await AuthLocalStore.clearSession();
-      clear();
-      return false;
+      requireReauthentication();
+      _setFromStoredSession(storedSession);
+      return true;
     }
 
     try {
@@ -95,16 +98,14 @@ class AuthSession {
       return true;
     } on AuthApiException catch (error) {
       final statusCode = error.statusCode;
-      final shouldSignOut =
-          statusCode == 400 || statusCode == 401 || statusCode == 403;
-      if (shouldSignOut) {
-        await AuthLocalStore.clearSession();
-        clear();
-        return false;
-      }
-
       _setFromStoredSession(storedSession);
-      _scheduleRefreshRetry();
+      requireReauthentication();
+
+      final shouldRetry =
+          statusCode != 400 && statusCode != 401 && statusCode != 403;
+      if (shouldRetry) {
+        _scheduleRefreshRetry();
+      }
       return true;
     }
   }
@@ -168,6 +169,7 @@ class AuthSession {
 
   static void _setFromStoredSession(AuthSessionData storedSession) {
     final previousUserId = _userId?.trim() ?? '';
+    clearReauthenticationRequirement();
     _accessToken = storedSession.accessToken.trim();
     _refreshToken = storedSession.refreshToken.trim();
     _expiresIn = storedSession.expiresIn;
@@ -184,6 +186,7 @@ class AuthSession {
 
   static void _setFromLoginResult(LoginResult result) {
     final previousUserId = _userId?.trim() ?? '';
+    clearReauthenticationRequirement();
     _accessToken = result.accessToken.trim();
     _refreshToken = result.refreshToken.trim();
     _expiresIn = result.expiresIn;
@@ -196,6 +199,25 @@ class AuthSession {
     unawaited(_invalidateCachesForAccountTransition(previousUserId, nextUserId));
     _notifyChanged();
     _scheduleRefreshTimer(_loginResultToSession(result));
+  }
+
+  static void requireReauthentication() {
+    if (_requiresReauthentication) {
+      _notifyChanged();
+      return;
+    }
+
+    _requiresReauthentication = true;
+    _notifyChanged();
+  }
+
+  static void clearReauthenticationRequirement() {
+    if (!_requiresReauthentication) {
+      return;
+    }
+
+    _requiresReauthentication = false;
+    _notifyChanged();
   }
 
   static Future<void> _invalidateCachesForAccountTransition(

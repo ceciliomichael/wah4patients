@@ -12,6 +12,7 @@ import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
 import '../../../data/personal_records_change_notifier.dart';
+import '../../../data/personal_records_repository.dart';
 
 enum TemperatureUnitSystem { celsius, fahrenheit }
 
@@ -35,11 +36,13 @@ class TemperatureScreen extends StatefulWidget {
 }
 
 class _TemperatureScreenState extends State<TemperatureScreen> {
+  final PersonalRecordsRepository _repository = PersonalRecordsRepository();
   final TextEditingController _temperatureController = TextEditingController();
 
   TemperatureUnitSystem _unitSystem = TemperatureUnitSystem.celsius;
   _TemperatureHistoryEntry? _latestEntry;
 
+  final List<TemperatureRecordResponse> _records = <TemperatureRecordResponse>[];
   final List<_TemperatureHistoryEntry> _history = <_TemperatureHistoryEntry>[];
   bool _isLoadingHistory = true;
   String? _historyError;
@@ -77,6 +80,14 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
   }
 
   Future<void> _loadHistory() async {
+    final cacheKey = _personalRecordsCacheKey();
+    final cachedRecords = await _repository.loadCachedTemperatureRecords(
+      cacheKey: cacheKey,
+    );
+    if (cachedRecords != null && mounted) {
+      _applyHistoryFromRecords(cachedRecords);
+    }
+
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       if (!mounted) {
@@ -95,22 +106,12 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     });
 
     try {
-      final response = await PersonalRecordsApiClient.instance.getTemperatureRecords(
+      final records = await _repository.loadTemperatureRecords(
         accessToken: accessToken,
+        cacheKey: cacheKey,
       );
-      final history = response.records
-          .map(_TemperatureHistoryEntry.fromRecord)
-          .toList(growable: false);
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _history
-          ..clear()
-          ..addAll(history);
-        _latestEntry = _history.isEmpty ? null : _history.first;
-        _isLoadingHistory = false;
-      });
+      if (!mounted) return;
+      _applyHistoryFromRecords(records);
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
         return;
@@ -120,6 +121,28 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
         _isLoadingHistory = false;
       });
     }
+  }
+
+  String _personalRecordsCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    return userId.isNotEmpty ? userId : 'anonymous';
+  }
+
+  void _applyHistoryFromRecords(List<TemperatureRecordResponse> records) {
+    final history = records
+        .map(_TemperatureHistoryEntry.fromRecord)
+        .toList(growable: false);
+    setState(() {
+      _records
+        ..clear()
+        ..addAll(records);
+      _history
+        ..clear()
+        ..addAll(history);
+      _latestEntry = _history.isEmpty ? null : _history.first;
+      _isLoadingHistory = false;
+      _historyError = null;
+    });
   }
 
   double _toCelsius(double value) {
@@ -186,10 +209,17 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
       }
 
       setState(() {
+        _records.insert(0, response);
         _latestEntry = entry;
         _history.insert(0, entry);
         _temperatureController.clear();
       });
+      unawaited(
+        _repository.cacheTemperatureRecords(
+          cacheKey: _personalRecordsCacheKey(),
+          records: _records,
+        ),
+      );
       PersonalRecordsChangeNotifier.notifyRecordSaved();
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
@@ -395,7 +425,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
   }
 
   Widget _buildHistoryTab() {
-    if (_isLoadingHistory) {
+    if (_isLoadingHistory && _history.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(color: AppColors.primary),
       );

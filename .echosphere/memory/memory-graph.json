@@ -18944,6 +18944,1377 @@
       ],
       "createdAt": "2026-05-17T09:15:23.709Z",
       "updatedAt": "2026-05-17T09:15:23.709Z"
+    },
+    {
+      "memoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "rootMemoryId": "7c69c074-5e17-4771-9e63-06464999a01a",
+      "parentMemoryIds": [
+        "7c69c074-5e17-4771-9e63-06464999a01a"
+      ],
+      "relatedMemoryIds": [
+        "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+        "73d39444-853d-4a6b-985f-fae5cda1f21d",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted the app to stop silently keeping users in the foreground forever and instead trigger a reauthentication flow when the session ages out or an authenticated API call returns 401/403. The app shell now listens for an explicit AuthSession reauth-required flag, routes to MPIN unlock when MPIN is enabled, and falls back to login when needed. AuthSession now exposes and clears this flag on successful login/storage restore, foreground expiry, and hard refresh failure. Several API clients now signal reauthentication on unauthorized responses, and manual sign-out paths clear the flag before wiping session state to avoid redirect loops.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Added background-state visibility used by the foreground session-expiry behavior to decide between silent refresh and reauth prompting.",
+          "notes": "Introduced isBackgrounded getter."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Centralized runtime reauthentication routing so the app navigates to MPIN unlock or login when session expiry or invalidation is signaled.",
+          "notes": "Listener now reacts to requiresReauthentication in addition to expiry state."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Added reauthentication signaling state, foreground expiry handling, and success-path clearing of the signal.",
+          "notes": "This is the main auth boundary change."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_api_client.dart",
+          "action": "modified",
+          "reason": "Authenticated auth endpoints now signal reauthentication on 401/403 so the app shell can route to MPIN or login.",
+          "notes": "Only bearer-token requests trigger the signal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Appointment history requests now request reauthentication when the backend rejects the access token.",
+          "notes": "Unauthorized responses trigger the shared session flag."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_api_client.dart",
+          "action": "modified",
+          "reason": "Health records requests now request reauthentication on 401/403 to avoid leaving users on stale screens.",
+          "notes": "Shared unauthorized handling added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "modified",
+          "reason": "Medication resupply history requests now signal reauthentication on unauthorized responses.",
+          "notes": "Keeps the flow consistent across data screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Interoperability sync requests now trigger reauthentication on 401/403 and the duplicate import was cleaned up.",
+          "notes": "Also removed an accidental duplicate import."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Personal records requests now request reauthentication when backend authorization fails.",
+          "notes": "Covers PHR history and write flows."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\login_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before moving into the MFA challenge path so a stale invalidation flag does not redirect away from sign-in.",
+          "notes": "Only the MFA branch needed it."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit sign-out from the MPIN unlock screen.",
+          "notes": "Prevents a redirect loop after sign-out."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the MFA challenge path during password registration.",
+          "notes": "Matches the login-screen behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the profile sign-out route so manual sign-out remains deterministic.",
+          "notes": "Keeps logout from being mistaken for session expiry."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit logout and login fallback from security settings.",
+          "notes": "Also clears stale reauth before routing to login."
+        }
+      ],
+      "createdAt": "2026-05-17T12:58:28.385Z",
+      "updatedAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "memoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "rootMemoryId": "7c69c074-5e17-4771-9e63-06464999a01a",
+      "parentMemoryIds": [
+        "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7"
+      ],
+      "relatedMemoryIds": [
+        "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+        "73d39444-853d-4a6b-985f-fae5cda1f21d",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [
+        "cfe6e575-f9d7-4641-b28c-42f6a43577f6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted the app to stop silently keeping users in the foreground forever and instead trigger a reauthentication flow when the session ages out or an authenticated API call returns 401/403. The app shell now listens for an explicit AuthSession reauth-required flag, routes to MPIN unlock when MPIN is enabled, and falls back to login when needed. AuthSession now exposes and clears this flag on successful login/storage restore, foreground expiry, and hard refresh failure. Several API clients now signal reauthentication on unauthorized responses, and manual sign-out paths clear the flag before wiping session state to avoid redirect loops.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Added background-state visibility used by the foreground session-expiry behavior to decide between silent refresh and reauth prompting.",
+          "notes": "Introduced isBackgrounded getter."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Centralized runtime reauthentication routing so the app navigates to MPIN unlock or login when session expiry or invalidation is signaled.",
+          "notes": "Listener now reacts to requiresReauthentication in addition to expiry state."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Added reauthentication signaling state, foreground expiry handling, and success-path clearing of the signal.",
+          "notes": "This is the main auth boundary change."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_api_client.dart",
+          "action": "modified",
+          "reason": "Authenticated auth endpoints now signal reauthentication on 401/403 so the app shell can route to MPIN or login.",
+          "notes": "Only bearer-token requests trigger the signal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Appointment history requests now request reauthentication when the backend rejects the access token.",
+          "notes": "Unauthorized responses trigger the shared session flag."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_api_client.dart",
+          "action": "modified",
+          "reason": "Health records requests now request reauthentication on 401/403 to avoid leaving users on stale screens.",
+          "notes": "Shared unauthorized handling added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "modified",
+          "reason": "Medication resupply history requests now signal reauthentication on unauthorized responses.",
+          "notes": "Keeps the flow consistent across data screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Interoperability sync requests now trigger reauthentication on 401/403 and the duplicate import was cleaned up.",
+          "notes": "Also removed an accidental duplicate import."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Personal records requests now request reauthentication when backend authorization fails.",
+          "notes": "Covers PHR history and write flows."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\login_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before moving into the MFA challenge path so a stale invalidation flag does not redirect away from sign-in.",
+          "notes": "Only the MFA branch needed it."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit sign-out from the MPIN unlock screen.",
+          "notes": "Prevents a redirect loop after sign-out."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the MFA challenge path during password registration.",
+          "notes": "Matches the login-screen behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the profile sign-out route so manual sign-out remains deterministic.",
+          "notes": "Keeps logout from being mistaken for session expiry."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit logout and login fallback from security settings.",
+          "notes": "Also clears stale reauth before routing to login."
+        }
+      ],
+      "createdAt": "2026-05-17T12:58:28.591Z",
+      "updatedAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "memoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "rootMemoryId": "7c69c074-5e17-4771-9e63-06464999a01a",
+      "parentMemoryIds": [
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe"
+      ],
+      "relatedMemoryIds": [
+        "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+        "73d39444-853d-4a6b-985f-fae5cda1f21d",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted the app to stop silently keeping users in the foreground forever and instead trigger a reauthentication flow when the session ages out or an authenticated API call returns 401/403. The app shell now listens for an explicit AuthSession reauth-required flag, routes to MPIN unlock when MPIN is enabled, and falls back to login when needed. AuthSession now exposes and clears this flag on successful login/storage restore, foreground expiry, and hard refresh failure. Several API clients now signal reauthentication on unauthorized responses, and manual sign-out paths clear the flag before wiping session state to avoid redirect loops.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Added background-state visibility used by the foreground session-expiry behavior to decide between silent refresh and reauth prompting.",
+          "notes": "Introduced isBackgrounded getter."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Centralized runtime reauthentication routing so the app navigates to MPIN unlock or login when session expiry or invalidation is signaled.",
+          "notes": "Listener now reacts to requiresReauthentication in addition to expiry state."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\domain\\auth_session.dart",
+          "action": "modified",
+          "reason": "Added reauthentication signaling state, foreground expiry handling, and success-path clearing of the signal.",
+          "notes": "This is the main auth boundary change."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_api_client.dart",
+          "action": "modified",
+          "reason": "Authenticated auth endpoints now signal reauthentication on 401/403 so the app shell can route to MPIN or login.",
+          "notes": "Only bearer-token requests trigger the signal."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Appointment history requests now request reauthentication when the backend rejects the access token.",
+          "notes": "Unauthorized responses trigger the shared session flag."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\health_records\\data\\health_records_api_client.dart",
+          "action": "modified",
+          "reason": "Health records requests now request reauthentication on 401/403 to avoid leaving users on stale screens.",
+          "notes": "Shared unauthorized handling added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\medication_resupply\\data\\medication_resupply_api_client.dart",
+          "action": "modified",
+          "reason": "Medication resupply history requests now signal reauthentication on unauthorized responses.",
+          "notes": "Keeps the flow consistent across data screens."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\interoperability\\data\\interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Interoperability sync requests now trigger reauthentication on 401/403 and the duplicate import was cleaned up.",
+          "notes": "Also removed an accidental duplicate import."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Personal records requests now request reauthentication when backend authorization fails.",
+          "notes": "Covers PHR history and write flows."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\login_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before moving into the MFA challenge path so a stale invalidation flag does not redirect away from sign-in.",
+          "notes": "Only the MFA branch needed it."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit sign-out from the MPIN unlock screen.",
+          "notes": "Prevents a redirect loop after sign-out."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the MFA challenge path during password registration.",
+          "notes": "Matches the login-screen behavior."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before the profile sign-out route so manual sign-out remains deterministic.",
+          "notes": "Keeps logout from being mistaken for session expiry."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\profile\\presentation\\screens\\security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the reauth signal before explicit logout and login fallback from security settings.",
+          "notes": "Also clears stale reauth before routing to login."
+        }
+      ],
+      "createdAt": "2026-05-17T12:58:28.791Z",
+      "updatedAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "memoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7"
+      ],
+      "childMemoryIds": [
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the auth logout-on-expiry behavior by preserving the persisted session during refresh failure and treating it as a reauthentication/lock state instead of clearing storage immediately. The app can now continue to route to MPIN lock without discarding the current session data unless the user explicitly signs out or there is truly no stored session.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "This is the core auth-session state machine; it now preserves stored sessions during refresh failure and marks the user for reauthentication instead of clearing them.",
+          "notes": "This is the key fix for the logout-on-expiry bug."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "The app-level route observer handles the reauthentication lock routing and must remain aligned with the new preserved-session behavior.",
+          "notes": "It continues to route to MPIN lock when appropriate."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Startup routing was reviewed to ensure expired authenticated sessions still land in MPIN unlock rather than hard login when possible.",
+          "notes": "No additional change was required here for this fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was checked to make sure it still uses the preserved session and does not force a logout unnecessarily.",
+          "notes": "No change was required in this step."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "401/403 handling was reviewed because it triggers reauthentication state transitions and can influence whether the app feels logged out.",
+          "notes": "This remains a possible follow-up area if the issue persists."
+        }
+      ],
+      "createdAt": "2026-05-17T14:07:20.564Z",
+      "updatedAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "memoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "8e97bd77-2c9c-473b-8458-70aa14e61bd6"
+      ],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7"
+      ],
+      "childMemoryIds": [
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the auth logout-on-expiry behavior by preserving the persisted session during refresh failure and treating it as a reauthentication/lock state instead of clearing storage immediately. The app can now continue to route to MPIN lock without discarding the current session data unless the user explicitly signs out or there is truly no stored session.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "This is the core auth-session state machine; it now preserves stored sessions during refresh failure and marks the user for reauthentication instead of clearing them.",
+          "notes": "This is the key fix for the logout-on-expiry bug."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "The app-level route observer handles the reauthentication lock routing and must remain aligned with the new preserved-session behavior.",
+          "notes": "It continues to route to MPIN lock when appropriate."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Startup routing was reviewed to ensure expired authenticated sessions still land in MPIN unlock rather than hard login when possible.",
+          "notes": "No additional change was required here for this fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was checked to make sure it still uses the preserved session and does not force a logout unnecessarily.",
+          "notes": "No change was required in this step."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "401/403 handling was reviewed because it triggers reauthentication state transitions and can influence whether the app feels logged out.",
+          "notes": "This remains a possible follow-up area if the issue persists."
+        }
+      ],
+      "createdAt": "2026-05-17T14:07:20.704Z",
+      "updatedAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "memoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the auth logout-on-expiry behavior by preserving the persisted session during refresh failure and treating it as a reauthentication/lock state instead of clearing storage immediately. The app can now continue to route to MPIN lock without discarding the current session data unless the user explicitly signs out or there is truly no stored session.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "This is the core auth-session state machine; it now preserves stored sessions during refresh failure and marks the user for reauthentication instead of clearing them.",
+          "notes": "This is the key fix for the logout-on-expiry bug."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "The app-level route observer handles the reauthentication lock routing and must remain aligned with the new preserved-session behavior.",
+          "notes": "It continues to route to MPIN lock when appropriate."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "inspected",
+          "reason": "Startup routing was reviewed to ensure expired authenticated sessions still land in MPIN unlock rather than hard login when possible.",
+          "notes": "No additional change was required here for this fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was checked to make sure it still uses the preserved session and does not force a logout unnecessarily.",
+          "notes": "No change was required in this step."
+        },
+        {
+          "path": "frontend/lib/features/auth/data/auth_api_client.dart",
+          "action": "inspected",
+          "reason": "401/403 handling was reviewed because it triggers reauthentication state transitions and can influence whether the app feels logged out.",
+          "notes": "This remains a possible follow-up area if the issue persists."
+        }
+      ],
+      "createdAt": "2026-05-17T14:07:20.839Z",
+      "updatedAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "memoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "relatedMemoryIds": [
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [
+        "6e78c0de-0bdf-4321-a090-989aed9eef24"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the MPIN unlock loop by clearing the reauthentication flag after a successful MPIN verification. The prior behavior preserved the session but left the app marked for reauthentication, which could cause the global auth listener to keep the user stuck on the MPIN screen instead of returning them to the app.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "This is the direct unlock path; it now clears reauthentication state after successful verification so navigation can continue normally.",
+          "notes": "Single-line behavioral fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "The session state machine was reviewed to confirm that preserve-on-refresh-failure behavior remains in place and that reauth flags are the relevant blocker.",
+          "notes": "No further edits needed in this pass."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The global auth listener was reviewed because it is what can re-route the app back into lock or login based on auth flags.",
+          "notes": "Behavior unchanged for now."
+        }
+      ],
+      "createdAt": "2026-05-17T17:46:18.076Z",
+      "updatedAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "memoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "fa59106c-72dd-4193-b4aa-c27d0f7d7a40"
+      ],
+      "relatedMemoryIds": [
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [
+        "cf4605c3-2426-4f56-a013-774bd2da1133"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the MPIN unlock loop by clearing the reauthentication flag after a successful MPIN verification. The prior behavior preserved the session but left the app marked for reauthentication, which could cause the global auth listener to keep the user stuck on the MPIN screen instead of returning them to the app.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "This is the direct unlock path; it now clears reauthentication state after successful verification so navigation can continue normally.",
+          "notes": "Single-line behavioral fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "The session state machine was reviewed to confirm that preserve-on-refresh-failure behavior remains in place and that reauth flags are the relevant blocker.",
+          "notes": "No further edits needed in this pass."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The global auth listener was reviewed because it is what can re-route the app back into lock or login based on auth flags.",
+          "notes": "Behavior unchanged for now."
+        }
+      ],
+      "createdAt": "2026-05-17T17:46:18.185Z",
+      "updatedAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "memoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "rootMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "parentMemoryIds": [
+        "6e78c0de-0bdf-4321-a090-989aed9eef24"
+      ],
+      "relatedMemoryIds": [
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "54a11d38-3200-4f17-ade4-2735d8906222"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the MPIN unlock loop by clearing the reauthentication flag after a successful MPIN verification. The prior behavior preserved the session but left the app marked for reauthentication, which could cause the global auth listener to keep the user stuck on the MPIN screen instead of returning them to the app.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "This is the direct unlock path; it now clears reauthentication state after successful verification so navigation can continue normally.",
+          "notes": "Single-line behavioral fix."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "The session state machine was reviewed to confirm that preserve-on-refresh-failure behavior remains in place and that reauth flags are the relevant blocker.",
+          "notes": "No further edits needed in this pass."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "The global auth listener was reviewed because it is what can re-route the app back into lock or login based on auth flags.",
+          "notes": "Behavior unchanged for now."
+        }
+      ],
+      "createdAt": "2026-05-17T17:46:18.308Z",
+      "updatedAt": "2026-05-17T17:46:18.308Z"
+    },
+    {
+      "memoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "rootMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "parentMemoryIds": [
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "relatedMemoryIds": [
+        "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "childMemoryIds": [
+        "013f1eba-51d4-41b1-bcff-00aafe806e54"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the stuck 'session is refreshing' auth loop by removing the foreground timer branch that was incorrectly setting reauthentication instead of performing a silent refresh. The auth session now stays in refresh mode and no longer traps users on the MPIN lock screen or login flow just because the refresh timer fired.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Core session lifecycle logic was fixed so the timer no longer forces reauthentication in the foreground and instead performs a silent refresh.",
+          "notes": "This is the direct fix for the stuck 'session is refreshing' loop."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was reviewed to confirm it still uses the session state correctly and only shows refresh messaging when the session truly needs it.",
+          "notes": "No changes were required in this step."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "App-level route redirection was reviewed to make sure the reauth logic still points to MPIN lock only when appropriate.",
+          "notes": "No changes were required in this step."
+        }
+      ],
+      "createdAt": "2026-05-17T17:49:10.894Z",
+      "updatedAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "memoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "rootMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "parentMemoryIds": [
+        "50572752-fe04-41bc-a60b-c2f5581cfbd7"
+      ],
+      "relatedMemoryIds": [
+        "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "childMemoryIds": [
+        "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the stuck 'session is refreshing' auth loop by removing the foreground timer branch that was incorrectly setting reauthentication instead of performing a silent refresh. The auth session now stays in refresh mode and no longer traps users on the MPIN lock screen or login flow just because the refresh timer fired.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Core session lifecycle logic was fixed so the timer no longer forces reauthentication in the foreground and instead performs a silent refresh.",
+          "notes": "This is the direct fix for the stuck 'session is refreshing' loop."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was reviewed to confirm it still uses the session state correctly and only shows refresh messaging when the session truly needs it.",
+          "notes": "No changes were required in this step."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "App-level route redirection was reviewed to make sure the reauth logic still points to MPIN lock only when appropriate.",
+          "notes": "No changes were required in this step."
+        }
+      ],
+      "createdAt": "2026-05-17T17:49:11.004Z",
+      "updatedAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "memoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "rootMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "parentMemoryIds": [
+        "013f1eba-51d4-41b1-bcff-00aafe806e54"
+      ],
+      "relatedMemoryIds": [
+        "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+        "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+        "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the stuck 'session is refreshing' auth loop by removing the foreground timer branch that was incorrectly setting reauthentication instead of performing a silent refresh. The auth session now stays in refresh mode and no longer traps users on the MPIN lock screen or login flow just because the refresh timer fired.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Core session lifecycle logic was fixed so the timer no longer forces reauthentication in the foreground and instead performs a silent refresh.",
+          "notes": "This is the direct fix for the stuck 'session is refreshing' loop."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "inspected",
+          "reason": "Unlock flow was reviewed to confirm it still uses the session state correctly and only shows refresh messaging when the session truly needs it.",
+          "notes": "No changes were required in this step."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "inspected",
+          "reason": "App-level route redirection was reviewed to make sure the reauth logic still points to MPIN lock only when appropriate.",
+          "notes": "No changes were required in this step."
+        }
+      ],
+      "createdAt": "2026-05-17T17:49:11.120Z",
+      "updatedAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "memoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "rootMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "parentMemoryIds": [
+        "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7"
+      ],
+      "relatedMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6",
+        "a265d276-0a47-4072-8e71-5c87a53728f4",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "60cea514-47ee-4070-bd72-abeb54b5529f"
+      ],
+      "childMemoryIds": [
+        "a279705d-2ed1-4b91-bfe2-e534511a5042"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented local cache coverage for Personal Records feature screens (BMI, Blood Pressure, Temperature, and Medicine Intake), including add-record flows writing updated lists back to cache. Added dedicated Personal Records local store/repository and wired cache invalidation for account transitions.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_local_store.dart",
+          "action": "created",
+          "reason": "Introduced section-scoped secure local cache storage for personal records data.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_repository.dart",
+          "action": "created",
+          "reason": "Centralized typed cache-first repository methods for all personal record sections.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Added toJson serialization on personal record response models to support cache persistence payloads.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after BMI saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after blood pressure saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after temperature saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first medicine list loading and cache writes after add medicine actions.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "modified",
+          "reason": "Added Personal Records cache section clearing during user-scoped cache invalidation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T17:58:41.260Z",
+      "updatedAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "memoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "rootMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "parentMemoryIds": [
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "relatedMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6",
+        "a265d276-0a47-4072-8e71-5c87a53728f4",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "60cea514-47ee-4070-bd72-abeb54b5529f"
+      ],
+      "childMemoryIds": [
+        "35f1320b-ef61-40d8-ba20-8ca2c9ff7346"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented local cache coverage for Personal Records feature screens (BMI, Blood Pressure, Temperature, and Medicine Intake), including add-record flows writing updated lists back to cache. Added dedicated Personal Records local store/repository and wired cache invalidation for account transitions.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_local_store.dart",
+          "action": "created",
+          "reason": "Introduced section-scoped secure local cache storage for personal records data.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_repository.dart",
+          "action": "created",
+          "reason": "Centralized typed cache-first repository methods for all personal record sections.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Added toJson serialization on personal record response models to support cache persistence payloads.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after BMI saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after blood pressure saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after temperature saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first medicine list loading and cache writes after add medicine actions.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "modified",
+          "reason": "Added Personal Records cache section clearing during user-scoped cache invalidation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T17:58:41.432Z",
+      "updatedAt": "2026-05-17T17:58:41.432Z"
+    },
+    {
+      "memoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "rootMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "parentMemoryIds": [
+        "a279705d-2ed1-4b91-bfe2-e534511a5042"
+      ],
+      "relatedMemoryIds": [
+        "f5535322-c325-41ea-8a4f-616c9844f8d6",
+        "a265d276-0a47-4072-8e71-5c87a53728f4",
+        "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+        "60cea514-47ee-4070-bd72-abeb54b5529f"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented local cache coverage for Personal Records feature screens (BMI, Blood Pressure, Temperature, and Medicine Intake), including add-record flows writing updated lists back to cache. Added dedicated Personal Records local store/repository and wired cache invalidation for account transitions.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_local_store.dart",
+          "action": "created",
+          "reason": "Introduced section-scoped secure local cache storage for personal records data.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_repository.dart",
+          "action": "created",
+          "reason": "Centralized typed cache-first repository methods for all personal record sections.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\data\\personal_records_api_client.dart",
+          "action": "modified",
+          "reason": "Added toJson serialization on personal record response models to support cache persistence payloads.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after BMI saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after blood pressure saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first history loading and cache writes after temperature saves.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Wired cache-first medicine list loading and cache writes after add medicine actions.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_local_cache_invalidator.dart",
+          "action": "modified",
+          "reason": "Added Personal Records cache section clearing during user-scoped cache invalidation.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T17:58:41.591Z",
+      "updatedAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "memoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "rootMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "parentMemoryIds": [
+        "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6"
+      ],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [
+        "ababc060-c9cb-49c0-ad27-49893f8c21e5"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the BMI Add Record tab loading spinner so the form now renders immediately while history/cache sync continues in the background. The BMI screen still loads cached/history data and refreshes it asynchronously, but the add form is no longer gated on that state.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Removed add-tab loading gate so the BMI form renders immediately and still reads cached/history data in the background.",
+          "notes": "History tab loading behavior was left intact."
+        }
+      ],
+      "createdAt": "2026-05-17T18:03:13.912Z",
+      "updatedAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "memoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "rootMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "parentMemoryIds": [
+        "fd5a8d47-1547-4790-9b97-0b46d99add95"
+      ],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [
+        "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the BMI Add Record tab loading spinner so the form now renders immediately while history/cache sync continues in the background. The BMI screen still loads cached/history data and refreshes it asynchronously, but the add form is no longer gated on that state.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Removed add-tab loading gate so the BMI form renders immediately and still reads cached/history data in the background.",
+          "notes": "History tab loading behavior was left intact."
+        }
+      ],
+      "createdAt": "2026-05-17T18:03:14.057Z",
+      "updatedAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "memoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "rootMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "parentMemoryIds": [
+        "ababc060-c9cb-49c0-ad27-49893f8c21e5"
+      ],
+      "relatedMemoryIds": [
+        "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+        "419b04fb-994e-4b0f-bb68-2d3838b73617",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the BMI Add Record tab loading spinner so the form now renders immediately while history/cache sync continues in the background. The BMI screen still loads cached/history data and refreshes it asynchronously, but the add form is no longer gated on that state.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Removed add-tab loading gate so the BMI form renders immediately and still reads cached/history data in the background.",
+          "notes": "History tab loading behavior was left intact."
+        }
+      ],
+      "createdAt": "2026-05-17T18:03:14.178Z",
+      "updatedAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "memoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "rootMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "parentMemoryIds": [
+        "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d"
+      ],
+      "relatedMemoryIds": [
+        "fd5a8d47-1547-4790-9b97-0b46d99add95",
+        "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [
+        "da523f59-2d60-43bb-b822-784a17f4be73"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted all Personal Records history tabs to use cached data immediately and only show loading indicators when there is no data yet. This preserves the cache-first experience while preventing spinner flashes during background refreshes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Changed BMI history tab to keep cached history visible and only show loading when no BMI data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Changed blood pressure history tab to keep cached history visible and only show loading when no blood pressure data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Changed temperature history tab to keep cached history visible and only show loading when no temperature data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Changed medicine intake history/list area to keep cached medicines visible and only show loading when no medicine data is present yet.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T18:04:41.900Z",
+      "updatedAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "memoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "rootMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "parentMemoryIds": [
+        "e2f3a974-eb98-4db7-951f-6c470264fcb8"
+      ],
+      "relatedMemoryIds": [
+        "fd5a8d47-1547-4790-9b97-0b46d99add95",
+        "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [
+        "748402a1-87ea-49dd-8c4a-6470395071eb"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted all Personal Records history tabs to use cached data immediately and only show loading indicators when there is no data yet. This preserves the cache-first experience while preventing spinner flashes during background refreshes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Changed BMI history tab to keep cached history visible and only show loading when no BMI data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Changed blood pressure history tab to keep cached history visible and only show loading when no blood pressure data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Changed temperature history tab to keep cached history visible and only show loading when no temperature data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Changed medicine intake history/list area to keep cached medicines visible and only show loading when no medicine data is present yet.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T18:04:42.056Z",
+      "updatedAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "memoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "rootMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "parentMemoryIds": [
+        "da523f59-2d60-43bb-b822-784a17f4be73"
+      ],
+      "relatedMemoryIds": [
+        "fd5a8d47-1547-4790-9b97-0b46d99add95",
+        "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted all Personal Records history tabs to use cached data immediately and only show loading indicators when there is no data yet. This preserves the cache-first experience while preventing spinner flashes during background refreshes.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\body_mass_index\\presentation\\screen\\body_mass_index_screen.dart",
+          "action": "modified",
+          "reason": "Changed BMI history tab to keep cached history visible and only show loading when no BMI data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\blood_pressure\\presentation\\screen\\blood_pressure_screen.dart",
+          "action": "modified",
+          "reason": "Changed blood pressure history tab to keep cached history visible and only show loading when no blood pressure data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\temperature\\presentation\\screen\\temperature_screen.dart",
+          "action": "modified",
+          "reason": "Changed temperature history tab to keep cached history visible and only show loading when no temperature data is present yet.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\phr\\medicine_intake\\presentation\\screen\\medicine_intake_screen.dart",
+          "action": "modified",
+          "reason": "Changed medicine intake history/list area to keep cached medicines visible and only show loading when no medicine data is present yet.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-17T18:04:42.189Z",
+      "updatedAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "memoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90cac141-e925-4337-960f-07957c676ca8",
+      "rootMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+        "da523f59-2d60-43bb-b822-784a17f4be73",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+        "748402a1-87ea-49dd-8c4a-6470395071eb",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042"
+      ],
+      "childMemoryIds": [
+        "35ec3e4a-805e-465b-b806-1b37f856d92c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted the Health Records feature to be cache-first and preserve visible cached content during background refreshes. The shared data screen now accepts repository injection for easier testing, keeps cached records visible when the network returns an empty list, and still falls back to loading/error states only for true first-load/no-cache cases. The shared template no longer shows a loading overlay once entries are already visible, which keeps the UI smooth and consistent with the Personal Records behavior.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "modified",
+          "reason": "This is the orchestration layer that loads cached health-record data, performs background refreshes, and now preserves cached content when the refresh response is empty.",
+          "notes": "Added optional repository injection and guarded empty refresh updates."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "This template controls whether loading UI is shown once entries are already visible, so it needed to stop overlaying a loading indicator over cached content.",
+          "notes": "Kept quiet loading state for first-load/no-cache only."
+        },
+        {
+          "path": "frontend/test/features/health_records/presentation/widgets/health_record_data_screen_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the cache-first behavior ensures cached records stay visible when the refresh returns no new items.",
+          "notes": "Uses a fake repository and seeded auth session."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Needed to understand how to seed an auth session in the widget test so the background refresh path is exercised.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Needed the LoginResult and UserProfileSummary constructors to seed the test auth session cleanly.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_repository.dart",
+          "action": "inspected",
+          "reason": "Confirmed the load-cached/load-network split and how the screen consumes repository results.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "Verified the template branch structure before removing the overlay loading indicator.",
+          "notes": "No code changes made to the inspection copy beyond the actual edit."
+        }
+      ],
+      "createdAt": "2026-05-17T18:10:23.669Z",
+      "updatedAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "memoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90cac141-e925-4337-960f-07957c676ca8",
+      "rootMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "parentMemoryIds": [
+        "90cac141-e925-4337-960f-07957c676ca8"
+      ],
+      "relatedMemoryIds": [
+        "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+        "da523f59-2d60-43bb-b822-784a17f4be73",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+        "748402a1-87ea-49dd-8c4a-6470395071eb",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042"
+      ],
+      "childMemoryIds": [
+        "b467338a-3b9b-4ce6-8168-40c216ce0678"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted the Health Records feature to be cache-first and preserve visible cached content during background refreshes. The shared data screen now accepts repository injection for easier testing, keeps cached records visible when the network returns an empty list, and still falls back to loading/error states only for true first-load/no-cache cases. The shared template no longer shows a loading overlay once entries are already visible, which keeps the UI smooth and consistent with the Personal Records behavior.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "modified",
+          "reason": "This is the orchestration layer that loads cached health-record data, performs background refreshes, and now preserves cached content when the refresh response is empty.",
+          "notes": "Added optional repository injection and guarded empty refresh updates."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "This template controls whether loading UI is shown once entries are already visible, so it needed to stop overlaying a loading indicator over cached content.",
+          "notes": "Kept quiet loading state for first-load/no-cache only."
+        },
+        {
+          "path": "frontend/test/features/health_records/presentation/widgets/health_record_data_screen_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the cache-first behavior ensures cached records stay visible when the refresh returns no new items.",
+          "notes": "Uses a fake repository and seeded auth session."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Needed to understand how to seed an auth session in the widget test so the background refresh path is exercised.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Needed the LoginResult and UserProfileSummary constructors to seed the test auth session cleanly.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_repository.dart",
+          "action": "inspected",
+          "reason": "Confirmed the load-cached/load-network split and how the screen consumes repository results.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "Verified the template branch structure before removing the overlay loading indicator.",
+          "notes": "No code changes made to the inspection copy beyond the actual edit."
+        }
+      ],
+      "createdAt": "2026-05-17T18:10:23.810Z",
+      "updatedAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "memoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90cac141-e925-4337-960f-07957c676ca8",
+      "rootMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "parentMemoryIds": [
+        "35ec3e4a-805e-465b-b806-1b37f856d92c"
+      ],
+      "relatedMemoryIds": [
+        "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+        "da523f59-2d60-43bb-b822-784a17f4be73",
+        "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+        "748402a1-87ea-49dd-8c4a-6470395071eb",
+        "a279705d-2ed1-4b91-bfe2-e534511a5042"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted the Health Records feature to be cache-first and preserve visible cached content during background refreshes. The shared data screen now accepts repository injection for easier testing, keeps cached records visible when the network returns an empty list, and still falls back to loading/error states only for true first-load/no-cache cases. The shared template no longer shows a loading overlay once entries are already visible, which keeps the UI smooth and consistent with the Personal Records behavior.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_data_screen.dart",
+          "action": "modified",
+          "reason": "This is the orchestration layer that loads cached health-record data, performs background refreshes, and now preserves cached content when the refresh response is empty.",
+          "notes": "Added optional repository injection and guarded empty refresh updates."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "modified",
+          "reason": "This template controls whether loading UI is shown once entries are already visible, so it needed to stop overlaying a loading indicator over cached content.",
+          "notes": "Kept quiet loading state for first-load/no-cache only."
+        },
+        {
+          "path": "frontend/test/features/health_records/presentation/widgets/health_record_data_screen_test.dart",
+          "action": "created",
+          "reason": "Regression coverage for the cache-first behavior ensures cached records stay visible when the refresh returns no new items.",
+          "notes": "Uses a fake repository and seeded auth session."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "inspected",
+          "reason": "Needed to understand how to seed an auth session in the widget test so the background refresh path is exercised.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/models/auth_api_models.dart",
+          "action": "inspected",
+          "reason": "Needed the LoginResult and UserProfileSummary constructors to seed the test auth session cleanly.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/data/health_records_repository.dart",
+          "action": "inspected",
+          "reason": "Confirmed the load-cached/load-network split and how the screen consumes repository results.",
+          "notes": "No code changes made."
+        },
+        {
+          "path": "frontend/lib/features/health_records/presentation/widgets/health_record_screen_template.dart",
+          "action": "inspected",
+          "reason": "Verified the template branch structure before removing the overlay loading indicator.",
+          "notes": "No code changes made to the inspection copy beyond the actual edit."
+        }
+      ],
+      "createdAt": "2026-05-17T18:10:23.956Z",
+      "updatedAt": "2026-05-17T18:10:23.956Z"
     }
   ],
   "edges": [
@@ -31777,7 +33148,973 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-17T09:15:23.709Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "7c69c074-5e17-4771-9e63-06464999a01a",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "73d39444-853d-4a6b-985f-fae5cda1f21d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.385Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "73d39444-853d-4a6b-985f-fae5cda1f21d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "toMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.591Z"
+    },
+    {
+      "fromMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "fromMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "toMemoryId": "fff95c0a-92fc-4e9f-bea5-bf79c4b6b0b2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "fromMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "toMemoryId": "73d39444-853d-4a6b-985f-fae5cda1f21d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "fromMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "fromMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T12:58:28.791Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.564Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.704Z"
+    },
+    {
+      "fromMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "fromMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "fromMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "fromMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "fromMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "toMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T14:07:20.839Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "toMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.076Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "toMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.185Z"
+    },
+    {
+      "fromMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "toMemoryId": "6e78c0de-0bdf-4321-a090-989aed9eef24",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.309Z"
+    },
+    {
+      "fromMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.309Z"
+    },
+    {
+      "fromMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.309Z"
+    },
+    {
+      "fromMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.309Z"
+    },
+    {
+      "fromMemoryId": "cf4605c3-2426-4f56-a013-774bd2da1133",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:46:18.309Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "toMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:10.894Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "50572752-fe04-41bc-a60b-c2f5581cfbd7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "toMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.004Z"
+    },
+    {
+      "fromMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "toMemoryId": "013f1eba-51d4-41b1-bcff-00aafe806e54",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "fromMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "toMemoryId": "8e97bd77-2c9c-473b-8458-70aa14e61bd6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "fromMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "toMemoryId": "03ebe5bf-4094-427c-b7ac-b8b1bcca5129",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "fromMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "toMemoryId": "fa59106c-72dd-4193-b4aa-c27d0f7d7a40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "fromMemoryId": "a0c5a5f6-dc6c-4ac4-b292-bb19d599438c",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:49:11.120Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "f1a31a8f-0ffc-4781-bd5d-acb033aed9f7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.260Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.432Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.433Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.433Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.433Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.433Z"
+    },
+    {
+      "fromMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "toMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.433Z"
+    },
+    {
+      "fromMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "fromMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "toMemoryId": "f5535322-c325-41ea-8a4f-616c9844f8d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "fromMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "toMemoryId": "a265d276-0a47-4072-8e71-5c87a53728f4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "fromMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "toMemoryId": "b1faba52-a0e4-4a97-9a81-fc8c1210cb53",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "fromMemoryId": "35f1320b-ef61-40d8-ba20-8ca2c9ff7346",
+      "toMemoryId": "60cea514-47ee-4070-bd72-abeb54b5529f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T17:58:41.591Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "98dfc7ad-e2da-429e-ba5e-2c9bc934cba6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "toMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:13.912Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "toMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.057Z"
+    },
+    {
+      "fromMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "toMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "fromMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "toMemoryId": "ad571b0f-51fb-4e40-8ef8-00141965f9a4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "fromMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "toMemoryId": "419b04fb-994e-4b0f-bb68-2d3838b73617",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "fromMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "fromMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:03:14.178Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "b7b9ae18-7c4d-4776-9701-b6e0251b6c0d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "toMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:41.900Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "toMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.056Z"
+    },
+    {
+      "fromMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "toMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "fromMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "toMemoryId": "fd5a8d47-1547-4790-9b97-0b46d99add95",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "fromMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "toMemoryId": "ababc060-c9cb-49c0-ad27-49893f8c21e5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "fromMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "fromMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:04:42.189Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "toMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.669Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "90cac141-e925-4337-960f-07957c676ca8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "toMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.810Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "35ec3e4a-805e-465b-b806-1b37f856d92c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "e2f3a974-eb98-4db7-951f-6c470264fcb8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "da523f59-2d60-43bb-b822-784a17f4be73",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "bb2f0a49-8583-4990-aa70-d1dd4b7e470b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "748402a1-87ea-49dd-8c4a-6470395071eb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "b467338a-3b9b-4ce6-8168-40c216ce0678",
+      "toMemoryId": "a279705d-2ed1-4b91-bfe2-e534511a5042",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-17T18:10:23.956Z"
     }
   ],
-  "updatedAt": "2026-05-17T09:15:23.718Z"
+  "updatedAt": "2026-05-17T18:10:23.963Z"
 }

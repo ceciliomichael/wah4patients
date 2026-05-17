@@ -52,17 +52,20 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       return;
     }
 
-    if (AuthSession.isAuthenticated && !AuthSession.isAccessTokenExpired) {
-      return;
-    }
-
-    final navigator = _navigatorKey.currentState;
-    if (navigator == null || !mounted) {
+    final shouldReauthenticate =
+        AuthSession.requiresReauthentication ||
+        (AuthSession.isAuthenticated && AuthSession.isAccessTokenExpired);
+    if (!shouldReauthenticate) {
       return;
     }
 
     final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
     final targetRoute = isMpinEnabled ? AppRoutes.mpinUnlock : AppRoutes.login;
+
+    final navigator = _navigatorKey.currentState;
+    if (navigator == null || !mounted) {
+      return;
+    }
 
     if (!mounted || _routeTrackerObserver.currentRoute == targetRoute) {
       return;

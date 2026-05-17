@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../core/config/app_environment.dart';
+import '../../auth/domain/auth_session.dart';
 
 class HealthRecordsApiException implements Exception {
   const HealthRecordsApiException(this.message, {this.statusCode});
@@ -205,6 +206,10 @@ class HealthRecordsApiClient {
     final decodedBody = _decodeResponseBody(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
+    }
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      AuthSession.requireReauthentication();
     }
 
     throw HealthRecordsApiException(

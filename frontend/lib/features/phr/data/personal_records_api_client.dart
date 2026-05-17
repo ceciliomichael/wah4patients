@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../core/config/app_environment.dart';
+import '../../auth/domain/auth_session.dart';
 
 class PersonalRecordsApiException implements Exception {
   const PersonalRecordsApiException(this.message, {this.statusCode});
@@ -56,6 +57,23 @@ class BmiRecordResponse {
       createdAt: _readDateTime(json['createdAt']),
       updatedAt: _readDateTime(json['updatedAt']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profileId': profileId,
+      'weightKg': weightKg,
+      'heightCm': heightCm,
+      'bmiValue': bmiValue,
+      'manualBmiValue': manualBmiValue,
+      'bmiSource': bmiSource,
+      'measurementSystem': measurementSystem,
+      'notes': notes,
+      'recordedAt': recordedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+    };
   }
 }
 
@@ -121,6 +139,22 @@ class BloodPressureRecordResponse {
       updatedAt: _readDateTime(json['updatedAt']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profileId': profileId,
+      'systolicMmHg': systolicMmHg,
+      'diastolicMmHg': diastolicMmHg,
+      'pulseRate': pulseRate,
+      'measurementPosition': measurementPosition,
+      'measurementMethod': measurementMethod,
+      'notes': notes,
+      'recordedAt': recordedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+    };
+  }
 }
 
 class BloodPressureRecordsResponse {
@@ -181,6 +215,21 @@ class TemperatureRecordResponse {
       createdAt: _readDateTime(json['createdAt']),
       updatedAt: _readDateTime(json['updatedAt']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profileId': profileId,
+      'temperatureValue': temperatureValue,
+      'temperatureUnit': temperatureUnit,
+      'normalizedCelsius': normalizedCelsius,
+      'measurementMethod': measurementMethod,
+      'notes': notes,
+      'recordedAt': recordedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+    };
   }
 }
 
@@ -251,6 +300,24 @@ class MedicationIntakeRecordResponse {
       createdAt: _readDateTime(json['createdAt']),
       updatedAt: _readDateTime(json['updatedAt']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profileId': profileId,
+      'prescriptionId': prescriptionId,
+      'medicationReference': medicationReference,
+      'medicationNameSnapshot': medicationNameSnapshot,
+      'scheduledAt': scheduledAt.toIso8601String(),
+      'takenAt': takenAt?.toIso8601String(),
+      'status': status,
+      'quantityValue': quantityValue,
+      'quantityUnit': quantityUnit,
+      'notes': notes,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+    };
   }
 }
 
@@ -455,6 +522,10 @@ class PersonalRecordsApiClient {
     final decodedBody = _decodeResponseBody(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
+    }
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      AuthSession.requireReauthentication();
     }
 
     throw PersonalRecordsApiException(

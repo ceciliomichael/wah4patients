@@ -151,6 +151,10 @@ class InteroperabilityApiClient implements InteroperabilityClient {
       return decodedBody;
     }
 
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      AuthSession.requireReauthentication();
+    }
+
     throw InteroperabilityApiException(
       _extractErrorMessage(decodedBody) ??
           'Request failed with status ${response.statusCode}',

@@ -12,6 +12,7 @@ import '../../../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../auth/domain/auth_session.dart';
 import '../../../data/personal_records_api_client.dart';
 import '../../../data/personal_records_change_notifier.dart';
+import '../../../data/personal_records_repository.dart';
 
 class BloodPressureScreen extends StatefulWidget {
   const BloodPressureScreen({super.key});
@@ -21,9 +22,11 @@ class BloodPressureScreen extends StatefulWidget {
 }
 
 class _BloodPressureScreenState extends State<BloodPressureScreen> {
+  final PersonalRecordsRepository _repository = PersonalRecordsRepository();
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
 
+  final List<BloodPressureRecordResponse> _records = <BloodPressureRecordResponse>[];
   _BloodPressureHistoryEntry? _latestEntry;
   final List<_BloodPressureHistoryEntry> _history = <_BloodPressureHistoryEntry>[];
   bool _isLoadingHistory = true;
@@ -63,6 +66,14 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   }
 
   Future<void> _loadHistory() async {
+    final cacheKey = _personalRecordsCacheKey();
+    final cachedRecords = await _repository.loadCachedBloodPressureRecords(
+      cacheKey: cacheKey,
+    );
+    if (cachedRecords != null && mounted) {
+      _applyHistoryFromRecords(cachedRecords);
+    }
+
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       if (!mounted) {
@@ -81,21 +92,12 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
     });
 
     try {
-      final response = await PersonalRecordsApiClient.instance
-          .getBloodPressureRecords(accessToken: accessToken);
-      final history = response.records
-          .map(_BloodPressureHistoryEntry.fromRecord)
-          .toList(growable: false);
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _history
-          ..clear()
-          ..addAll(history);
-        _latestEntry = _history.isEmpty ? null : _history.first;
-        _isLoadingHistory = false;
-      });
+      final records = await _repository.loadBloodPressureRecords(
+        accessToken: accessToken,
+        cacheKey: cacheKey,
+      );
+      if (!mounted) return;
+      _applyHistoryFromRecords(records);
     } on PersonalRecordsApiException catch (error) {
       if (!mounted) {
         return;
@@ -105,6 +107,28 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
         _isLoadingHistory = false;
       });
     }
+  }
+
+  String _personalRecordsCacheKey() {
+    final userId = AuthSession.userId?.trim() ?? '';
+    return userId.isNotEmpty ? userId : 'anonymous';
+  }
+
+  void _applyHistoryFromRecords(List<BloodPressureRecordResponse> records) {
+    final history = records
+        .map(_BloodPressureHistoryEntry.fromRecord)
+        .toList(growable: false);
+    setState(() {
+      _records
+        ..clear()
+        ..addAll(records);
+      _history
+        ..clear()
+        ..addAll(history);
+      _latestEntry = _history.isEmpty ? null : _history.first;
+      _isLoadingHistory = false;
+      _historyError = null;
+    });
   }
 
   Color _categoryColor(String category) {
@@ -160,11 +184,18 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
       }
 
       setState(() {
+        _records.insert(0, response);
         _latestEntry = entry;
         _history.insert(0, entry);
         _systolicController.clear();
         _diastolicController.clear();
       });
+      unawaited(
+        _repository.cacheBloodPressureRecords(
+          cacheKey: _personalRecordsCacheKey(),
+          records: _records,
+        ),
+      );
       PersonalRecordsChangeNotifier.notifyRecordSaved();
 
       AppNotificationCenter.instance.showSuccess(
@@ -437,7 +468,7 @@ class _BloodPressureScreenState extends State<BloodPressureScreen> {
   }
 
   Widget _buildHistoryTab() {
-    if (_isLoadingHistory) {
+    if (_isLoadingHistory && _history.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(color: AppColors.primary),
       );

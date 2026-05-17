@@ -148,6 +148,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (sheetContext) {
         return SignOutConfirmationSheetWidget(
           onSignOut: () {
+            AuthSession.clearReauthenticationRequirement();
             AuthSession.clear();
             Navigator.of(
               context,
