@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getLandingAndroidApkUrl } from "@/config/landing";
 
 const androidSteps = [
   "Tap the Download button below",
@@ -8,6 +9,8 @@ const androidSteps = [
 ];
 
 export function LandingDownload() {
+  const androidApkUrl = getLandingAndroidApkUrl();
+
   return (
     <section
       id="download"
@@ -89,7 +92,7 @@ export function LandingDownload() {
             </div>
 
             <Link
-              href="https://drive.usercontent.google.com/download?id=1kq3N-5USCaA6wxQKYMFpA5lB2D7HOdV9&export=download&authuser=0"
+              href={androidApkUrl}
               className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#46017D] text-sm font-bold text-white shadow-lg shadow-[#46017D]/30 transition-all duration-200 hover:bg-[#5a02a3] hover:-translate-y-0.5 hover:shadow-[#46017D]/50 active:scale-95"
             >
               <svg

@@ -20315,6 +20315,254 @@
       ],
       "createdAt": "2026-05-17T18:10:23.956Z",
       "updatedAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "memoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "185b0534-a163-471c-bae7-d292b4ccbea9"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [
+        "60ae4c59-ef49-427e-a333-b672701631e4"
+      ],
+      "sectionKind": "fact",
+      "summary": "Updated the landing-wah4p frontend so the Android APK download link is configurable through an environment variable instead of being hardcoded in the landing download CTA. To make runtime env changes effective, the landing route was switched to dynamic rendering and the Docker Compose file plus README were updated to document and pass the variable through.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\config\\landing.ts",
+          "action": "created",
+          "reason": "Added the typed env-backed source of truth for the Android APK URL with validation and fallback behavior.",
+          "notes": "Exports getLandingAndroidApkUrl()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Replaced the hardcoded APK download href with the config helper so the CTA uses the env-based URL.",
+          "notes": "Component remains presentation-focused."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "modified",
+          "reason": "Enabled dynamic rendering so the landing page picks up runtime environment changes to the download URL.",
+          "notes": "Keeps route entrypoint thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Forwarded the APK URL env var into the container for compose-based deployments.",
+          "notes": "Uses a safe empty-string fallback if unset."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\README.md",
+          "action": "modified",
+          "reason": "Documented the new env variable and where to place it for local Next.js and Docker Compose usage.",
+          "notes": "Clarifies .env.local vs .env."
+        }
+      ],
+      "createdAt": "2026-05-18T02:53:01.932Z",
+      "updatedAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "memoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "0456f494-7d74-4aa2-a0b4-200047867ccd"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [
+        "73938d54-d518-4a37-801e-62616520e9b9"
+      ],
+      "sectionKind": "decision",
+      "summary": "Updated the landing-wah4p frontend so the Android APK download link is configurable through an environment variable instead of being hardcoded in the landing download CTA. To make runtime env changes effective, the landing route was switched to dynamic rendering and the Docker Compose file plus README were updated to document and pass the variable through.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\config\\landing.ts",
+          "action": "created",
+          "reason": "Added the typed env-backed source of truth for the Android APK URL with validation and fallback behavior.",
+          "notes": "Exports getLandingAndroidApkUrl()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Replaced the hardcoded APK download href with the config helper so the CTA uses the env-based URL.",
+          "notes": "Component remains presentation-focused."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "modified",
+          "reason": "Enabled dynamic rendering so the landing page picks up runtime environment changes to the download URL.",
+          "notes": "Keeps route entrypoint thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Forwarded the APK URL env var into the container for compose-based deployments.",
+          "notes": "Uses a safe empty-string fallback if unset."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\README.md",
+          "action": "modified",
+          "reason": "Documented the new env variable and where to place it for local Next.js and Docker Compose usage.",
+          "notes": "Clarifies .env.local vs .env."
+        }
+      ],
+      "createdAt": "2026-05-18T02:53:02.054Z",
+      "updatedAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "memoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "rootMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "parentMemoryIds": [
+        "60ae4c59-ef49-427e-a333-b672701631e4"
+      ],
+      "relatedMemoryIds": [
+        "94019429-1fa6-4bad-97b0-60adf26466bb",
+        "b21404cc-f536-42e0-8746-340a94af948b",
+        "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+        "c980db21-4ede-4298-85c7-587e811c11ee"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Updated the landing-wah4p frontend so the Android APK download link is configurable through an environment variable instead of being hardcoded in the landing download CTA. To make runtime env changes effective, the landing route was switched to dynamic rendering and the Docker Compose file plus README were updated to document and pass the variable through.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\config\\landing.ts",
+          "action": "created",
+          "reason": "Added the typed env-backed source of truth for the Android APK URL with validation and fallback behavior.",
+          "notes": "Exports getLandingAndroidApkUrl()."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\components\\landing\\landing-download.tsx",
+          "action": "modified",
+          "reason": "Replaced the hardcoded APK download href with the config helper so the CTA uses the env-based URL.",
+          "notes": "Component remains presentation-focused."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\src\\app\\page.tsx",
+          "action": "modified",
+          "reason": "Enabled dynamic rendering so the landing page picks up runtime environment changes to the download URL.",
+          "notes": "Keeps route entrypoint thin."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\docker-compose.yml",
+          "action": "modified",
+          "reason": "Forwarded the APK URL env var into the container for compose-based deployments.",
+          "notes": "Uses a safe empty-string fallback if unset."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\README.md",
+          "action": "modified",
+          "reason": "Documented the new env variable and where to place it for local Next.js and Docker Compose usage.",
+          "notes": "Clarifies .env.local vs .env."
+        }
+      ],
+      "createdAt": "2026-05-18T02:53:02.171Z",
+      "updatedAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "memoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "rootMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "parentMemoryIds": [
+        "0456f494-7d74-4aa2-a0b4-200047867ccd"
+      ],
+      "relatedMemoryIds": [
+        "73938d54-d518-4a37-801e-62616520e9b9",
+        "60ae4c59-ef49-427e-a333-b672701631e4",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "94019429-1fa6-4bad-97b0-60adf26466bb"
+      ],
+      "childMemoryIds": [
+        "9efcd010-f7d0-4643-9981-3878f3d7385c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Added an example env file for the landing-wah4p app so the APK download URL can be copied into local or deployment env files more easily. This was a small follow-up to the earlier env-backed APK link change and kept the file intentionally minimal.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\.env.example",
+          "action": "created",
+          "reason": "Added the requested example env file documenting the APK download URL variable for easy setup.",
+          "notes": "Contains one variable and a comment."
+        }
+      ],
+      "createdAt": "2026-05-18T02:55:46.320Z",
+      "updatedAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "memoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "rootMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "parentMemoryIds": [
+        "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0"
+      ],
+      "relatedMemoryIds": [
+        "73938d54-d518-4a37-801e-62616520e9b9",
+        "60ae4c59-ef49-427e-a333-b672701631e4",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "94019429-1fa6-4bad-97b0-60adf26466bb"
+      ],
+      "childMemoryIds": [
+        "6eb55702-8ab0-4ddf-96f0-fa1c750afde7"
+      ],
+      "sectionKind": "decision",
+      "summary": "Added an example env file for the landing-wah4p app so the APK download URL can be copied into local or deployment env files more easily. This was a small follow-up to the earlier env-backed APK link change and kept the file intentionally minimal.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\.env.example",
+          "action": "created",
+          "reason": "Added the requested example env file documenting the APK download URL variable for easy setup.",
+          "notes": "Contains one variable and a comment."
+        }
+      ],
+      "createdAt": "2026-05-18T02:55:46.421Z",
+      "updatedAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "memoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "rootMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "parentMemoryIds": [
+        "9efcd010-f7d0-4643-9981-3878f3d7385c"
+      ],
+      "relatedMemoryIds": [
+        "73938d54-d518-4a37-801e-62616520e9b9",
+        "60ae4c59-ef49-427e-a333-b672701631e4",
+        "185b0534-a163-471c-bae7-d292b4ccbea9",
+        "94019429-1fa6-4bad-97b0-60adf26466bb"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Added an example env file for the landing-wah4p app so the APK download URL can be copied into local or deployment env files more easily. This was a small follow-up to the earlier env-backed APK link change and kept the file intentionally minimal.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\landing-wah4p\\.env.example",
+          "action": "created",
+          "reason": "Added the requested example env file documenting the APK download URL variable for easy setup.",
+          "notes": "Contains one variable and a comment."
+        }
+      ],
+      "createdAt": "2026-05-18T02:55:46.525Z",
+      "updatedAt": "2026-05-18T02:55:46.525Z"
     }
   ],
   "edges": [
@@ -34114,7 +34362,245 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-17T18:10:23.956Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "toMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:01.932Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "toMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.054Z"
+    },
+    {
+      "fromMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "toMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "fromMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "fromMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "toMemoryId": "b21404cc-f536-42e0-8746-340a94af948b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "fromMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "toMemoryId": "95ba45a7-1d41-4754-9e83-29e4c25f1de2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "fromMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "toMemoryId": "c980db21-4ede-4298-85c7-587e811c11ee",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:53:02.171Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "0456f494-7d74-4aa2-a0b4-200047867ccd",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "toMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.320Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "d7fe9d0d-0f47-45e5-b4bd-58740d6c3af0",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "toMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.421Z"
+    },
+    {
+      "fromMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "toMemoryId": "9efcd010-f7d0-4643-9981-3878f3d7385c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "fromMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "toMemoryId": "73938d54-d518-4a37-801e-62616520e9b9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "fromMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "toMemoryId": "60ae4c59-ef49-427e-a333-b672701631e4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "fromMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "toMemoryId": "185b0534-a163-471c-bae7-d292b4ccbea9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "fromMemoryId": "6eb55702-8ab0-4ddf-96f0-fa1c750afde7",
+      "toMemoryId": "94019429-1fa6-4bad-97b0-60adf26466bb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T02:55:46.525Z"
     }
   ],
-  "updatedAt": "2026-05-17T18:10:23.963Z"
+  "updatedAt": "2026-05-18T02:55:46.540Z"
 }

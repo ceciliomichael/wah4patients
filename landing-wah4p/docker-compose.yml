@@ -6,6 +6,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3049
+      WAH4P_ANDROID_APK_URL: ${WAH4P_ANDROID_APK_URL:-}
     ports:
       - "0.0.0.0:3049:3049"
     restart: always

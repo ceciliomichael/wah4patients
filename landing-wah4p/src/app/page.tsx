@@ -4,6 +4,8 @@ import { LandingHero } from "@/components/landing/landing-hero";
 import { LandingHighlights } from "@/components/landing/landing-highlights";
 import { LandingImageShowcase } from "@/components/landing/landing-image-showcase";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
