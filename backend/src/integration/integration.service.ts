@@ -14,6 +14,7 @@ import {
 } from './integration.types';
 import { GatewayResourceType } from '../fhir-sync/fhir-sync.types';
 import { FhirSyncRepository } from '../fhir-sync/fhir-sync.repository';
+import { GatewayClientService } from './gateway-client.service';
 
 const DEFAULT_RESOURCE_TYPE = 'Patient';
 const PHILHEALTH_IDENTIFIER_SYSTEM =
@@ -40,6 +41,7 @@ export class IntegrationService {
   constructor(
     private readonly configService: ConfigService,
     private readonly fhirSyncRepository: FhirSyncRepository,
+    private readonly gatewayClient: GatewayClientService,
   ) {}
 
   async getProviders(): Promise<InteroperabilityProvidersResponse> {
@@ -120,76 +122,15 @@ export class IntegrationService {
   }
 
   private async fetchGatewayJson(path: string): Promise<unknown> {
-    return this.requestGatewayJson({
-      method: 'GET',
-      path,
-    });
+    return this.gatewayClient.getJson(path);
   }
 
   private async postGatewayJson(
     path: string,
     body: Record<string, unknown>,
+    headers: Record<string, string> = {},
   ): Promise<unknown> {
-    return this.requestGatewayJson({
-      method: 'POST',
-      path,
-      body,
-    });
-  }
-
-  private async requestGatewayJson(input: {
-    method: 'GET' | 'POST';
-    path: string;
-    body?: Record<string, unknown>;
-  }): Promise<unknown> {
-    const gatewayUrl = this.resolveGatewayApiBaseUrl();
-    const requestUrl = new URL(
-      input.path.replace(/^\//, ''),
-      `${gatewayUrl}/`,
-    ).toString();
-    const apiKey = this.getRequiredConfig('WAH4PC_API_KEY');
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15_000);
-
-    let response: Response;
-    try {
-      response = await fetch(requestUrl, {
-        method: input.method,
-        headers: {
-          Accept: 'application/json',
-          'x-api-key': apiKey,
-          ...(input.method == 'POST'
-              ? {'Content-Type': 'application/json'}
-              : {}),
-        },
-        body: input.body == null ? undefined : JSON.stringify(input.body),
-        signal: controller.signal,
-      });
-    } catch (error) {
-      if ((error as Error & { name?: string }).name === 'AbortError') {
-        throw new ServiceUnavailableException(
-          'The WAH4PC Gateway request timed out. Please try again.',
-        );
-      }
-
-      throw new ServiceUnavailableException(
-        'Unable to reach the WAH4PC Gateway. Check the configured gateway URL.',
-      );
-    } finally {
-      clearTimeout(timeoutId);
-    }
-
-    const decodedBody = await this.safeParseJson(response);
-    if (!response.ok) {
-      const message = this.extractErrorMessage(decodedBody);
-      throw new BadGatewayException(
-        message ??
-          `WAH4PC Gateway request failed with status ${response.status}`,
-      );
-    }
-
-    return decodedBody;
+    return this.gatewayClient.postJson(path, body, headers);
   }
 
   private async requestSyncResourcesFromGateway(input: {
@@ -275,20 +216,6 @@ export class IntegrationService {
     );
   }
 
-  private async safeParseJson(response: Response): Promise<unknown> {
-    const contentType = response.headers.get('content-type') ?? '';
-    if (!contentType.includes('application/json')) {
-      const textBody = await response.text();
-      return textBody.trim().length > 0 ? textBody : null;
-    }
-
-    try {
-      return await response.json();
-    } catch {
-      return null;
-    }
-  }
-
   private extractProviderPayload(payload: unknown): GatewayProviderRecord[] {
     if (Array.isArray(payload)) {
       return payload.filter((provider) =>
@@ -335,36 +262,6 @@ export class IntegrationService {
       location: provider.location.trim(),
       isActive: provider.isActive,
     };
-  }
-
-  private extractErrorMessage(payload: unknown): string | undefined {
-    if (!this.isRecord(payload)) {
-      return undefined;
-    }
-
-    const directMessage = payload['message'];
-    if (typeof directMessage === 'string' && directMessage.trim().length > 0) {
-      return directMessage.trim();
-    }
-
-    const errorMessage = payload['error'];
-    if (typeof errorMessage === 'string' && errorMessage.trim().length > 0) {
-      return errorMessage.trim();
-    }
-
-    return undefined;
-  }
-
-  private resolveGatewayApiBaseUrl(): string {
-    const gatewayUrl = this.getRequiredConfig('WAH4PC_GATEWAY_URL').trim();
-    if (gatewayUrl.length === 0) {
-      throw new ServiceUnavailableException(
-        'Missing WAH4PC gateway URL configuration.',
-      );
-    }
-
-    const normalized = gatewayUrl.replace(/\/+$/, '');
-    return normalized.endsWith('/api/v1') ? normalized : `${normalized}/api/v1`;
   }
 
   private getRequiredConfig(key: string): string {

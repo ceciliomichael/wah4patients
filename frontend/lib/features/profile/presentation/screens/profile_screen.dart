@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -150,6 +151,7 @@ class ProfileScreen extends StatelessWidget {
           onSignOut: () {
             AuthSession.clearReauthenticationRequirement();
             AuthSession.clear();
+            AppLockStateService.reset();
             Navigator.of(
               context,
             ).pushNamedAndRemoveUntil(AppRoutes.splash, (route) => false);

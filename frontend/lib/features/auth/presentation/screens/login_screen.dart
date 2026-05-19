@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
@@ -106,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
 
         if (securityVerificationToken.isEmpty) {
+          AppLockStateService.reset();
           AuthSession.clear();
           AppNotificationCenter.instance.showWarning(
             'Email verification is required to register this device for MPIN.',
@@ -172,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (result.mfaRequired) {
         AuthSession.clearReauthenticationRequirement();
         AuthSession.clear();
+        AppLockStateService.reset();
         Navigator.of(context).pushNamed(
           AppRoutes.mfaChallenge,
           arguments: MfaChallengeArguments(
@@ -183,6 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       await AuthSession.persist(result);
+      AppLockStateService.unlock();
 
       final shouldContinue = await _prepareMpinDeviceAfterLogin(
         result.accessToken,

@@ -42,7 +42,7 @@ class AppointmentReviewScreen extends StatelessWidget {
           messages: <String>[
             'Check each booking detail carefully before you confirm.',
             'Use Back to return to the previous step if you want to change something.',
-            'Confirming here keeps the flow readable before any backend write is added.',
+            'Confirming here sends the request to the selected provider through the backend gateway.',
           ],
           icons: const <IconData>[
             Icons.fact_check_outlined,
@@ -169,7 +169,7 @@ class AppointmentReviewScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Please review the details below before you confirm this booking.',
+                            'Please review the details below before the app sends the request to ${summary.provider.name}.',
                             style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -200,7 +200,15 @@ class AppointmentReviewScreen extends StatelessWidget {
                             summary.mode.locationLabel,
                             summary.location,
                           ),
-                          _buildDetailRow('Provider', summary.provider),
+                          _buildDetailRow('Provider', summary.provider.name),
+                          _buildDetailRow(
+                            'Provider location',
+                            '${summary.provider.facilityCode} • ${summary.provider.location}',
+                          ),
+                          _buildDetailRow(
+                            'Patient identifier',
+                            '${summary.patientIdentifier.label}: ${summary.patientIdentifier.value}',
+                          ),
                         ],
                       ),
                       const SizedBox(height: 14),
@@ -235,7 +243,7 @@ class AppointmentReviewScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: PrimaryButtonWidget(
-                      text: 'Confirm Booking',
+                      text: 'Confirm and Send',
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                   ),

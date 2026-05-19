@@ -34,7 +34,7 @@ class _StartupGateScreenState extends State<StartupGateScreen> {
               if (snapshot.connectionState != ConnectionState.done) {
                 return _StartupStatusView(
                   title: 'Starting WAH for Patients',
-                  subtitle: 'Checking your session and loading your experience.',
+                  subtitle: 'Loading your experience.',
                 );
               }
 
@@ -56,10 +56,10 @@ class _StartupGateScreenState extends State<StartupGateScreen> {
               }
 
               return _StartupStatusView(
-                title: isUnlockRoute ? 'Unlock your session' : 'Welcome back',
+                title: isUnlockRoute ? 'Unlock with MPIN' : 'Welcome back',
                 subtitle: isUnlockRoute
                     ? 'Please enter your MPIN to continue.'
-                    : 'Preparing your secure session now.',
+                    : 'Preparing your app now.',
               );
             },
           ),

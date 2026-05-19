@@ -8,6 +8,8 @@ class OnsiteConsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppointmentBookingScreen(content: onsiteAppointmentContent);
+    return AppointmentBookingScreen(
+      initialMode: AppointmentBookingMode.onsite,
+    );
   }
 }

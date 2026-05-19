@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_notification_center.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/config/screen_protection.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -100,6 +101,7 @@ class _TotpChallengeScreenState extends State<TotpChallengeScreen>
           );
 
           await AuthSession.persist(result);
+          AppLockStateService.unlock();
           await _registerCurrentDeviceAfterLogin(result.accessToken);
 
           if (!mounted) {

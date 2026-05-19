@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../app/app_notification_center.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -221,6 +222,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
 
       AuthSession.clearReauthenticationRequirement();
       AuthSession.clear();
+      AppLockStateService.reset();
 
       if (!mounted) {
         return;
@@ -316,6 +318,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
       }
 
       AuthSession.clearReauthenticationRequirement();
+      AppLockStateService.reset();
       AppNotificationCenter.instance.showWarning(
         'Please sign in again to access security settings.',
       );

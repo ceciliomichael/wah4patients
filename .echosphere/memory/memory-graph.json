@@ -20563,6 +20563,1814 @@
       ],
       "createdAt": "2026-05-18T02:55:46.525Z",
       "updatedAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "memoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "rootMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "parentMemoryIds": [
+        "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [
+        "a344a821-b17e-4303-ba51-a61bafc3bc12"
+      ],
+      "sectionKind": "fact",
+      "summary": "Reworked the frontend auth/session model toward a persistent-login UX with an app-level idle lock. The app now tracks inactivity through a dedicated lock service, locks after 5 minutes of no interaction/navigation, and routes to MPIN unlock instead of forcing routine relogin on token expiry. Session refresh remains silent, and sign-out/reset flows now clear the idle-lock state as well.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Replaced the background-only lock helper with a dedicated idle-lock coordinator that tracks activity and triggers the 5-minute lock.",
+          "notes": "Added timer-based idle tracking and lock state notifications."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Wired the app shell to the new lock service, activity tracking, lifecycle resume handling, and MPIN-lock routing.",
+          "notes": "Added root activity listeners and route-guard logic."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Changed startup routing so authenticated users go to dashboard by default unless the app is actually locked for MPIN.",
+          "notes": "Removed startup reliance on ordinary token expiry for relogin decisions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Adjusted silent refresh failure handling so normal expiry no longer forces the app into a reauthentication flow.",
+          "notes": "Removed the reauth escalation from refresh failure."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Made MPIN unlock restore the idle-lock state on success and clear it on forced sign-out.",
+          "notes": "Replaced the old background-state reset behavior."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/login_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service after successful login and on login-related session resets.",
+          "notes": "Keeps the idle timer aligned with the current auth state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service when registration produces a new authenticated session or an auth reset.",
+          "notes": "Ensures registration flows do not inherit stale lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/totp_challenge_screen.dart",
+          "action": "modified",
+          "reason": "Unlocks the app lock service after MFA success so the new persistent session starts with a fresh idle timer.",
+          "notes": "Keeps MFA completion consistent with login flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when the user signs out from profile settings.",
+          "notes": "Prevents stale lock state after logout."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when security-setting actions sign the user out or force a login transition.",
+          "notes": "Aligns security actions with the new persistent-session architecture."
+        }
+      ],
+      "createdAt": "2026-05-18T15:48:40.804Z",
+      "updatedAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "memoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "rootMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "parentMemoryIds": [
+        "5b777986-bd0e-4aad-b7df-7c72bed8ba55"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [
+        "b7c84953-7f96-4290-98ad-23971dd5f4d4"
+      ],
+      "sectionKind": "decision",
+      "summary": "Reworked the frontend auth/session model toward a persistent-login UX with an app-level idle lock. The app now tracks inactivity through a dedicated lock service, locks after 5 minutes of no interaction/navigation, and routes to MPIN unlock instead of forcing routine relogin on token expiry. Session refresh remains silent, and sign-out/reset flows now clear the idle-lock state as well.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Replaced the background-only lock helper with a dedicated idle-lock coordinator that tracks activity and triggers the 5-minute lock.",
+          "notes": "Added timer-based idle tracking and lock state notifications."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Wired the app shell to the new lock service, activity tracking, lifecycle resume handling, and MPIN-lock routing.",
+          "notes": "Added root activity listeners and route-guard logic."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Changed startup routing so authenticated users go to dashboard by default unless the app is actually locked for MPIN.",
+          "notes": "Removed startup reliance on ordinary token expiry for relogin decisions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Adjusted silent refresh failure handling so normal expiry no longer forces the app into a reauthentication flow.",
+          "notes": "Removed the reauth escalation from refresh failure."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Made MPIN unlock restore the idle-lock state on success and clear it on forced sign-out.",
+          "notes": "Replaced the old background-state reset behavior."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/login_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service after successful login and on login-related session resets.",
+          "notes": "Keeps the idle timer aligned with the current auth state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service when registration produces a new authenticated session or an auth reset.",
+          "notes": "Ensures registration flows do not inherit stale lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/totp_challenge_screen.dart",
+          "action": "modified",
+          "reason": "Unlocks the app lock service after MFA success so the new persistent session starts with a fresh idle timer.",
+          "notes": "Keeps MFA completion consistent with login flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when the user signs out from profile settings.",
+          "notes": "Prevents stale lock state after logout."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when security-setting actions sign the user out or force a login transition.",
+          "notes": "Aligns security actions with the new persistent-session architecture."
+        }
+      ],
+      "createdAt": "2026-05-18T15:48:40.965Z",
+      "updatedAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "memoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "rootMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "parentMemoryIds": [
+        "a344a821-b17e-4303-ba51-a61bafc3bc12"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Reworked the frontend auth/session model toward a persistent-login UX with an app-level idle lock. The app now tracks inactivity through a dedicated lock service, locks after 5 minutes of no interaction/navigation, and routes to MPIN unlock instead of forcing routine relogin on token expiry. Session refresh remains silent, and sign-out/reset flows now clear the idle-lock state as well.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/app/app_lock_state_service.dart",
+          "action": "modified",
+          "reason": "Replaced the background-only lock helper with a dedicated idle-lock coordinator that tracks activity and triggers the 5-minute lock.",
+          "notes": "Added timer-based idle tracking and lock state notifications."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Wired the app shell to the new lock service, activity tracking, lifecycle resume handling, and MPIN-lock routing.",
+          "notes": "Added root activity listeners and route-guard logic."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Changed startup routing so authenticated users go to dashboard by default unless the app is actually locked for MPIN.",
+          "notes": "Removed startup reliance on ordinary token expiry for relogin decisions."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Adjusted silent refresh failure handling so normal expiry no longer forces the app into a reauthentication flow.",
+          "notes": "Removed the reauth escalation from refresh failure."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Made MPIN unlock restore the idle-lock state on success and clear it on forced sign-out.",
+          "notes": "Replaced the old background-state reset behavior."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/login_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service after successful login and on login-related session resets.",
+          "notes": "Keeps the idle timer aligned with the current auth state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/password_registration_screen.dart",
+          "action": "modified",
+          "reason": "Reset or unlock the app lock service when registration produces a new authenticated session or an auth reset.",
+          "notes": "Ensures registration flows do not inherit stale lock state."
+        },
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/totp_challenge_screen.dart",
+          "action": "modified",
+          "reason": "Unlocks the app lock service after MFA success so the new persistent session starts with a fresh idle timer.",
+          "notes": "Keeps MFA completion consistent with login flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/profile_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when the user signs out from profile settings.",
+          "notes": "Prevents stale lock state after logout."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/security_settings_screen.dart",
+          "action": "modified",
+          "reason": "Clears the idle-lock state when security-setting actions sign the user out or force a login transition.",
+          "notes": "Aligns security actions with the new persistent-session architecture."
+        }
+      ],
+      "createdAt": "2026-05-18T15:48:41.130Z",
+      "updatedAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "memoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "rootMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "childMemoryIds": [
+        "2c84fc38-a6c9-4906-992e-5d17277c6626"
+      ],
+      "sectionKind": "fact",
+      "summary": "Adjusted backend auth support so expired Supabase access tokens can still be treated as an active session when the signed JWT payload is still available. This was done to preserve the persistent-login UX and avoid the app falling back to a forced relogin on ordinary expiry. The auth-support service now falls back from Supabase getUser() to decoding the JWT payload for authenticated profile/session calls, and the behavior is covered by a new test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Implemented the backend fallback that accepts expired-but-signed access tokens for active sessions so the app does not force a relogin on ordinary expiry.",
+          "notes": "Uses JWT payload decode as a fallback after Supabase getUser failure."
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for the expired access token fallback so the new backend behavior is explicit and regression-resistant.",
+          "notes": "Mocks Supabase getUser failure and verifies JWT decode fallback."
+        }
+      ],
+      "createdAt": "2026-05-18T16:07:21.110Z",
+      "updatedAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "memoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "rootMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "parentMemoryIds": [
+        "bc7145ea-570a-4a2f-9a2b-c9c1d8003710"
+      ],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "childMemoryIds": [
+        "faecbb84-53ba-421f-acfe-6949d53d81d3"
+      ],
+      "sectionKind": "decision",
+      "summary": "Adjusted backend auth support so expired Supabase access tokens can still be treated as an active session when the signed JWT payload is still available. This was done to preserve the persistent-login UX and avoid the app falling back to a forced relogin on ordinary expiry. The auth-support service now falls back from Supabase getUser() to decoding the JWT payload for authenticated profile/session calls, and the behavior is covered by a new test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Implemented the backend fallback that accepts expired-but-signed access tokens for active sessions so the app does not force a relogin on ordinary expiry.",
+          "notes": "Uses JWT payload decode as a fallback after Supabase getUser failure."
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for the expired access token fallback so the new backend behavior is explicit and regression-resistant.",
+          "notes": "Mocks Supabase getUser failure and verifies JWT decode fallback."
+        }
+      ],
+      "createdAt": "2026-05-18T16:07:21.227Z",
+      "updatedAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "memoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "rootMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "parentMemoryIds": [
+        "2c84fc38-a6c9-4906-992e-5d17277c6626"
+      ],
+      "relatedMemoryIds": [
+        "36269528-5a3c-4745-9180-63f89648d5f5",
+        "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "54a11d38-3200-4f17-ade4-2735d8906222",
+        "765a41d0-6b44-4368-bb0c-e5350f53c865"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Adjusted backend auth support so expired Supabase access tokens can still be treated as an active session when the signed JWT payload is still available. This was done to preserve the persistent-login UX and avoid the app falling back to a forced relogin on ordinary expiry. The auth-support service now falls back from Supabase getUser() to decoding the JWT payload for authenticated profile/session calls, and the behavior is covered by a new test.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Implemented the backend fallback that accepts expired-but-signed access tokens for active sessions so the app does not force a relogin on ordinary expiry.",
+          "notes": "Uses JWT payload decode as a fallback after Supabase getUser failure."
+        },
+        {
+          "path": "backend/src/auth/auth-support.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for the expired access token fallback so the new backend behavior is explicit and regression-resistant.",
+          "notes": "Mocks Supabase getUser failure and verifies JWT decode fallback."
+        }
+      ],
+      "createdAt": "2026-05-18T16:07:21.325Z",
+      "updatedAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "memoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd"
+      ],
+      "sectionKind": "fact",
+      "summary": "Investigated the appointments flow and provider discovery integration to prepare an appointment-to-gateway push feature. The app already has a multi-step booking flow, but provider choices are still mocked and there is no appointment push endpoint yet. The backend integration module already handles provider discovery and sync preparation, and the gateway docs define POST /api/v1/fhir/push/Appointment plus /fhir/receive-push on provider systems.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointments_screen.dart",
+          "action": "inspected",
+          "reason": "Confirms the current appointments hub is only a routing shell and needs a more appointment-specific flow if we change the UX.",
+          "notes": "Uses FeatureHubScreen with three routes."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the current booking wizard structure and where provider lookup/data binding would need to attach.",
+          "notes": "Currently local/mock-only."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "inspected",
+          "reason": "Contains the provider selection UI that currently consumes a static string list and would need replacement with provider discovery data.",
+          "notes": "Good boundary for typed provider options."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "inspected",
+          "reason": "Provides the existing provider lookup pattern to reuse for appointment provider selection.",
+          "notes": "Includes loading, error, and retry states."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "inspected",
+          "reason": "Shows the provider picker UI pattern and active-provider filtering behavior to mirror in appointments.",
+          "notes": "Selects from InteroperabilityProviderSummary."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains the gateway client patterns and provider discovery logic that appointment push should reuse or parallel.",
+          "notes": "Includes timeout, auth headers, and provider validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "inspected",
+          "reason": "Defines the current integration route surface and where a new appointment push endpoint would likely live.",
+          "notes": "Currently exposes providers and sync endpoints only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Shows the project’s existing authenticated gateway POST pattern, including Idempotency-Key and gateway auth headers.",
+          "notes": "Useful template for appointment push."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Documents the gateway appointment push payload and provider webhook expectations that the new feature should follow.",
+          "notes": "Contains POST /api/v1/fhir/push/Appointment and /fhir/receive-push examples."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Documents the gateway-side webhook contract for receiving pushed appointment data and required headers.",
+          "notes": "Confirms /fhir/receive-push details."
+        },
+        {
+          "path": "data-structure.md",
+          "action": "inspected",
+          "reason": "Defines appointments as a first-class booking entity and helps constrain the user-facing data model.",
+          "notes": "Appointments should map to profile_id, type, mode, scheduled_at, location_or_platform, provider_name, and status."
+        }
+      ],
+      "createdAt": "2026-05-18T16:30:08.281Z",
+      "updatedAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "memoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [
+        "0221eb81-f646-4c04-9384-c6442bdca789"
+      ],
+      "relatedMemoryIds": [
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [
+        "b0b24de5-095f-4511-ba25-83107cc01462"
+      ],
+      "sectionKind": "decision",
+      "summary": "Investigated the appointments flow and provider discovery integration to prepare an appointment-to-gateway push feature. The app already has a multi-step booking flow, but provider choices are still mocked and there is no appointment push endpoint yet. The backend integration module already handles provider discovery and sync preparation, and the gateway docs define POST /api/v1/fhir/push/Appointment plus /fhir/receive-push on provider systems.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointments_screen.dart",
+          "action": "inspected",
+          "reason": "Confirms the current appointments hub is only a routing shell and needs a more appointment-specific flow if we change the UX.",
+          "notes": "Uses FeatureHubScreen with three routes."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the current booking wizard structure and where provider lookup/data binding would need to attach.",
+          "notes": "Currently local/mock-only."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "inspected",
+          "reason": "Contains the provider selection UI that currently consumes a static string list and would need replacement with provider discovery data.",
+          "notes": "Good boundary for typed provider options."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "inspected",
+          "reason": "Provides the existing provider lookup pattern to reuse for appointment provider selection.",
+          "notes": "Includes loading, error, and retry states."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "inspected",
+          "reason": "Shows the provider picker UI pattern and active-provider filtering behavior to mirror in appointments.",
+          "notes": "Selects from InteroperabilityProviderSummary."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains the gateway client patterns and provider discovery logic that appointment push should reuse or parallel.",
+          "notes": "Includes timeout, auth headers, and provider validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "inspected",
+          "reason": "Defines the current integration route surface and where a new appointment push endpoint would likely live.",
+          "notes": "Currently exposes providers and sync endpoints only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Shows the project’s existing authenticated gateway POST pattern, including Idempotency-Key and gateway auth headers.",
+          "notes": "Useful template for appointment push."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Documents the gateway appointment push payload and provider webhook expectations that the new feature should follow.",
+          "notes": "Contains POST /api/v1/fhir/push/Appointment and /fhir/receive-push examples."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Documents the gateway-side webhook contract for receiving pushed appointment data and required headers.",
+          "notes": "Confirms /fhir/receive-push details."
+        },
+        {
+          "path": "data-structure.md",
+          "action": "inspected",
+          "reason": "Defines appointments as a first-class booking entity and helps constrain the user-facing data model.",
+          "notes": "Appointments should map to profile_id, type, mode, scheduled_at, location_or_platform, provider_name, and status."
+        }
+      ],
+      "createdAt": "2026-05-18T16:30:08.460Z",
+      "updatedAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "memoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd"
+      ],
+      "relatedMemoryIds": [
+        "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+        "3afab245-375e-4d82-87c2-68ac77ac8b19",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Investigated the appointments flow and provider discovery integration to prepare an appointment-to-gateway push feature. The app already has a multi-step booking flow, but provider choices are still mocked and there is no appointment push endpoint yet. The backend integration module already handles provider discovery and sync preparation, and the gateway docs define POST /api/v1/fhir/push/Appointment plus /fhir/receive-push on provider systems.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointments_screen.dart",
+          "action": "inspected",
+          "reason": "Confirms the current appointments hub is only a routing shell and needs a more appointment-specific flow if we change the UX.",
+          "notes": "Uses FeatureHubScreen with three routes."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Shows the current booking wizard structure and where provider lookup/data binding would need to attach.",
+          "notes": "Currently local/mock-only."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "inspected",
+          "reason": "Contains the provider selection UI that currently consumes a static string list and would need replacement with provider discovery data.",
+          "notes": "Good boundary for typed provider options."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/screens/sync_records_wizard_screen.dart",
+          "action": "inspected",
+          "reason": "Provides the existing provider lookup pattern to reuse for appointment provider selection.",
+          "notes": "Includes loading, error, and retry states."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/presentation/widgets/sync_provider_step.dart",
+          "action": "inspected",
+          "reason": "Shows the provider picker UI pattern and active-provider filtering behavior to mirror in appointments.",
+          "notes": "Selects from InteroperabilityProviderSummary."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains the gateway client patterns and provider discovery logic that appointment push should reuse or parallel.",
+          "notes": "Includes timeout, auth headers, and provider validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "inspected",
+          "reason": "Defines the current integration route surface and where a new appointment push endpoint would likely live.",
+          "notes": "Currently exposes providers and sync endpoints only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Shows the project’s existing authenticated gateway POST pattern, including Idempotency-Key and gateway auth headers.",
+          "notes": "Useful template for appointment push."
+        },
+        {
+          "path": "provider-integration.md",
+          "action": "inspected",
+          "reason": "Documents the gateway appointment push payload and provider webhook expectations that the new feature should follow.",
+          "notes": "Contains POST /api/v1/fhir/push/Appointment and /fhir/receive-push examples."
+        },
+        {
+          "path": "wah4pc.md",
+          "action": "inspected",
+          "reason": "Documents the gateway-side webhook contract for receiving pushed appointment data and required headers.",
+          "notes": "Confirms /fhir/receive-push details."
+        },
+        {
+          "path": "data-structure.md",
+          "action": "inspected",
+          "reason": "Defines appointments as a first-class booking entity and helps constrain the user-facing data model.",
+          "notes": "Appointments should map to profile_id, type, mode, scheduled_at, location_or_platform, provider_name, and status."
+        }
+      ],
+      "createdAt": "2026-05-18T16:30:08.633Z",
+      "updatedAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "memoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [
+        "0221eb81-f646-4c04-9384-c6442bdca789"
+      ],
+      "relatedMemoryIds": [
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a unified appointments flow and backend gateway push path for appointment requests. The old split UX (onsite/teleconsultation as separate main paths) now converges into a single guided booking flow with in-flow mode selection, provider lookup, details entry, review, and request submission. Added backend endpoint and service support for posting FHIR Appointment push requests to WAH4PC, with provider validation and gateway request hardening via a shared gateway client.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Introduced reusable gateway HTTP client logic to avoid duplicate timeout/error/auth handling across integration services.",
+          "notes": "Now used by IntegrationService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines explicit typed contracts for appointment push payloads and FHIR Appointment resource structure.",
+          "notes": "Includes request payload, gateway request envelope, and response model."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Adds validation boundary for frontend appointment request submissions before gateway push orchestration.",
+          "notes": "Enforces UUID target provider, ISO datetime, length limits, and mode enum."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Implements provider validation, appointment resource assembly, gateway POST /fhir/push/Appointment call, and transaction-id extraction.",
+          "notes": "Uses shared GatewayClientService and IntegrationService provider lookup."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Exposes new POST interoperability/appointments/request endpoint and wires AppointmentPushService into controller surface.",
+          "notes": "Maintains x-user-id context validation."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registers new services for appointment push and shared gateway client under the integration module.",
+          "notes": "Provider array now includes GatewayClientService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway transport calls to use shared GatewayClientService instead of duplicating request logic.",
+          "notes": "Preserves existing sync behavior while improving separation of concerns."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated IntegrationService constructor setup in unit tests to include the new GatewayClientService dependency.",
+          "notes": "Avoids broken test construction after service refactor."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused unit coverage for successful appointment push and inactive-provider rejection scenarios.",
+          "notes": "Mocks gateway provider and push responses via global fetch spy."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Expanded CORS allowed headers to include x-user-id required by new/existing interoperability request flows.",
+          "notes": "Prevents browser blocking of user-context header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Introduces frontend HTTP client for submitting appointment requests to backend interoperability endpoint.",
+          "notes": "Includes consistent timeout/network/auth error handling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Provides in-flow consultation mode selection UI to unify onsite and teleconsultation into one booking flow.",
+          "notes": "Uses neutral selected-state styling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Provides provider lookup/selection UI with loading, error, empty, and active list states.",
+          "notes": "Mirrors existing interoperability provider-step behavior."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed mock provider dropdown and now anchors details step to selected real provider summary plus location chips and request notes.",
+          "notes": "Keeps teleconsult readiness acknowledgement."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "modified",
+          "reason": "Generalized step header to accept totalSteps so the unified flow can show accurate progress indicators.",
+          "notes": "Text now renders 'Step x of y' dynamically."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Extended appointment summary with typed provider and patient identifier and added shared mode options for unified flow.",
+          "notes": "Retained existing mode-specific content for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Major refactor to unified request flow with mode selection, provider lookup integration, review, and backend submission.",
+          "notes": "Now accepts optional initialMode for backward-compatible shortcuts."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review messaging and details to reflect provider-targeted request sending and display selected identifier/provider metadata.",
+          "notes": "Primary CTA now reads 'Confirm and Send'."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial onsite mode.",
+          "notes": "No separate divergent onsite flow remains."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial teleconsultation mode.",
+          "notes": "No separate divergent tele flow remains."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Redesigned appointments landing page to align with the unified flow and simplify user entry into a single booking path plus history.",
+          "notes": "Removed reliance on generic feature hub behavior for this screen."
+        }
+      ],
+      "createdAt": "2026-05-18T18:00:27.900Z",
+      "updatedAt": "2026-05-18T18:00:27.900Z"
+    },
+    {
+      "memoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [
+        "8eaca796-2b2e-4336-ae61-e22618e2497c"
+      ],
+      "relatedMemoryIds": [
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a unified appointments flow and backend gateway push path for appointment requests. The old split UX (onsite/teleconsultation as separate main paths) now converges into a single guided booking flow with in-flow mode selection, provider lookup, details entry, review, and request submission. Added backend endpoint and service support for posting FHIR Appointment push requests to WAH4PC, with provider validation and gateway request hardening via a shared gateway client.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Introduced reusable gateway HTTP client logic to avoid duplicate timeout/error/auth handling across integration services.",
+          "notes": "Now used by IntegrationService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines explicit typed contracts for appointment push payloads and FHIR Appointment resource structure.",
+          "notes": "Includes request payload, gateway request envelope, and response model."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Adds validation boundary for frontend appointment request submissions before gateway push orchestration.",
+          "notes": "Enforces UUID target provider, ISO datetime, length limits, and mode enum."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Implements provider validation, appointment resource assembly, gateway POST /fhir/push/Appointment call, and transaction-id extraction.",
+          "notes": "Uses shared GatewayClientService and IntegrationService provider lookup."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Exposes new POST interoperability/appointments/request endpoint and wires AppointmentPushService into controller surface.",
+          "notes": "Maintains x-user-id context validation."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registers new services for appointment push and shared gateway client under the integration module.",
+          "notes": "Provider array now includes GatewayClientService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway transport calls to use shared GatewayClientService instead of duplicating request logic.",
+          "notes": "Preserves existing sync behavior while improving separation of concerns."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated IntegrationService constructor setup in unit tests to include the new GatewayClientService dependency.",
+          "notes": "Avoids broken test construction after service refactor."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused unit coverage for successful appointment push and inactive-provider rejection scenarios.",
+          "notes": "Mocks gateway provider and push responses via global fetch spy."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Expanded CORS allowed headers to include x-user-id required by new/existing interoperability request flows.",
+          "notes": "Prevents browser blocking of user-context header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Introduces frontend HTTP client for submitting appointment requests to backend interoperability endpoint.",
+          "notes": "Includes consistent timeout/network/auth error handling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Provides in-flow consultation mode selection UI to unify onsite and teleconsultation into one booking flow.",
+          "notes": "Uses neutral selected-state styling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Provides provider lookup/selection UI with loading, error, empty, and active list states.",
+          "notes": "Mirrors existing interoperability provider-step behavior."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed mock provider dropdown and now anchors details step to selected real provider summary plus location chips and request notes.",
+          "notes": "Keeps teleconsult readiness acknowledgement."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "modified",
+          "reason": "Generalized step header to accept totalSteps so the unified flow can show accurate progress indicators.",
+          "notes": "Text now renders 'Step x of y' dynamically."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Extended appointment summary with typed provider and patient identifier and added shared mode options for unified flow.",
+          "notes": "Retained existing mode-specific content for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Major refactor to unified request flow with mode selection, provider lookup integration, review, and backend submission.",
+          "notes": "Now accepts optional initialMode for backward-compatible shortcuts."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review messaging and details to reflect provider-targeted request sending and display selected identifier/provider metadata.",
+          "notes": "Primary CTA now reads 'Confirm and Send'."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial onsite mode.",
+          "notes": "No separate divergent onsite flow remains."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial teleconsultation mode.",
+          "notes": "No separate divergent tele flow remains."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Redesigned appointments landing page to align with the unified flow and simplify user entry into a single booking path plus history.",
+          "notes": "Removed reliance on generic feature hub behavior for this screen."
+        }
+      ],
+      "createdAt": "2026-05-18T18:00:28.232Z",
+      "updatedAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "memoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "rootMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "parentMemoryIds": [
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "relatedMemoryIds": [
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+        "f1039666-1d28-4d81-9e6a-5574a07965fd"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a unified appointments flow and backend gateway push path for appointment requests. The old split UX (onsite/teleconsultation as separate main paths) now converges into a single guided booking flow with in-flow mode selection, provider lookup, details entry, review, and request submission. Added backend endpoint and service support for posting FHIR Appointment push requests to WAH4PC, with provider validation and gateway request hardening via a shared gateway client.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Introduced reusable gateway HTTP client logic to avoid duplicate timeout/error/auth handling across integration services.",
+          "notes": "Now used by IntegrationService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines explicit typed contracts for appointment push payloads and FHIR Appointment resource structure.",
+          "notes": "Includes request payload, gateway request envelope, and response model."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Adds validation boundary for frontend appointment request submissions before gateway push orchestration.",
+          "notes": "Enforces UUID target provider, ISO datetime, length limits, and mode enum."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Implements provider validation, appointment resource assembly, gateway POST /fhir/push/Appointment call, and transaction-id extraction.",
+          "notes": "Uses shared GatewayClientService and IntegrationService provider lookup."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Exposes new POST interoperability/appointments/request endpoint and wires AppointmentPushService into controller surface.",
+          "notes": "Maintains x-user-id context validation."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registers new services for appointment push and shared gateway client under the integration module.",
+          "notes": "Provider array now includes GatewayClientService and AppointmentPushService."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway transport calls to use shared GatewayClientService instead of duplicating request logic.",
+          "notes": "Preserves existing sync behavior while improving separation of concerns."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated IntegrationService constructor setup in unit tests to include the new GatewayClientService dependency.",
+          "notes": "Avoids broken test construction after service refactor."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused unit coverage for successful appointment push and inactive-provider rejection scenarios.",
+          "notes": "Mocks gateway provider and push responses via global fetch spy."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Expanded CORS allowed headers to include x-user-id required by new/existing interoperability request flows.",
+          "notes": "Prevents browser blocking of user-context header."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Introduces frontend HTTP client for submitting appointment requests to backend interoperability endpoint.",
+          "notes": "Includes consistent timeout/network/auth error handling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Provides in-flow consultation mode selection UI to unify onsite and teleconsultation into one booking flow.",
+          "notes": "Uses neutral selected-state styling."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Provides provider lookup/selection UI with loading, error, empty, and active list states.",
+          "notes": "Mirrors existing interoperability provider-step behavior."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed mock provider dropdown and now anchors details step to selected real provider summary plus location chips and request notes.",
+          "notes": "Keeps teleconsult readiness acknowledgement."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "modified",
+          "reason": "Generalized step header to accept totalSteps so the unified flow can show accurate progress indicators.",
+          "notes": "Text now renders 'Step x of y' dynamically."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Extended appointment summary with typed provider and patient identifier and added shared mode options for unified flow.",
+          "notes": "Retained existing mode-specific content for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Major refactor to unified request flow with mode selection, provider lookup integration, review, and backend submission.",
+          "notes": "Now accepts optional initialMode for backward-compatible shortcuts."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review messaging and details to reflect provider-targeted request sending and display selected identifier/provider metadata.",
+          "notes": "Primary CTA now reads 'Confirm and Send'."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial onsite mode.",
+          "notes": "No separate divergent onsite flow remains."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Converted screen to a compatibility wrapper that opens unified booking flow with initial teleconsultation mode.",
+          "notes": "No separate divergent tele flow remains."
+        },
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Redesigned appointments landing page to align with the unified flow and simplify user entry into a single booking path plus history.",
+          "notes": "Removed reliance on generic feature hub behavior for this screen."
+        }
+      ],
+      "createdAt": "2026-05-18T18:00:28.529Z",
+      "updatedAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "memoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "rootMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "parentMemoryIds": [
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "relatedMemoryIds": [
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd"
+      ],
+      "childMemoryIds": [
+        "3c6b3aed-590c-4683-8af3-93daa6e73d2f"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a unified appointment booking flow with provider lookup and gateway push submission. The frontend appointments entrypoint was simplified into a single guided request hub, the booking flow now selects onsite or teleconsultation inside the same flow, provider discovery reuses the interoperability provider list pattern, and the final review submits an appointment request to the backend. The backend now exposes an appointments request endpoint that validates the selected provider and sends a FHIR Appointment push to the WAH4PC gateway.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the appointments entrypoint into a clearer hub with one guided request action and a history shortcut.",
+          "notes": "Removed the old separate onsite/teleconsultation hub cards."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Reworked the booking flow into a unified, provider-aware wizard that can submit appointment requests to the backend.",
+          "notes": "Uses live provider discovery and final review submission."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Adds the new consultation-mode selection step used at the start of the unified appointment flow.",
+          "notes": "Keeps mode selection separate from later booking steps."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Adds the provider lookup and selection step that reuses the active-provider discovery pattern.",
+          "notes": "Handles loading, empty, and error states."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed the old provider string picker and made provider context read-only once selected from lookup.",
+          "notes": "Now shows the selected provider summary and location/platform fields."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review copy and details so the user clearly sees the provider and patient identifier before submission.",
+          "notes": "The review now reflects the gateway push flow."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Adjusted appointment booking models to support the unified flow and remove stale mock provider lists.",
+          "notes": "Provider options were deleted because discovery is now dynamic."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Adds the frontend backend client for sending validated appointment requests to the new endpoint.",
+          "notes": "Uses the existing auth/environment conventions."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with onsite preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with teleconsultation preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Centralizes gateway HTTP request handling so appointment push and provider discovery use the same timeout/auth/error pattern.",
+          "notes": "Keeps gateway access in one place."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines the typed appointment push payload and FHIR Appointment resource contracts used by the backend.",
+          "notes": "Separates gateway request shape from FHIR resource shape."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Validates appointment request submissions at the backend boundary before gateway forwarding.",
+          "notes": "Uses class-validator rules for the new endpoint."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Builds the FHIR Appointment resource and sends it to the WAH4PC gateway after validating the selected provider.",
+          "notes": "Uses the shared gateway client and provider discovery validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new appointment request endpoint alongside the existing interoperability routes.",
+          "notes": "Requires authenticated account context via x-user-id."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registered the new gateway client and appointment push service in the integration module.",
+          "notes": "Ensures dependency injection works for the new flow."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Allowed the x-user-id header through CORS so the new request endpoint can be called from the frontend.",
+          "notes": "Preserves existing header validation on the controller."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway HTTP calls to reuse the shared gateway client service.",
+          "notes": "Provider discovery and sync prep now share a single gateway access path."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated integration tests to inject the shared gateway client after the refactor.",
+          "notes": "Keeps provider discovery/sync coverage valid."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused coverage for appointment push success and inactive-provider rejection.",
+          "notes": "Verifies the new gateway submission path."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Adjusted to use the selected provider name from the validated discovery result and removed redundant request fields.",
+          "notes": "Keeps the request payload smaller and clearer."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName validation because the backend now derives provider identity from the lookup result.",
+          "notes": "Matches the simplified request body."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the appointment request payload contract.",
+          "notes": "Aligns the typed payload with the simplified API client."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the frontend request body and kept the client aligned with the backend DTO.",
+          "notes": "Still sends the selected provider ID and identifier data."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Wired the unified booking UI to provider discovery, review, and backend appointment submission.",
+          "notes": "Now uses live providers and submits the request after confirmation."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated the review screen copy/details to reflect that confirming sends a provider-directed gateway request.",
+          "notes": "Shows provider location and patient identifier."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "inspected",
+          "reason": "Confirmed the step-header contract supports the new unified flow with a total-steps count.",
+          "notes": "Used by the booking wizard."
+        }
+      ],
+      "createdAt": "2026-05-18T18:04:47.687Z",
+      "updatedAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "memoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "rootMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "parentMemoryIds": [
+        "b3d45f72-194b-4cbf-9486-80bea4500dde"
+      ],
+      "relatedMemoryIds": [
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd"
+      ],
+      "childMemoryIds": [
+        "6ef953e5-b115-4853-b141-f4a15c9634e6"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a unified appointment booking flow with provider lookup and gateway push submission. The frontend appointments entrypoint was simplified into a single guided request hub, the booking flow now selects onsite or teleconsultation inside the same flow, provider discovery reuses the interoperability provider list pattern, and the final review submits an appointment request to the backend. The backend now exposes an appointments request endpoint that validates the selected provider and sends a FHIR Appointment push to the WAH4PC gateway.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the appointments entrypoint into a clearer hub with one guided request action and a history shortcut.",
+          "notes": "Removed the old separate onsite/teleconsultation hub cards."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Reworked the booking flow into a unified, provider-aware wizard that can submit appointment requests to the backend.",
+          "notes": "Uses live provider discovery and final review submission."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Adds the new consultation-mode selection step used at the start of the unified appointment flow.",
+          "notes": "Keeps mode selection separate from later booking steps."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Adds the provider lookup and selection step that reuses the active-provider discovery pattern.",
+          "notes": "Handles loading, empty, and error states."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed the old provider string picker and made provider context read-only once selected from lookup.",
+          "notes": "Now shows the selected provider summary and location/platform fields."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review copy and details so the user clearly sees the provider and patient identifier before submission.",
+          "notes": "The review now reflects the gateway push flow."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Adjusted appointment booking models to support the unified flow and remove stale mock provider lists.",
+          "notes": "Provider options were deleted because discovery is now dynamic."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Adds the frontend backend client for sending validated appointment requests to the new endpoint.",
+          "notes": "Uses the existing auth/environment conventions."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with onsite preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with teleconsultation preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Centralizes gateway HTTP request handling so appointment push and provider discovery use the same timeout/auth/error pattern.",
+          "notes": "Keeps gateway access in one place."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines the typed appointment push payload and FHIR Appointment resource contracts used by the backend.",
+          "notes": "Separates gateway request shape from FHIR resource shape."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Validates appointment request submissions at the backend boundary before gateway forwarding.",
+          "notes": "Uses class-validator rules for the new endpoint."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Builds the FHIR Appointment resource and sends it to the WAH4PC gateway after validating the selected provider.",
+          "notes": "Uses the shared gateway client and provider discovery validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new appointment request endpoint alongside the existing interoperability routes.",
+          "notes": "Requires authenticated account context via x-user-id."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registered the new gateway client and appointment push service in the integration module.",
+          "notes": "Ensures dependency injection works for the new flow."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Allowed the x-user-id header through CORS so the new request endpoint can be called from the frontend.",
+          "notes": "Preserves existing header validation on the controller."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway HTTP calls to reuse the shared gateway client service.",
+          "notes": "Provider discovery and sync prep now share a single gateway access path."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated integration tests to inject the shared gateway client after the refactor.",
+          "notes": "Keeps provider discovery/sync coverage valid."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused coverage for appointment push success and inactive-provider rejection.",
+          "notes": "Verifies the new gateway submission path."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Adjusted to use the selected provider name from the validated discovery result and removed redundant request fields.",
+          "notes": "Keeps the request payload smaller and clearer."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName validation because the backend now derives provider identity from the lookup result.",
+          "notes": "Matches the simplified request body."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the appointment request payload contract.",
+          "notes": "Aligns the typed payload with the simplified API client."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the frontend request body and kept the client aligned with the backend DTO.",
+          "notes": "Still sends the selected provider ID and identifier data."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Wired the unified booking UI to provider discovery, review, and backend appointment submission.",
+          "notes": "Now uses live providers and submits the request after confirmation."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated the review screen copy/details to reflect that confirming sends a provider-directed gateway request.",
+          "notes": "Shows provider location and patient identifier."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "inspected",
+          "reason": "Confirmed the step-header contract supports the new unified flow with a total-steps count.",
+          "notes": "Used by the booking wizard."
+        }
+      ],
+      "createdAt": "2026-05-18T18:04:47.918Z",
+      "updatedAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "memoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "rootMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "parentMemoryIds": [
+        "3c6b3aed-590c-4683-8af3-93daa6e73d2f"
+      ],
+      "relatedMemoryIds": [
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "6d9c20df-bd1d-4916-b97f-e9ed72d672cd"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a unified appointment booking flow with provider lookup and gateway push submission. The frontend appointments entrypoint was simplified into a single guided request hub, the booking flow now selects onsite or teleconsultation inside the same flow, provider discovery reuses the interoperability provider list pattern, and the final review submits an appointment request to the backend. The backend now exposes an appointments request endpoint that validates the selected provider and sends a FHIR Appointment push to the WAH4PC gateway.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/dashboard/presentation/screens/appointments_screen.dart",
+          "action": "modified",
+          "reason": "Simplified the appointments entrypoint into a clearer hub with one guided request action and a history shortcut.",
+          "notes": "Removed the old separate onsite/teleconsultation hub cards."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Reworked the booking flow into a unified, provider-aware wizard that can submit appointment requests to the backend.",
+          "notes": "Uses live provider discovery and final review submission."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_mode_step.dart",
+          "action": "created",
+          "reason": "Adds the new consultation-mode selection step used at the start of the unified appointment flow.",
+          "notes": "Keeps mode selection separate from later booking steps."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_provider_step.dart",
+          "action": "created",
+          "reason": "Adds the provider lookup and selection step that reuses the active-provider discovery pattern.",
+          "notes": "Handles loading, empty, and error states."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_details_step.dart",
+          "action": "modified",
+          "reason": "Removed the old provider string picker and made provider context read-only once selected from lookup.",
+          "notes": "Now shows the selected provider summary and location/platform fields."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated review copy and details so the user clearly sees the provider and patient identifier before submission.",
+          "notes": "The review now reflects the gateway push flow."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/models/appointment_booking_models.dart",
+          "action": "modified",
+          "reason": "Adjusted appointment booking models to support the unified flow and remove stale mock provider lists.",
+          "notes": "Provider options were deleted because discovery is now dynamic."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "created",
+          "reason": "Adds the frontend backend client for sending validated appointment requests to the new endpoint.",
+          "notes": "Uses the existing auth/environment conventions."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/onsite_consultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with onsite preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/teleconsultation_screen.dart",
+          "action": "modified",
+          "reason": "Kept the route as a shortcut that now points into the unified booking flow with teleconsultation preselected.",
+          "notes": "No longer relies on the old separate flow content object."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "created",
+          "reason": "Centralizes gateway HTTP request handling so appointment push and provider discovery use the same timeout/auth/error pattern.",
+          "notes": "Keeps gateway access in one place."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "created",
+          "reason": "Defines the typed appointment push payload and FHIR Appointment resource contracts used by the backend.",
+          "notes": "Separates gateway request shape from FHIR resource shape."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "created",
+          "reason": "Validates appointment request submissions at the backend boundary before gateway forwarding.",
+          "notes": "Uses class-validator rules for the new endpoint."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "created",
+          "reason": "Builds the FHIR Appointment resource and sends it to the WAH4PC gateway after validating the selected provider.",
+          "notes": "Uses the shared gateway client and provider discovery validation."
+        },
+        {
+          "path": "backend/src/integration/integration.controller.ts",
+          "action": "modified",
+          "reason": "Added the new appointment request endpoint alongside the existing interoperability routes.",
+          "notes": "Requires authenticated account context via x-user-id."
+        },
+        {
+          "path": "backend/src/integration/integration.module.ts",
+          "action": "modified",
+          "reason": "Registered the new gateway client and appointment push service in the integration module.",
+          "notes": "Ensures dependency injection works for the new flow."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Allowed the x-user-id header through CORS so the new request endpoint can be called from the frontend.",
+          "notes": "Preserves existing header validation on the controller."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Refactored gateway HTTP calls to reuse the shared gateway client service.",
+          "notes": "Provider discovery and sync prep now share a single gateway access path."
+        },
+        {
+          "path": "backend/src/integration/integration.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated integration tests to inject the shared gateway client after the refactor.",
+          "notes": "Keeps provider discovery/sync coverage valid."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "created",
+          "reason": "Adds focused coverage for appointment push success and inactive-provider rejection.",
+          "notes": "Verifies the new gateway submission path."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Adjusted to use the selected provider name from the validated discovery result and removed redundant request fields.",
+          "notes": "Keeps the request payload smaller and clearer."
+        },
+        {
+          "path": "backend/src/integration/dto/appointment-push-request.dto.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName validation because the backend now derives provider identity from the lookup result.",
+          "notes": "Matches the simplified request body."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the appointment request payload contract.",
+          "notes": "Aligns the typed payload with the simplified API client."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Removed redundant providerName from the frontend request body and kept the client aligned with the backend DTO.",
+          "notes": "Still sends the selected provider ID and identifier data."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Wired the unified booking UI to provider discovery, review, and backend appointment submission.",
+          "notes": "Now uses live providers and submits the request after confirmation."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_review_screen.dart",
+          "action": "modified",
+          "reason": "Updated the review screen copy/details to reflect that confirming sends a provider-directed gateway request.",
+          "notes": "Shows provider location and patient identifier."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_step_header.dart",
+          "action": "inspected",
+          "reason": "Confirmed the step-header contract supports the new unified flow with a total-steps count.",
+          "notes": "Used by the booking wizard."
+        }
+      ],
+      "createdAt": "2026-05-18T18:04:48.163Z",
+      "updatedAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "memoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "rootMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "parentMemoryIds": [
+        "a344a821-b17e-4303-ba51-a61bafc3bc12"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+        "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [
+        "60dd6152-f116-4b60-be44-63347b518c4b"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the remaining frontend session-refresh UX so the app now behaves as a persistent login with idle-based MPIN locking only. The MPIN unlock screen no longer waits for token refresh or shows the 'session is refreshing' warning, startup routing restores the stored session instead of attempting refresh, and startup copy no longer mentions session checking. Also removed the old session-expired copy from personal information.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Removed the refresh wait gate and the visible refreshing warning so MPIN unlock is immediate and idle-based.",
+          "notes": "This is the user-facing fix that removes the annoying message."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Stopped startup from trying to refresh the session and made it just restore the stored session state.",
+          "notes": "Keeps startup aligned with persistent login behavior."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Stopped lifecycle routing from attempting session refresh before deciding whether to lock with MPIN.",
+          "notes": "Now uses stored session restoration instead."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Simplified session state restoration to remove hidden refresh scheduling and retry behavior from the frontend auth session service.",
+          "notes": "RefreshIfNeeded now only restores from storage."
+        },
+        {
+          "path": "frontend/lib/app/startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Removed session-focused loading copy so the app does not talk about session checking during startup.",
+          "notes": "Keeps the UI aligned with the simplified flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the lingering session-expired warning message and left only the redirect to login when no access token is available.",
+          "notes": "Prevents a leftover expiry message from surfacing."
+        }
+      ],
+      "createdAt": "2026-05-19T09:25:20.773Z",
+      "updatedAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "memoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "rootMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "parentMemoryIds": [
+        "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+        "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [
+        "1f912a89-8cf1-4c3e-a03c-395e63275d3f"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the remaining frontend session-refresh UX so the app now behaves as a persistent login with idle-based MPIN locking only. The MPIN unlock screen no longer waits for token refresh or shows the 'session is refreshing' warning, startup routing restores the stored session instead of attempting refresh, and startup copy no longer mentions session checking. Also removed the old session-expired copy from personal information.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Removed the refresh wait gate and the visible refreshing warning so MPIN unlock is immediate and idle-based.",
+          "notes": "This is the user-facing fix that removes the annoying message."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Stopped startup from trying to refresh the session and made it just restore the stored session state.",
+          "notes": "Keeps startup aligned with persistent login behavior."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Stopped lifecycle routing from attempting session refresh before deciding whether to lock with MPIN.",
+          "notes": "Now uses stored session restoration instead."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Simplified session state restoration to remove hidden refresh scheduling and retry behavior from the frontend auth session service.",
+          "notes": "RefreshIfNeeded now only restores from storage."
+        },
+        {
+          "path": "frontend/lib/app/startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Removed session-focused loading copy so the app does not talk about session checking during startup.",
+          "notes": "Keeps the UI aligned with the simplified flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the lingering session-expired warning message and left only the redirect to login when no access token is available.",
+          "notes": "Prevents a leftover expiry message from surfacing."
+        }
+      ],
+      "createdAt": "2026-05-19T09:25:20.916Z",
+      "updatedAt": "2026-05-19T09:25:20.916Z"
+    },
+    {
+      "memoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "rootMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "parentMemoryIds": [
+        "60dd6152-f116-4b60-be44-63347b518c4b"
+      ],
+      "relatedMemoryIds": [
+        "e11647e4-f913-4a74-a855-4a58f75cd80b",
+        "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+        "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+        "36269528-5a3c-4745-9180-63f89648d5f5"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the remaining frontend session-refresh UX so the app now behaves as a persistent login with idle-based MPIN locking only. The MPIN unlock screen no longer waits for token refresh or shows the 'session is refreshing' warning, startup routing restores the stored session instead of attempting refresh, and startup copy no longer mentions session checking. Also removed the old session-expired copy from personal information.",
+      "affectedFiles": [
+        {
+          "path": "frontend/lib/features/auth/presentation/screens/mpin_unlock_screen.dart",
+          "action": "modified",
+          "reason": "Removed the refresh wait gate and the visible refreshing warning so MPIN unlock is immediate and idle-based.",
+          "notes": "This is the user-facing fix that removes the annoying message."
+        },
+        {
+          "path": "frontend/lib/app/app_startup_service.dart",
+          "action": "modified",
+          "reason": "Stopped startup from trying to refresh the session and made it just restore the stored session state.",
+          "notes": "Keeps startup aligned with persistent login behavior."
+        },
+        {
+          "path": "frontend/lib/app/wah4p_app.dart",
+          "action": "modified",
+          "reason": "Stopped lifecycle routing from attempting session refresh before deciding whether to lock with MPIN.",
+          "notes": "Now uses stored session restoration instead."
+        },
+        {
+          "path": "frontend/lib/features/auth/domain/auth_session.dart",
+          "action": "modified",
+          "reason": "Simplified session state restoration to remove hidden refresh scheduling and retry behavior from the frontend auth session service.",
+          "notes": "RefreshIfNeeded now only restores from storage."
+        },
+        {
+          "path": "frontend/lib/app/startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Removed session-focused loading copy so the app does not talk about session checking during startup.",
+          "notes": "Keeps the UI aligned with the simplified flow."
+        },
+        {
+          "path": "frontend/lib/features/profile/presentation/screens/personal_information_screen.dart",
+          "action": "modified",
+          "reason": "Removed the lingering session-expired warning message and left only the redirect to login when no access token is available.",
+          "notes": "Prevents a leftover expiry message from surfacing."
+        }
+      ],
+      "createdAt": "2026-05-19T09:25:21.050Z",
+      "updatedAt": "2026-05-19T09:25:21.050Z"
     }
   ],
   "edges": [
@@ -34600,7 +36408,749 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-18T02:55:46.525Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "c3df99e2-c29a-4b5d-af0c-f851eadb2ac7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "toMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.804Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "toMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:40.965Z"
+    },
+    {
+      "fromMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "toMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "fromMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "fromMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "fromMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "fromMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T15:48:41.130Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "toMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.110Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "toMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.227Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "92e713ce-27d3-4ebb-892e-33ab46a7f512",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "54a11d38-3200-4f17-ade4-2735d8906222",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "toMemoryId": "765a41d0-6b44-4368-bb0c-e5350f53c865",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:07:21.325Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.281Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.460Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "b630e48c-ca78-45c7-9e9c-fe449e7979e8",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "cb286e38-e278-47c6-b09f-b4e4b2ba9563",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "3afab245-375e-4d82-87c2-68ac77ac8b19",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T16:30:08.633Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:27.901Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.232Z"
+    },
+    {
+      "fromMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "fromMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "fromMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "fromMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "toMemoryId": "6a859094-9fc2-4cff-8cf6-1824f8c7134f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "fromMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "toMemoryId": "f1039666-1d28-4d81-9e6a-5574a07965fd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:00:28.529Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "toMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.687Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "b3d45f72-194b-4cbf-9486-80bea4500dde",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "toMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:47.918Z"
+    },
+    {
+      "fromMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "toMemoryId": "3c6b3aed-590c-4683-8af3-93daa6e73d2f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "fromMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "fromMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "fromMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "fromMemoryId": "6ef953e5-b115-4853-b141-f4a15c9634e6",
+      "toMemoryId": "6d9c20df-bd1d-4916-b97f-e9ed72d672cd",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-18T18:04:48.163Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "a344a821-b17e-4303-ba51-a61bafc3bc12",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "toMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.773Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "8c5df28d-bc2b-4d2f-8580-e9cd551b8e0c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "toMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:20.917Z"
+    },
+    {
+      "fromMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "toMemoryId": "60dd6152-f116-4b60-be44-63347b518c4b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "fromMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "toMemoryId": "e11647e4-f913-4a74-a855-4a58f75cd80b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "fromMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "toMemoryId": "b7c84953-7f96-4290-98ad-23971dd5f4d4",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "fromMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "toMemoryId": "5b777986-bd0e-4aad-b7df-7c72bed8ba55",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "fromMemoryId": "1f912a89-8cf1-4c3e-a03c-395e63275d3f",
+      "toMemoryId": "36269528-5a3c-4745-9180-63f89648d5f5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-19T09:25:21.050Z"
     }
   ],
-  "updatedAt": "2026-05-18T02:55:46.540Z"
+  "updatedAt": "2026-05-19T09:25:21.062Z"
 }

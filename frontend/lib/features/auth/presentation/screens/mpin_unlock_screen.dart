@@ -117,21 +117,9 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
       return;
     }
 
-    await AuthSession.refreshIfNeeded();
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
       _forceSignOut();
-      return;
-    }
-
-    if (AuthSession.isAccessTokenExpired) {
-      if (!mounted) {
-        return;
-      }
-
-      AppNotificationCenter.instance.showWarning(
-        'Your session is refreshing. Please try MPIN again in a moment.',
-      );
       return;
     }
 
@@ -172,7 +160,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
           }
 
           _controller.registerSuccess();
-          AppLockStateService.clearBackgroundState();
+          AppLockStateService.unlock();
 
           if (!mounted) {
             return;
@@ -235,6 +223,7 @@ class _MpinUnlockScreenState extends State<MpinUnlockScreen>
   void _forceSignOut() {
     AuthSession.clearReauthenticationRequirement();
     AuthSession.clear();
+    AppLockStateService.reset();
     Navigator.of(
       context,
     ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);

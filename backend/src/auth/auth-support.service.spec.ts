@@ -4,8 +4,20 @@ import { AuthSupportService } from './auth-support.service';
 import { SupabaseService } from '../supabase/supabase.service';
 
 describe('AuthSupportService auth user lookup', () => {
-  const createService = (listUsersMock: jest.Mock) => {
+  const createService = (
+    listUsersMock: jest.Mock,
+    getUserMock: jest.Mock = jest.fn().mockResolvedValue({
+      data: { user: null },
+      error: null,
+    }),
+    decodeMock: jest.Mock = jest.fn(),
+  ) => {
     const supabaseService = {
+      authClient: {
+        auth: {
+          getUser: getUserMock,
+        },
+      },
       adminClient: {
         auth: {
           admin: {
@@ -24,7 +36,11 @@ describe('AuthSupportService auth user lookup', () => {
       totpSecretEncryptionKey: 'totp-secret-encryption-key',
     } as AuthSettingsService;
 
-    return new AuthSupportService(settings, new JwtService(), supabaseService);
+    const jwtService = {
+      decode: decodeMock,
+    } as unknown as JwtService;
+
+    return new AuthSupportService(settings, jwtService, supabaseService);
   };
 
   afterEach(() => {
@@ -70,5 +86,27 @@ describe('AuthSupportService auth user lookup', () => {
     const service = createService(listUsersMock);
 
     await expect(service.findAuthUserIdByEmail('missing@example.com')).resolves.toBeNull();
+  });
+
+  it('falls back to the signed JWT payload when Supabase rejects an expired access token', async () => {
+    const getUserMock = jest.fn().mockResolvedValue({
+      data: { user: null },
+      error: { message: 'JWT expired' },
+    });
+    const decodeMock = jest.fn().mockReturnValue({
+      sub: 'user-123',
+      email: 'patient@example.com',
+    });
+
+    const service = createService(jest.fn(), getUserMock, decodeMock);
+
+    await expect(
+      service.getAuthenticatedUserFromAccessToken('expired-token'),
+    ).resolves.toEqual({
+      id: 'user-123',
+      email: 'patient@example.com',
+    });
+    expect(getUserMock).toHaveBeenCalledWith('expired-token');
+    expect(decodeMock).toHaveBeenCalledWith('expired-token');
   });
 });

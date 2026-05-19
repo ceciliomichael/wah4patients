@@ -55,9 +55,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
     final accessToken = AuthSession.accessToken?.trim() ?? '';
     if (accessToken.isEmpty) {
-      AppNotificationCenter.instance.showWarning(
-        'Your session expired. Please sign in again.',
-      );
       Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       return;
     }

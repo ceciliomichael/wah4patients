@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../interoperability/domain/interoperability_models.dart';
 
 enum AppointmentBookingMode { onsite, teleconsultation }
 
@@ -18,13 +19,13 @@ extension AppointmentBookingModeX on AppointmentBookingMode {
   List<String> get helpMessages => switch (this) {
     AppointmentBookingMode.onsite => const <String>[
       'Select the consultation type that best matches your visit.',
-      'Choose a date and time slot, then confirm clinic details.',
-      'Review the full booking on a dedicated screen before you confirm.',
+      'Choose a date and time slot, then look up the provider for the request.',
+      'Review the request and send it through the gateway when everything looks right.',
     ],
     AppointmentBookingMode.teleconsultation => const <String>[
       'Select the remote consultation type that fits your concern.',
-      'Choose a date and time slot, then confirm teleconsult details.',
-      'Review the full booking on a dedicated screen before you confirm.',
+      'Choose a date and time slot, then look up the provider for the request.',
+      'Review the request and send it through the gateway when everything looks right.',
     ],
   };
 
@@ -73,6 +74,20 @@ class AppointmentTypeOption {
   final Color accentColor;
 }
 
+class AppointmentModeOption {
+  const AppointmentModeOption({
+    required this.mode,
+    required this.title,
+    required this.description,
+    required this.icon,
+  });
+
+  final AppointmentBookingMode mode;
+  final String title;
+  final String description;
+  final IconData icon;
+}
+
 class AppointmentLocationOption {
   const AppointmentLocationOption({
     required this.label,
@@ -94,7 +109,6 @@ class AppointmentBookingContent {
     required this.stepThreeSubtitle,
     required this.typeOptions,
     required this.locationOptions,
-    required this.providerOptions,
   });
 
   final AppointmentBookingMode mode;
@@ -106,7 +120,6 @@ class AppointmentBookingContent {
   final String stepThreeSubtitle;
   final List<AppointmentTypeOption> typeOptions;
   final List<AppointmentLocationOption> locationOptions;
-  final List<String> providerOptions;
 }
 
 class AppointmentBookingSummary {
@@ -117,6 +130,7 @@ class AppointmentBookingSummary {
     required this.timeSlot,
     required this.location,
     required this.provider,
+    required this.patientIdentifier,
     required this.reason,
     required this.notes,
     required this.teleReady,
@@ -127,11 +141,27 @@ class AppointmentBookingSummary {
   final DateTime date;
   final String timeSlot;
   final String location;
-  final String provider;
+  final InteroperabilityProviderSummary provider;
+  final SyncIdentifierOption patientIdentifier;
   final String reason;
   final String notes;
   final bool teleReady;
 }
+
+const List<AppointmentModeOption> appointmentModeOptions = <AppointmentModeOption>[
+  AppointmentModeOption(
+    mode: AppointmentBookingMode.onsite,
+    title: 'Onsite consultation',
+    description: 'Book an in-person clinic visit with a provider.',
+    icon: Icons.local_hospital_outlined,
+  ),
+  AppointmentModeOption(
+    mode: AppointmentBookingMode.teleconsultation,
+    title: 'Teleconsultation',
+    description: 'Schedule a remote appointment through a video platform.',
+    icon: Icons.video_call_outlined,
+  ),
+];
 
 const List<String> mockAppointmentTimeSlots = <String>[
   '09:00 AM - 09:30 AM',
@@ -190,7 +220,6 @@ const AppointmentBookingContent onsiteAppointmentContent =
           description: 'Maternal and pediatric consultation area',
         ),
       ],
-      providerOptions: <String>['Dr. Reyes', 'Dr. Santos', 'Dr. Cruz'],
     );
 
 const AppointmentBookingContent teleconsultationAppointmentContent =
@@ -243,5 +272,14 @@ const AppointmentBookingContent teleconsultationAppointmentContent =
           description: 'Audio-only teleconsultation appointment',
         ),
       ],
-      providerOptions: <String>['Dr. Navarro', 'Dr. Lopez', 'Dr. Garcia'],
     );
+
+AppointmentBookingContent appointmentBookingContentForMode(
+  AppointmentBookingMode mode,
+) {
+  return switch (mode) {
+    AppointmentBookingMode.onsite => onsiteAppointmentContent,
+    AppointmentBookingMode.teleconsultation =>
+      teleconsultationAppointmentContent,
+  };
+}

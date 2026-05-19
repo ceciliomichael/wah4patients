@@ -8,8 +8,8 @@ class TeleconsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppointmentBookingScreen(
-      content: teleconsultationAppointmentContent,
+    return AppointmentBookingScreen(
+      initialMode: AppointmentBookingMode.teleconsultation,
     );
   }
 }

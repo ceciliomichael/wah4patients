@@ -25,97 +25,45 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   late final _RouteTrackerObserver _routeTrackerObserver;
 
-  bool _isLockRouteVisible = false;
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _routeTrackerObserver = _RouteTrackerObserver();
     AuthSession.notifier.addListener(_handleSessionStateChange);
+    AppLockStateService.notifier.addListener(_handleLockStateChange);
   }
 
   @override
   void dispose() {
     AuthSession.notifier.removeListener(_handleSessionStateChange);
+    AppLockStateService.notifier.removeListener(_handleLockStateChange);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   void _handleSessionStateChange() {
-    _redirectToReauthenticationIfNeeded();
+    _syncRouteWithSessionAndLockState();
   }
 
-  Future<void> _redirectToReauthenticationIfNeeded() async {
+  void _handleLockStateChange() {
+    _syncRouteWithSessionAndLockState();
+  }
+
+  Future<void> _syncRouteWithSessionAndLockState() async {
     final currentRoute = _routeTrackerObserver.currentRoute;
     if (currentRoute == AppRoutes.login || currentRoute == AppRoutes.mpinUnlock) {
       return;
     }
 
-    final shouldReauthenticate =
-        AuthSession.requiresReauthentication ||
-        (AuthSession.isAuthenticated && AuthSession.isAccessTokenExpired);
-    if (!shouldReauthenticate) {
-      return;
-    }
-
-    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
-    final targetRoute = isMpinEnabled ? AppRoutes.mpinUnlock : AppRoutes.login;
-
-    final navigator = _navigatorKey.currentState;
-    if (navigator == null || !mounted) {
-      return;
-    }
-
-    if (!mounted || _routeTrackerObserver.currentRoute == targetRoute) {
-      return;
-    }
-
-    navigator.pushNamedAndRemoveUntil(targetRoute, (route) => false);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
-      AppLockStateService.markBackgrounded();
-      return;
-    }
-
-    if (state == AppLifecycleState.resumed) {
-      _tryShowMpinLock();
-    }
-  }
-
-  Future<void> _tryShowMpinLock() async {
-    if (_isLockRouteVisible || !AuthSession.isAuthenticated) {
-      return;
-    }
-
-    final hasFreshSession = await AuthSession.refreshIfNeeded();
-    if (!hasFreshSession || !AuthSession.isAuthenticated) {
-      await _redirectToReauthenticationIfNeeded();
-      return;
-    }
-
-    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
-    if (AuthSession.isAccessTokenExpired) {
-      if (!isMpinEnabled ||
-          _routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {
-        return;
-      }
-
+    await AuthSession.restoreFromStorage();
+    if (!AuthSession.isAuthenticated) {
       final navigator = _navigatorKey.currentState;
       if (navigator == null || !mounted) {
         return;
       }
 
-      _isLockRouteVisible = true;
-      try {
-        await navigator.pushNamed(AppRoutes.mpinUnlock);
-      } finally {
-        _isLockRouteVisible = false;
-      }
+      navigator.pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
       return;
     }
 
@@ -131,18 +79,15 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
         status: status,
       );
 
-      if (status.isMpinConfigured && status.isMpinDeviceRegistered) {
-        await MpinLocalStore.setMpinEnabled(true);
-      } else {
-        await MpinLocalStore.setMpinEnabled(false);
-      }
+      await MpinLocalStore.setMpinEnabled(
+        status.isMpinConfigured && status.isMpinDeviceRegistered,
+      );
     } on AuthApiException {
       // Keep the local device state as the fallback when security status cannot be resolved.
     }
 
-    if (!isMpinEnabled ||
-        !AppLockStateService.shouldRequireUnlockOnResume() ||
-        _routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {
+    final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+    if (!isMpinEnabled || !AppLockStateService.shouldRequireUnlockOnResume()) {
       return;
     }
 
@@ -151,11 +96,24 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       return;
     }
 
-    _isLockRouteVisible = true;
-    try {
-      await navigator.pushNamed(AppRoutes.mpinUnlock);
-    } finally {
-      _isLockRouteVisible = false;
+    if (_routeTrackerObserver.currentRoute == AppRoutes.mpinUnlock) {
+      return;
+    }
+
+    navigator.pushNamedAndRemoveUntil(AppRoutes.mpinUnlock, (route) => false);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      AppLockStateService.markBackgrounded();
+      return;
+    }
+
+    if (state == AppLifecycleState.resumed) {
+      AppLockStateService.markForegrounded();
+      _syncRouteWithSessionAndLockState();
     }
   }
 
@@ -260,12 +218,30 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
       theme: theme,
       initialRoute: AppRoutes.splash,
       builder: (context, child) {
-        return Stack(
+        final appContent = Stack(
           fit: StackFit.expand,
           children: [
             if (child != null) child,
             AppNotificationHost(controller: AppNotificationCenter.instance),
           ],
+        );
+
+        return Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerDown: (_) => AppLockStateService.registerActivity(),
+          onPointerMove: (_) => AppLockStateService.registerActivity(),
+          onPointerSignal: (_) => AppLockStateService.registerActivity(),
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollStartNotification ||
+                  notification is ScrollUpdateNotification ||
+                  notification is UserScrollNotification) {
+                AppLockStateService.registerActivity();
+              }
+              return false;
+            },
+            child: appContent,
+          ),
         );
       },
       onGenerateRoute: (settings) {
@@ -292,18 +268,21 @@ class _RouteTrackerObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     currentRoute = route.settings.name;
+    AppLockStateService.registerActivity();
     super.didPush(route, previousRoute);
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     currentRoute = previousRoute?.settings.name;
+    AppLockStateService.registerActivity();
     super.didPop(route, previousRoute);
   }
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     currentRoute = newRoute?.settings.name;
+    AppLockStateService.registerActivity();
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }
 }

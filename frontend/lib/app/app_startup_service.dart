@@ -3,6 +3,7 @@ import '../features/auth/data/auth_api_client.dart';
 import '../features/auth/data/mpin_local_store.dart';
 import '../features/auth/domain/auth_session.dart';
 import '../features/auth/presentation/services/security_settings_status_cache_service.dart';
+import 'app_lock_state_service.dart';
 import 'app_routes.dart';
 
 class AppStartupResult {
@@ -22,17 +23,8 @@ class AppStartupService {
   AppStartupService._();
 
   static Future<AppStartupResult> resolveInitialRoute() async {
-    await AuthSession.refreshIfNeeded();
+    await AuthSession.restoreFromStorage();
     if (AuthSession.isAuthenticated) {
-      final isAccessTokenExpired = AuthSession.isAccessTokenExpired;
-      final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
-
-      if (isAccessTokenExpired) {
-        return isMpinEnabled
-            ? AppStartupResult.mpinUnlock
-            : AppStartupResult.login;
-      }
-
       try {
         final deviceId = await MpinLocalStore.readOrCreateDeviceId();
         final accessToken = AuthSession.accessToken?.trim() ?? '';
@@ -47,18 +39,17 @@ class AppStartupService {
 
         if (status.isMpinConfigured && status.isMpinDeviceRegistered) {
           await MpinLocalStore.setMpinEnabled(true);
-          return AppStartupResult.mpinUnlock;
+        } else {
+          await MpinLocalStore.setMpinEnabled(false);
         }
-
-        await MpinLocalStore.setMpinEnabled(false);
       } on AuthApiException {
         // Keep the local device state as the fallback if security status cannot be resolved.
       }
 
-      final refreshedMpinEnabled = await MpinLocalStore.isMpinEnabled();
-      return refreshedMpinEnabled
-          ? AppStartupResult.mpinUnlock
-          : AppStartupResult.dashboard;
+      final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
+      final shouldUnlock =
+          isMpinEnabled && AppLockStateService.shouldRequireUnlockOnResume();
+      return shouldUnlock ? AppStartupResult.mpinUnlock : AppStartupResult.dashboard;
     }
 
     final onboardingCompleted = await AuthLocalStore.isOnboardingCompleted();

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../../../../app/app_notification_center.dart';
 import '../../../../app/app_routes.dart';
+import '../../../../app/app_lock_state_service.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
@@ -145,6 +146,7 @@ class _PasswordRegistrationScreenState
       if (loginResult.mfaRequired) {
         AuthSession.clearReauthenticationRequirement();
         AuthSession.clear();
+        AppLockStateService.reset();
         navigator.pushNamedAndRemoveUntil(
           AppRoutes.mfaChallenge,
           (route) => false,
@@ -162,6 +164,7 @@ class _PasswordRegistrationScreenState
       }
 
       await AuthSession.persist(loginResult);
+      AppLockStateService.unlock();
       navigator.pushNamedAndRemoveUntil(
         AppRoutes.mpinSetup,
         (route) => false,

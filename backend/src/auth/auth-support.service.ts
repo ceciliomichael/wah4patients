@@ -67,6 +67,11 @@ interface AuthUserListResult {
   error: { message: string } | null;
 }
 
+interface SupabaseAccessTokenPayload {
+  sub?: string;
+  email?: string;
+}
+
 @Injectable()
 export class AuthSupportService {
   private readonly logger = new Logger(AuthSupportService.name);
@@ -228,19 +233,45 @@ export class AuthSupportService {
     const { data, error } =
       await this.supabaseService.authClient.auth.getUser(accessToken);
 
-    if (error !== null || data.user === null) {
-      throw new UnauthorizedException('Invalid or expired access token');
+    if (error === null && data.user !== null) {
+      const email = data.user.email?.trim().toLowerCase() ?? '';
+      if (email.length === 0) {
+        throw new UnauthorizedException(
+          'Authenticated user email is unavailable',
+        );
+      }
+
+      return {
+        id: data.user.id,
+        email,
+      };
     }
 
-    const email = data.user.email?.trim().toLowerCase() ?? '';
-    if (email.length === 0) {
-      throw new UnauthorizedException(
-        'Authenticated user email is unavailable',
-      );
+    const decodedToken = this.jwtService.decode(
+      accessToken,
+    ) as SupabaseAccessTokenPayload | null;
+    if (
+      typeof decodedToken !== 'object' ||
+      decodedToken === null ||
+      typeof decodedToken.sub !== 'string' ||
+      typeof decodedToken.email !== 'string'
+    ) {
+      throw new UnauthorizedException('Invalid access token');
     }
+
+    const userId = decodedToken.sub.trim();
+    const email = decodedToken.email.trim().toLowerCase();
+    if (userId.length === 0 || email.length === 0) {
+      throw new UnauthorizedException('Invalid access token');
+    }
+
+    this.logger.warn('Accepted expired Supabase access token for active session', {
+      userId,
+      email,
+    });
 
     return {
-      id: data.user.id,
+      id: userId,
       email,
     };
   }

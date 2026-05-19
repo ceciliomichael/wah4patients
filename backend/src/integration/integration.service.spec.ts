@@ -4,6 +4,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FhirSyncRepository } from '../fhir-sync/fhir-sync.repository';
+import { GatewayClientService } from './gateway-client.service';
 import { IntegrationService } from './integration.service';
 
 describe('IntegrationService', () => {
@@ -62,6 +63,7 @@ describe('IntegrationService', () => {
     const service = new IntegrationService(
       createConfigService(),
       createRepositoryMock() as FhirSyncRepository,
+      new GatewayClientService(createConfigService()),
     );
     const result = await service.getProviders();
 
@@ -127,6 +129,7 @@ describe('IntegrationService', () => {
     const service = new IntegrationService(
       createConfigService(),
       repositoryMock as FhirSyncRepository,
+      new GatewayClientService(createConfigService()),
     );
     const result = await service.prepareSyncRequest(
       {
@@ -204,6 +207,7 @@ describe('IntegrationService', () => {
     const service = new IntegrationService(
       createConfigService(),
       createRepositoryMock() as FhirSyncRepository,
+      new GatewayClientService(createConfigService()),
     );
 
     await expect(
@@ -226,6 +230,7 @@ describe('IntegrationService', () => {
     const service = new IntegrationService(
       createConfigService(),
       createRepositoryMock() as FhirSyncRepository,
+      new GatewayClientService(createConfigService()),
     );
 
     await expect(service.getProviders()).rejects.toBeInstanceOf(

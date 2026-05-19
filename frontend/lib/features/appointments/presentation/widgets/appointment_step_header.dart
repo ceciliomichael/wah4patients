@@ -8,12 +8,14 @@ class AppointmentStepHeader extends StatelessWidget {
   const AppointmentStepHeader({
     super.key,
     required this.currentStep,
+    required this.totalSteps,
     required this.title,
     required this.subtitle,
     required this.accentColor,
   });
 
   final int currentStep;
+  final int totalSteps;
   final String title;
   final String subtitle;
   final Color accentColor;
@@ -37,7 +39,7 @@ class AppointmentStepHeader extends StatelessWidget {
               borderRadius: AppRadii.pill,
             ),
             child: Text(
-              'Step ${currentStep + 1} of 3',
+              'Step ${currentStep + 1} of $totalSteps',
               style: AppTextStyles.labelLarge.copyWith(
                 color: accentColor,
                 fontWeight: FontWeight.w700,
