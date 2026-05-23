@@ -1,0 +1,168 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ph-core-appointment",
+  "language": "en",
+  "text": {
+    "status": "extensions"
+  },
+  "url": "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-appointment",
+  "version": "0.2.0",
+  "name": "PHCoreAppointment",
+  "title": "PH Core Appointment",
+  "status": "active",
+  "date": "2026-05-14T10:00:00+08:00",
+  "publisher": "Wireless Access for Health (WAH)",
+  "contact": [
+    {
+      "name": "Wireless Access for Health (WAH)",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://wah.ph"
+        }
+      ]
+    }
+  ],
+  "description": "A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "PH",
+          "display": "Philippines"
+        }
+      ]
+    }
+  ],
+  "purpose": "Defines the minimum set of appointment data elements that WAH systems should exchange for outpatient scheduling and care coordination.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Appointment",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Appointment",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Appointment",
+        "path": "Appointment"
+      },
+      {
+        "id": "Appointment.identifier",
+        "path": "Appointment.identifier",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.status",
+        "path": "Appointment.status",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.cancelationReason",
+        "path": "Appointment.cancelationReason",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.serviceCategory",
+        "path": "Appointment.serviceCategory",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.serviceType",
+        "path": "Appointment.serviceType",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.specialty",
+        "path": "Appointment.specialty",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.appointmentType",
+        "path": "Appointment.appointmentType",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.reasonCode",
+        "path": "Appointment.reasonCode",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.reasonReference",
+        "path": "Appointment.reasonReference",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.description",
+        "path": "Appointment.description",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.supportingInformation",
+        "path": "Appointment.supportingInformation",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.start",
+        "path": "Appointment.start",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.end",
+        "path": "Appointment.end",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.minutesDuration",
+        "path": "Appointment.minutesDuration",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.created",
+        "path": "Appointment.created",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.comment",
+        "path": "Appointment.comment",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.patientInstruction",
+        "path": "Appointment.patientInstruction",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.participant",
+        "path": "Appointment.participant",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.participant.type",
+        "path": "Appointment.participant.type",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.participant.actor",
+        "path": "Appointment.participant.actor",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.participant.required",
+        "path": "Appointment.participant.required",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.participant.status",
+        "path": "Appointment.participant.status",
+        "mustSupport": true
+      },
+      {
+        "id": "Appointment.requestedPeriod",
+        "path": "Appointment.requestedPeriod",
+        "mustSupport": true
+      }
+    ]
+  }
+}

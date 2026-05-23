@@ -2,13 +2,13 @@
   "resourceType": "ValueSet",
   "id": "provinces",
   "language": "en",
-  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/provinces",
+  "url": "https://fhir-ph-core.wah.ph/classification/psgc/ValueSet/provinces",
   "version": "1Q-2026",
   "name": "Provinces",
   "title": "Provinces",
   "status": "active",
   "experimental": false,
-  "date": "2026-03-31",
+  "date": "2026-05-14T10:00:00+08:00",
   "publisher": "Wireless Access for Health (WAH)",
   "contact": [
     {
@@ -21,7 +21,7 @@
       ]
     }
   ],
-  "description": "All province-level codes from the Philippine Standard Geographic Code (PSGC) published by the Philippine Statistics Authority (PSA).",
+  "description": "All province codes from the Philippine Standard Geographic Code (PSGC) 1Q-2026, published by the Philippine Statistics Authority (PSA).",
   "jurisdiction": [
     {
       "coding": [

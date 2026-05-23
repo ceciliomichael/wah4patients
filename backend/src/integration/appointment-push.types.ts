@@ -21,13 +21,14 @@ export interface FhirAppointmentParticipantIdentifier {
 }
 
 export interface FhirAppointmentParticipantActor {
-  type: 'Patient';
+  type: 'Patient' | 'Practitioner';
   identifier: FhirAppointmentParticipantIdentifier;
 }
 
 export interface FhirAppointmentParticipant {
   actor: FhirAppointmentParticipantActor;
   status: 'accepted' | 'needs-action';
+  required?: 'required' | 'optional' | 'information-only';
 }
 
 export interface FhirAppointmentNote {
@@ -40,7 +41,10 @@ export interface FhirAppointmentReasonCode {
 
 export interface FhirAppointmentResource {
   resourceType: 'Appointment';
+  meta?: { profile: string[] };
+  identifier?: Array<{ use?: string; system: string; value: string }>;
   status: 'proposed';
+  serviceCategory?: Array<{ coding: Array<{ system: string; code: string; display?: string }> }>;
   description: string;
   start: string;
   end: string;
@@ -53,6 +57,7 @@ export interface AppointmentPushGatewayRequest {
   senderId: string;
   targetId: string;
   resource: FhirAppointmentResource;
+  data?: FhirAppointmentResource;
   reason?: string;
   notes?: string;
 }

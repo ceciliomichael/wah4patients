@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
@@ -8,6 +7,7 @@ import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../models/appointment_booking_models.dart';
+import '../widgets/appointment_step_header.dart';
 
 class AppointmentReviewScreen extends StatelessWidget {
   const AppointmentReviewScreen({super.key, required this.summary});
@@ -15,59 +15,45 @@ class AppointmentReviewScreen extends StatelessWidget {
   final AppointmentBookingSummary summary;
 
   String _formatDate(DateTime date) {
-    const months = <String>[
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
     ];
-
     return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
 
   void _showHelpDialog(BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (dialogContext) {
-        return HelpModalWidget(
-          title: 'Review Booking Help',
-          messages: <String>[
-            'Check each booking detail carefully before you confirm.',
-            'Use Back to return to the previous step if you want to change something.',
-            'Confirming here sends the request to the selected provider through the backend gateway.',
-          ],
-          icons: const <IconData>[
-            Icons.fact_check_outlined,
-            Icons.edit_outlined,
-            Icons.check_circle_outline,
-          ],
-          onClose: () => Navigator.of(dialogContext).pop(),
-        );
-      },
+      builder: (ctx) => HelpModalWidget(
+        title: 'Review Booking Help',
+        messages: const [
+          'Check each detail carefully before you confirm.',
+          'Use Back to return and change anything if needed.',
+          'Confirming sends the request to your chosen provider.',
+        ],
+        icons: const [
+          Icons.fact_check_outlined,
+          Icons.edit_outlined,
+          Icons.check_circle_outline,
+        ],
+        onClose: () => Navigator.of(ctx).pop(),
+      ),
     );
   }
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 118,
+            width: 120,
             child: Text(
               label,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -85,37 +71,10 @@ class AppointmentReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionCard({
-    required String title,
-    required List<Widget> children,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.extraLarge,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ...children,
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;
-    final horizontalPadding = isTablet ? 32.0 : 16.0;
+    final horizontalPadding = isTablet ? 32.0 : 24.0;
     final notes = summary.notes.trim();
 
     return SafeArea(
@@ -127,106 +86,81 @@ class AppointmentReviewScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppScreenHeader(
-                title: summary.mode.reviewTitle,
+                title: 'Review Request',
                 isTablet: isTablet,
                 topPadding: 24.0,
                 onBackPressed: () => Navigator.of(context).pop(),
                 onHelpPressed: () => _showHelpDialog(context),
               ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: AppRadii.extraLarge,
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 54,
-                      height: 54,
-                      decoration: BoxDecoration(
-                        color: summary.mode.accentColor.withValues(alpha: 0.08),
-                        borderRadius: AppRadii.large,
-                      ),
-                      child: Icon(
-                        summary.mode.icon,
-                        color: summary.mode.accentColor,
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            summary.mode.title,
-                            style: AppTextStyles.titleLarge.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Please review the details below before the app sends the request to ${summary.provider.name}.',
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 24),
+                  padding: const EdgeInsets.only(top: 24, bottom: 32),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _buildSectionCard(
-                        title: 'Consultation Details',
-                        children: <Widget>[
-                          _buildDetailRow(
-                            'Type',
-                            summary.consultationType.title,
-                          ),
-                          _buildDetailRow('Date', _formatDate(summary.date)),
-                          _buildDetailRow('Time', summary.timeSlot),
-                          _buildDetailRow(
-                            summary.mode.locationLabel,
-                            summary.location,
-                          ),
-                          _buildDetailRow('Provider', summary.provider.name),
-                          _buildDetailRow(
-                            'Provider location',
-                            '${summary.provider.facilityCode} • ${summary.provider.location}',
-                          ),
-                          _buildDetailRow(
-                            'Patient identifier',
-                            '${summary.patientIdentifier.label}: ${summary.patientIdentifier.value}',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      _buildSectionCard(
-                        title: 'Reason and Notes',
-                        children: <Widget>[
-                          _buildDetailRow('Reason', summary.reason),
-                          if (notes.isNotEmpty)
-                            _buildDetailRow('Notes', notes),
-                          if (summary.mode == AppointmentBookingMode.teleconsultation)
-                            _buildDetailRow(
-                              'Remote readiness',
-                              summary.teleReady
-                                  ? 'Confirmed'
-                                  : 'Not confirmed',
+                      // Header
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 52,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: summary.mode.accentColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(14),
                             ),
+                            child: Icon(
+                              summary.mode.icon,
+                              color: summary.mode.accentColor,
+                              size: 26,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  summary.mode.title,
+                                  style: AppTextStyles.headlineSmall.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  'Review your details before sending the request to ${summary.provider.name}.',
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    color: AppColors.textSecondary,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
+                      const SizedBox(height: 40),
+
+                      // Details list
+                      const AppointmentSectionLabel('APPOINTMENT DETAILS'),
+                      _buildDetailRow('Type', summary.consultationType.title),
+                      _buildDetailRow('Date', _formatDate(summary.date)),
+                      _buildDetailRow('Time', summary.timeSlot),
+                      if (summary.mode == AppointmentBookingMode.teleconsultation)
+                        _buildDetailRow('Platform', summary.location),
+                      _buildDetailRow('Provider', summary.provider.name),
+                      _buildDetailRow('Location', '${summary.provider.facilityCode} • ${summary.provider.location}'),
+                      
+                      const SizedBox(height: 32),
+                      const AppointmentSectionLabel('YOUR INFO'),
+                      _buildDetailRow('Patient ID', summary.patientIdentifier.value),
+                      _buildDetailRow('Reason', summary.reason),
+                      if (notes.isNotEmpty) _buildDetailRow('Notes', notes),
+                      if (summary.mode == AppointmentBookingMode.teleconsultation)
+                        _buildDetailRow(
+                          'Readiness',
+                          summary.teleReady ? 'Confirmed connection & device' : 'Not confirmed',
+                        ),
                     ],
                   ),
                 ),
@@ -243,7 +177,7 @@ class AppointmentReviewScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: PrimaryButtonWidget(
-                      text: 'Confirm and Send',
+                      text: 'Send Request',
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                   ),

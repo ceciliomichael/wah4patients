@@ -31,6 +31,7 @@ export class AppointmentPushService {
       senderId,
       targetId: targetProvider.id,
       resource: appointment,
+      data: appointment, // Adding this because hospital backend might require it due to buggy implementation
       reason: this.readOptionalText(payload.reason),
       notes: this.readOptionalText(payload.notes),
     };
@@ -107,7 +108,30 @@ export class AppointmentPushService {
 
     return {
       resourceType: 'Appointment',
+      meta: {
+        profile: [
+          'https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-appointment'
+        ]
+      },
+      identifier: [
+        {
+          use: 'secondary',
+          system: 'https://wah.ph/fhir/Identifier/scheduling-request-id',
+          value: randomUUID()
+        }
+      ],
       status: 'proposed',
+      serviceCategory: [
+        {
+          coding: [
+            {
+              system: 'https://wah.ph/fhir/CodeSystem/service-category',
+              code: payload.appointmentMode === 'onsite' ? 'outpatient' : 'teleconsultation',
+              display: payload.appointmentMode === 'onsite' ? 'Outpatient Services' : 'Teleconsultation Services'
+            }
+          ]
+        }
+      ],
       description: `${appointmentType} request (${modeLabel})`,
       start: scheduledAt.toISOString(),
       end: endAt.toISOString(),
@@ -120,8 +144,20 @@ export class AppointmentPushService {
               value: payload.identifierValue.trim(),
             },
           },
+          required: 'required',
           status: 'accepted',
         },
+        {
+          actor: {
+            type: 'Practitioner',
+            identifier: {
+              system: 'https://wah.ph/fhir/Identifier/provider-id',
+              value: payload.targetProviderId.trim()
+            }
+          },
+          required: 'required',
+          status: 'needs-action'
+        }
       ],
       reasonCode: [{ text: reason }],
       note: [

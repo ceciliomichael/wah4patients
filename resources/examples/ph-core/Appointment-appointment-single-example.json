@@ -1,0 +1,108 @@
+{
+  "resourceType": "Appointment",
+  "id": "appointment-single-example",
+  "meta": {
+    "profile": [
+      "https://fhir-ph-core.wah.ph/phcore/StructureDefinition/ph-core-appointment"
+    ]
+  },
+  "language": "en",
+  "text": {
+    "status": "generated"
+  },
+  "identifier": [
+    {
+      "system": "https://wah.ph/fhir/Identifier/appointment-id",
+      "value": "WAH-APT-2026-0001"
+    }
+  ],
+  "status": "booked",
+  "serviceCategory": [
+    {
+      "coding": [
+        {
+          "system": "https://wah.ph/fhir/CodeSystem/service-category",
+          "code": "outpatient",
+          "display": "Outpatient Services"
+        }
+      ]
+    }
+  ],
+  "serviceType": [
+    {
+      "coding": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "185389009",
+          "display": "Follow-up visit"
+        }
+      ],
+      "text": "Primary care follow-up consultation"
+    }
+  ],
+  "specialty": [
+    {
+      "coding": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "394814009",
+          "display": "General practice"
+        }
+      ]
+    }
+  ],
+  "appointmentType": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v2-0276",
+        "code": "FOLLOWUP",
+        "display": "A follow up visit from a previous appointment"
+      }
+    ]
+  },
+  "reasonReference": [
+    {
+      "reference": "Condition/condition-single-example"
+    }
+  ],
+  "description": "WAH primary care follow-up consultation",
+  "start": "2026-05-28T09:00:00+08:00",
+  "end": "2026-05-28T09:30:00+08:00",
+  "created": "2026-05-21T08:15:00+08:00",
+  "comment": "Patient is scheduled for blood pressure review and medication adherence check.",
+  "patientInstruction": "Please arrive 15 minutes early and bring your latest laboratory results.",
+  "participant": [
+    {
+      "actor": {
+        "reference": "Patient/patient-single-example"
+      },
+      "required": "required",
+      "status": "accepted"
+    },
+    {
+      "type": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+              "code": "ATND",
+              "display": "attender"
+            }
+          ]
+        }
+      ],
+      "actor": {
+        "reference": "Practitioner/practitioner-single-example"
+      },
+      "required": "required",
+      "status": "accepted"
+    },
+    {
+      "actor": {
+        "reference": "Location/location-single-example"
+      },
+      "required": "required",
+      "status": "accepted"
+    }
+  ]
+}

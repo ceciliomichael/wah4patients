@@ -44,8 +44,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   int _currentStep = 0;
   AppointmentBookingMode? _selectedMode;
   int? _selectedTypeIndex;
-  int? _selectedDateIndex;
-  String? _selectedTimeSlot;
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
   String? _selectedLocation;
   String? _selectedProviderId;
   bool _teleReady = false;
@@ -154,8 +154,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
         setState(() {
           _selectedMode = null;
           _selectedTypeIndex = null;
-          _selectedDateIndex = null;
-          _selectedTimeSlot = null;
+          _selectedDate = null;
+          _selectedTime = null;
           _selectedLocation = null;
           _selectedProviderId = null;
           _teleReady = false;
@@ -191,8 +191,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     }
 
     if (_currentStep == 1) {
-      if (_selectedDateIndex == null || _selectedTimeSlot == null) {
-        _showSnackBar('Choose both a date and a time slot.');
+      if (_selectedDate == null || _selectedTime == null) {
+        _showSnackBar('Choose both a date and a time.');
         return;
       }
 
@@ -264,8 +264,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     final selectedIdentifier = _selectedPatientIdentifier;
     final selectedProvider = _selectedProvider;
     final selectedType = _selectedTypeIndex;
-    final selectedDate = _selectedDateIndex;
-    final selectedTimeSlot = _selectedTimeSlot;
+    final selectedDate = _selectedDate;
+    final selectedTime = _selectedTime;
     final selectedLocation = _selectedLocation;
     final reason = _reasonController.text.trim();
     final notes = _notesController.text.trim();
@@ -282,15 +282,19 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
       _showSnackBar('Select a consultation type first.');
       return;
     }
-    if (selectedDate == null || selectedTimeSlot == null) {
-      _showSnackBar('Choose both a date and a time slot.');
+    if (selectedDate == null || selectedTime == null) {
+      _showSnackBar('Choose both a date and a time.');
       return;
     }
     if (selectedProvider == null) {
       _showSnackBar('Select a provider first.');
       return;
     }
-    if (selectedLocation == null || reason.isEmpty) {
+    if (mode == AppointmentBookingMode.teleconsultation && selectedLocation == null) {
+      _showSnackBar('Select a platform first.');
+      return;
+    }
+    if (reason.isEmpty) {
       _showSnackBar('Complete the appointment details first.');
       return;
     }
@@ -302,9 +306,9 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     final summary = AppointmentBookingSummary(
       mode: mode,
       consultationType: content.typeOptions[selectedType],
-      date: _dateOptions[selectedDate],
-      timeSlot: selectedTimeSlot,
-      location: selectedLocation,
+      date: selectedDate,
+      timeSlot: '${selectedTime.hourOfPeriod == 0 ? 12 : selectedTime.hourOfPeriod}:${selectedTime.minute.toString().padLeft(2, '0')} ${selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}',
+      location: mode == AppointmentBookingMode.onsite ? selectedProvider.name : selectedLocation!,
       provider: selectedProvider,
       patientIdentifier: selectedIdentifier,
       reason: reason,
@@ -413,8 +417,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
           setState(() {
             _selectedMode = mode;
             _selectedTypeIndex = null;
-            _selectedDateIndex = null;
-            _selectedTimeSlot = null;
+            _selectedDate = null;
+            _selectedTime = null;
             _selectedLocation = null;
             _selectedProviderId = null;
             _teleReady = false;
@@ -440,18 +444,16 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
         },
       ),
       1 => AppointmentScheduleStep(
-        selectedDateIndex: _selectedDateIndex,
-        selectedTimeSlot: _selectedTimeSlot,
-        dateOptions: _dateOptions,
-        timeSlots: mockAppointmentTimeSlots,
-        onDateSelected: (index) {
+        selectedDate: _selectedDate,
+        selectedTime: _selectedTime,
+        onDateSelected: (date) {
           setState(() {
-            _selectedDateIndex = index;
+            _selectedDate = date;
           });
         },
-        onTimeSlotSelected: (slot) {
+        onTimeSelected: (time) {
           setState(() {
-            _selectedTimeSlot = slot;
+            _selectedTime = time;
           });
         },
       ),
@@ -549,7 +551,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
 
     return switch (_currentStep) {
       0 => _selectedTypeIndex != null,
-      1 => _selectedDateIndex != null && _selectedTimeSlot != null,
+      1 => _selectedDate != null && _selectedTime != null,
       2 => _selectedProvider != null,
       _ => true,
     };

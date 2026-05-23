@@ -1,14 +1,14 @@
 {
   "resourceType": "ValueSet",
-  "id": "municipalities",
+  "id": "cities-municipalities",
   "language": "en",
-  "url": "https://fhir-ph-core.wah.ph/phcore/ValueSet/municipalities",
+  "url": "https://fhir-ph-core.wah.ph/classification/psgc/ValueSet/cities-municipalities",
   "version": "1Q-2026",
-  "name": "Municipalities",
-  "title": "Municipalities",
+  "name": "CitiesMunicipalities",
+  "title": "Cities, Municipalities, and Sub-Municipalities",
   "status": "active",
   "experimental": false,
-  "date": "2026-03-31",
+  "date": "2026-05-14T10:00:00+08:00",
   "publisher": "Wireless Access for Health (WAH)",
   "contact": [
     {
@@ -21,7 +21,7 @@
       ]
     }
   ],
-  "description": "All municipality-level codes from the Philippine Standard Geographic Code (PSGC) published by the Philippine Statistics Authority (PSA).",
+  "description": "All city, municipality, and sub-municipality codes from the Philippine Standard Geographic Code (PSGC) 1Q-2026, published by the Philippine Statistics Authority (PSA).",
   "jurisdiction": [
     {
       "coding": [
@@ -38,6 +38,126 @@
       {
         "system": "https://psa.gov.ph/classification/psgc",
         "concept": [
+          {
+            "code": "1380100000",
+            "display": "City of Caloocan"
+          },
+          {
+            "code": "1380200000",
+            "display": "City of Las Piñas"
+          },
+          {
+            "code": "1380300000",
+            "display": "City of Makati"
+          },
+          {
+            "code": "1380400000",
+            "display": "City of Malabon"
+          },
+          {
+            "code": "1380500000",
+            "display": "City of Mandaluyong"
+          },
+          {
+            "code": "1380600000",
+            "display": "City of Manila"
+          },
+          {
+            "code": "1380601000",
+            "display": "Tondo I/II"
+          },
+          {
+            "code": "1380602000",
+            "display": "Binondo"
+          },
+          {
+            "code": "1380603000",
+            "display": "Quiapo"
+          },
+          {
+            "code": "1380604000",
+            "display": "San Nicolas"
+          },
+          {
+            "code": "1380605000",
+            "display": "Santa Cruz"
+          },
+          {
+            "code": "1380606000",
+            "display": "Sampaloc"
+          },
+          {
+            "code": "1380607000",
+            "display": "San Miguel"
+          },
+          {
+            "code": "1380608000",
+            "display": "Ermita"
+          },
+          {
+            "code": "1380609000",
+            "display": "Intramuros"
+          },
+          {
+            "code": "1380610000",
+            "display": "Malate"
+          },
+          {
+            "code": "1380611000",
+            "display": "Paco"
+          },
+          {
+            "code": "1380612000",
+            "display": "Pandacan"
+          },
+          {
+            "code": "1380613000",
+            "display": "Port Area"
+          },
+          {
+            "code": "1380614000",
+            "display": "Santa Ana"
+          },
+          {
+            "code": "1380700000",
+            "display": "City of Marikina"
+          },
+          {
+            "code": "1380800000",
+            "display": "City of Muntinlupa"
+          },
+          {
+            "code": "1380900000",
+            "display": "City of Navotas"
+          },
+          {
+            "code": "1381000000",
+            "display": "City of Parañaque"
+          },
+          {
+            "code": "1381100000",
+            "display": "Pasay City"
+          },
+          {
+            "code": "1381200000",
+            "display": "City of Pasig"
+          },
+          {
+            "code": "1381300000",
+            "display": "Quezon City"
+          },
+          {
+            "code": "1381400000",
+            "display": "City of San Juan"
+          },
+          {
+            "code": "1381500000",
+            "display": "City of Taguig"
+          },
+          {
+            "code": "1381600000",
+            "display": "City of Valenzuela"
+          },
           {
             "code": "1381701000",
             "display": "Pateros"
@@ -267,6 +387,10 @@
             "display": "Rizal"
           },
           {
+            "code": "1403213000",
+            "display": "City of Tabuk"
+          },
+          {
             "code": "1403214000",
             "display": "Tanudan"
           },
@@ -343,6 +467,10 @@
             "display": "Santa Marcela"
           },
           {
+            "code": "1430300000",
+            "display": "City of Baguio"
+          },
+          {
             "code": "0102801000",
             "display": "Adams"
           },
@@ -357,6 +485,10 @@
           {
             "code": "0102804000",
             "display": "Bangui"
+          },
+          {
+            "code": "0102805000",
+            "display": "City of Batac"
           },
           {
             "code": "0102806000",
@@ -381,6 +513,10 @@
           {
             "code": "0102811000",
             "display": "Banna"
+          },
+          {
+            "code": "0102812000",
+            "display": "City of Laoag"
           },
           {
             "code": "0102813000",
@@ -445,6 +581,10 @@
           {
             "code": "0102905000",
             "display": "Cabugao"
+          },
+          {
+            "code": "0102906000",
+            "display": "City of Candon"
           },
           {
             "code": "0102907000",
@@ -555,6 +695,10 @@
             "display": "Tagudin"
           },
           {
+            "code": "0102934000",
+            "display": "City of Vigan"
+          },
+          {
             "code": "0103301000",
             "display": "Agoo"
           },
@@ -607,6 +751,10 @@
             "display": "Rosario"
           },
           {
+            "code": "0103314000",
+            "display": "City of San Fernando"
+          },
+          {
             "code": "0103315000",
             "display": "San Gabriel"
           },
@@ -637,6 +785,10 @@
           {
             "code": "0105502000",
             "display": "Aguilar"
+          },
+          {
+            "code": "0105503000",
+            "display": "City of Alaminos"
           },
           {
             "code": "0105504000",
@@ -695,6 +847,10 @@
             "display": "Calasiao"
           },
           {
+            "code": "0105518000",
+            "display": "City of Dagupan"
+          },
+          {
             "code": "0105519000",
             "display": "Dasol"
           },
@@ -747,6 +903,10 @@
             "display": "Rosales"
           },
           {
+            "code": "0105532000",
+            "display": "City of San Carlos"
+          },
+          {
             "code": "0105533000",
             "display": "San Fabian"
           },
@@ -797,6 +957,10 @@
           {
             "code": "0105545000",
             "display": "Urbiztondo"
+          },
+          {
+            "code": "0105546000",
+            "display": "City of Urdaneta"
           },
           {
             "code": "0105547000",
@@ -943,6 +1107,10 @@
             "display": "Tuao"
           },
           {
+            "code": "0201529000",
+            "display": "Tuguegarao City"
+          },
+          {
             "code": "0203101000",
             "display": "Alicia"
           },
@@ -971,6 +1139,10 @@
             "display": "Cabatuan"
           },
           {
+            "code": "0203108000",
+            "display": "City of Cauayan"
+          },
+          {
             "code": "0203109000",
             "display": "Cordon"
           },
@@ -989,6 +1161,10 @@
           {
             "code": "0203113000",
             "display": "Gamu"
+          },
+          {
+            "code": "0203114000",
+            "display": "City of Ilagan"
           },
           {
             "code": "0203115000",
@@ -1069,6 +1245,10 @@
           {
             "code": "0203134000",
             "display": "Santa Maria"
+          },
+          {
+            "code": "0203135000",
+            "display": "City of Santiago"
           },
           {
             "code": "0203136000",
@@ -1171,6 +1351,10 @@
             "display": "Bagac"
           },
           {
+            "code": "0300803000",
+            "display": "City of Balanga"
+          },
+          {
             "code": "0300804000",
             "display": "Dinalupihan"
           },
@@ -1215,6 +1399,10 @@
             "display": "Balagtas"
           },
           {
+            "code": "0301403000",
+            "display": "City of Baliwag"
+          },
+          {
             "code": "0301404000",
             "display": "Bocaue"
           },
@@ -1239,8 +1427,16 @@
             "display": "Hagonoy"
           },
           {
+            "code": "0301410000",
+            "display": "City of Malolos"
+          },
+          {
             "code": "0301411000",
             "display": "Marilao"
+          },
+          {
+            "code": "0301412000",
+            "display": "City of Meycauayan"
           },
           {
             "code": "0301413000",
@@ -1271,6 +1467,10 @@
             "display": "San Ildefonso"
           },
           {
+            "code": "0301420000",
+            "display": "City of San Jose Del Monte"
+          },
+          {
             "code": "0301421000",
             "display": "San Miguel"
           },
@@ -1295,6 +1495,10 @@
             "display": "Bongabon"
           },
           {
+            "code": "0304903000",
+            "display": "City of Cabanatuan"
+          },
+          {
             "code": "0304904000",
             "display": "Cabiao"
           },
@@ -1309,6 +1513,10 @@
           {
             "code": "0304907000",
             "display": "Gabaldon"
+          },
+          {
+            "code": "0304908000",
+            "display": "City of Gapan"
           },
           {
             "code": "0304909000",
@@ -1343,8 +1551,16 @@
             "display": "Lupao"
           },
           {
+            "code": "0304917000",
+            "display": "Science City of Muñoz"
+          },
+          {
             "code": "0304918000",
             "display": "Nampicuan"
+          },
+          {
+            "code": "0304919000",
+            "display": "City of Palayan"
           },
           {
             "code": "0304920000",
@@ -1369,6 +1585,10 @@
           {
             "code": "0304925000",
             "display": "San Isidro"
+          },
+          {
+            "code": "0304926000",
+            "display": "San Jose City"
           },
           {
             "code": "0304927000",
@@ -1423,6 +1643,10 @@
             "display": "Lubao"
           },
           {
+            "code": "0305409000",
+            "display": "Mabalacat City"
+          },
+          {
             "code": "0305410000",
             "display": "Macabebe"
           },
@@ -1445,6 +1669,10 @@
           {
             "code": "0305415000",
             "display": "Porac"
+          },
+          {
+            "code": "0305416000",
+            "display": "City of San Fernando"
           },
           {
             "code": "0305417000",
@@ -1529,6 +1757,10 @@
           {
             "code": "0306915000",
             "display": "Santa Ignacia"
+          },
+          {
+            "code": "0306916000",
+            "display": "City of Tarlac"
           },
           {
             "code": "0306917000",
@@ -1623,6 +1855,14 @@
             "display": "San Luis"
           },
           {
+            "code": "0330100000",
+            "display": "City of Angeles"
+          },
+          {
+            "code": "0331400000",
+            "display": "City of Olongapo"
+          },
+          {
             "code": "0401001000",
             "display": "Agoncillo"
           },
@@ -1639,8 +1879,16 @@
             "display": "Balete"
           },
           {
+            "code": "0401005000",
+            "display": "Batangas City"
+          },
+          {
             "code": "0401006000",
             "display": "Bauan"
+          },
+          {
+            "code": "0401007000",
+            "display": "City of Calaca"
           },
           {
             "code": "0401008000",
@@ -1665,6 +1913,10 @@
           {
             "code": "0401013000",
             "display": "Lian"
+          },
+          {
+            "code": "0401014000",
+            "display": "City of Lipa"
           },
           {
             "code": "0401015000",
@@ -1719,12 +1971,20 @@
             "display": "Santa Teresita"
           },
           {
+            "code": "0401028000",
+            "display": "City of Sto. Tomas"
+          },
+          {
             "code": "0401029000",
             "display": "Taal"
           },
           {
             "code": "0401030000",
             "display": "Talisay"
+          },
+          {
+            "code": "0401031000",
+            "display": "City of Tanauan"
           },
           {
             "code": "0401032000",
@@ -1747,8 +2007,32 @@
             "display": "Amadeo"
           },
           {
+            "code": "0402103000",
+            "display": "City of Bacoor"
+          },
+          {
+            "code": "0402104000",
+            "display": "City of Carmona"
+          },
+          {
+            "code": "0402105000",
+            "display": "City of Cavite"
+          },
+          {
+            "code": "0402106000",
+            "display": "City of Dasmariñas"
+          },
+          {
             "code": "0402107000",
             "display": "General Emilio Aguinaldo"
+          },
+          {
+            "code": "0402108000",
+            "display": "City of General Trias"
+          },
+          {
+            "code": "0402109000",
+            "display": "City of Imus"
           },
           {
             "code": "0402110000",
@@ -1787,12 +2071,20 @@
             "display": "Silang"
           },
           {
+            "code": "0402119000",
+            "display": "City of Tagaytay"
+          },
+          {
             "code": "0402120000",
             "display": "Tanza"
           },
           {
             "code": "0402121000",
             "display": "Ternate"
+          },
+          {
+            "code": "0402122000",
+            "display": "City of Trece Martires"
           },
           {
             "code": "0402123000",
@@ -1805,6 +2097,18 @@
           {
             "code": "0403402000",
             "display": "Bay"
+          },
+          {
+            "code": "0403403000",
+            "display": "City of Biñan"
+          },
+          {
+            "code": "0403404000",
+            "display": "City of Cabuyao"
+          },
+          {
+            "code": "0403405000",
+            "display": "City of Calamba"
           },
           {
             "code": "0403406000",
@@ -1879,12 +2183,24 @@
             "display": "Rizal"
           },
           {
+            "code": "0403424000",
+            "display": "City of San Pablo"
+          },
+          {
+            "code": "0403425000",
+            "display": "City of San Pedro"
+          },
+          {
             "code": "0403426000",
             "display": "Santa Cruz"
           },
           {
             "code": "0403427000",
             "display": "Santa Maria"
+          },
+          {
+            "code": "0403428000",
+            "display": "City of Santa Rosa"
           },
           {
             "code": "0403429000",
@@ -2043,6 +2359,10 @@
             "display": "Tagkawayan"
           },
           {
+            "code": "0405647000",
+            "display": "City of Tayabas"
+          },
+          {
             "code": "0405648000",
             "display": "Tiaong"
           },
@@ -2053,6 +2373,10 @@
           {
             "code": "0405801000",
             "display": "Angono"
+          },
+          {
+            "code": "0405802000",
+            "display": "City of Antipolo"
           },
           {
             "code": "0405803000",
@@ -2101,6 +2425,10 @@
           {
             "code": "0405814000",
             "display": "Teresa"
+          },
+          {
+            "code": "0431200000",
+            "display": "City of Lucena"
           },
           {
             "code": "1704001000",
@@ -2185,6 +2513,10 @@
           {
             "code": "1705204000",
             "display": "Bulalacao"
+          },
+          {
+            "code": "1705205000",
+            "display": "City of Calapan"
           },
           {
             "code": "1705206000",
@@ -2387,6 +2719,10 @@
             "display": "Santa Maria"
           },
           {
+            "code": "1731500000",
+            "display": "City of Puerto Princesa"
+          },
+          {
             "code": "0500501000",
             "display": "Bacacay"
           },
@@ -2407,8 +2743,16 @@
             "display": "Jovellar"
           },
           {
+            "code": "0500506000",
+            "display": "City of Legazpi"
+          },
+          {
             "code": "0500507000",
             "display": "Libon"
+          },
+          {
+            "code": "0500508000",
+            "display": "City of Ligao"
           },
           {
             "code": "0500509000",
@@ -2441,6 +2785,10 @@
           {
             "code": "0500516000",
             "display": "Santo Domingo"
+          },
+          {
+            "code": "0500517000",
+            "display": "City of Tabaco"
           },
           {
             "code": "0500518000",
@@ -2555,6 +2903,10 @@
             "display": "Goa"
           },
           {
+            "code": "0501716000",
+            "display": "City of Iriga"
+          },
+          {
             "code": "0501717000",
             "display": "Lagonoy"
           },
@@ -2581,6 +2933,10 @@
           {
             "code": "0501723000",
             "display": "Nabua"
+          },
+          {
+            "code": "0501724000",
+            "display": "City of Naga"
           },
           {
             "code": "0501725000",
@@ -2719,6 +3075,10 @@
             "display": "Mandaon"
           },
           {
+            "code": "0504111000",
+            "display": "City of Masbate"
+          },
+          {
             "code": "0504112000",
             "display": "Milagros"
           },
@@ -2813,6 +3173,10 @@
           {
             "code": "0506215000",
             "display": "Santa Magdalena"
+          },
+          {
+            "code": "0506216000",
+            "display": "City of Sorsogon"
           },
           {
             "code": "0600401000",
@@ -3007,6 +3371,10 @@
             "display": "President Roxas"
           },
           {
+            "code": "0601914000",
+            "display": "City of Roxas"
+          },
+          {
             "code": "0601915000",
             "display": "Sapi-An"
           },
@@ -3139,6 +3507,10 @@
             "display": "Oton"
           },
           {
+            "code": "0603035000",
+            "display": "City of Passi"
+          },
+          {
             "code": "0603036000",
             "display": "Pavia"
           },
@@ -3207,8 +3579,20 @@
             "display": "Sibunag"
           },
           {
+            "code": "0631000000",
+            "display": "City of Iloilo"
+          },
+          {
+            "code": "1804502000",
+            "display": "City of Bago"
+          },
+          {
             "code": "1804503000",
             "display": "Binalbagan"
+          },
+          {
+            "code": "1804504000",
+            "display": "City of Cadiz"
           },
           {
             "code": "1804505000",
@@ -3227,6 +3611,14 @@
             "display": "Enrique B. Magalona"
           },
           {
+            "code": "1804509000",
+            "display": "City of Escalante"
+          },
+          {
+            "code": "1804510000",
+            "display": "City of Himamaylan"
+          },
+          {
             "code": "1804511000",
             "display": "Hinigaran"
           },
@@ -3241,6 +3633,14 @@
           {
             "code": "1804514000",
             "display": "Isabela"
+          },
+          {
+            "code": "1804515000",
+            "display": "City of Kabankalan"
+          },
+          {
+            "code": "1804516000",
+            "display": "City of La Carlota"
           },
           {
             "code": "1804517000",
@@ -3267,8 +3667,28 @@
             "display": "Pulupandan"
           },
           {
+            "code": "1804523000",
+            "display": "City of Sagay"
+          },
+          {
+            "code": "1804524000",
+            "display": "City of San Carlos"
+          },
+          {
             "code": "1804525000",
             "display": "San Enrique"
+          },
+          {
+            "code": "1804526000",
+            "display": "City of Silay"
+          },
+          {
+            "code": "1804527000",
+            "display": "City of Sipalay"
+          },
+          {
+            "code": "1804528000",
+            "display": "City of Talisay"
           },
           {
             "code": "1804529000",
@@ -3277,6 +3697,10 @@
           {
             "code": "1804530000",
             "display": "Valladolid"
+          },
+          {
+            "code": "1804531000",
+            "display": "City of Victorias"
           },
           {
             "code": "1804532000",
@@ -3295,16 +3719,36 @@
             "display": "Bacong"
           },
           {
+            "code": "1804604000",
+            "display": "City of Bais"
+          },
+          {
             "code": "1804605000",
             "display": "Basay"
+          },
+          {
+            "code": "1804606000",
+            "display": "City of Bayawan"
           },
           {
             "code": "1804607000",
             "display": "Bindoy"
           },
           {
+            "code": "1804608000",
+            "display": "City of Canlaon"
+          },
+          {
             "code": "1804609000",
             "display": "Dauin"
+          },
+          {
+            "code": "1804610000",
+            "display": "City of Dumaguete"
+          },
+          {
+            "code": "1804611000",
+            "display": "City of Guihulngan"
           },
           {
             "code": "1804612000",
@@ -3341,6 +3785,10 @@
           {
             "code": "1804620000",
             "display": "Sibulan"
+          },
+          {
+            "code": "1804621000",
+            "display": "City of Tanjay"
           },
           {
             "code": "1804622000",
@@ -3381,6 +3829,10 @@
           {
             "code": "1806106000",
             "display": "Siquijor"
+          },
+          {
+            "code": "1830200000",
+            "display": "City of Bacolod"
           },
           {
             "code": "0701201000",
@@ -3547,6 +3999,10 @@
             "display": "Sikatuna"
           },
           {
+            "code": "0701242000",
+            "display": "City of Tagbilaran"
+          },
+          {
             "code": "0701243000",
             "display": "Talibon"
           },
@@ -3611,12 +4067,20 @@
             "display": "Barili"
           },
           {
+            "code": "0702211000",
+            "display": "City of Bogo"
+          },
+          {
             "code": "0702212000",
             "display": "Boljoon"
           },
           {
             "code": "0702213000",
             "display": "Borbon"
+          },
+          {
+            "code": "0702214000",
+            "display": "City of Carcar"
           },
           {
             "code": "0702215000",
@@ -3645,6 +4109,10 @@
           {
             "code": "0702222000",
             "display": "Dalaguete"
+          },
+          {
+            "code": "0702223000",
+            "display": "Danao City"
           },
           {
             "code": "0702224000",
@@ -3677,6 +4145,10 @@
           {
             "code": "0702233000",
             "display": "Moalboal"
+          },
+          {
+            "code": "0702234000",
+            "display": "City of Naga"
           },
           {
             "code": "0702235000",
@@ -3739,12 +4211,32 @@
             "display": "Tabuelan"
           },
           {
+            "code": "0702250000",
+            "display": "City of Talisay"
+          },
+          {
+            "code": "0702251000",
+            "display": "City of Toledo"
+          },
+          {
             "code": "0702252000",
             "display": "Tuburan"
           },
           {
             "code": "0702253000",
             "display": "Tudela"
+          },
+          {
+            "code": "0730600000",
+            "display": "City of Cebu"
+          },
+          {
+            "code": "0731100000",
+            "display": "City of Lapu-Lapu"
+          },
+          {
+            "code": "0731300000",
+            "display": "City of Mandaue"
           },
           {
             "code": "0802601000",
@@ -3757,6 +4249,10 @@
           {
             "code": "0802603000",
             "display": "Balangkayan"
+          },
+          {
+            "code": "0802604000",
+            "display": "City of Borongan"
           },
           {
             "code": "0802605000",
@@ -3859,6 +4355,10 @@
             "display": "Bato"
           },
           {
+            "code": "0803708000",
+            "display": "City of Baybay"
+          },
+          {
             "code": "0803710000",
             "display": "Burauen"
           },
@@ -3945,6 +4445,10 @@
           {
             "code": "0803736000",
             "display": "Merida"
+          },
+          {
+            "code": "0803738000",
+            "display": "Ormoc City"
           },
           {
             "code": "0803739000",
@@ -4099,8 +4603,16 @@
             "display": "Basey"
           },
           {
+            "code": "0806003000",
+            "display": "City of Calbayog"
+          },
+          {
             "code": "0806004000",
             "display": "Calbiga"
+          },
+          {
+            "code": "0806005000",
+            "display": "City of Catbalogan"
           },
           {
             "code": "0806006000",
@@ -4211,6 +4723,10 @@
             "display": "Liloan"
           },
           {
+            "code": "0806407000",
+            "display": "City of Maasin"
+          },
+          {
             "code": "0806408000",
             "display": "Macrohon"
           },
@@ -4291,6 +4807,10 @@
             "display": "Naval"
           },
           {
+            "code": "0831600000",
+            "display": "City of Tacloban"
+          },
+          {
             "code": "0906601000",
             "display": "Indanan"
           },
@@ -4365,6 +4885,14 @@
           {
             "code": "0906619000",
             "display": "Omar"
+          },
+          {
+            "code": "0907201000",
+            "display": "City of Dapitan"
+          },
+          {
+            "code": "0907202000",
+            "display": "City of Dipolog"
           },
           {
             "code": "0907203000",
@@ -4519,6 +5047,10 @@
             "display": "Molave"
           },
           {
+            "code": "0907322000",
+            "display": "City of Pagadian"
+          },
+          {
             "code": "0907323000",
             "display": "Ramon Magsaysay"
           },
@@ -4635,6 +5167,14 @@
             "display": "Tungawan"
           },
           {
+            "code": "0990101000",
+            "display": "City of Isabela"
+          },
+          {
+            "code": "0931700000",
+            "display": "City of Zamboanga"
+          },
+          {
             "code": "1001301000",
             "display": "Baungon"
           },
@@ -4679,6 +5219,10 @@
             "display": "Libona"
           },
           {
+            "code": "1001312000",
+            "display": "City of Malaybalay"
+          },
+          {
             "code": "1001313000",
             "display": "Malitbog"
           },
@@ -4709,6 +5253,10 @@
           {
             "code": "1001320000",
             "display": "Talakag"
+          },
+          {
+            "code": "1001321000",
+            "display": "City of Valencia"
           },
           {
             "code": "1001322000",
@@ -4855,6 +5403,14 @@
             "display": "Lopez Jaena"
           },
           {
+            "code": "1004209000",
+            "display": "City of Oroquieta"
+          },
+          {
+            "code": "1004210000",
+            "display": "City of Ozamiz"
+          },
+          {
             "code": "1004211000",
             "display": "Panaon"
           },
@@ -4869,6 +5425,10 @@
           {
             "code": "1004214000",
             "display": "Sinacaban"
+          },
+          {
+            "code": "1004215000",
+            "display": "City of Tangub"
           },
           {
             "code": "1004216000",
@@ -4897,6 +5457,14 @@
           {
             "code": "1004306000",
             "display": "Claveria"
+          },
+          {
+            "code": "1004307000",
+            "display": "City of El Salvador"
+          },
+          {
+            "code": "1004308000",
+            "display": "City of Gingoog"
           },
           {
             "code": "1004309000",
@@ -4971,6 +5539,14 @@
             "display": "Villanueva"
           },
           {
+            "code": "1030500000",
+            "display": "City of Cagayan De Oro"
+          },
+          {
+            "code": "1030900000",
+            "display": "City of Iligan"
+          },
+          {
             "code": "1102301000",
             "display": "Asuncion"
           },
@@ -4987,8 +5563,20 @@
             "display": "New Corella"
           },
           {
+            "code": "1102315000",
+            "display": "City of Panabo"
+          },
+          {
+            "code": "1102317000",
+            "display": "Island Garden City of Samal"
+          },
+          {
             "code": "1102318000",
             "display": "Santo Tomas"
+          },
+          {
+            "code": "1102319000",
+            "display": "City of Tagum"
           },
           {
             "code": "1102322000",
@@ -5005,6 +5593,10 @@
           {
             "code": "1102401000",
             "display": "Bansalan"
+          },
+          {
+            "code": "1102403000",
+            "display": "City of Digos"
           },
           {
             "code": "1102404000",
@@ -5069,6 +5661,10 @@
           {
             "code": "1102508000",
             "display": "Manay"
+          },
+          {
+            "code": "1102509000",
+            "display": "City of Mati"
           },
           {
             "code": "1102510000",
@@ -5143,6 +5739,10 @@
             "display": "Sarangani"
           },
           {
+            "code": "1130700000",
+            "display": "City of Davao"
+          },
+          {
             "code": "1204701000",
             "display": "Alamada"
           },
@@ -5153,6 +5753,10 @@
           {
             "code": "1204703000",
             "display": "Kabacan"
+          },
+          {
+            "code": "1204704000",
+            "display": "City of Kidapawan"
           },
           {
             "code": "1204705000",
@@ -5213,6 +5817,10 @@
           {
             "code": "1206302000",
             "display": "Banga"
+          },
+          {
+            "code": "1206306000",
+            "display": "City of Koronadal"
           },
           {
             "code": "1206311000",
@@ -5291,6 +5899,10 @@
             "display": "President Quirino"
           },
           {
+            "code": "1206511000",
+            "display": "City of Tacurong"
+          },
+          {
             "code": "1206512000",
             "display": "Sen. Ninoy Aquino"
           },
@@ -5323,8 +5935,16 @@
             "display": "Malungon"
           },
           {
+            "code": "1230800000",
+            "display": "City of General Santos"
+          },
+          {
             "code": "1600201000",
             "display": "Buenavista"
+          },
+          {
+            "code": "1600203000",
+            "display": "City of Cabadbaran"
           },
           {
             "code": "1600204000",
@@ -5361,6 +5981,10 @@
           {
             "code": "1600212000",
             "display": "Remedios T. Romualdez"
+          },
+          {
+            "code": "1600301000",
+            "display": "City of Bayugan"
           },
           {
             "code": "1600302000",
@@ -5487,6 +6111,10 @@
             "display": "Socorro"
           },
           {
+            "code": "1606724000",
+            "display": "City of Surigao"
+          },
+          {
             "code": "1606725000",
             "display": "Tagana-An"
           },
@@ -5501,6 +6129,10 @@
           {
             "code": "1606802000",
             "display": "Bayabas"
+          },
+          {
+            "code": "1606803000",
+            "display": "City of Bislig"
           },
           {
             "code": "1606804000",
@@ -5563,6 +6195,10 @@
             "display": "Tago"
           },
           {
+            "code": "1606819000",
+            "display": "City of Tandag"
+          },
+          {
             "code": "1608501000",
             "display": "Basilisa"
           },
@@ -5589,6 +6225,14 @@
           {
             "code": "1608507000",
             "display": "Tubajon"
+          },
+          {
+            "code": "1630400000",
+            "display": "City of Butuan"
+          },
+          {
+            "code": "1900702000",
+            "display": "City of Lamitan"
           },
           {
             "code": "1900703000",
@@ -5693,6 +6337,10 @@
           {
             "code": "1903616000",
             "display": "Marantao"
+          },
+          {
+            "code": "1903617000",
+            "display": "City of Marawi"
           },
           {
             "code": "1903618000",
@@ -5841,6 +6489,10 @@
           {
             "code": "1908702000",
             "display": "Buldon"
+          },
+          {
+            "code": "1908703000",
+            "display": "City of Cotabato"
           },
           {
             "code": "1908704000",

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/inputs/bottom_sheet_select_form_field.dart';
 import '../../../interoperability/domain/interoperability_models.dart';
+import 'appointment_step_header.dart';
 
 class AppointmentProviderStep extends StatelessWidget {
   const AppointmentProviderStep({
@@ -27,20 +28,13 @@ class AppointmentProviderStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return _StateCard(
-        icon: Icons.cloud_download_outlined,
-        title: 'Looking up providers',
-        message: 'Fetching the current provider list from the gateway.',
-      );
+      return _LoadingState();
     }
 
     if (errorMessage != null) {
-      return _StateCard(
-        icon: Icons.cloud_off_outlined,
-        title: 'Provider lookup unavailable',
+      return _ErrorState(
         message: errorMessage!,
-        actionLabel: 'Retry',
-        onActionPressed: onRetry,
+        onRetry: onRetry,
       );
     }
 
@@ -49,33 +43,16 @@ class AppointmentProviderStep extends StatelessWidget {
         .toList(growable: false);
 
     if (activeProviders.isEmpty) {
-      return _StateCard(
-        icon: Icons.domain_disabled_outlined,
-        title: 'No active providers yet',
-        message:
-            'The gateway does not currently have any active provider entries.',
-        actionLabel: 'Retry',
-        onActionPressed: onRetry,
+      return _ErrorState(
+        message: 'No providers are currently available. Please try again.',
+        onRetry: onRetry,
       );
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Select target provider',
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Choose the hospital or clinic that should receive the appointment request.',
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
-          ),
-        ),
-        const SizedBox(height: 16),
+        const AppointmentSectionLabel('YOUR PROVIDER'),
         BottomSheetSelectFormField<String>(
           value: selectedProviderId,
           options: activeProviders
@@ -83,93 +60,84 @@ class AppointmentProviderStep extends StatelessWidget {
                 (provider) => BottomSheetSelectOption<String>(
                   value: provider.id,
                   label: provider.name,
-                  description:
-                      '${provider.facilityCode} • ${provider.location}',
+                  description: '${provider.facilityCode} • ${provider.location}',
                   icon: Icons.local_hospital_outlined,
                 ),
               )
               .toList(growable: false),
           onChanged: onChanged,
-          label: 'Provider',
-          hintText: 'Select provider',
+          label: 'Hospital or Clinic',
+          hintText: 'Choose a provider',
           icon: Icons.apartment_outlined,
-          helperText: 'Only active providers are available for appointment requests.',
+          helperText: 'Showing currently available providers.',
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Your request will be sent directly to this provider.',
+          style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
         ),
       ],
     );
   }
 }
 
-class _StateCard extends StatelessWidget {
-  const _StateCard({
-    required this.icon,
-    required this.title,
-    required this.message,
-    this.actionLabel,
-    this.onActionPressed,
-  });
+class _LoadingState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            width: 32,
+            height: 32,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Finding available providers…',
+            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-  final IconData icon;
-  final String title;
+class _ErrorState extends StatelessWidget {
+  const _ErrorState({required this.message, required this.onRetry});
+
   final String message;
-  final String? actionLabel;
-  final VoidCallback? onActionPressed;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.extraLarge,
-        border: Border.all(color: AppColors.border),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: AppRadii.medium,
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: Icon(icon, color: AppColors.textPrimary),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.titleLarge.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      message,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Icon(
+            Icons.cloud_off_rounded,
+            size: 40,
+            color: AppColors.textSecondary,
           ),
-          if (actionLabel != null && onActionPressed != null) ...[
-            const SizedBox(height: 16),
-            TextButton.icon(
-              onPressed: onActionPressed,
-              icon: const Icon(Icons.refresh_outlined),
-              label: Text(actionLabel!),
-            ),
-          ],
+          const SizedBox(height: 16),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: 20),
+          PrimaryButtonWidget(
+            text: 'Try again',
+            onPressed: onRetry,
+          ),
         ],
       ),
     );

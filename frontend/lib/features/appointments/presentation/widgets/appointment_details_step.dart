@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_border_radii.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../interoperability/domain/interoperability_models.dart';
 import '../models/appointment_booking_models.dart';
+import 'appointment_step_header.dart';
 
 class AppointmentDetailsStep extends StatelessWidget {
   const AppointmentDetailsStep({
@@ -35,50 +35,156 @@ class AppointmentDetailsStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Provider',
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
+        // Provider summary — inline, no card
+        AppointmentSectionLabel(
+          mode == AppointmentBookingMode.onsite ? 'VISITING' : 'CONSULTING WITH',
+        ),
+        _ProviderSummaryRow(provider: provider),
+        const SizedBox(height: 28),
+
+        // Location / platform
+        if (mode == AppointmentBookingMode.teleconsultation) ...[
+          const AppointmentSectionLabel('PLATFORM'),
+          ...locationOptions.map((option) {
+            final isSelected = selectedLocation == option.label;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _LocationChip(
+                label: option.label,
+                description: option.description,
+                isSelected: isSelected,
+                onTap: () => onLocationChanged(option.label),
+              ),
+            );
+          }),
+          const SizedBox(height: 28),
+        ],
+
+        // Reason
+        const AppointmentSectionLabel('REASON FOR VISIT'),
+        _StyledTextField(
+          controller: reasonController,
+          hintText: 'Briefly describe why you are booking this appointment',
+          maxLines: 3,
+        ),
+        const SizedBox(height: 28),
+
+        // Notes
+        const AppointmentSectionLabel('ADDITIONAL NOTES (OPTIONAL)'),
+        _StyledTextField(
+          controller: notesController,
+          hintText: 'Anything else your doctor should know',
+          maxLines: 4,
+        ),
+
+        // Tele-readiness (only for teleconsultation)
+        if (mode == AppointmentBookingMode.teleconsultation) ...[
+          const SizedBox(height: 24),
+          _TeleReadinessRow(
+            value: teleReady,
+            onChanged: onTeleReadyChanged,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _ProviderSummaryRow extends StatelessWidget {
+  const _ProviderSummaryRow({required this.provider});
+
+  final InteroperabilityProviderSummary provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Icon(
+            Icons.local_hospital_outlined,
+            color: AppColors.primary,
+            size: 22,
           ),
         ),
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: AppRadii.extraLarge,
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Row(
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: AppRadii.large,
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: const Icon(
-                  Icons.local_hospital_outlined,
-                  color: AppColors.textPrimary,
+              Text(
+                provider.name,
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(height: 4),
+              Text(
+                '${provider.facilityCode} • ${provider.location}',
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LocationChip extends StatelessWidget {
+  const _LocationChip({
+    required this.label,
+    required this.description,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String description;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: isSelected
+          ? AppColors.primary.withValues(alpha: 0.05)
+          : AppColors.surface,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isSelected ? AppColors.primary : AppColors.border,
+              width: isSelected ? 1.5 : 1.0,
+            ),
+          ),
+          child: Row(
+            children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      provider.name,
-                      style: AppTextStyles.titleLarge.copyWith(
+                      label,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${provider.facilityCode} • ${provider.location}',
+                      description,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -86,110 +192,104 @@ class AppointmentDetailsStep extends StatelessWidget {
                   ],
                 ),
               ),
+              Icon(
+                isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
+                color: isSelected ? AppColors.primary : AppColors.border,
+                size: 20,
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
-        Text(
-          mode.locationLabel,
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+      ),
+    );
+  }
+}
+
+class _StyledTextField extends StatelessWidget {
+  const _StyledTextField({
+    required this.controller,
+    required this.hintText,
+    this.maxLines = 1,
+  });
+
+  final TextEditingController controller;
+  final String hintText;
+  final int maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      maxLines: maxLines,
+      style: AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimary),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.border,
         ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: locationOptions.map((option) {
-            final isSelected = selectedLocation == option.label;
-            return ChoiceChip(
-              label: Text(option.label),
-              selected: isSelected,
-              selectedColor: AppColors.textPrimary.withValues(alpha: 0.06),
-              labelStyle: AppTextStyles.labelLarge.copyWith(
-                color: AppColors.textPrimary,
-                fontWeight: FontWeight.w600,
-              ),
-              onSelected: (_) => onLocationChanged(option.label),
-              side: BorderSide(
-                color: isSelected ? AppColors.textPrimary : AppColors.border,
-              ),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.large),
-            );
-          }).toList(growable: false),
+        filled: true,
+        fillColor: AppColors.surface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
-        if (selectedLocation != null) ...[
-          const SizedBox(height: 8),
-          Text(
-            locationOptions
-                .firstWhere((option) => option.label == selectedLocation)
-                .description,
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        ),
+      ),
+    );
+  }
+}
+
+class _TeleReadinessRow extends StatelessWidget {
+  const _TeleReadinessRow({required this.value, required this.onChanged});
+
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: value
+          ? AppColors.secondary.withValues(alpha: 0.05)
+          : AppColors.surface,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: () => onChanged(!value),
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: value ? AppColors.secondary : AppColors.border,
+              width: value ? 1.5 : 1.0,
             ),
           ),
-        ],
-        const SizedBox(height: 20),
-        Text(
-          'Reason for Appointment',
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: reasonController,
-          style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textPrimary,
-          ),
-          decoration: const InputDecoration(
-            hintText: 'Describe the main reason for the appointment',
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'Additional Notes',
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: notesController,
-          maxLines: 4,
-          style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textPrimary,
-          ),
-          decoration: const InputDecoration(
-            hintText: 'Add instructions or notes for the care team',
-          ),
-        ),
-        if (mode == AppointmentBookingMode.teleconsultation) ...[
-          const SizedBox(height: 20),
-          Row(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Checkbox(
-                value: teleReady,
-                activeColor: AppColors.textPrimary,
-                onChanged: (value) => onTeleReadyChanged(value ?? false),
+              Icon(
+                value ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
+                color: value ? AppColors.secondary : AppColors.border,
+                size: 22,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 12),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    'I am ready for a remote consultation and have a stable device or connection available.',
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textPrimary,
-                    ),
+                child: Text(
+                  'I have a stable device and internet connection for this teleconsultation.',
+                  style: AppTextStyles.bodyLarge.copyWith(
+                    color: AppColors.textPrimary,
+                    height: 1.5,
                   ),
                 ),
               ),
             ],
           ),
-        ],
-      ],
+        ),
+      ),
     );
   }
 }
