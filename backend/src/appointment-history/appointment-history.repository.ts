@@ -10,6 +10,8 @@ import {
 
 type AppointmentHistoryRecordRow =
   Database['public']['Tables']['appointment_history_records']['Row'];
+type AppointmentHistoryRecordInsert =
+  Database['public']['Tables']['appointment_history_records']['Insert'];
 
 const LIST_LIMIT = 100;
 
@@ -45,6 +47,7 @@ export class AppointmentHistoryRepository {
   ): AppointmentHistoryRecordResponse {
     return {
       id: row.id,
+      gatewayTransactionId: row.gateway_transaction_id,
       profileId: row.profile_id,
       title: row.title,
       subtitle: row.subtitle,
@@ -61,6 +64,59 @@ export class AppointmentHistoryRepository {
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };
+  }
+
+  async insertPendingAppointmentHistoryRecord(
+    payload: AppointmentHistoryRecordInsert,
+  ): Promise<void> {
+    const { error } = await this.supabaseService.adminClient
+      .from('appointment_history_records')
+      .insert(payload as never);
+
+    if (error !== null) {
+      throw new InternalServerErrorException(
+        'Unable to store appointment history record',
+      );
+    }
+  }
+
+  async markAppointmentHistoryApprovedByTransactionId(
+    gatewayTransactionId: string,
+  ): Promise<boolean> {
+    const { data: rows, error: listError } = await this.supabaseService.adminClient
+      .from('appointment_history_records')
+      .select('id')
+      .eq('gateway_transaction_id', gatewayTransactionId)
+      .limit(1);
+
+    if (listError !== null) {
+      throw new InternalServerErrorException(
+        'Unable to load appointment history record for status update',
+      );
+    }
+
+    if (rows === null || rows.length === 0) {
+      return false;
+    }
+
+    const { error } = await this.supabaseService.adminClient
+      .from('appointment_history_records')
+      .update({
+        filter_value: 'Approved',
+        status_label: 'Approved',
+        status_color_key: 'success',
+        accent_color_key: 'secondary',
+        icon_key: 'check_circle',
+      } as never)
+      .eq('gateway_transaction_id', gatewayTransactionId);
+
+    if (error !== null) {
+      throw new InternalServerErrorException(
+        'Unable to update appointment history status',
+      );
+    }
+
+    return true;
   }
 
   private parseDetails(detailsJson: Json): AppointmentHistoryDetailResponse[] {

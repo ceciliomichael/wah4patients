@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../auth/domain/auth_session.dart';
+import '../../data/appointment_history_local_cache.dart';
 import '../../../health_records/presentation/models/health_record_models.dart';
 import '../../../health_records/presentation/widgets/health_record_screen_template.dart';
 import '../../data/appointment_history_api_client.dart';
@@ -50,6 +51,24 @@ class _AppointmentHistoryDataScreenState extends State<AppointmentHistoryDataScr
       }
 
       setState(() {
+        final localPendingRecords = AppointmentHistoryLocalCache
+            .snapshotForProfile(AuthSession.userId ?? '');
+        final recordsByTransactionId = <String, AppointmentHistoryRecordResponse>{};
+
+        for (final record in localPendingRecords) {
+          recordsByTransactionId[record.gatewayTransactionId.isNotEmpty
+              ? record.gatewayTransactionId
+              : record.id] = record;
+        }
+        for (final record in response.records) {
+          recordsByTransactionId[record.gatewayTransactionId.isNotEmpty
+              ? record.gatewayTransactionId
+              : record.id] = record;
+        }
+
+        final entries = recordsByTransactionId.values.toList(growable: false)
+          ..sort((left, right) => right.recordedAt.compareTo(left.recordedAt));
+
         _content = HealthRecordScreenContent(
           title: appointmentHistoryScreenContentShell.title,
           searchHint: appointmentHistoryScreenContentShell.searchHint,
@@ -58,9 +77,7 @@ class _AppointmentHistoryDataScreenState extends State<AppointmentHistoryDataScr
           helpMessages: appointmentHistoryScreenContentShell.helpMessages,
           emptyTitle: appointmentHistoryScreenContentShell.emptyTitle,
           emptyMessage: appointmentHistoryScreenContentShell.emptyMessage,
-          entries: response.records
-              .map(mapAppointmentHistoryResponseToEntry)
-              .toList(growable: false),
+          entries: entries.map(mapAppointmentHistoryResponseToEntry).toList(growable: false),
         );
         _isLoading = false;
       });
@@ -68,7 +85,7 @@ class _AppointmentHistoryDataScreenState extends State<AppointmentHistoryDataScr
       _handleLoadFailure(error.message);
     } catch (_) {
       _handleLoadFailure(
-        'Unable to load consultation history. Please try again.',
+        'Unable to load appointment history. Please try again.',
       );
     }
   }
@@ -101,22 +118,24 @@ class _AppointmentHistoryDataScreenState extends State<AppointmentHistoryDataScr
 
 const HealthRecordScreenContent appointmentHistoryScreenContentShell =
     HealthRecordScreenContent(
-      title: 'Consultation History',
-      searchHint: 'Search consultations',
+      title: 'Appointment History',
+      searchHint: 'Search appointments',
       filterOptions: <String>[
         'All',
+        'Pending',
+        'Approved',
         'Scheduled',
-        'Completed',
         'Cancelled',
         'No Show',
       ],
-      helpTitle: 'Consultation History Help',
+      helpTitle: 'Appointment History Help',
       helpMessages: <String>[
-        'Search by consultation type, provider, location, or note text.',
-        'Use the status filter to narrow the history list.',
+        'Search by appointment type, provider, location, or note text.',
+        'Pending appointments appear first until the provider approves them.',
         'Tap any card to review the stored summary and supporting details.',
       ],
-      emptyTitle: 'No matching consultations',
-      emptyMessage: 'Try a different search term or status filter.',
+      emptyTitle: 'No appointments yet',
+      emptyMessage:
+          'Send an appointment request and it will appear here as pending.',
       entries: <HealthRecordEntry>[],
     );

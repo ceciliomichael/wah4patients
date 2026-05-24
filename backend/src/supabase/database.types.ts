@@ -638,6 +638,7 @@ export interface Database {
       appointment_history_records: {
         Row: {
           id: string;
+          gateway_transaction_id: string;
           profile_id: string;
           title: string;
           subtitle: string;
@@ -656,6 +657,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
+          gateway_transaction_id?: string;
           profile_id: string;
           title: string;
           subtitle?: string;
@@ -674,6 +676,7 @@ export interface Database {
         };
         Update: {
           id?: string;
+          gateway_transaction_id?: string;
           profile_id?: string;
           title?: string;
           subtitle?: string;

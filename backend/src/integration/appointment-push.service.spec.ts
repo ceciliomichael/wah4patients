@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AppointmentHistoryRepository } from '../appointment-history/appointment-history.repository';
 import { FhirSyncRepository } from '../fhir-sync/fhir-sync.repository';
 import { GatewayClientService } from './gateway-client.service';
 import { AppointmentPushService } from './appointment-push.service';
@@ -28,6 +29,15 @@ describe('AppointmentPushService', () => {
   > => {
     return {
       upsertSyncTransaction: jest.fn().mockResolvedValue(undefined),
+    };
+  };
+
+  const createAppointmentHistoryRepositoryMock = (): Pick<
+    AppointmentHistoryRepository,
+    'insertPendingAppointmentHistoryRecord'
+  > => {
+    return {
+      insertPendingAppointmentHistoryRecord: jest.fn().mockResolvedValue(undefined),
     };
   };
 
@@ -98,6 +108,7 @@ describe('AppointmentPushService', () => {
       configService,
       integrationService,
       gatewayClient,
+      createAppointmentHistoryRepositoryMock() as AppointmentHistoryRepository,
     );
 
     const result = await service.sendAppointmentRequest({
@@ -111,7 +122,7 @@ describe('AppointmentPushService', () => {
       identifierValue: '12-345678901-2',
       reason: 'Follow-up consultation after lab results',
       notes: 'Please confirm availability for the morning slot.',
-    });
+    }, '11111111-1111-1111-1111-111111111111');
 
     expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(result.message).toContain('successfully');
@@ -159,6 +170,7 @@ describe('AppointmentPushService', () => {
       configService,
       integrationService,
       gatewayClient,
+      createAppointmentHistoryRepositoryMock() as AppointmentHistoryRepository,
     );
 
     await expect(
@@ -171,7 +183,7 @@ describe('AppointmentPushService', () => {
         locationOrPlatform: 'Google Meet',
         identifierSystem: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
         identifierValue: '12-345678901-2',
-      }),
+      }, '11111111-1111-1111-1111-111111111111'),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 });

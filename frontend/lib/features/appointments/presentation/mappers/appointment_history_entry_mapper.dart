@@ -7,6 +7,8 @@ import '../../data/appointment_history_api_client.dart';
 HealthRecordEntry mapAppointmentHistoryResponseToEntry(
   AppointmentHistoryRecordResponse record,
 ) {
+  final appointmentMode = _readAppointmentMode(record.details);
+
   return HealthRecordEntry(
     id: record.id,
     title: record.title,
@@ -21,12 +23,79 @@ HealthRecordEntry mapAppointmentHistoryResponseToEntry(
     details: record.details
         .map(
           (detail) => HealthRecordDetailField(
-            label: detail.label,
-            value: detail.value,
+            label: _formatDetailLabel(detail.label, appointmentMode),
+            value: _formatDetailValue(detail.label, detail.value),
           ),
         )
         .toList(growable: false),
   );
+}
+
+String? _readAppointmentMode(List<AppointmentHistoryDetailResponse> details) {
+  for (final detail in details) {
+    final normalizedLabel = detail.label.trim().toLowerCase();
+    if (normalizedLabel != 'mode') {
+      continue;
+    }
+
+    final normalizedValue = detail.value.trim().toLowerCase();
+    if (normalizedValue.contains('teleconsult')) {
+      return 'teleconsultation';
+    }
+    if (normalizedValue.contains('onsite')) {
+      return 'onsite';
+    }
+  }
+
+  return null;
+}
+
+String _formatDetailLabel(String label, String? appointmentMode) {
+  final normalizedLabel = label.trim().toLowerCase();
+  if (normalizedLabel != 'location/platform') {
+    return label;
+  }
+
+  return switch (appointmentMode) {
+    'teleconsultation' => 'Platform',
+    'onsite' => 'Location',
+    _ => 'Location',
+  };
+}
+
+String _formatDetailValue(String label, String value) {
+  final normalizedLabel = label.trim().toLowerCase();
+  if (normalizedLabel != 'scheduled at') {
+    return value;
+  }
+
+  final parsedDate = DateTime.tryParse(value.trim());
+  if (parsedDate == null) {
+    return value;
+  }
+
+  final localDate = parsedDate.toLocal();
+  final hour = localDate.hour % 12 == 0 ? 12 : localDate.hour % 12;
+  final minute = localDate.minute.toString().padLeft(2, '0');
+  final meridiem = localDate.hour >= 12 ? 'PM' : 'AM';
+
+  const months = <String>[
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  return '${months[localDate.month - 1]} ${localDate.day}, ${localDate.year} '
+      '$hour:$minute $meridiem';
 }
 
 Color _mapColor(String key) {

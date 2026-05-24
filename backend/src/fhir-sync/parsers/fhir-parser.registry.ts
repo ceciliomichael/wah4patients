@@ -3,6 +3,7 @@ import { readResourceType } from './fhir-parser.utils';
 import { parseConditionResource } from './condition.parser';
 import { parseEncounterResource } from './encounter.parser';
 import { parseImmunizationResource } from './immunization.parser';
+import { parseClinicalResource } from './clinical.parser';
 import { parseMedicationRequestResource } from './medication-request.parser';
 import { parseObservationResource } from './observation.parser';
 import { parsePatientResource } from './patient.parser';
@@ -14,6 +15,8 @@ export function parseInboundResource(resource: unknown): ParsedInboundResource {
   switch (resourceType) {
     case 'Patient':
       return parsePatientResource(resource);
+    case 'Appointment':
+      return parseClinicalResource(resource, 'Appointment');
     case 'Condition':
       return parseConditionResource(resource);
     case 'Procedure':

@@ -4,6 +4,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AppointmentHistoryRepository } from '../appointment-history/appointment-history.repository';
 import {
   buildOperationOutcome,
   buildSuccessProcessQueryData,
@@ -32,6 +33,7 @@ export class FhirSyncService {
   constructor(
     private readonly configService: ConfigService,
     private readonly repository: FhirSyncRepository,
+    private readonly appointmentHistoryRepository: AppointmentHistoryRepository,
   ) {}
 
   async processQuery(payload: unknown): Promise<FhirSyncAcknowledgement> {
@@ -148,6 +150,12 @@ export class FhirSyncService {
 
   async receivePush(payload: unknown): Promise<FhirSyncAcknowledgement> {
     const request = this.parseReceivePushRequest(payload);
+    if (request.resourceType === 'Appointment') {
+      await this.appointmentHistoryRepository
+        .markAppointmentHistoryApprovedByTransactionId(request.transactionId);
+      return { message: 'Data received successfully' };
+    }
+
     const parsedResource = parseInboundResource(request.resource);
 
     const identifiers = extractIdentifiersFromUnknownResource(parsedResource.resource);
@@ -345,6 +353,7 @@ export class FhirSyncService {
     const resourceType = this.readRequiredString(value, 'resourceType') as GatewayResourceType;
     const supportedTypes: GatewayResourceType[] = [
       'Patient',
+      'Appointment',
       'Condition',
       'Procedure',
       'Immunization',

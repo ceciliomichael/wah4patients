@@ -35,6 +35,7 @@ class AppointmentHistoryDetailResponse {
 class AppointmentHistoryRecordResponse {
   const AppointmentHistoryRecordResponse({
     required this.id,
+    required this.gatewayTransactionId,
     required this.profileId,
     required this.title,
     required this.subtitle,
@@ -53,6 +54,7 @@ class AppointmentHistoryRecordResponse {
   });
 
   final String id;
+  final String gatewayTransactionId;
   final String profileId;
   final String title;
   final String subtitle;
@@ -82,6 +84,9 @@ class AppointmentHistoryRecordResponse {
 
     return AppointmentHistoryRecordResponse(
       id: _readString(json['id']),
+      gatewayTransactionId: _readString(
+        json['gatewayTransactionId'] ?? json['gateway_transaction_id'],
+      ),
       profileId: _readString(json['profileId']),
       title: _readString(json['title']),
       subtitle: _readString(json['subtitle']),

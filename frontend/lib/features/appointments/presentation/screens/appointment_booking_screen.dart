@@ -13,6 +13,8 @@ import '../../../auth/domain/auth_session.dart';
 import '../../../interoperability/data/interoperability_api_client.dart';
 import '../../../interoperability/domain/interoperability_models.dart';
 import '../../data/appointment_request_api_client.dart';
+import '../../data/appointment_history_api_client.dart';
+import '../../data/appointment_history_local_cache.dart';
 import '../models/appointment_booking_models.dart';
 import '../widgets/appointment_details_step.dart';
 import '../widgets/appointment_mode_step.dart';
@@ -356,6 +358,9 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
         return;
       }
 
+      AppointmentHistoryLocalCache.upsertPendingRecord(
+        _buildPendingAppointmentHistoryRecord(summary, response.transactionId),
+      );
       _showSnackBar(response.message);
       Navigator.of(context).pop();
     } on AppointmentRequestApiException catch (error) {
@@ -390,6 +395,85 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     }
 
     return DateTime(date.year, date.month, date.day, normalizedHour, minute);
+  }
+
+  AppointmentHistoryRecordResponse _buildPendingAppointmentHistoryRecord(
+    AppointmentBookingSummary summary,
+    String transactionId,
+  ) {
+    final scheduledStart = _buildScheduledStart(summary.date, summary.timeSlot)
+        .toUtc()
+        .toIso8601String();
+    final nowIso = DateTime.now().toUtc().toIso8601String();
+    final modeLabel = summary.mode == AppointmentBookingMode.onsite
+        ? 'Onsite consultation'
+        : 'Teleconsultation';
+
+    return AppointmentHistoryRecordResponse(
+      id: 'pending-$transactionId',
+      gatewayTransactionId: transactionId,
+      profileId: AuthSession.userId ?? '',
+      title: summary.consultationType.title,
+      subtitle: '${summary.provider.name} • ${summary.location}',
+      summaryLabel: 'Scheduled',
+      summaryValue: _formatAppointmentDate(summary.date),
+      filterValue: 'Pending',
+      statusLabel: 'Pending',
+      statusColorKey: 'tertiary',
+      accentColorKey:
+          summary.mode == AppointmentBookingMode.onsite ? 'primary' : 'secondary',
+      iconKey: 'schedule',
+      details: <AppointmentHistoryDetailResponse>[
+        AppointmentHistoryDetailResponse(
+          label: 'Provider',
+          value: summary.provider.name,
+        ),
+        AppointmentHistoryDetailResponse(
+          label: 'Mode',
+          value: modeLabel,
+        ),
+        AppointmentHistoryDetailResponse(
+          label: 'Location/Platform',
+          value: summary.location,
+        ),
+        AppointmentHistoryDetailResponse(
+          label: 'Scheduled At',
+          value: scheduledStart,
+        ),
+        AppointmentHistoryDetailResponse(
+          label: 'Reason',
+          value: summary.reason,
+        ),
+        if (summary.notes.trim().isNotEmpty)
+          AppointmentHistoryDetailResponse(
+            label: 'Notes',
+            value: summary.notes.trim(),
+          ),
+      ],
+      recordedAt: scheduledStart,
+      displayOrder: 10,
+      createdAt: nowIso,
+      updatedAt: nowIso,
+    );
+  }
+
+  String _formatAppointmentDate(DateTime date) {
+    const months = <String>[
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
 
   Widget _buildReviewPlaceholder() {

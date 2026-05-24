@@ -22371,6 +22371,506 @@
       ],
       "createdAt": "2026-05-19T09:25:21.050Z",
       "updatedAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "memoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "rootMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "parentMemoryIds": [
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56"
+      ],
+      "relatedMemoryIds": [
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d"
+      ],
+      "sectionKind": "fact",
+      "summary": "Planned appointment lifecycle enhancement so successful outbound appointment requests are persisted to appointment history as Pending and later updated to Approved when an inbound provider push is received. Confirmed that /interoperability/appointments/request currently only sends gateway push and does not persist history, and /fhir/receive-push exists but does not support Appointment resource type yet.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_request_api_client.dart",
+          "action": "inspected",
+          "reason": "Verified appointment request response shape and current lack of history persistence hook after send success.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\screens\\appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed submit flow only sends request and exits; this is where UX expectations around pending history originate.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed outbound gateway push logic and transactionId extraction point where pending history insertion should be attached.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed receive-push pipeline and resourceType validation path that must be expanded for Appointment updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "inspected",
+          "reason": "Validated current history data access only supports reads and needs write/update methods for appointment lifecycle changes.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\009_appointment_history_setup.sql",
+          "action": "inspected",
+          "reason": "Checked appointment_history_records schema to identify missing transaction linkage columns required for update-on-push behavior.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:18:56.200Z",
+      "updatedAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "memoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "rootMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "parentMemoryIds": [
+        "267ad685-fb27-467f-bfad-5bc7ac9c5d0b"
+      ],
+      "relatedMemoryIds": [
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "f1eab438-0d3d-461a-85eb-ee0772be4c02"
+      ],
+      "sectionKind": "decision",
+      "summary": "Planned appointment lifecycle enhancement so successful outbound appointment requests are persisted to appointment history as Pending and later updated to Approved when an inbound provider push is received. Confirmed that /interoperability/appointments/request currently only sends gateway push and does not persist history, and /fhir/receive-push exists but does not support Appointment resource type yet.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_request_api_client.dart",
+          "action": "inspected",
+          "reason": "Verified appointment request response shape and current lack of history persistence hook after send success.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\screens\\appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed submit flow only sends request and exits; this is where UX expectations around pending history originate.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed outbound gateway push logic and transactionId extraction point where pending history insertion should be attached.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed receive-push pipeline and resourceType validation path that must be expanded for Appointment updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "inspected",
+          "reason": "Validated current history data access only supports reads and needs write/update methods for appointment lifecycle changes.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\009_appointment_history_setup.sql",
+          "action": "inspected",
+          "reason": "Checked appointment_history_records schema to identify missing transaction linkage columns required for update-on-push behavior.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:18:56.357Z",
+      "updatedAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "memoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "rootMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "parentMemoryIds": [
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d"
+      ],
+      "relatedMemoryIds": [
+        "0221eb81-f646-4c04-9384-c6442bdca789",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "b0b24de5-095f-4511-ba25-83107cc01462",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Planned appointment lifecycle enhancement so successful outbound appointment requests are persisted to appointment history as Pending and later updated to Approved when an inbound provider push is received. Confirmed that /interoperability/appointments/request currently only sends gateway push and does not persist history, and /fhir/receive-push exists but does not support Appointment resource type yet.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\data\\appointment_request_api_client.dart",
+          "action": "inspected",
+          "reason": "Verified appointment request response shape and current lack of history persistence hook after send success.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\screens\\appointment_booking_screen.dart",
+          "action": "inspected",
+          "reason": "Confirmed submit flow only sends request and exits; this is where UX expectations around pending history originate.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed outbound gateway push logic and transactionId extraction point where pending history insertion should be attached.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Confirmed receive-push pipeline and resourceType validation path that must be expanded for Appointment updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "inspected",
+          "reason": "Validated current history data access only supports reads and needs write/update methods for appointment lifecycle changes.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\009_appointment_history_setup.sql",
+          "action": "inspected",
+          "reason": "Checked appointment_history_records schema to identify missing transaction linkage columns required for update-on-push behavior.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:18:56.495Z",
+      "updatedAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "memoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "rootMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "parentMemoryIds": [
+        "267ad685-fb27-467f-bfad-5bc7ac9c5d0b"
+      ],
+      "relatedMemoryIds": [
+        "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "5443493f-3a0f-4ebc-9642-f965e4e76556"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented appointment lifecycle persistence so successful outbound appointment requests are now inserted into appointment history as Pending and inbound Appointment receive-push webhook calls update matching records to Approved using gateway transaction id linkage.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.controller.ts",
+          "action": "modified",
+          "reason": "Passed authenticated user id into appointment push service so history rows can be attributed to the correct profile.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Inserted pending appointment history records immediately after successful gateway push using transaction id and appointment metadata.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to provide AppointmentHistoryRepository dependency to AppointmentPushService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added insert and status update methods for appointment lifecycle writes and mapped new gateway transaction id field.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended response/row contracts with gateway transaction id for new persistence linkage.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.module.ts",
+          "action": "modified",
+          "reason": "Exported repository so other modules can reuse appointment history write operations.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Added Appointment to supported gateway resource types for receive-push lifecycle handling.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Implemented Appointment receive-push branch to mark pending appointment history entries as Approved by transaction id.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to inject AppointmentHistoryRepository into FhirSyncService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Aligned generated database typings with new appointment_history_records.gateway_transaction_id column.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test instantiation for new service dependency and required profile id parameter.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test service construction to include new AppointmentHistoryRepository dependency.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\013_appointment_history_gateway_transaction.sql",
+          "action": "created",
+          "reason": "Added migration introducing gateway_transaction_id column and index used for pending-to-approved status updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\widgets\\appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Exposed Pending and Approved status filters in consultation history UI to reflect backend lifecycle state changes.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:32:48.543Z",
+      "updatedAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "memoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "rootMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "parentMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224"
+      ],
+      "relatedMemoryIds": [
+        "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "e8e0342e-6b02-496e-be26-b315a9dec66c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented appointment lifecycle persistence so successful outbound appointment requests are now inserted into appointment history as Pending and inbound Appointment receive-push webhook calls update matching records to Approved using gateway transaction id linkage.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.controller.ts",
+          "action": "modified",
+          "reason": "Passed authenticated user id into appointment push service so history rows can be attributed to the correct profile.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Inserted pending appointment history records immediately after successful gateway push using transaction id and appointment metadata.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to provide AppointmentHistoryRepository dependency to AppointmentPushService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added insert and status update methods for appointment lifecycle writes and mapped new gateway transaction id field.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended response/row contracts with gateway transaction id for new persistence linkage.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.module.ts",
+          "action": "modified",
+          "reason": "Exported repository so other modules can reuse appointment history write operations.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Added Appointment to supported gateway resource types for receive-push lifecycle handling.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Implemented Appointment receive-push branch to mark pending appointment history entries as Approved by transaction id.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to inject AppointmentHistoryRepository into FhirSyncService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Aligned generated database typings with new appointment_history_records.gateway_transaction_id column.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test instantiation for new service dependency and required profile id parameter.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test service construction to include new AppointmentHistoryRepository dependency.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\013_appointment_history_gateway_transaction.sql",
+          "action": "created",
+          "reason": "Added migration introducing gateway_transaction_id column and index used for pending-to-approved status updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\widgets\\appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Exposed Pending and Approved status filters in consultation history UI to reflect backend lifecycle state changes.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:32:48.719Z",
+      "updatedAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "memoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "rootMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "parentMemoryIds": [
+        "5443493f-3a0f-4ebc-9642-f965e4e76556"
+      ],
+      "relatedMemoryIds": [
+        "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+        "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented appointment lifecycle persistence so successful outbound appointment requests are now inserted into appointment history as Pending and inbound Appointment receive-push webhook calls update matching records to Approved using gateway transaction id linkage.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.controller.ts",
+          "action": "modified",
+          "reason": "Passed authenticated user id into appointment push service so history rows can be attributed to the correct profile.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Inserted pending appointment history records immediately after successful gateway push using transaction id and appointment metadata.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\integration.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to provide AppointmentHistoryRepository dependency to AppointmentPushService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added insert and status update methods for appointment lifecycle writes and mapped new gateway transaction id field.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended response/row contracts with gateway transaction id for new persistence linkage.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\appointment-history\\appointment-history.module.ts",
+          "action": "modified",
+          "reason": "Exported repository so other modules can reuse appointment history write operations.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Added Appointment to supported gateway resource types for receive-push lifecycle handling.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Implemented Appointment receive-push branch to mark pending appointment history entries as Approved by transaction id.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.module.ts",
+          "action": "modified",
+          "reason": "Imported AppointmentHistoryModule to inject AppointmentHistoryRepository into FhirSyncService.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\supabase\\database.types.ts",
+          "action": "modified",
+          "reason": "Aligned generated database typings with new appointment_history_records.gateway_transaction_id column.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\integration\\appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test instantiation for new service dependency and required profile id parameter.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\fhir-sync\\fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Updated test service construction to include new AppointmentHistoryRepository dependency.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\sqls\\013_appointment_history_gateway_transaction.sql",
+          "action": "created",
+          "reason": "Added migration introducing gateway_transaction_id column and index used for pending-to-approved status updates.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\appointments\\presentation\\widgets\\appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Exposed Pending and Approved status filters in consultation history UI to reflect backend lifecycle state changes.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-24T14:32:48.893Z",
+      "updatedAt": "2026-05-24T14:32:48.893Z"
     }
   ],
   "edges": [
@@ -37150,7 +37650,245 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-19T09:25:21.050Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.200Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "toMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.357Z"
+    },
+    {
+      "fromMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "fromMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "toMemoryId": "0221eb81-f646-4c04-9384-c6442bdca789",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "fromMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "fromMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "toMemoryId": "b0b24de5-095f-4511-ba25-83107cc01462",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "fromMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:18:56.495Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.543Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "toMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.719Z"
+    },
+    {
+      "fromMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "fromMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "toMemoryId": "f1eab438-0d3d-461a-85eb-ee0772be4c02",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "fromMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "fromMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "toMemoryId": "8c4bf761-00c5-49bb-b295-f6b56ba64f56",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "fromMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-24T14:32:48.893Z"
     }
   ],
-  "updatedAt": "2026-05-19T09:25:21.062Z"
+  "updatedAt": "2026-05-24T14:32:48.898Z"
 }

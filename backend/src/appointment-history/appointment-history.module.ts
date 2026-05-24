@@ -9,5 +9,6 @@ import { AppointmentHistoryService } from './appointment-history.service';
   imports: [AuthModule, SupabaseModule],
   controllers: [AppointmentHistoryController],
   providers: [AppointmentHistoryRepository, AppointmentHistoryService],
+  exports: [AppointmentHistoryRepository],
 })
 export class AppointmentHistoryModule {}

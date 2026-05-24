@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 
 const PH_CORE_PROFILE_SUFFIXES = {
   Patient: '/phcore/StructureDefinition/ph-core-patient',
+  Appointment: '/phcore/StructureDefinition/ph-core-appointment',
   Immunization: '/phcore/StructureDefinition/ph-core-immunization',
   Encounter: '/phcore/StructureDefinition/ph-core-encounter',
   Observation: '/phcore/StructureDefinition/ph-core-observation',

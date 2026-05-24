@@ -1,4 +1,5 @@
 import { ConfigService } from '@nestjs/config';
+import { AppointmentHistoryRepository } from '../appointment-history/appointment-history.repository';
 import { FhirSyncRepository } from './fhir-sync.repository';
 import { FhirSyncService } from './fhir-sync.service';
 import { FhirPatientResource } from './fhir-sync.types';
@@ -35,13 +36,20 @@ describe('FhirSyncService', () => {
     | 'insertClinicalRecord'
     | 'insertMedicationResupplyRecord'
   >;
+  const appointmentHistoryRepositoryMock = {
+    markAppointmentHistoryApprovedByTransactionId: jest.fn(),
+  } as Pick<AppointmentHistoryRepository, 'markAppointmentHistoryApprovedByTransactionId'>;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('parses a receive-results bundle and persists each normalized resource', async () => {
-    const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
 
     const patient = readFixture('Patient-patient-single-example.json') as FhirPatientResource;
     patient.identifier = [
@@ -207,6 +215,7 @@ describe('FhirSyncService', () => {
     const service = new FhirSyncService(
       configServiceMock as ConfigService,
       repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
     );
 
     const condition = readFixture('Condition-condition-single-example.json');
@@ -252,7 +261,11 @@ describe('FhirSyncService', () => {
   });
 
   it('parses a receive-push patient payload and updates the profile', async () => {
-    const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
     const patient = readFixture('Patient-patient-single-example.json') as FhirPatientResource;
 
     repositoryMock.findProfileIdByIdentifiers = jest.fn().mockResolvedValue('profile-123');
@@ -285,7 +298,11 @@ describe('FhirSyncService', () => {
   });
 
   it('maps PH Core gateway payload fields from receive-results into patient profile patch', async () => {
-    const service = new FhirSyncService(configServiceMock as ConfigService, repositoryMock as FhirSyncRepository);
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
 
     const bundle = {
       resourceType: 'Bundle',

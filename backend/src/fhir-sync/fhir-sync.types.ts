@@ -2,6 +2,7 @@ import { Json } from '../supabase/database.types';
 
 export type GatewayResourceType =
   | 'Patient'
+  | 'Appointment'
   | 'Condition'
   | 'Procedure'
   | 'Immunization'

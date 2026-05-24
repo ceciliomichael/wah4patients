@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'node:crypto';
+import { AppointmentHistoryRepository } from '../appointment-history/appointment-history.repository';
 import { IntegrationService } from './integration.service';
 import { GatewayClientService } from './gateway-client.service';
 import {
@@ -16,10 +17,12 @@ export class AppointmentPushService {
     private readonly configService: ConfigService,
     private readonly integrationService: IntegrationService,
     private readonly gatewayClient: GatewayClientService,
+    private readonly appointmentHistoryRepository: AppointmentHistoryRepository,
   ) {}
 
   async sendAppointmentRequest(
     payload: AppointmentPushRequestPayload,
+    profileId: string,
   ): Promise<AppointmentPushResponse> {
     const targetProvider = await this.resolveTargetProvider(
       payload.targetProviderId.trim(),
@@ -46,6 +49,36 @@ export class AppointmentPushService {
     );
 
     const transactionId = this.extractTransactionId(response);
+    const appointmentType = payload.appointmentType.trim();
+    const modeLabel = payload.appointmentMode === 'onsite'
+      ? 'Onsite consultation'
+      : 'Teleconsultation';
+    const reason = this.readOptionalText(payload.reason);
+    const notes = this.readOptionalText(payload.notes);
+    const locationOrPlatform = payload.locationOrPlatform.trim();
+    await this.appointmentHistoryRepository.insertPendingAppointmentHistoryRecord({
+      profile_id: profileId,
+      gateway_transaction_id: transactionId,
+      title: appointmentType,
+      subtitle: `${modeLabel} • ${targetProvider.name}`,
+      summary_label: 'Scheduled',
+      summary_value: this.formatIsoDateForSummary(appointment.start),
+      filter_value: 'Pending',
+      status_label: 'Pending',
+      status_color_key: 'tertiary',
+      accent_color_key: payload.appointmentMode === 'onsite' ? 'primary' : 'secondary',
+      icon_key: 'schedule',
+      details_json: [
+        { label: 'Provider', value: targetProvider.name },
+        { label: 'Mode', value: modeLabel },
+        { label: 'Location/Platform', value: locationOrPlatform },
+        { label: 'Scheduled At', value: appointment.start },
+        { label: 'Reason', value: reason ?? appointmentType },
+        ...(notes !== undefined ? [{ label: 'Notes', value: notes }] : []),
+      ],
+      recorded_at: appointment.start,
+      display_order: 10,
+    });
 
     return {
       message: 'Appointment request sent to the gateway successfully.',
@@ -177,6 +210,19 @@ export class AppointmentPushService {
       );
     }
 
+    // Handle { data: { transactionId: '...' } } or { data: { id: '...' } }
+    const data = response['data'];
+    if (this.isRecord(data)) {
+      const dataTransactionId = data['transactionId'];
+      if (typeof dataTransactionId === 'string' && dataTransactionId.trim().length > 0) {
+        return dataTransactionId.trim();
+      }
+      const dataId = data['id'];
+      if (typeof dataId === 'string' && dataId.trim().length > 0) {
+        return dataId.trim();
+      }
+    }
+
     const directId = response['id'];
     if (typeof directId === 'string' && directId.trim().length > 0) {
       return directId.trim();
@@ -195,6 +241,15 @@ export class AppointmentPushService {
   private readOptionalText(value: string | undefined): string | undefined {
     const trimmed = value?.trim() ?? '';
     return trimmed.length > 0 ? trimmed : undefined;
+  }
+
+  private formatIsoDateForSummary(isoValue: string): string {
+    const parsedDate = new Date(isoValue);
+    if (Number.isNaN(parsedDate.getTime())) {
+      return isoValue;
+    }
+
+    return parsedDate.toISOString().split('T')[0] ?? isoValue;
   }
 
   private getRequiredConfig(key: string): string {

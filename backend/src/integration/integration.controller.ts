@@ -47,7 +47,7 @@ export class IntegrationController {
       throw new BadRequestException('Missing authenticated account context.');
     }
 
-    return this.appointmentPushService.sendAppointmentRequest(dto);
+    return this.appointmentPushService.sendAppointmentRequest(dto, userId.trim());
   }
 
   @Post('sync/prepare')
