@@ -17,15 +17,18 @@ class AppointmentRequestResult {
   const AppointmentRequestResult({
     required this.message,
     required this.transactionId,
+    required this.correlationId,
   });
 
   final String message;
   final String transactionId;
+  final String correlationId;
 
   factory AppointmentRequestResult.fromJson(Map<String, dynamic> json) {
     return AppointmentRequestResult(
       message: _readString(json['message']),
       transactionId: _readString(json['transactionId']),
+      correlationId: _readString(json['correlationId'] ?? json['correlation_id']),
     );
   }
 }

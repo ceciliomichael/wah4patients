@@ -56,6 +56,7 @@ export interface FhirAppointmentResource {
 export interface AppointmentPushGatewayRequest {
   senderId: string;
   targetId: string;
+  correlationId: string;
   resource: FhirAppointmentResource;
   data?: FhirAppointmentResource;
   reason?: string;
@@ -65,6 +66,7 @@ export interface AppointmentPushGatewayRequest {
 export interface AppointmentPushResponse {
   message: string;
   transactionId: string;
+  correlationId: string;
   requesterId: string;
   targetProvider: InteroperabilityProviderSummary;
   appointment: FhirAppointmentResource;

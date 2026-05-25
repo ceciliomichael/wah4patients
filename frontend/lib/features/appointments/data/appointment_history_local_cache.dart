@@ -19,7 +19,8 @@ class AppointmentHistoryLocalCache {
     records.removeWhere(
       (existing) =>
           existing.id == record.id ||
-          existing.gatewayTransactionId == record.gatewayTransactionId,
+          existing.gatewayTransactionId == record.gatewayTransactionId ||
+          existing.correlationId == record.correlationId,
     );
     records.insert(0, record);
   }

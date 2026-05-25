@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { RequestLoggingService } from './common/logging/request-logging.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,6 +30,11 @@ async function bootstrap() {
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'x-api-key', 'authorization', 'x-user-id'],
   });
+
+  const requestLoggingService = app.get(RequestLoggingService);
+  if (requestLoggingService.isEnabled()) {
+    app.use(requestLoggingService.createMiddleware());
+  }
 
   const port = configService.get<number>('PORT', 3000);
   await app.listen(port, '0.0.0.0');

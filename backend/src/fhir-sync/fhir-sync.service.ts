@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -30,6 +31,8 @@ import { ParsedClinicalResource } from './parsers/fhir-parser.types';
 
 @Injectable()
 export class FhirSyncService {
+  private readonly logger = new Logger(FhirSyncService.name);
+
   constructor(
     private readonly configService: ConfigService,
     private readonly repository: FhirSyncRepository,
@@ -150,10 +153,38 @@ export class FhirSyncService {
 
   async receivePush(payload: unknown): Promise<FhirSyncAcknowledgement> {
     const request = this.parseReceivePushRequest(payload);
+    this.logger.log(
+      `Received receive-push request: resourceType=${request.resourceType} transactionId=${request.transactionId} correlationId=${request.correlationId ?? 'n/a'} senderId=${request.senderId}`,
+    );
+
     if (request.resourceType === 'Appointment') {
-      await this.appointmentHistoryRepository
-        .markAppointmentHistoryApprovedByTransactionId(request.transactionId);
-      return { message: 'Data received successfully' };
+      if (request.correlationId === undefined) {
+        this.logger.warn(
+          `Appointment receive-push is missing correlationId: transactionId=${request.transactionId} senderId=${request.senderId}`,
+        );
+        throw new BadRequestException(
+          'Unable to match the appointment push without a correlationId.',
+        );
+      }
+
+      const approvedByCorrelationId =
+        await this.appointmentHistoryRepository.markAppointmentHistoryApprovedByCorrelationId(
+          request.correlationId,
+        );
+
+      if (approvedByCorrelationId) {
+        this.logger.log(
+          `Appointment receive-push matched by correlationId=${request.correlationId}`,
+        );
+        return { message: 'Data received successfully' };
+      }
+
+      this.logger.warn(
+        `Appointment receive-push did not match a pending history record by correlationId=${request.correlationId} transactionId=${request.transactionId}`,
+      );
+      throw new BadRequestException(
+        'Unable to match the appointment push to a pending history record.',
+      );
     }
 
     const parsedResource = parseInboundResource(request.resource);
@@ -313,15 +344,53 @@ export class FhirSyncService {
     }
 
     const resource = payload['resource'];
+    const correlationId = this.readReceivePushCorrelationId(payload, resource);
 
     return {
       transactionId,
+      correlationId,
       senderId,
       resourceType,
       resource,
       reason: this.readOptionalString(payload['reason']) ?? undefined,
       notes: this.readOptionalString(payload['notes']) ?? undefined,
     };
+  }
+
+  private readReceivePushCorrelationId(
+    payload: Record<string, unknown>,
+    resource: Record<string, unknown>,
+  ): string | undefined {
+    return (
+      this.readOptionalString(payload['correlationId']) ??
+      this.readAppointmentIdentifierValue(resource) ??
+      this.readAppointmentIdentifierValue(payload['data']) ??
+      undefined
+    );
+  }
+
+  private readAppointmentIdentifierValue(value: unknown): string | null {
+    if (!this.isRecord(value) || !Array.isArray(value['identifier'])) {
+      return null;
+    }
+
+    const schedulingRequestIdentifier = value['identifier'].find((identifier) => {
+      if (!this.isRecord(identifier)) {
+        return false;
+      }
+
+      const system = this.readOptionalString(identifier['system']);
+      return (
+        system === 'https://wah.ph/fhir/Identifier/scheduling-request-id' ||
+        system === 'https://wah.ph/fhir/Identifier/appointment-id'
+      );
+    });
+
+    if (this.isRecord(schedulingRequestIdentifier)) {
+      return this.readOptionalString(schedulingRequestIdentifier['value']);
+    }
+
+    return null;
   }
 
   private readIdentifierList(value: unknown): NormalizedIdentifier[] {

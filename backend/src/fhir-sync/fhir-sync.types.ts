@@ -35,6 +35,7 @@ export interface GatewayReceiveResultsRequest {
 
 export interface GatewayReceivePushRequest {
   transactionId: string;
+  correlationId?: string;
   senderId: string;
   resourceType: GatewayResourceType;
   resource: unknown;

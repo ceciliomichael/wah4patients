@@ -53,20 +53,26 @@ class _AppointmentHistoryDataScreenState extends State<AppointmentHistoryDataScr
       setState(() {
         final localPendingRecords = AppointmentHistoryLocalCache
             .snapshotForProfile(AuthSession.userId ?? '');
-        final recordsByTransactionId = <String, AppointmentHistoryRecordResponse>{};
+        final recordsByCorrelationId = <String, AppointmentHistoryRecordResponse>{};
 
         for (final record in localPendingRecords) {
-          recordsByTransactionId[record.gatewayTransactionId.isNotEmpty
-              ? record.gatewayTransactionId
-              : record.id] = record;
+          final lookupKey = record.correlationId.isNotEmpty
+              ? record.correlationId
+              : (record.gatewayTransactionId.isNotEmpty
+                  ? record.gatewayTransactionId
+                  : record.id);
+          recordsByCorrelationId[lookupKey] = record;
         }
         for (final record in response.records) {
-          recordsByTransactionId[record.gatewayTransactionId.isNotEmpty
-              ? record.gatewayTransactionId
-              : record.id] = record;
+          final lookupKey = record.correlationId.isNotEmpty
+              ? record.correlationId
+              : (record.gatewayTransactionId.isNotEmpty
+                  ? record.gatewayTransactionId
+                  : record.id);
+          recordsByCorrelationId[lookupKey] = record;
         }
 
-        final entries = recordsByTransactionId.values.toList(growable: false)
+        final entries = recordsByCorrelationId.values.toList(growable: false)
           ..sort((left, right) => right.recordedAt.compareTo(left.recordedAt));
 
         _content = HealthRecordScreenContent(

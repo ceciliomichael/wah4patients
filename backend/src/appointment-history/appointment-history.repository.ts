@@ -48,6 +48,7 @@ export class AppointmentHistoryRepository {
     return {
       id: row.id,
       gatewayTransactionId: row.gateway_transaction_id,
+      correlationId: row.correlation_id,
       profileId: row.profile_id,
       title: row.title,
       subtitle: row.subtitle,
@@ -80,13 +81,68 @@ export class AppointmentHistoryRepository {
     }
   }
 
-  async markAppointmentHistoryApprovedByTransactionId(
+  async updateGatewayTransactionIdByCorrelationId(
+    correlationId: string,
     gatewayTransactionId: string,
   ): Promise<boolean> {
     const { data: rows, error: listError } = await this.supabaseService.adminClient
       .from('appointment_history_records')
       .select('id')
-      .eq('gateway_transaction_id', gatewayTransactionId)
+      .eq('correlation_id', correlationId)
+      .limit(1);
+
+    if (listError !== null) {
+      throw new InternalServerErrorException(
+        'Unable to load appointment history record for transaction update',
+      );
+    }
+
+    if (rows === null || rows.length === 0) {
+      return false;
+    }
+
+    const { error } = await this.supabaseService.adminClient
+      .from('appointment_history_records')
+      .update({
+        gateway_transaction_id: gatewayTransactionId,
+      } as never)
+      .eq('correlation_id', correlationId);
+
+    if (error !== null) {
+      throw new InternalServerErrorException(
+        'Unable to update appointment history transaction id',
+      );
+    }
+
+    return true;
+  }
+
+  async markAppointmentHistoryApprovedByTransactionId(
+    gatewayTransactionId: string,
+  ): Promise<boolean> {
+    return this.markAppointmentHistoryApprovedByColumn(
+      'gateway_transaction_id',
+      gatewayTransactionId,
+    );
+  }
+
+  async markAppointmentHistoryApprovedByCorrelationId(
+    correlationId: string,
+  ): Promise<boolean> {
+    return this.markAppointmentHistoryApprovedByColumn(
+      'correlation_id',
+      correlationId,
+    );
+  }
+
+  private async markAppointmentHistoryApprovedByColumn(
+    column: 'gateway_transaction_id' | 'correlation_id',
+    value: string,
+  ): Promise<boolean> {
+    const { data: rows, error: listError } = await this.supabaseService.adminClient
+      .from('appointment_history_records')
+      .select('id')
+      .eq(column, value)
       .limit(1);
 
     if (listError !== null) {
@@ -108,7 +164,7 @@ export class AppointmentHistoryRepository {
         accent_color_key: 'secondary',
         icon_key: 'check_circle',
       } as never)
-      .eq('gateway_transaction_id', gatewayTransactionId);
+      .eq(column, value);
 
     if (error !== null) {
       throw new InternalServerErrorException(

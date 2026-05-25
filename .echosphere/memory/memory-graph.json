@@ -22871,6 +22871,1361 @@
       ],
       "createdAt": "2026-05-24T14:32:48.893Z",
       "updatedAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "memoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "rootMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c"
+      ],
+      "childMemoryIds": [
+        "d6a8cb9a-5065-42b9-bb64-f3917d5422af"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented an opt-in backend request logger for verifying inbound payloads, including whether transactionId is present. The logger writes JSON lines to backend/logs/requests.log only when BACKEND_REQUEST_LOGGING_ENABLED is true, defaults to off through env validation, and captures safe request metadata plus extracted transactionId/resourceType.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.service.ts",
+          "action": "created",
+          "reason": "Implements the opt-in request logging behavior and safe metadata extraction for inbound requests.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.module.ts",
+          "action": "created",
+          "reason": "Provides and exports the request logging service for bootstrap wiring.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Registers the request logging middleware when the env toggle is enabled so all inbound requests are logged.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imports the request logging module so the logger service is available in the application context.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Adds the BACKEND_REQUEST_LOGGING_ENABLED env toggle with a false default when omitted.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documents the new logging toggle and its default-off behavior for local setup.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.gitignore",
+          "action": "inspected",
+          "reason": "Confirmed logs/ and *.log are already ignored so the generated request logs will not be committed accidentally.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T01:17:49.267Z",
+      "updatedAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "memoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "rootMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "parentMemoryIds": [
+        "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198"
+      ],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c"
+      ],
+      "childMemoryIds": [
+        "65443565-3d02-4ea3-b414-c095090db61c"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented an opt-in backend request logger for verifying inbound payloads, including whether transactionId is present. The logger writes JSON lines to backend/logs/requests.log only when BACKEND_REQUEST_LOGGING_ENABLED is true, defaults to off through env validation, and captures safe request metadata plus extracted transactionId/resourceType.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.service.ts",
+          "action": "created",
+          "reason": "Implements the opt-in request logging behavior and safe metadata extraction for inbound requests.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.module.ts",
+          "action": "created",
+          "reason": "Provides and exports the request logging service for bootstrap wiring.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Registers the request logging middleware when the env toggle is enabled so all inbound requests are logged.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imports the request logging module so the logger service is available in the application context.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Adds the BACKEND_REQUEST_LOGGING_ENABLED env toggle with a false default when omitted.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documents the new logging toggle and its default-off behavior for local setup.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.gitignore",
+          "action": "inspected",
+          "reason": "Confirmed logs/ and *.log are already ignored so the generated request logs will not be committed accidentally.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T01:17:49.411Z",
+      "updatedAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "memoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "rootMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "parentMemoryIds": [
+        "d6a8cb9a-5065-42b9-bb64-f3917d5422af"
+      ],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "376747c3-cccf-427f-b234-119486b3f878",
+        "da1f41cd-88c4-4ca1-888c-763459169672",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented an opt-in backend request logger for verifying inbound payloads, including whether transactionId is present. The logger writes JSON lines to backend/logs/requests.log only when BACKEND_REQUEST_LOGGING_ENABLED is true, defaults to off through env validation, and captures safe request metadata plus extracted transactionId/resourceType.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.service.ts",
+          "action": "created",
+          "reason": "Implements the opt-in request logging behavior and safe metadata extraction for inbound requests.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\logging\\request-logging.module.ts",
+          "action": "created",
+          "reason": "Provides and exports the request logging service for bootstrap wiring.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\main.ts",
+          "action": "modified",
+          "reason": "Registers the request logging middleware when the env toggle is enabled so all inbound requests are logged.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\app.module.ts",
+          "action": "modified",
+          "reason": "Imports the request logging module so the logger service is available in the application context.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\src\\common\\config\\env.validation.ts",
+          "action": "modified",
+          "reason": "Adds the BACKEND_REQUEST_LOGGING_ENABLED env toggle with a false default when omitted.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.env.example",
+          "action": "modified",
+          "reason": "Documents the new logging toggle and its default-off behavior for local setup.",
+          "notes": ""
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\backend\\.gitignore",
+          "action": "inspected",
+          "reason": "Confirmed logs/ and *.log are already ignored so the generated request logs will not be committed accidentally.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T01:17:49.553Z",
+      "updatedAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "memoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "rootMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "parentMemoryIds": [
+        "e8e0342e-6b02-496e-be26-b315a9dec66c"
+      ],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d"
+      ],
+      "childMemoryIds": [
+        "fba990bf-fb41-4507-b926-d8b883814cd9"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented a generated correlationId flow for outbound appointment push requests so the gateway/provider can echo the same identifier back on approval. The backend now generates one opaque UUID per appointment request, includes it in the outbound gateway payload and appointment resource identifier, stores it in appointment history, and returns it to the caller. The approval-matching repository logic now supports both gateway transaction IDs and correlation IDs. Frontend appointment booking and history screens now carry the correlationId through local pending records and merge history records using correlation-aware aliases to avoid duplicates. A new DB migration adds the correlation_id column and index, and the task card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Added correlationId to the outbound gateway request contract and the appointment push response so the identifier can flow through the backend.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generated and reused the correlationId, added it to the gateway payload, persisted it in appointment history, and returned it in the API response.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended appointment history row and response shapes to include correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Mapped correlationId from rows and added approval matching support for both gateway transaction IDs and correlation IDs.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types so appointment_history_records includes correlation_id in Row/Insert/Update shapes.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Introduced the database migration that adds the correlation_id column and index for appointment history records.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added test coverage for the correlationId payload, appointment identifier reuse, response field, and history insert persistence.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment request responses so the UI can store the same identifier locally.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment history API responses so the UI can dedupe and render correlation-aware records.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Extended local pending-record dedupe to account for correlationId as well as gateway transaction ID.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Stored the returned correlationId in the pending appointment record and used it as the local pending identifier when available.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Changed history merging to use correlation-aware aliases so local pending and server history rows do not duplicate.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T03:59:51.756Z",
+      "updatedAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "memoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "rootMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "parentMemoryIds": [
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce"
+      ],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d"
+      ],
+      "childMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented a generated correlationId flow for outbound appointment push requests so the gateway/provider can echo the same identifier back on approval. The backend now generates one opaque UUID per appointment request, includes it in the outbound gateway payload and appointment resource identifier, stores it in appointment history, and returns it to the caller. The approval-matching repository logic now supports both gateway transaction IDs and correlation IDs. Frontend appointment booking and history screens now carry the correlationId through local pending records and merge history records using correlation-aware aliases to avoid duplicates. A new DB migration adds the correlation_id column and index, and the task card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Added correlationId to the outbound gateway request contract and the appointment push response so the identifier can flow through the backend.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generated and reused the correlationId, added it to the gateway payload, persisted it in appointment history, and returned it in the API response.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended appointment history row and response shapes to include correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Mapped correlationId from rows and added approval matching support for both gateway transaction IDs and correlation IDs.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types so appointment_history_records includes correlation_id in Row/Insert/Update shapes.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Introduced the database migration that adds the correlation_id column and index for appointment history records.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added test coverage for the correlationId payload, appointment identifier reuse, response field, and history insert persistence.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment request responses so the UI can store the same identifier locally.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment history API responses so the UI can dedupe and render correlation-aware records.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Extended local pending-record dedupe to account for correlationId as well as gateway transaction ID.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Stored the returned correlationId in the pending appointment record and used it as the local pending identifier when available.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Changed history merging to use correlation-aware aliases so local pending and server history rows do not duplicate.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T03:59:51.906Z",
+      "updatedAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "memoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "rootMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "parentMemoryIds": [
+        "fba990bf-fb41-4507-b926-d8b883814cd9"
+      ],
+      "relatedMemoryIds": [
+        "9d96585b-240d-4f67-bc09-57b12a112224",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556",
+        "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+        "2d316240-54ee-4bab-ade4-7e7b9d27f07d"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented a generated correlationId flow for outbound appointment push requests so the gateway/provider can echo the same identifier back on approval. The backend now generates one opaque UUID per appointment request, includes it in the outbound gateway payload and appointment resource identifier, stores it in appointment history, and returns it to the caller. The approval-matching repository logic now supports both gateway transaction IDs and correlation IDs. Frontend appointment booking and history screens now carry the correlationId through local pending records and merge history records using correlation-aware aliases to avoid duplicates. A new DB migration adds the correlation_id column and index, and the task card was moved to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Added correlationId to the outbound gateway request contract and the appointment push response so the identifier can flow through the backend.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generated and reused the correlationId, added it to the gateway payload, persisted it in appointment history, and returned it in the API response.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Extended appointment history row and response shapes to include correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Mapped correlationId from rows and added approval matching support for both gateway transaction IDs and correlation IDs.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types so appointment_history_records includes correlation_id in Row/Insert/Update shapes.",
+          "notes": ""
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Introduced the database migration that adds the correlation_id column and index for appointment history records.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added test coverage for the correlationId payload, appointment identifier reuse, response field, and history insert persistence.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment request responses so the UI can store the same identifier locally.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Parsed correlationId from appointment history API responses so the UI can dedupe and render correlation-aware records.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Extended local pending-record dedupe to account for correlationId as well as gateway transaction ID.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Stored the returned correlationId in the pending appointment record and used it as the local pending identifier when available.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Changed history merging to use correlation-aware aliases so local pending and server history rows do not duplicate.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T03:59:52.069Z",
+      "updatedAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "memoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "e8e0342e-6b02-496e-be26-b315a9dec66c",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556"
+      ],
+      "childMemoryIds": [
+        "463d9dee-ccb7-4934-9c25-681baea2a8d7"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented correlationId-based appointment receive-push handling and improved appointment history loading resilience. The backend now parses an optional correlationId on receive-push, extracts correlation IDs from appointment payload identifiers, maps appointment resource status to internal history statuses, and updates appointment history by correlationId first with transactionId as fallback. The frontend appointment history screen now falls back to locally cached pending records when the backend history request fails or the session token is unavailable, preventing a hard empty/error state. Also added a test covering appointment receive-push correlation matching and status updates.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added correlationId-aware appointment receive-push handling and appointment status mapping logic.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended the appointment webhook payload type to carry an optional correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Generalized appointment history status updates so webhook handling can set several appointment states by correlationId or transactionId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for appointment receive-push correlationId matching and status updates.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Added local-cache fallback behavior so the appointment history screen does not hard-fail when backend loading fails.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/mappers/appointment_history_entry_mapper.dart",
+          "action": "modified",
+          "reason": "Added icon mapping for no-show style appointment history states.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T05:14:28.755Z",
+      "updatedAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "memoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "a1693759-58c0-494a-a681-9ea2146e7e82"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "e8e0342e-6b02-496e-be26-b315a9dec66c",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556"
+      ],
+      "childMemoryIds": [
+        "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented correlationId-based appointment receive-push handling and improved appointment history loading resilience. The backend now parses an optional correlationId on receive-push, extracts correlation IDs from appointment payload identifiers, maps appointment resource status to internal history statuses, and updates appointment history by correlationId first with transactionId as fallback. The frontend appointment history screen now falls back to locally cached pending records when the backend history request fails or the session token is unavailable, preventing a hard empty/error state. Also added a test covering appointment receive-push correlation matching and status updates.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added correlationId-aware appointment receive-push handling and appointment status mapping logic.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended the appointment webhook payload type to carry an optional correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Generalized appointment history status updates so webhook handling can set several appointment states by correlationId or transactionId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for appointment receive-push correlationId matching and status updates.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Added local-cache fallback behavior so the appointment history screen does not hard-fail when backend loading fails.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/mappers/appointment_history_entry_mapper.dart",
+          "action": "modified",
+          "reason": "Added icon mapping for no-show style appointment history states.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T05:14:28.882Z",
+      "updatedAt": "2026-05-25T05:14:28.882Z"
+    },
+    {
+      "memoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "463d9dee-ccb7-4934-9c25-681baea2a8d7"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "e8e0342e-6b02-496e-be26-b315a9dec66c",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "5443493f-3a0f-4ebc-9642-f965e4e76556"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented correlationId-based appointment receive-push handling and improved appointment history loading resilience. The backend now parses an optional correlationId on receive-push, extracts correlation IDs from appointment payload identifiers, maps appointment resource status to internal history statuses, and updates appointment history by correlationId first with transactionId as fallback. The frontend appointment history screen now falls back to locally cached pending records when the backend history request fails or the session token is unavailable, preventing a hard empty/error state. Also added a test covering appointment receive-push correlation matching and status updates.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added correlationId-aware appointment receive-push handling and appointment status mapping logic.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Extended the appointment webhook payload type to carry an optional correlationId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Generalized appointment history status updates so webhook handling can set several appointment states by correlationId or transactionId.",
+          "notes": ""
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added coverage for appointment receive-push correlationId matching and status updates.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Added local-cache fallback behavior so the appointment history screen does not hard-fail when backend loading fails.",
+          "notes": ""
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/mappers/appointment_history_entry_mapper.dart",
+          "action": "modified",
+          "reason": "Added icon mapping for no-show style appointment history states.",
+          "notes": ""
+        }
+      ],
+      "createdAt": "2026-05-25T05:14:29.002Z",
+      "updatedAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "memoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+        "a1693759-58c0-494a-a681-9ea2146e7e82"
+      ],
+      "childMemoryIds": [
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented end-to-end correlationId support for appointment push/approval matching. Outbound appointment pushes now generate a single correlationId, send it to the provider, and store it alongside the gateway transaction id in appointment history. Inbound receive-push now prefers correlationId when approving appointment pushes, with transactionId fallback for compatibility. The appointment history API now exposes correlationId so the frontend local cache can merge pending and server records without duplicates. A new SQL migration adds the correlation_id column and index to appointment_history_records.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generate and propagate correlationId on outbound appointment pushes and persist it with the pending appointment record.",
+          "notes": "Also reuses the same correlationId inside the appointment resource identifier."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Extend the outbound gateway request/response contract with correlationId.",
+          "notes": "Keeps the payload shape explicit and typed."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Add approval lookup by correlationId and map correlationId into history responses.",
+          "notes": "Refactored approval updates through a shared helper to avoid duplication."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Add correlation_id to the row shape and correlationId to the response model.",
+          "notes": "Aligns the typed history contract with the updated schema."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Allow receive-push payload parsing to accept an optional correlationId.",
+          "notes": "TransactionId remains available for fallback and compatibility."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Prioritize correlationId when approving Appointment pushes from receive-push.",
+          "notes": "Falls back to transactionId when no correlationId match is available."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Add coverage for correlationId-first approval behavior on receive-push.",
+          "notes": "Mocks the new repository method."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Verify outbound correlationId is sent and persisted with the pending appointment record.",
+          "notes": "Also asserts the resource identifier uses the same correlationId."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Keep generated Supabase types in sync with the new correlation_id column.",
+          "notes": "Added the column to Row, Insert, and Update for appointment_history_records."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parse the new correlationId returned by the backend appointment request endpoint.",
+          "notes": "Supports fallback to snake_case for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Expose correlationId in appointment history records fetched by the app.",
+          "notes": "Allows local/server history deduplication to key off correlationId."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Prevent duplicate pending appointment entries by comparing correlationId as well as transaction id.",
+          "notes": "Keeps the local cache aligned with the backend record."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Use the backend-returned correlationId when creating the local pending appointment record.",
+          "notes": "Preserves gateway transaction id separately for audit/display."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Merge local pending and server history rows by correlationId first so approved records replace pending ones cleanly.",
+          "notes": "Falls back to gatewayTransactionId or id when needed."
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Database migration to add correlation_id and an index to appointment_history_records.",
+          "notes": "Adds a not-null column with empty-string default for existing rows."
+        }
+      ],
+      "createdAt": "2026-05-25T09:50:50.499Z",
+      "updatedAt": "2026-05-25T09:50:50.499Z"
+    },
+    {
+      "memoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "075f534e-764a-4cd4-a21e-a0f410170b87"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+        "a1693759-58c0-494a-a681-9ea2146e7e82"
+      ],
+      "childMemoryIds": [
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented end-to-end correlationId support for appointment push/approval matching. Outbound appointment pushes now generate a single correlationId, send it to the provider, and store it alongside the gateway transaction id in appointment history. Inbound receive-push now prefers correlationId when approving appointment pushes, with transactionId fallback for compatibility. The appointment history API now exposes correlationId so the frontend local cache can merge pending and server records without duplicates. A new SQL migration adds the correlation_id column and index to appointment_history_records.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generate and propagate correlationId on outbound appointment pushes and persist it with the pending appointment record.",
+          "notes": "Also reuses the same correlationId inside the appointment resource identifier."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Extend the outbound gateway request/response contract with correlationId.",
+          "notes": "Keeps the payload shape explicit and typed."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Add approval lookup by correlationId and map correlationId into history responses.",
+          "notes": "Refactored approval updates through a shared helper to avoid duplication."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Add correlation_id to the row shape and correlationId to the response model.",
+          "notes": "Aligns the typed history contract with the updated schema."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Allow receive-push payload parsing to accept an optional correlationId.",
+          "notes": "TransactionId remains available for fallback and compatibility."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Prioritize correlationId when approving Appointment pushes from receive-push.",
+          "notes": "Falls back to transactionId when no correlationId match is available."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Add coverage for correlationId-first approval behavior on receive-push.",
+          "notes": "Mocks the new repository method."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Verify outbound correlationId is sent and persisted with the pending appointment record.",
+          "notes": "Also asserts the resource identifier uses the same correlationId."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Keep generated Supabase types in sync with the new correlation_id column.",
+          "notes": "Added the column to Row, Insert, and Update for appointment_history_records."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parse the new correlationId returned by the backend appointment request endpoint.",
+          "notes": "Supports fallback to snake_case for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Expose correlationId in appointment history records fetched by the app.",
+          "notes": "Allows local/server history deduplication to key off correlationId."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Prevent duplicate pending appointment entries by comparing correlationId as well as transaction id.",
+          "notes": "Keeps the local cache aligned with the backend record."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Use the backend-returned correlationId when creating the local pending appointment record.",
+          "notes": "Preserves gateway transaction id separately for audit/display."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Merge local pending and server history rows by correlationId first so approved records replace pending ones cleanly.",
+          "notes": "Falls back to gatewayTransactionId or id when needed."
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Database migration to add correlation_id and an index to appointment_history_records.",
+          "notes": "Adds a not-null column with empty-string default for existing rows."
+        }
+      ],
+      "createdAt": "2026-05-25T09:50:50.663Z",
+      "updatedAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "memoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "rootMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "parentMemoryIds": [
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c"
+      ],
+      "relatedMemoryIds": [
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+        "a1693759-58c0-494a-a681-9ea2146e7e82"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented end-to-end correlationId support for appointment push/approval matching. Outbound appointment pushes now generate a single correlationId, send it to the provider, and store it alongside the gateway transaction id in appointment history. Inbound receive-push now prefers correlationId when approving appointment pushes, with transactionId fallback for compatibility. The appointment history API now exposes correlationId so the frontend local cache can merge pending and server records without duplicates. A new SQL migration adds the correlation_id column and index to appointment_history_records.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Generate and propagate correlationId on outbound appointment pushes and persist it with the pending appointment record.",
+          "notes": "Also reuses the same correlationId inside the appointment resource identifier."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.types.ts",
+          "action": "modified",
+          "reason": "Extend the outbound gateway request/response contract with correlationId.",
+          "notes": "Keeps the payload shape explicit and typed."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Add approval lookup by correlationId and map correlationId into history responses.",
+          "notes": "Refactored approval updates through a shared helper to avoid duplication."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.types.ts",
+          "action": "modified",
+          "reason": "Add correlation_id to the row shape and correlationId to the response model.",
+          "notes": "Aligns the typed history contract with the updated schema."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.types.ts",
+          "action": "modified",
+          "reason": "Allow receive-push payload parsing to accept an optional correlationId.",
+          "notes": "TransactionId remains available for fallback and compatibility."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Prioritize correlationId when approving Appointment pushes from receive-push.",
+          "notes": "Falls back to transactionId when no correlationId match is available."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Add coverage for correlationId-first approval behavior on receive-push.",
+          "notes": "Mocks the new repository method."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Verify outbound correlationId is sent and persisted with the pending appointment record.",
+          "notes": "Also asserts the resource identifier uses the same correlationId."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Keep generated Supabase types in sync with the new correlation_id column.",
+          "notes": "Added the column to Row, Insert, and Update for appointment_history_records."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_request_api_client.dart",
+          "action": "modified",
+          "reason": "Parse the new correlationId returned by the backend appointment request endpoint.",
+          "notes": "Supports fallback to snake_case for compatibility."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_api_client.dart",
+          "action": "modified",
+          "reason": "Expose correlationId in appointment history records fetched by the app.",
+          "notes": "Allows local/server history deduplication to key off correlationId."
+        },
+        {
+          "path": "frontend/lib/features/appointments/data/appointment_history_local_cache.dart",
+          "action": "modified",
+          "reason": "Prevent duplicate pending appointment entries by comparing correlationId as well as transaction id.",
+          "notes": "Keeps the local cache aligned with the backend record."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/screens/appointment_booking_screen.dart",
+          "action": "modified",
+          "reason": "Use the backend-returned correlationId when creating the local pending appointment record.",
+          "notes": "Preserves gateway transaction id separately for audit/display."
+        },
+        {
+          "path": "frontend/lib/features/appointments/presentation/widgets/appointment_history_data_screen.dart",
+          "action": "modified",
+          "reason": "Merge local pending and server history rows by correlationId first so approved records replace pending ones cleanly.",
+          "notes": "Falls back to gatewayTransactionId or id when needed."
+        },
+        {
+          "path": "sqls/014_appointment_history_correlation_id.sql",
+          "action": "created",
+          "reason": "Database migration to add correlation_id and an index to appointment_history_records.",
+          "notes": "Adds a not-null column with empty-string default for existing rows."
+        }
+      ],
+      "createdAt": "2026-05-25T09:50:50.832Z",
+      "updatedAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "memoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "rootMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "parentMemoryIds": [
+        "faecbb84-53ba-421f-acfe-6949d53d81d3"
+      ],
+      "relatedMemoryIds": [
+        "2c84fc38-a6c9-4906-992e-5d17277c6626",
+        "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+        "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [
+        "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa"
+      ],
+      "sectionKind": "fact",
+      "summary": "Removed the backend Supabase expiry check path so authenticated calls no longer depend on auth.getUser(accessToken). The auth support service now decodes the access token payload directly and no longer logs or reacts to 'expired Supabase access token' warnings. This was done to keep the persistent-login + idle-MPIN experience simple and avoid expiry behavior for now.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Removed the Supabase expiry-check path and warning so expired access tokens are not treated as a session problem during normal app use.",
+          "notes": "Backend now uses JWT payload decode directly for authenticated user lookup."
+        }
+      ],
+      "createdAt": "2026-05-25T10:09:00.567Z",
+      "updatedAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "memoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "rootMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "parentMemoryIds": [
+        "3d8e8934-a33d-440c-935b-82e0b066abb6"
+      ],
+      "relatedMemoryIds": [
+        "2c84fc38-a6c9-4906-992e-5d17277c6626",
+        "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+        "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [
+        "25d43e78-2370-4c48-ac3d-47cef7692c75"
+      ],
+      "sectionKind": "decision",
+      "summary": "Removed the backend Supabase expiry check path so authenticated calls no longer depend on auth.getUser(accessToken). The auth support service now decodes the access token payload directly and no longer logs or reacts to 'expired Supabase access token' warnings. This was done to keep the persistent-login + idle-MPIN experience simple and avoid expiry behavior for now.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Removed the Supabase expiry-check path and warning so expired access tokens are not treated as a session problem during normal app use.",
+          "notes": "Backend now uses JWT payload decode directly for authenticated user lookup."
+        }
+      ],
+      "createdAt": "2026-05-25T10:09:00.687Z",
+      "updatedAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "memoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "rootMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "parentMemoryIds": [
+        "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa"
+      ],
+      "relatedMemoryIds": [
+        "2c84fc38-a6c9-4906-992e-5d17277c6626",
+        "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+        "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+        "66a43719-9973-4ca2-8d52-3516b8bb1ca9"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Removed the backend Supabase expiry check path so authenticated calls no longer depend on auth.getUser(accessToken). The auth support service now decodes the access token payload directly and no longer logs or reacts to 'expired Supabase access token' warnings. This was done to keep the persistent-login + idle-MPIN experience simple and avoid expiry behavior for now.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/auth/auth-support.service.ts",
+          "action": "modified",
+          "reason": "Removed the Supabase expiry-check path and warning so expired access tokens are not treated as a session problem during normal app use.",
+          "notes": "Backend now uses JWT payload decode directly for authenticated user lookup."
+        }
+      ],
+      "createdAt": "2026-05-25T10:09:00.797Z",
+      "updatedAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "memoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "rootMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "parentMemoryIds": [
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca"
+      ],
+      "relatedMemoryIds": [
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [
+        "3ddbac6b-0f67-49ef-be09-c572286c7ce8"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the Appointment receive-push flow to use correlationId only for approval matching and removed the transactionId fallback from webhook approval. Also updated the outbound appointment push path to create the pending history row before calling the gateway, then update the stored gateway transaction id afterward, which prevents the provider pushback from arriving before the matching row exists. Added tests for correlationId-only matching, missing-correlationId rejection, and the pre-gateway pending-row write ordering.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Removed Appointment transactionId fallback and required correlationId for approval matching while keeping detailed logs.",
+          "notes": "Now rejects Appointment pushes without correlationId and approves only by correlationId."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added helper to update the gateway transaction id by correlationId after the gateway responds.",
+          "notes": "Supports the new pre-gateway insert flow."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Changed outbound appointment push to insert the pending row before the gateway call and update the transaction id afterward.",
+          "notes": "Eliminates the race that caused valid provider pushbacks to fail matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added and updated tests for correlationId-only approval and missing-correlationId rejection.",
+          "notes": "Covers the receive-push behavior change."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage that the pending appointment record is stored before the gateway push and later updated with the transaction id.",
+          "notes": "Confirms the race fix."
+        }
+      ],
+      "createdAt": "2026-05-25T14:44:57.157Z",
+      "updatedAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "memoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "rootMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "parentMemoryIds": [
+        "acfa9b60-9dbe-444a-8794-ec12484e0754"
+      ],
+      "relatedMemoryIds": [
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [
+        "cfbdf449-1f90-4d43-8a62-3ed9664ee036"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the Appointment receive-push flow to use correlationId only for approval matching and removed the transactionId fallback from webhook approval. Also updated the outbound appointment push path to create the pending history row before calling the gateway, then update the stored gateway transaction id afterward, which prevents the provider pushback from arriving before the matching row exists. Added tests for correlationId-only matching, missing-correlationId rejection, and the pre-gateway pending-row write ordering.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Removed Appointment transactionId fallback and required correlationId for approval matching while keeping detailed logs.",
+          "notes": "Now rejects Appointment pushes without correlationId and approves only by correlationId."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added helper to update the gateway transaction id by correlationId after the gateway responds.",
+          "notes": "Supports the new pre-gateway insert flow."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Changed outbound appointment push to insert the pending row before the gateway call and update the transaction id afterward.",
+          "notes": "Eliminates the race that caused valid provider pushbacks to fail matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added and updated tests for correlationId-only approval and missing-correlationId rejection.",
+          "notes": "Covers the receive-push behavior change."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage that the pending appointment record is stored before the gateway push and later updated with the transaction id.",
+          "notes": "Confirms the race fix."
+        }
+      ],
+      "createdAt": "2026-05-25T14:44:57.447Z",
+      "updatedAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "memoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "rootMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "parentMemoryIds": [
+        "3ddbac6b-0f67-49ef-be09-c572286c7ce8"
+      ],
+      "relatedMemoryIds": [
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "fba990bf-fb41-4507-b926-d8b883814cd9",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the Appointment receive-push flow to use correlationId only for approval matching and removed the transactionId fallback from webhook approval. Also updated the outbound appointment push path to create the pending history row before calling the gateway, then update the stored gateway transaction id afterward, which prevents the provider pushback from arriving before the matching row exists. Added tests for correlationId-only matching, missing-correlationId rejection, and the pre-gateway pending-row write ordering.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Removed Appointment transactionId fallback and required correlationId for approval matching while keeping detailed logs.",
+          "notes": "Now rejects Appointment pushes without correlationId and approves only by correlationId."
+        },
+        {
+          "path": "backend/src/appointment-history/appointment-history.repository.ts",
+          "action": "modified",
+          "reason": "Added helper to update the gateway transaction id by correlationId after the gateway responds.",
+          "notes": "Supports the new pre-gateway insert flow."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.ts",
+          "action": "modified",
+          "reason": "Changed outbound appointment push to insert the pending row before the gateway call and update the transaction id afterward.",
+          "notes": "Eliminates the race that caused valid provider pushbacks to fail matching."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added and updated tests for correlationId-only approval and missing-correlationId rejection.",
+          "notes": "Covers the receive-push behavior change."
+        },
+        {
+          "path": "backend/src/integration/appointment-push.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage that the pending appointment record is stored before the gateway push and later updated with the transaction id.",
+          "notes": "Confirms the race fix."
+        }
+      ],
+      "createdAt": "2026-05-25T14:44:57.568Z",
+      "updatedAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "memoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "rootMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "parentMemoryIds": [
+        "3ddbac6b-0f67-49ef-be09-c572286c7ce8"
+      ],
+      "relatedMemoryIds": [
+        "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "acfa9b60-9dbe-444a-8794-ec12484e0754",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca"
+      ],
+      "childMemoryIds": [
+        "0efeec89-efc5-442d-b229-75523c5e5dad"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the Appointment receive-push correlationId parser after runtime logs showed top-level correlationId was missing in the target Nest payload even though gateway audit logs displayed it. The parser now recovers the Appointment correlationId from the FHIR Appointment identifier in resource.identifier or data.identifier, supporting both scheduling-request-id and appointment-id systems, while keeping approval matching correlationId-only. Added regression coverage for gateway-forwarded payloads that lack top-level correlationId but contain the echoed value in resource.identifier.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added robust receive-push correlationId extraction from Appointment FHIR identifiers when top-level correlationId is missing.",
+          "notes": "Prevents false missing-correlationId errors for gateway-forwarded Appointment payloads."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage for Appointment receive-push payloads with correlationId only in resource.identifier.",
+          "notes": "Ensures correlationId-only approval still works with forwarded gateway payload shapes."
+        }
+      ],
+      "createdAt": "2026-05-25T15:06:45.087Z",
+      "updatedAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "memoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "rootMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "parentMemoryIds": [
+        "dc931a91-7553-422d-ab64-c0996ffc62eb"
+      ],
+      "relatedMemoryIds": [
+        "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "acfa9b60-9dbe-444a-8794-ec12484e0754",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca"
+      ],
+      "childMemoryIds": [
+        "aec9813a-af32-4904-a9c3-296200a3cded"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the Appointment receive-push correlationId parser after runtime logs showed top-level correlationId was missing in the target Nest payload even though gateway audit logs displayed it. The parser now recovers the Appointment correlationId from the FHIR Appointment identifier in resource.identifier or data.identifier, supporting both scheduling-request-id and appointment-id systems, while keeping approval matching correlationId-only. Added regression coverage for gateway-forwarded payloads that lack top-level correlationId but contain the echoed value in resource.identifier.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added robust receive-push correlationId extraction from Appointment FHIR identifiers when top-level correlationId is missing.",
+          "notes": "Prevents false missing-correlationId errors for gateway-forwarded Appointment payloads."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage for Appointment receive-push payloads with correlationId only in resource.identifier.",
+          "notes": "Ensures correlationId-only approval still works with forwarded gateway payload shapes."
+        }
+      ],
+      "createdAt": "2026-05-25T15:06:45.199Z",
+      "updatedAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "memoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "rootMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "parentMemoryIds": [
+        "0efeec89-efc5-442d-b229-75523c5e5dad"
+      ],
+      "relatedMemoryIds": [
+        "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "acfa9b60-9dbe-444a-8794-ec12484e0754",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the Appointment receive-push correlationId parser after runtime logs showed top-level correlationId was missing in the target Nest payload even though gateway audit logs displayed it. The parser now recovers the Appointment correlationId from the FHIR Appointment identifier in resource.identifier or data.identifier, supporting both scheduling-request-id and appointment-id systems, while keeping approval matching correlationId-only. Added regression coverage for gateway-forwarded payloads that lack top-level correlationId but contain the echoed value in resource.identifier.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added robust receive-push correlationId extraction from Appointment FHIR identifiers when top-level correlationId is missing.",
+          "notes": "Prevents false missing-correlationId errors for gateway-forwarded Appointment payloads."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression coverage for Appointment receive-push payloads with correlationId only in resource.identifier.",
+          "notes": "Ensures correlationId-only approval still works with forwarded gateway payload shapes."
+        }
+      ],
+      "createdAt": "2026-05-25T15:06:45.321Z",
+      "updatedAt": "2026-05-25T15:06:45.321Z"
     }
   ],
   "edges": [
@@ -37888,7 +39243,854 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-24T14:32:48.893Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "toMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.267Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "90b15ee4-77c6-4fb6-b7c1-fd7cad13f198",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "toMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.411Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "376747c3-cccf-427f-b234-119486b3f878",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "da1f41cd-88c4-4ca1-888c-763459169672",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "65443565-3d02-4ea3-b414-c095090db61c",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T01:17:49.553Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.756Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:51.906Z"
+    },
+    {
+      "fromMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "fromMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "toMemoryId": "9d96585b-240d-4f67-bc09-57b12a112224",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "fromMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "fromMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "toMemoryId": "267ad685-fb27-467f-bfad-5bc7ac9c5d0b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "fromMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "toMemoryId": "2d316240-54ee-4bab-ade4-7e7b9d27f07d",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T03:59:52.069Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "toMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.755Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "toMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:28.883Z"
+    },
+    {
+      "fromMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "toMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "fromMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "fromMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "toMemoryId": "e8e0342e-6b02-496e-be26-b315a9dec66c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "fromMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "fromMemoryId": "d5cc706e-cdf2-41a5-b3fb-b34aeec840f5",
+      "toMemoryId": "5443493f-3a0f-4ebc-9642-f965e4e76556",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T05:14:29.002Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.500Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.663Z"
+    },
+    {
+      "fromMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "fromMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "fromMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "fromMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "toMemoryId": "463d9dee-ccb7-4934-9c25-681baea2a8d7",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "fromMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "toMemoryId": "a1693759-58c0-494a-a681-9ea2146e7e82",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T09:50:50.832Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "faecbb84-53ba-421f-acfe-6949d53d81d3",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "toMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.567Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "3d8e8934-a33d-440c-935b-82e0b066abb6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "toMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.687Z"
+    },
+    {
+      "fromMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "toMemoryId": "edfbad0f-1d0a-4e22-b3f5-e26c0c2d53fa",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "fromMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "toMemoryId": "2c84fc38-a6c9-4906-992e-5d17277c6626",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "fromMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "toMemoryId": "bc7145ea-570a-4a2f-9a2b-c9c1d8003710",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "fromMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "toMemoryId": "c4f288e9-68b0-40d8-b564-61a9ae06a2d6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "fromMemoryId": "25d43e78-2370-4c48-ac3d-47cef7692c75",
+      "toMemoryId": "66a43719-9973-4ca2-8d52-3516b8bb1ca9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T10:09:00.797Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "toMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.157Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "toMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.447Z"
+    },
+    {
+      "fromMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "toMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "fromMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "fromMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "fromMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "toMemoryId": "fba990bf-fb41-4507-b926-d8b883814cd9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "fromMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T14:44:57.568Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "3ddbac6b-0f67-49ef-be09-c572286c7ce8",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "toMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.087Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "dc931a91-7553-422d-ab64-c0996ffc62eb",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "toMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.199Z"
+    },
+    {
+      "fromMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "toMemoryId": "0efeec89-efc5-442d-b229-75523c5e5dad",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "fromMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "toMemoryId": "cfbdf449-1f90-4d43-8a62-3ed9664ee036",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "fromMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "fromMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "toMemoryId": "acfa9b60-9dbe-444a-8794-ec12484e0754",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "fromMemoryId": "aec9813a-af32-4904-a9c3-296200a3cded",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:06:45.321Z"
     }
   ],
-  "updatedAt": "2026-05-24T14:32:48.898Z"
+  "updatedAt": "2026-05-25T15:06:45.330Z"
 }

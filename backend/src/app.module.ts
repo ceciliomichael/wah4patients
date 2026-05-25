@@ -11,6 +11,7 @@ import { HealthRecordsModule } from './health-records/health-records.module';
 import { IntegrationModule } from './integration/integration.module';
 import { FhirSyncModule } from './fhir-sync/fhir-sync.module';
 import { MedicationResupplyModule } from './medication-resupply/medication-resupply.module';
+import { RequestLoggingModule } from './common/logging/request-logging.module';
 import { PersonalRecordsModule } from './personal-records/personal-records.module';
 
 @Module({
@@ -34,6 +35,7 @@ import { PersonalRecordsModule } from './personal-records/personal-records.modul
     IntegrationModule,
     FhirSyncModule,
     MedicationResupplyModule,
+    RequestLoggingModule,
   ],
   providers: [
     {

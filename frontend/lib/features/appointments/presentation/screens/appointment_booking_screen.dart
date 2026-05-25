@@ -359,7 +359,11 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
       }
 
       AppointmentHistoryLocalCache.upsertPendingRecord(
-        _buildPendingAppointmentHistoryRecord(summary, response.transactionId),
+        _buildPendingAppointmentHistoryRecord(
+          summary,
+          response.transactionId,
+          response.correlationId,
+        ),
       );
       _showSnackBar(response.message);
       Navigator.of(context).pop();
@@ -400,6 +404,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   AppointmentHistoryRecordResponse _buildPendingAppointmentHistoryRecord(
     AppointmentBookingSummary summary,
     String transactionId,
+    String correlationId,
   ) {
     final scheduledStart = _buildScheduledStart(summary.date, summary.timeSlot)
         .toUtc()
@@ -412,6 +417,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
     return AppointmentHistoryRecordResponse(
       id: 'pending-$transactionId',
       gatewayTransactionId: transactionId,
+      correlationId: correlationId,
       profileId: AuthSession.userId ?? '',
       title: summary.consultationType.title,
       subtitle: '${summary.provider.name} • ${summary.location}',

@@ -8,6 +8,7 @@ export interface AppointmentHistoryDetailResponse {
 export interface AppointmentHistoryRecordResponse {
   id: string;
   gatewayTransactionId: string;
+  correlationId: string;
   profileId: string;
   title: string;
   subtitle: string;
@@ -32,6 +33,7 @@ export interface AppointmentHistoryResponse {
 export interface AppointmentHistoryRowShape {
   id: string;
   gateway_transaction_id: string;
+  correlation_id: string;
   profile_id: string;
   title: string;
   subtitle: string;

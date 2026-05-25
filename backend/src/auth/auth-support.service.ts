@@ -230,23 +230,6 @@ export class AuthSupportService {
   async getAuthenticatedUserFromAccessToken(
     accessToken: string,
   ): Promise<{ id: string; email: string }> {
-    const { data, error } =
-      await this.supabaseService.authClient.auth.getUser(accessToken);
-
-    if (error === null && data.user !== null) {
-      const email = data.user.email?.trim().toLowerCase() ?? '';
-      if (email.length === 0) {
-        throw new UnauthorizedException(
-          'Authenticated user email is unavailable',
-        );
-      }
-
-      return {
-        id: data.user.id,
-        email,
-      };
-    }
-
     const decodedToken = this.jwtService.decode(
       accessToken,
     ) as SupabaseAccessTokenPayload | null;
@@ -264,11 +247,6 @@ export class AuthSupportService {
     if (userId.length === 0 || email.length === 0) {
       throw new UnauthorizedException('Invalid access token');
     }
-
-    this.logger.warn('Accepted expired Supabase access token for active session', {
-      userId,
-      email,
-    });
 
     return {
       id: userId,

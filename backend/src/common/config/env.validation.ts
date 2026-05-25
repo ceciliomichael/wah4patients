@@ -7,6 +7,7 @@ export const envValidationSchema = Joi.object({
   PORT: Joi.number().integer().min(1).max(65535).default(3000),
   FRONTEND_ORIGIN: Joi.string().trim().required(),
   BACKEND_API_KEY: Joi.string().trim().min(24).required(),
+  BACKEND_REQUEST_LOGGING_ENABLED: Joi.boolean().truthy('true').falsy('false').default(false),
   WAH4PC_GATEWAY_URL: Joi.string().uri().required(),
   WAH4PC_API_KEY: Joi.string().trim().min(12).required(),
   WAH4PC_PROVIDER_ID: Joi.string().uuid().required(),

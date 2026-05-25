@@ -38,7 +38,12 @@ describe('FhirSyncService', () => {
   >;
   const appointmentHistoryRepositoryMock = {
     markAppointmentHistoryApprovedByTransactionId: jest.fn(),
-  } as Pick<AppointmentHistoryRepository, 'markAppointmentHistoryApprovedByTransactionId'>;
+    markAppointmentHistoryApprovedByCorrelationId: jest.fn(),
+  } as Pick<
+    AppointmentHistoryRepository,
+    | 'markAppointmentHistoryApprovedByTransactionId'
+    | 'markAppointmentHistoryApprovedByCorrelationId'
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -295,6 +300,141 @@ describe('FhirSyncService', () => {
         value: '63-584789845-5',
       },
     ]);
+  });
+
+  it('prioritizes correlationId when approving appointment pushes', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId = jest
+      .fn()
+      .mockResolvedValue(false);
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-push-002',
+        correlationId: 'corr-push-002',
+        senderId: 'sender-001',
+        resourceType: 'Appointment',
+        resource: {
+          resourceType: 'Appointment',
+        },
+      }),
+    ).resolves.toEqual({ message: 'Data received successfully' });
+
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId,
+    ).toHaveBeenCalledWith('corr-push-002');
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId,
+    ).not.toHaveBeenCalled();
+  });
+
+  it('extracts appointment correlationId from the FHIR identifier when the top-level field is absent', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId = jest
+      .fn()
+      .mockResolvedValue(false);
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-forwarded-gateway-001',
+        senderId: 'sender-001',
+        resourceType: 'Appointment',
+        resource: {
+          resourceType: 'Appointment',
+          status: 'booked',
+          identifier: [
+            {
+              system: 'https://wah.ph/fhir/Identifier/appointment-id',
+              use: 'official',
+              value: '7017daa4-45eb-483b-921e-71136e56770d',
+            },
+          ],
+        },
+      }),
+    ).resolves.toEqual({ message: 'Data received successfully' });
+
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId,
+    ).toHaveBeenCalledWith('7017daa4-45eb-483b-921e-71136e56770d');
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId,
+    ).not.toHaveBeenCalled();
+  });
+
+  it('rejects appointment pushes when no matching history record exists', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(false);
+    appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId = jest
+      .fn()
+      .mockResolvedValue(false);
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-push-404',
+        correlationId: 'corr-push-404',
+        senderId: 'sender-001',
+        resourceType: 'Appointment',
+        resource: {
+          resourceType: 'Appointment',
+        },
+      }),
+    ).rejects.toThrow('Unable to match the appointment push to a pending history record.');
+
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId,
+    ).toHaveBeenCalledWith('corr-push-404');
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId,
+    ).not.toHaveBeenCalled();
+  });
+
+  it('rejects appointment pushes without a correlationId', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-push-no-correlation',
+        senderId: 'sender-001',
+        resourceType: 'Appointment',
+        resource: {
+          resourceType: 'Appointment',
+        },
+      }),
+    ).rejects.toThrow('Unable to match the appointment push without a correlationId.');
+
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByCorrelationId,
+    ).not.toHaveBeenCalled();
+    expect(
+      appointmentHistoryRepositoryMock.markAppointmentHistoryApprovedByTransactionId,
+    ).not.toHaveBeenCalled();
   });
 
   it('maps PH Core gateway payload fields from receive-results into patient profile patch', async () => {

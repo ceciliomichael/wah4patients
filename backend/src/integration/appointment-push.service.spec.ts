@@ -34,10 +34,14 @@ describe('AppointmentPushService', () => {
 
   const createAppointmentHistoryRepositoryMock = (): Pick<
     AppointmentHistoryRepository,
-    'insertPendingAppointmentHistoryRecord'
+    | 'insertPendingAppointmentHistoryRecord'
+    | 'updateGatewayTransactionIdByCorrelationId'
   > => {
     return {
       insertPendingAppointmentHistoryRecord: jest.fn().mockResolvedValue(undefined),
+      updateGatewayTransactionIdByCorrelationId: jest
+        .fn()
+        .mockResolvedValue(true),
     };
   };
 
@@ -84,11 +88,37 @@ describe('AppointmentPushService', () => {
         }
 
         if (requestUrl.endsWith('/fhir/push/Appointment')) {
+          const body = JSON.parse(init?.body?.toString() ?? '{}') as Record<
+            string,
+            unknown
+          >;
           expect(init?.headers).toEqual(
             expect.objectContaining({
               'X-Provider-ID': baseConfig.WAH4PC_PROVIDER_ID,
               'Idempotency-Key': expect.any(String),
             }),
+          );
+          expect(body).toEqual(
+            expect.objectContaining({
+              correlationId: expect.any(String),
+              resource: expect.objectContaining({
+                identifier: expect.arrayContaining([
+                  expect.objectContaining({
+                    value: expect.any(String),
+                  }),
+                ]),
+              }),
+            }),
+          );
+          const correlationId = body.correlationId as string;
+          expect(
+            (body.resource as Record<string, unknown>).identifier,
+          ).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                value: correlationId,
+              }),
+            ]),
           );
           return pushResponse.clone();
         }
@@ -104,11 +134,13 @@ describe('AppointmentPushService', () => {
       createRepositoryMock() as FhirSyncRepository,
       gatewayClient,
     );
+    const appointmentHistoryRepositoryMock =
+      createAppointmentHistoryRepositoryMock();
     const service = new AppointmentPushService(
       configService,
       integrationService,
       gatewayClient,
-      createAppointmentHistoryRepositoryMock() as AppointmentHistoryRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
     );
 
     const result = await service.sendAppointmentRequest({
@@ -127,6 +159,7 @@ describe('AppointmentPushService', () => {
     expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(result.message).toContain('successfully');
     expect(result.transactionId).toBe('txn_appointment_123');
+    expect(result.correlationId).toEqual(expect.any(String));
     expect(result.requesterId).toBe(baseConfig.WAH4PC_PROVIDER_ID);
     expect(result.targetProvider.id).toBe(
       '7fffb351-9a0f-4327-9c22-da6344fa74b5',
@@ -134,6 +167,67 @@ describe('AppointmentPushService', () => {
     expect(result.appointment.resourceType).toBe('Appointment');
     expect(result.appointment.description).toContain('General Checkup');
     expect(result.appointment.start).toBe('2026-03-18T01:00:00.000Z');
+    expect(
+      appointmentHistoryRepositoryMock.insertPendingAppointmentHistoryRecord,
+    ).toHaveBeenCalledWith(
+      expect.objectContaining({
+        gateway_transaction_id: '',
+        correlation_id: result.correlationId,
+      }),
+    );
+    expect(
+      appointmentHistoryRepositoryMock.updateGatewayTransactionIdByCorrelationId,
+    ).toHaveBeenCalledWith(result.correlationId, 'txn_appointment_123');
+  });
+
+  it('stores the pending appointment record before calling the gateway push', async () => {
+    const configService = createConfigService();
+    const gatewayClient = {
+      postJson: jest.fn().mockImplementation(async () => {
+        expect(
+          appointmentHistoryRepositoryMock.insertPendingAppointmentHistoryRecord,
+        ).toHaveBeenCalled();
+        return {
+          id: 'txn_appointment_456',
+          status: 'COMPLETED',
+        };
+      }),
+    } as Pick<GatewayClientService, 'postJson'>;
+    const integrationService = new IntegrationService(
+      configService,
+      createRepositoryMock() as FhirSyncRepository,
+      gatewayClient as GatewayClientService,
+    );
+    const appointmentHistoryRepositoryMock =
+      createAppointmentHistoryRepositoryMock();
+    const service = new AppointmentPushService(
+      configService,
+      integrationService,
+      gatewayClient as GatewayClientService,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    await expect(
+      service.sendAppointmentRequest({
+        targetProviderId: '7fffb351-9a0f-4327-9c22-da6344fa74b5',
+        appointmentMode: 'onsite',
+        appointmentType: 'General Checkup',
+        scheduledAt: '2026-03-18T09:00:00+08:00',
+        durationMinutes: 30,
+        locationOrPlatform: 'WAH Main Clinic',
+        identifierSystem: 'http://philhealth.gov.ph/fhir/Identifier/philhealth-id',
+        identifierValue: '12-345678901-2',
+      }, '11111111-1111-1111-1111-111111111111'),
+    ).resolves.toMatchObject({
+      transactionId: 'txn_appointment_456',
+    });
+
+    expect(
+      appointmentHistoryRepositoryMock.insertPendingAppointmentHistoryRecord,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      appointmentHistoryRepositoryMock.updateGatewayTransactionIdByCorrelationId,
+    ).toHaveBeenCalledWith(expect.any(String), 'txn_appointment_456');
   });
 
   it('rejects inactive providers before sending the gateway push', async () => {

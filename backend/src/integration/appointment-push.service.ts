@@ -29,26 +29,22 @@ export class AppointmentPushService {
     );
     const senderId = this.getRequiredConfig('WAH4PC_PROVIDER_ID');
     const gatewayUrl = this.getRequiredConfig('WAH4PC_GATEWAY_URL');
-    const appointment = this.buildAppointmentResource(payload, targetProvider.name);
+    const correlationId = randomUUID();
+    const appointment = this.buildAppointmentResource(
+      payload,
+      targetProvider.name,
+      correlationId,
+    );
     const gatewayRequest: AppointmentPushGatewayRequest = {
       senderId,
       targetId: targetProvider.id,
+      correlationId,
       resource: appointment,
       data: appointment, // Adding this because hospital backend might require it due to buggy implementation
       reason: this.readOptionalText(payload.reason),
       notes: this.readOptionalText(payload.notes),
     };
 
-    const response = await this.gatewayClient.postJson(
-      '/fhir/push/Appointment',
-      gatewayRequest as unknown as Record<string, unknown>,
-      {
-        'X-Provider-ID': senderId,
-        'Idempotency-Key': randomUUID(),
-      },
-    );
-
-    const transactionId = this.extractTransactionId(response);
     const appointmentType = payload.appointmentType.trim();
     const modeLabel = payload.appointmentMode === 'onsite'
       ? 'Onsite consultation'
@@ -56,9 +52,11 @@ export class AppointmentPushService {
     const reason = this.readOptionalText(payload.reason);
     const notes = this.readOptionalText(payload.notes);
     const locationOrPlatform = payload.locationOrPlatform.trim();
+
     await this.appointmentHistoryRepository.insertPendingAppointmentHistoryRecord({
       profile_id: profileId,
-      gateway_transaction_id: transactionId,
+      gateway_transaction_id: '',
+      correlation_id: correlationId,
       title: appointmentType,
       subtitle: `${modeLabel} • ${targetProvider.name}`,
       summary_label: 'Scheduled',
@@ -80,9 +78,32 @@ export class AppointmentPushService {
       display_order: 10,
     });
 
+    const response = await this.gatewayClient.postJson(
+      '/fhir/push/Appointment',
+      gatewayRequest as unknown as Record<string, unknown>,
+      {
+        'X-Provider-ID': senderId,
+        'Idempotency-Key': randomUUID(),
+      },
+    );
+
+    const transactionId = this.extractTransactionId(response);
+    const updatedTransactionId =
+      await this.appointmentHistoryRepository.updateGatewayTransactionIdByCorrelationId(
+        correlationId,
+        transactionId,
+      );
+
+    if (!updatedTransactionId) {
+      throw new BadRequestException(
+        'The appointment history record could not be updated with the gateway transaction id.',
+      );
+    }
+
     return {
       message: 'Appointment request sent to the gateway successfully.',
       transactionId,
+      correlationId,
       requesterId: senderId,
       targetProvider,
       appointment,
@@ -118,6 +139,7 @@ export class AppointmentPushService {
   private buildAppointmentResource(
     payload: AppointmentPushRequestPayload,
     providerName: string,
+    correlationId: string,
   ): FhirAppointmentResource {
     const scheduledAt = new Date(payload.scheduledAt);
     if (Number.isNaN(scheduledAt.getTime())) {
@@ -150,7 +172,7 @@ export class AppointmentPushService {
         {
           use: 'secondary',
           system: 'https://wah.ph/fhir/Identifier/scheduling-request-id',
-          value: randomUUID()
+          value: correlationId
         }
       ],
       status: 'proposed',
