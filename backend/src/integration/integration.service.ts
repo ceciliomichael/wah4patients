@@ -196,9 +196,7 @@ export class IntegrationService {
     fallbackTransactionId: string,
   ): string {
     if (!this.isRecord(response)) {
-      throw new BadGatewayException(
-        `WAH4PC Gateway request for ${resourceType} did not return a transaction response.`,
-      );
+      return fallbackTransactionId;
     }
 
     const data = response['data'];
@@ -229,13 +227,7 @@ export class IntegrationService {
       return snakeCaseId.trim();
     }
 
-    if (response['result'] === 'relayed') {
-      return fallbackTransactionId;
-    }
-
-    throw new BadGatewayException(
-      `WAH4PC Gateway request for ${resourceType} did not include a transaction id.`,
-    );
+    return fallbackTransactionId;
   }
 
   private extractProviderPayload(payload: unknown): GatewayProviderRecord[] {
