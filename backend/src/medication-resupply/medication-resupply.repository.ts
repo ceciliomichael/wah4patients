@@ -44,6 +44,8 @@ export class MedicationResupplyRepository {
   ): MedicationResupplyHistoryRecordResponse {
     return {
       id: row.id,
+      gatewayTransactionId: row.gateway_transaction_id,
+      correlationId: row.correlation_id,
       profileId: row.profile_id,
       medicationName: row.medication_name,
       dosage: row.dosage,

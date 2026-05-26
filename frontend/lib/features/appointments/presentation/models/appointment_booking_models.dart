@@ -205,6 +205,30 @@ const AppointmentBookingContent onsiteAppointmentContent =
           icon: Icons.science_outlined,
           accentColor: AppColors.primaryDark,
         ),
+        AppointmentTypeOption(
+          title: 'Well-Child Visit',
+          description: 'Routine pediatric care, development tracking, and immunization.',
+          icon: Icons.child_care_outlined,
+          accentColor: AppColors.success,
+        ),
+        AppointmentTypeOption(
+          title: 'Dental Checkup',
+          description: 'Oral health examination, cleaning, and dental care.',
+          icon: Icons.medical_services_outlined,
+          accentColor: AppColors.secondary,
+        ),
+        AppointmentTypeOption(
+          title: 'Specialty Referral',
+          description: 'Consultation with a specialist for targeted medical concerns.',
+          icon: Icons.assignment_ind_outlined,
+          accentColor: AppColors.tertiary,
+        ),
+        AppointmentTypeOption(
+          title: 'Vaccination Visit',
+          description: 'Scheduled immunization and vaccine administration.',
+          icon: Icons.vaccines_outlined,
+          accentColor: AppColors.primary,
+        ),
       ],
       locationOptions: <AppointmentLocationOption>[
         AppointmentLocationOption(

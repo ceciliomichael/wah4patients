@@ -25,6 +25,7 @@ describe('FhirSyncService', () => {
     upsertPatientIdentifiers: jest.fn(),
     insertClinicalRecord: jest.fn(),
     insertMedicationResupplyRecord: jest.fn(),
+    markMedicationResupplyApprovedByCorrelationId: jest.fn(),
   } as Pick<
     FhirSyncRepository,
     | 'findProfileIdByIdentifiers'
@@ -35,6 +36,7 @@ describe('FhirSyncService', () => {
     | 'upsertPatientIdentifiers'
     | 'insertClinicalRecord'
     | 'insertMedicationResupplyRecord'
+    | 'markMedicationResupplyApprovedByCorrelationId'
   >;
   const appointmentHistoryRepositoryMock = {
     markAppointmentHistoryApprovedByTransactionId: jest.fn(),
@@ -97,6 +99,9 @@ describe('FhirSyncService', () => {
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertMedicationResupplyRecord = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.markMedicationResupplyApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
 
     await expect(
       service.receiveResults({
@@ -236,6 +241,9 @@ describe('FhirSyncService', () => {
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertMedicationResupplyRecord = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.markMedicationResupplyApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
 
     await expect(
       service.receiveResults({
@@ -300,6 +308,98 @@ describe('FhirSyncService', () => {
         value: '63-584789845-5',
       },
     ]);
+  });
+
+  it('extracts medication request correlationId from the FHIR identifier when the top-level field is absent', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    repositoryMock.markMedicationResupplyApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-medication-push-001',
+        senderId: 'sender-001',
+        resourceType: 'MedicationRequest',
+        resource: {
+          resourceType: 'MedicationRequest',
+          identifier: [
+            {
+              system: 'https://wah.ph/fhir/Identifier/medication-request-id',
+              use: 'official',
+              value: '3a6ef0f7-7fd8-4571-88fb-2b5ac8c0b1b1',
+            },
+          ],
+        },
+      }),
+    ).resolves.toEqual({ message: 'Data received successfully' });
+
+    expect(
+      repositoryMock.markMedicationResupplyApprovedByCorrelationId,
+    ).toHaveBeenCalledWith('3a6ef0f7-7fd8-4571-88fb-2b5ac8c0b1b1');
+    expect(repositoryMock.insertMedicationResupplyRecord).not.toHaveBeenCalled();
+  });
+
+  it('rejects medication request pushes when no matching history record exists', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    repositoryMock.markMedicationResupplyApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(false);
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-medication-push-404',
+        senderId: 'sender-001',
+        resourceType: 'MedicationRequest',
+        resource: {
+          resourceType: 'MedicationRequest',
+          identifier: [
+            {
+              system: 'https://wah.ph/fhir/Identifier/medication-request-id',
+              value: 'c72d1f6e-5388-4a9b-b72c-e4f6ca7fd0c4',
+            },
+          ],
+        },
+      }),
+    ).rejects.toThrow('Unable to match the medication request push to a pending history record.');
+
+    expect(
+      repositoryMock.markMedicationResupplyApprovedByCorrelationId,
+    ).toHaveBeenCalledWith('c72d1f6e-5388-4a9b-b72c-e4f6ca7fd0c4');
+  });
+
+  it('rejects medication request pushes without a correlationId', async () => {
+    const service = new FhirSyncService(
+      configServiceMock as ConfigService,
+      repositoryMock as FhirSyncRepository,
+      appointmentHistoryRepositoryMock as AppointmentHistoryRepository,
+    );
+
+    await expect(
+      service.receivePush({
+        transactionId: 'txn-medication-push-no-correlation',
+        senderId: 'sender-001',
+        resourceType: 'MedicationRequest',
+        resource: {
+          resourceType: 'MedicationRequest',
+        },
+      }),
+    ).rejects.toThrow('Unable to match the medication request push without a correlationId.');
+
+    expect(
+      repositoryMock.markMedicationResupplyApprovedByCorrelationId,
+    ).not.toHaveBeenCalled();
+    expect(repositoryMock.insertMedicationResupplyRecord).not.toHaveBeenCalled();
   });
 
   it('prioritizes correlationId when approving appointment pushes', async () => {
@@ -566,6 +666,9 @@ describe('FhirSyncService', () => {
     repositoryMock.upsertPatientIdentifiers = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertClinicalRecord = jest.fn().mockResolvedValue(undefined);
     repositoryMock.insertMedicationResupplyRecord = jest.fn().mockResolvedValue(undefined);
+    repositoryMock.markMedicationResupplyApprovedByCorrelationId = jest
+      .fn()
+      .mockResolvedValue(true);
 
     await expect(
       service.receiveResults({

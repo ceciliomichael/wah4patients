@@ -219,11 +219,17 @@ export class FhirSyncRepository {
   async insertMedicationResupplyRecord(
     profileId: string,
     record: MedicationResupplyInsert,
+    metadata?: {
+      gatewayTransactionId?: string;
+      correlationId?: string;
+    },
   ): Promise<void> {
     const { error } = await this.supabaseService.adminClient
       .from('medication_resupply_history_records')
       .insert({
         profile_id: profileId,
+        gateway_transaction_id: metadata?.gatewayTransactionId ?? '',
+        correlation_id: metadata?.correlationId ?? '',
         medication_name: record.medicationName,
         dosage: record.dosage,
         status: record.status,
@@ -235,6 +241,52 @@ export class FhirSyncRepository {
     if (error !== null) {
       throw new InternalServerErrorException('Unable to store medication request record');
     }
+  }
+
+  async updateMedicationResupplyGatewayTransactionIdByCorrelationId(
+    correlationId: string,
+    gatewayTransactionId: string,
+  ): Promise<boolean> {
+    return this.updateMedicationResupplyByColumn(
+      'gateway_transaction_id',
+      gatewayTransactionId,
+      correlationId,
+    );
+  }
+
+  async markMedicationResupplyApprovedByCorrelationId(
+    correlationId: string,
+  ): Promise<boolean> {
+    const { data: rows, error: listError } = await this.supabaseService.adminClient
+      .from('medication_resupply_history_records')
+      .select('id')
+      .eq('correlation_id', correlationId)
+      .limit(1);
+
+    if (listError !== null) {
+      throw new InternalServerErrorException(
+        'Unable to load medication resupply history record for status update',
+      );
+    }
+
+    if (rows === null || rows.length === 0) {
+      return false;
+    }
+
+    const { error } = await this.supabaseService.adminClient
+      .from('medication_resupply_history_records')
+      .update({
+        status: 'approved',
+      } as never)
+      .eq('correlation_id', correlationId);
+
+    if (error !== null) {
+      throw new InternalServerErrorException(
+        'Unable to update medication resupply status',
+      );
+    }
+
+    return true;
   }
 
   async listRecords(profileId: string, resourceType: GatewayResourceType): Promise<unknown[]> {
@@ -339,6 +391,45 @@ export class FhirSyncRepository {
       default:
         throw new BadRequestException(`Unsupported resource type for clinical storage: ${resourceType}`);
     }
+  }
+
+  private async updateMedicationResupplyByColumn(
+    column: 'gateway_transaction_id',
+    value: string,
+    correlationId: string,
+  ): Promise<boolean> {
+    const { data: rows, error: listError } = await this.supabaseService.adminClient
+      .from('medication_resupply_history_records')
+      .select('id')
+      .eq('correlation_id', correlationId)
+      .limit(1);
+
+    if (listError !== null) {
+      throw new InternalServerErrorException(
+        'Unable to load medication resupply history record for transaction update',
+      );
+    }
+
+    if (rows === null || rows.length === 0) {
+      return false;
+    }
+
+    const { error } = await this.supabaseService.adminClient
+      .from('medication_resupply_history_records')
+      .update(
+        {
+          [column]: value,
+        } as never,
+      )
+      .eq('correlation_id', correlationId);
+
+    if (error !== null) {
+      throw new InternalServerErrorException(
+        'Unable to update medication resupply transaction id',
+      );
+    }
+
+    return true;
   }
 
   private normalizeIdentifier(

@@ -171,8 +171,10 @@ export class IntegrationService {
   }): Promise<string> {
     const reason = input.reason?.trim();
     const notes = input.notes?.trim();
+    const transactionId = crypto.randomUUID();
 
     const response = await this.postGatewayJson(`${GATEWAY_FHIR_REQUEST_PATH_PREFIX}${input.resourceType}`, {
+      transactionId,
       requesterId: input.requesterId,
       targetId: input.targetId,
       patientIdentifiers: [
@@ -185,12 +187,13 @@ export class IntegrationService {
       notes: notes && notes.length > 0 ? notes : null,
     });
 
-    return this.extractGatewayTransactionId(response, input.resourceType);
+    return this.extractGatewayTransactionId(response, input.resourceType, transactionId);
   }
 
   private extractGatewayTransactionId(
     response: unknown,
     resourceType: GatewayResourceType,
+    fallbackTransactionId: string,
   ): string {
     if (!this.isRecord(response)) {
       throw new BadGatewayException(
@@ -204,11 +207,30 @@ export class IntegrationService {
       if (typeof nestedId === 'string' && nestedId.trim().length > 0) {
         return nestedId.trim();
       }
+
+      const nestedTransactionId = data['transactionId'];
+      if (typeof nestedTransactionId === 'string' && nestedTransactionId.trim().length > 0) {
+        return nestedTransactionId.trim();
+      }
+
+      const nestedTransactionIdSnake = data['transaction_id'];
+      if (typeof nestedTransactionIdSnake === 'string' && nestedTransactionIdSnake.trim().length > 0) {
+        return nestedTransactionIdSnake.trim();
+      }
     }
 
     const directId = response['transactionId'];
     if (typeof directId === 'string' && directId.trim().length > 0) {
       return directId.trim();
+    }
+
+    const snakeCaseId = response['transaction_id'];
+    if (typeof snakeCaseId === 'string' && snakeCaseId.trim().length > 0) {
+      return snakeCaseId.trim();
+    }
+
+    if (response['result'] === 'relayed') {
+      return fallbackTransactionId;
     }
 
     throw new BadGatewayException(

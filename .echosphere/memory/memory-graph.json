@@ -24226,6 +24226,399 @@
       ],
       "createdAt": "2026-05-25T15:06:45.321Z",
       "updatedAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "memoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [
+        "4fecf308-ce5c-4ab5-813d-073687d655aa"
+      ],
+      "sectionKind": "fact",
+      "summary": "Inspected MedicationRequest resupply flow and confirmed it currently behaves differently from the Appointment push/approval path. MedicationRequest is parsed into medication_resupply_history_records as a normal inbound clinical record, but there is no correlationId extraction, no receive-push approval matcher, and no gateway transaction/correlation persistence for that flow yet.",
+      "affectedFiles": [
+        {
+          "path": "resources/examples/ph-core/MedicationRequest-medicationrequest-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the concrete example payload to verify the MedicationRequest request shape and whether it includes correlation data.",
+          "notes": "No correlationId field present in the sample."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Needed to verify how MedicationRequest is handled in the shared FHIR sync entrypoint and whether it has any receive-push approval logic.",
+          "notes": "MedicationRequest currently goes through normal record insertion, not correlation-based approval."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm how MedicationRequest resources are normalized into storage inserts.",
+          "notes": "Maps MedicationRequest into a medication resupply insert only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to check whether medication resupply storage already persists any gateway correlation metadata.",
+          "notes": "It only inserts/list medication resupply history rows."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to verify the dedicated history listing path for medication resupply records.",
+          "notes": "Read-only listing service with no approval logic."
+        },
+        {
+          "path": "sqls/008_medication_resupply_setup.sql",
+          "action": "inspected",
+          "reason": "Needed to verify the underlying table schema for medication resupply history.",
+          "notes": "No correlation or transaction columns exist."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm the generated type shape for the resupply history table.",
+          "notes": "Types mirror the schema and also lack correlation fields."
+        }
+      ],
+      "createdAt": "2026-05-25T15:27:21.875Z",
+      "updatedAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "memoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [
+        "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6"
+      ],
+      "relatedMemoryIds": [
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [
+        "29668be7-3a79-4a1e-a106-ae29f17a2dcc"
+      ],
+      "sectionKind": "decision",
+      "summary": "Inspected MedicationRequest resupply flow and confirmed it currently behaves differently from the Appointment push/approval path. MedicationRequest is parsed into medication_resupply_history_records as a normal inbound clinical record, but there is no correlationId extraction, no receive-push approval matcher, and no gateway transaction/correlation persistence for that flow yet.",
+      "affectedFiles": [
+        {
+          "path": "resources/examples/ph-core/MedicationRequest-medicationrequest-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the concrete example payload to verify the MedicationRequest request shape and whether it includes correlation data.",
+          "notes": "No correlationId field present in the sample."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Needed to verify how MedicationRequest is handled in the shared FHIR sync entrypoint and whether it has any receive-push approval logic.",
+          "notes": "MedicationRequest currently goes through normal record insertion, not correlation-based approval."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm how MedicationRequest resources are normalized into storage inserts.",
+          "notes": "Maps MedicationRequest into a medication resupply insert only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to check whether medication resupply storage already persists any gateway correlation metadata.",
+          "notes": "It only inserts/list medication resupply history rows."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to verify the dedicated history listing path for medication resupply records.",
+          "notes": "Read-only listing service with no approval logic."
+        },
+        {
+          "path": "sqls/008_medication_resupply_setup.sql",
+          "action": "inspected",
+          "reason": "Needed to verify the underlying table schema for medication resupply history.",
+          "notes": "No correlation or transaction columns exist."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm the generated type shape for the resupply history table.",
+          "notes": "Types mirror the schema and also lack correlation fields."
+        }
+      ],
+      "createdAt": "2026-05-25T15:27:22.028Z",
+      "updatedAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "memoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [
+        "4fecf308-ce5c-4ab5-813d-073687d655aa"
+      ],
+      "relatedMemoryIds": [
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87",
+        "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+        "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+        "b7236cdc-b1d8-4dcf-b17e-716f80f01027"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Inspected MedicationRequest resupply flow and confirmed it currently behaves differently from the Appointment push/approval path. MedicationRequest is parsed into medication_resupply_history_records as a normal inbound clinical record, but there is no correlationId extraction, no receive-push approval matcher, and no gateway transaction/correlation persistence for that flow yet.",
+      "affectedFiles": [
+        {
+          "path": "resources/examples/ph-core/MedicationRequest-medicationrequest-single-example.json",
+          "action": "inspected",
+          "reason": "Used as the concrete example payload to verify the MedicationRequest request shape and whether it includes correlation data.",
+          "notes": "No correlationId field present in the sample."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Needed to verify how MedicationRequest is handled in the shared FHIR sync entrypoint and whether it has any receive-push approval logic.",
+          "notes": "MedicationRequest currently goes through normal record insertion, not correlation-based approval."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.mapper.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm how MedicationRequest resources are normalized into storage inserts.",
+          "notes": "Maps MedicationRequest into a medication resupply insert only."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to check whether medication resupply storage already persists any gateway correlation metadata.",
+          "notes": "It only inserts/list medication resupply history rows."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "inspected",
+          "reason": "Needed to verify the dedicated history listing path for medication resupply records.",
+          "notes": "Read-only listing service with no approval logic."
+        },
+        {
+          "path": "sqls/008_medication_resupply_setup.sql",
+          "action": "inspected",
+          "reason": "Needed to verify the underlying table schema for medication resupply history.",
+          "notes": "No correlation or transaction columns exist."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "inspected",
+          "reason": "Needed to confirm the generated type shape for the resupply history table.",
+          "notes": "Types mirror the schema and also lack correlation fields."
+        }
+      ],
+      "createdAt": "2026-05-25T15:27:22.149Z",
+      "updatedAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "memoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [
+        "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6"
+      ],
+      "relatedMemoryIds": [
+        "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+        "4fecf308-ce5c-4ab5-813d-073687d655aa",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87"
+      ],
+      "childMemoryIds": [
+        "f4397b0b-9f10-446b-a4ce-86ebeed6a908"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented MedicationRequest resupply correlation handling to mirror the appointment push flow. The backend now treats MedicationRequest receive-push as correlation-based approval-only, with correlationId extracted from the forwarded payload’s top-level field or from identifier arrays, and it rejects missing correlationId or unmatched pending records. The medication resupply history schema was extended with gateway_transaction_id and correlation_id columns plus indexes, and the repository/history types were updated accordingly. Regression tests were added for MedicationRequest correlation extraction, missing correlation rejection, and unmatched-record rejection.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added MedicationRequest receive-push correlation handling and identifier parsing logic, keeping Appointment behavior unchanged.",
+          "notes": "Also added UUID-style fallback detection for correlation identifiers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added medication resupply approval helpers and support for storing correlation/transaction metadata.",
+          "notes": "This keeps the sync repository responsible for write-side sync operations."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression tests for MedicationRequest correlation extraction and rejection paths, plus mock updates for the new repository method.",
+          "notes": "Existing appointment tests remain intact."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types to reflect the new medication resupply correlation fields.",
+          "notes": "Keeps repository typing aligned with the migration."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.types.ts",
+          "action": "modified",
+          "reason": "Expanded response and row shapes so medication resupply history can surface correlation metadata.",
+          "notes": "Frontend JSON parsing can ignore these extra fields until used."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "modified",
+          "reason": "Mapped the new medication resupply correlation fields into history responses.",
+          "notes": "List endpoint now returns the new metadata fields."
+        },
+        {
+          "path": "sqls/015_medication_resupply_gateway_transaction_and_correlation.sql",
+          "action": "created",
+          "reason": "Database migration to add gateway_transaction_id and correlation_id columns and indexes to medication resupply history records.",
+          "notes": "This is the schema source of truth for the new approval path."
+        }
+      ],
+      "createdAt": "2026-05-25T15:48:11.538Z",
+      "updatedAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "memoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [
+        "d33a8900-caff-4db8-8af0-a09ba2bbaa18"
+      ],
+      "relatedMemoryIds": [
+        "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+        "4fecf308-ce5c-4ab5-813d-073687d655aa",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87"
+      ],
+      "childMemoryIds": [
+        "6b94ff22-f2c1-4811-a07d-827b7ec3267e"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented MedicationRequest resupply correlation handling to mirror the appointment push flow. The backend now treats MedicationRequest receive-push as correlation-based approval-only, with correlationId extracted from the forwarded payload’s top-level field or from identifier arrays, and it rejects missing correlationId or unmatched pending records. The medication resupply history schema was extended with gateway_transaction_id and correlation_id columns plus indexes, and the repository/history types were updated accordingly. Regression tests were added for MedicationRequest correlation extraction, missing correlation rejection, and unmatched-record rejection.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added MedicationRequest receive-push correlation handling and identifier parsing logic, keeping Appointment behavior unchanged.",
+          "notes": "Also added UUID-style fallback detection for correlation identifiers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added medication resupply approval helpers and support for storing correlation/transaction metadata.",
+          "notes": "This keeps the sync repository responsible for write-side sync operations."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression tests for MedicationRequest correlation extraction and rejection paths, plus mock updates for the new repository method.",
+          "notes": "Existing appointment tests remain intact."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types to reflect the new medication resupply correlation fields.",
+          "notes": "Keeps repository typing aligned with the migration."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.types.ts",
+          "action": "modified",
+          "reason": "Expanded response and row shapes so medication resupply history can surface correlation metadata.",
+          "notes": "Frontend JSON parsing can ignore these extra fields until used."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "modified",
+          "reason": "Mapped the new medication resupply correlation fields into history responses.",
+          "notes": "List endpoint now returns the new metadata fields."
+        },
+        {
+          "path": "sqls/015_medication_resupply_gateway_transaction_and_correlation.sql",
+          "action": "created",
+          "reason": "Database migration to add gateway_transaction_id and correlation_id columns and indexes to medication resupply history records.",
+          "notes": "This is the schema source of truth for the new approval path."
+        }
+      ],
+      "createdAt": "2026-05-25T15:48:11.667Z",
+      "updatedAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "memoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "rootMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "parentMemoryIds": [
+        "f4397b0b-9f10-446b-a4ce-86ebeed6a908"
+      ],
+      "relatedMemoryIds": [
+        "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+        "4fecf308-ce5c-4ab5-813d-073687d655aa",
+        "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+        "075f534e-764a-4cd4-a21e-a0f410170b87"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented MedicationRequest resupply correlation handling to mirror the appointment push flow. The backend now treats MedicationRequest receive-push as correlation-based approval-only, with correlationId extracted from the forwarded payload’s top-level field or from identifier arrays, and it rejects missing correlationId or unmatched pending records. The medication resupply history schema was extended with gateway_transaction_id and correlation_id columns plus indexes, and the repository/history types were updated accordingly. Regression tests were added for MedicationRequest correlation extraction, missing correlation rejection, and unmatched-record rejection.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "modified",
+          "reason": "Added MedicationRequest receive-push correlation handling and identifier parsing logic, keeping Appointment behavior unchanged.",
+          "notes": "Also added UUID-style fallback detection for correlation identifiers."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.repository.ts",
+          "action": "modified",
+          "reason": "Added medication resupply approval helpers and support for storing correlation/transaction metadata.",
+          "notes": "This keeps the sync repository responsible for write-side sync operations."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.spec.ts",
+          "action": "modified",
+          "reason": "Added regression tests for MedicationRequest correlation extraction and rejection paths, plus mock updates for the new repository method.",
+          "notes": "Existing appointment tests remain intact."
+        },
+        {
+          "path": "backend/src/supabase/database.types.ts",
+          "action": "modified",
+          "reason": "Updated generated Supabase table types to reflect the new medication resupply correlation fields.",
+          "notes": "Keeps repository typing aligned with the migration."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.types.ts",
+          "action": "modified",
+          "reason": "Expanded response and row shapes so medication resupply history can surface correlation metadata.",
+          "notes": "Frontend JSON parsing can ignore these extra fields until used."
+        },
+        {
+          "path": "backend/src/medication-resupply/medication-resupply.repository.ts",
+          "action": "modified",
+          "reason": "Mapped the new medication resupply correlation fields into history responses.",
+          "notes": "List endpoint now returns the new metadata fields."
+        },
+        {
+          "path": "sqls/015_medication_resupply_gateway_transaction_and_correlation.sql",
+          "action": "created",
+          "reason": "Database migration to add gateway_transaction_id and correlation_id columns and indexes to medication resupply history records.",
+          "notes": "This is the schema source of truth for the new approval path."
+        }
+      ],
+      "createdAt": "2026-05-25T15:48:11.789Z",
+      "updatedAt": "2026-05-25T15:48:11.789Z"
     }
   ],
   "edges": [
@@ -40090,7 +40483,259 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-25T15:06:45.321Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "toMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:21.875Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "toMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.028Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "085be35f-7166-4c85-951a-2c6b8dc23d2c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "4b7e3d24-4731-4a9f-b8e9-1be9916783ce",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "toMemoryId": "b7236cdc-b1d8-4dcf-b17e-716f80f01027",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:27:22.149Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "fa8fc6fd-8813-4094-83f9-583bb7ae2ed6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "toMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.538Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "d33a8900-caff-4db8-8af0-a09ba2bbaa18",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "toMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.667Z"
+    },
+    {
+      "fromMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "toMemoryId": "f4397b0b-9f10-446b-a4ce-86ebeed6a908",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "fromMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "toMemoryId": "29668be7-3a79-4a1e-a106-ae29f17a2dcc",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "fromMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "toMemoryId": "4fecf308-ce5c-4ab5-813d-073687d655aa",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "fromMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "toMemoryId": "e3ccdd84-94e4-4ec2-adfc-ed92af621fca",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "fromMemoryId": "6b94ff22-f2c1-4811-a07d-827b7ec3267e",
+      "toMemoryId": "075f534e-764a-4cd4-a21e-a0f410170b87",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-25T15:48:11.789Z"
     }
   ],
-  "updatedAt": "2026-05-25T15:06:45.330Z"
+  "updatedAt": "2026-05-25T15:48:11.794Z"
 }

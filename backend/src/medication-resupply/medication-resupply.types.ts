@@ -6,6 +6,8 @@ export type MedicationResupplyRequestStatus =
 
 export interface MedicationResupplyHistoryRecordResponse {
   id: string;
+  gatewayTransactionId: string;
+  correlationId: string;
   profileId: string;
   medicationName: string;
   dosage: string;
@@ -23,6 +25,8 @@ export interface MedicationResupplyHistoryResponse {
 
 export interface MedicationResupplyHistoryRowShape {
   id: string;
+  gateway_transaction_id: string;
+  correlation_id: string;
   profile_id: string;
   medication_name: string;
   dosage: string;

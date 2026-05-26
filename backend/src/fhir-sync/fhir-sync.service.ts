@@ -187,6 +187,36 @@ export class FhirSyncService {
       );
     }
 
+    if (request.resourceType === 'MedicationRequest') {
+      if (request.correlationId === undefined) {
+        this.logger.warn(
+          `MedicationRequest receive-push is missing correlationId: transactionId=${request.transactionId} senderId=${request.senderId}`,
+        );
+        throw new BadRequestException(
+          'Unable to match the medication request push without a correlationId.',
+        );
+      }
+
+      const approvedByCorrelationId =
+        await this.repository.markMedicationResupplyApprovedByCorrelationId(
+          request.correlationId,
+        );
+
+      if (approvedByCorrelationId) {
+        this.logger.log(
+          `MedicationRequest receive-push matched by correlationId=${request.correlationId}`,
+        );
+        return { message: 'Data received successfully' };
+      }
+
+      this.logger.warn(
+        `MedicationRequest receive-push did not match a pending history record by correlationId=${request.correlationId} transactionId=${request.transactionId}`,
+      );
+      throw new BadRequestException(
+        'Unable to match the medication request push to a pending history record.',
+      );
+    }
+
     const parsedResource = parseInboundResource(request.resource);
 
     const identifiers = extractIdentifiersFromUnknownResource(parsedResource.resource);
@@ -344,7 +374,11 @@ export class FhirSyncService {
     }
 
     const resource = payload['resource'];
-    const correlationId = this.readReceivePushCorrelationId(payload, resource);
+    const correlationId = this.readReceivePushCorrelationId(
+      payload,
+      resource,
+      resourceType,
+    );
 
     return {
       transactionId,
@@ -360,37 +394,62 @@ export class FhirSyncService {
   private readReceivePushCorrelationId(
     payload: Record<string, unknown>,
     resource: Record<string, unknown>,
+    resourceType: GatewayResourceType,
   ): string | undefined {
     return (
       this.readOptionalString(payload['correlationId']) ??
-      this.readAppointmentIdentifierValue(resource) ??
-      this.readAppointmentIdentifierValue(payload['data']) ??
+      this.readResourceCorrelationIdentifierValue(resource, resourceType) ??
+      this.readResourceCorrelationIdentifierValue(payload['data'], resourceType) ??
       undefined
     );
   }
 
-  private readAppointmentIdentifierValue(value: unknown): string | null {
+  private readResourceCorrelationIdentifierValue(
+    value: unknown,
+    resourceType: GatewayResourceType,
+  ): string | null {
     if (!this.isRecord(value) || !Array.isArray(value['identifier'])) {
       return null;
     }
 
-    const schedulingRequestIdentifier = value['identifier'].find((identifier) => {
+    const allowedSystems =
+      resourceType === 'Appointment'
+        ? [
+            'https://wah.ph/fhir/Identifier/scheduling-request-id',
+            'https://wah.ph/fhir/Identifier/appointment-id',
+          ]
+        : undefined;
+    let fallbackValue: string | null = null;
+
+    for (const identifier of value['identifier']) {
       if (!this.isRecord(identifier)) {
-        return false;
+        continue;
+      }
+
+      const identifierValue = this.readOptionalString(identifier['value']);
+      if (identifierValue === null) {
+        continue;
+      }
+
+      if (allowedSystems === undefined) {
+        if (this.looksLikeCorrelationId(identifierValue)) {
+          return identifierValue;
+        }
+
+        if (fallbackValue === null) {
+          fallbackValue = identifierValue;
+        }
+
+        continue;
       }
 
       const system = this.readOptionalString(identifier['system']);
-      return (
-        system === 'https://wah.ph/fhir/Identifier/scheduling-request-id' ||
-        system === 'https://wah.ph/fhir/Identifier/appointment-id'
-      );
-    });
-
-    if (this.isRecord(schedulingRequestIdentifier)) {
-      return this.readOptionalString(schedulingRequestIdentifier['value']);
+      if (system !== null && allowedSystems.includes(system)) {
+        return identifierValue;
+      }
     }
 
-    return null;
+    return fallbackValue;
   }
 
   private readIdentifierList(value: unknown): NormalizedIdentifier[] {
@@ -557,5 +616,11 @@ export class FhirSyncService {
 
   private isAbortError(error: unknown): boolean {
     return error instanceof Error && error.name === 'AbortError';
+  }
+
+  private looksLikeCorrelationId(value: string): boolean {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      value,
+    );
   }
 }

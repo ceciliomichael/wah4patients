@@ -591,6 +591,8 @@ export interface Database {
       medication_resupply_history_records: {
         Row: {
           id: string;
+          gateway_transaction_id: string;
+          correlation_id: string;
           profile_id: string;
           medication_name: string;
           dosage: string;
@@ -603,6 +605,8 @@ export interface Database {
         };
         Insert: {
           id?: string;
+          gateway_transaction_id?: string;
+          correlation_id?: string;
           profile_id: string;
           medication_name: string;
           dosage?: string;
@@ -615,6 +619,8 @@ export interface Database {
         };
         Update: {
           id?: string;
+          gateway_transaction_id?: string;
+          correlation_id?: string;
           profile_id?: string;
           medication_name?: string;
           dosage?: string;
