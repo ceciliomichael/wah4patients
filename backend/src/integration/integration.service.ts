@@ -34,7 +34,6 @@ const SYNC_RESOURCE_TYPES: readonly GatewayResourceType[] = [
   'Immunization',
   'Encounter',
   'Observation',
-  'MedicationRequest',
 ] as const;
 
 @Injectable()
