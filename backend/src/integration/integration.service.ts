@@ -2,6 +2,7 @@ import {
   BadGatewayException,
   BadRequestException,
   Injectable,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -38,6 +39,8 @@ const SYNC_RESOURCE_TYPES: readonly GatewayResourceType[] = [
 
 @Injectable()
 export class IntegrationService {
+  private readonly logger = new Logger(IntegrationService.name);
+
   constructor(
     private readonly configService: ConfigService,
     private readonly fhirSyncRepository: FhirSyncRepository,
@@ -143,19 +146,23 @@ export class IntegrationService {
     notes?: string;
   }): Promise<void> {
     for (const resourceType of SYNC_RESOURCE_TYPES) {
-      const transactionId = await this.requestResourceSyncFromGateway({
-        resourceType,
-        ...input,
-      });
-
-      if (input.requesterProfileId !== undefined) {
-        await this.fhirSyncRepository.upsertSyncTransaction({
-          transactionId,
-          profileId: input.requesterProfileId,
-          requesterId: input.requesterId,
-          targetProviderId: input.targetId,
+      try {
+        const transactionId = await this.requestResourceSyncFromGateway({
           resourceType,
+          ...input,
         });
+
+        if (input.requesterProfileId !== undefined) {
+          await this.fhirSyncRepository.upsertSyncTransaction({
+            transactionId,
+            profileId: input.requesterProfileId,
+            requesterId: input.requesterId,
+            targetProviderId: input.targetId,
+            resourceType,
+          });
+        }
+      } catch (error) {
+        this.logger.error(`Failed to request sync for ${resourceType}:`, error);
       }
     }
   }
