@@ -163,6 +163,9 @@ export class IntegrationService {
       } catch (error) {
         this.logger.error(`Failed to request sync for ${resourceType}:`, error);
       }
+
+      // Add a 500ms delay between requests to avoid hitting gateway rate limits/throttling
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
 
