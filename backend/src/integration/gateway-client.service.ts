@@ -1,8 +1,15 @@
-import { BadGatewayException, Injectable, ServiceUnavailableException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  Logger,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GatewayClientService {
+  private readonly logger = new Logger(GatewayClientService.name);
+
   constructor(private readonly configService: ConfigService) {}
 
   async getJson(path: string): Promise<unknown> {
@@ -67,29 +74,64 @@ export class GatewayClientService {
       clearTimeout(timeoutId);
     }
 
-    const decodedBody = await this.safeParseJson(response);
+    const responseBody = await this.readResponseBody(response);
     if (!response.ok) {
+      this.logGatewayFailure(input, response, responseBody);
+      const decodedBody = this.tryParseJson(responseBody);
       const message = this.extractErrorMessage(decodedBody);
       throw new BadGatewayException(
         message ?? `WAH4PC Gateway request failed with status ${response.status}`,
       );
     }
 
-    return decodedBody;
+    return this.tryParseJson(responseBody);
   }
 
-  private async safeParseJson(response: Response): Promise<unknown> {
-    const contentType = response.headers.get('content-type') ?? '';
-    if (!contentType.includes('application/json')) {
-      const textBody = await response.text();
-      return textBody.trim().length > 0 ? textBody : null;
+  private async readResponseBody(response: Response): Promise<string> {
+    try {
+      return await response.text();
+    } catch {
+      return '';
+    }
+  }
+
+  private tryParseJson(body: string): unknown {
+    const trimmedBody = body.trim();
+    if (trimmedBody.length === 0) {
+      return null;
+    }
+
+    const contentTypeLooksJson = trimmedBody.startsWith('{') || trimmedBody.startsWith('[');
+    if (!contentTypeLooksJson) {
+      return trimmedBody;
     }
 
     try {
-      return await response.json();
+      return JSON.parse(trimmedBody) as unknown;
     } catch {
-      return null;
+      return trimmedBody;
     }
+  }
+
+  private logGatewayFailure(
+    input: {
+      method: 'GET' | 'POST';
+      path: string;
+    },
+    response: Response,
+    responseBody: string,
+  ): void {
+    this.logger.error(
+      [
+        `Gateway request failed`,
+        `method=${input.method}`,
+        `path=${input.path}`,
+        `status=${response.status}`,
+        `statusText=${response.statusText}`,
+        `contentType=${response.headers.get('content-type') ?? 'n/a'}`,
+        `body=${responseBody.trim().length > 0 ? responseBody : '<empty>'}`,
+      ].join(' | '),
+    );
   }
 
   private extractErrorMessage(payload: unknown): string | undefined {

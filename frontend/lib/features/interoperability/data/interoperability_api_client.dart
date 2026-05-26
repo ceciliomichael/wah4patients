@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../core/config/app_environment.dart';
 import '../../auth/domain/auth_session.dart';
 import '../domain/interoperability_models.dart';
+import 'interoperability_response_parser.dart';
 
 class InteroperabilityApiException implements Exception {
   const InteroperabilityApiException(this.message, {this.statusCode});
@@ -146,7 +147,10 @@ class InteroperabilityApiClient implements InteroperabilityClient {
       );
     }
 
-    final decodedBody = _decodeResponseBody(response.body);
+    final decodedBody = decodeInteroperabilityResponseBody(
+      response.body,
+      contentType: response.headers['content-type'] ?? '',
+    );
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
     }
@@ -197,7 +201,10 @@ class InteroperabilityApiClient implements InteroperabilityClient {
       );
     }
 
-    final decodedBody = _decodeResponseBody(response.body);
+    final decodedBody = decodeInteroperabilityResponseBody(
+      response.body,
+      contentType: response.headers['content-type'] ?? '',
+    );
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return decodedBody;
     }
@@ -207,28 +214,6 @@ class InteroperabilityApiClient implements InteroperabilityClient {
           'Request failed with status ${response.statusCode}',
       statusCode: response.statusCode,
     );
-  }
-
-  Map<String, dynamic> _decodeResponseBody(String body) {
-    final trimmed = body.trim();
-    if (trimmed.isEmpty) {
-      return <String, dynamic>{};
-    }
-
-    try {
-      final decoded = jsonDecode(trimmed);
-      if (decoded is Map<String, dynamic>) {
-        return decoded;
-      }
-
-      if (decoded is List) {
-        return <String, dynamic>{'data': decoded};
-      }
-    } on FormatException {
-      return <String, dynamic>{'message': trimmed};
-    }
-
-    return <String, dynamic>{};
   }
 
   String? _extractErrorMessage(Map<String, dynamic> body) {

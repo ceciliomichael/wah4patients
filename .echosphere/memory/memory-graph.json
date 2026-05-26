@@ -24619,6 +24619,167 @@
       ],
       "createdAt": "2026-05-25T15:48:11.789Z",
       "updatedAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "memoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "rootMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "192ad8a9-57e8-4624-886f-3f030a903aaf",
+        "3072d716-baed-42b4-ba1c-b3e770432b31",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "15c16aca-623b-4cc4-a22a-b17955f25fe2"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the interoperability sync error flow so HTML/non-JSON 503 responses no longer surface raw markup in the UI. The backend gateway client now logs full failure details, and the frontend interoperability client ignores non-JSON bodies and falls back to generic status-based errors. Added focused tests for both sides and moved the tracking card to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "modified",
+          "reason": "Added backend logging for failed gateway responses and kept thrown errors generic for the UI.",
+          "notes": "Now logs raw body, status, status text, and content type on non-OK responses."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.spec.ts",
+          "action": "created",
+          "reason": "Covers the new backend logging behavior for HTML 503 gateway responses and the existing connectivity failure path.",
+          "notes": "Uses mocked fetch and Logger spying."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed response decoding to ignore non-JSON bodies so raw HTML is not shown to users.",
+          "notes": "Now delegates to the shared response parser helper."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_response_parser.dart",
+          "action": "created",
+          "reason": "Provides a reusable helper for decoding interoperability responses while dropping HTML and other non-JSON bodies.",
+          "notes": "Keeps the parser logic small and testable."
+        },
+        {
+          "path": "frontend/test/features/interoperability/data/interoperability_response_parser_test.dart",
+          "action": "created",
+          "reason": "Verifies that HTML bodies are ignored and JSON bodies still decode correctly.",
+          "notes": "Focused unit coverage for the parser helper."
+        }
+      ],
+      "createdAt": "2026-05-26T13:37:57.331Z",
+      "updatedAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "memoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "rootMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "parentMemoryIds": [
+        "98c2846f-4977-439d-9f6c-fc2652c15feb"
+      ],
+      "relatedMemoryIds": [
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "192ad8a9-57e8-4624-886f-3f030a903aaf",
+        "3072d716-baed-42b4-ba1c-b3e770432b31",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [
+        "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the interoperability sync error flow so HTML/non-JSON 503 responses no longer surface raw markup in the UI. The backend gateway client now logs full failure details, and the frontend interoperability client ignores non-JSON bodies and falls back to generic status-based errors. Added focused tests for both sides and moved the tracking card to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "modified",
+          "reason": "Added backend logging for failed gateway responses and kept thrown errors generic for the UI.",
+          "notes": "Now logs raw body, status, status text, and content type on non-OK responses."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.spec.ts",
+          "action": "created",
+          "reason": "Covers the new backend logging behavior for HTML 503 gateway responses and the existing connectivity failure path.",
+          "notes": "Uses mocked fetch and Logger spying."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed response decoding to ignore non-JSON bodies so raw HTML is not shown to users.",
+          "notes": "Now delegates to the shared response parser helper."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_response_parser.dart",
+          "action": "created",
+          "reason": "Provides a reusable helper for decoding interoperability responses while dropping HTML and other non-JSON bodies.",
+          "notes": "Keeps the parser logic small and testable."
+        },
+        {
+          "path": "frontend/test/features/interoperability/data/interoperability_response_parser_test.dart",
+          "action": "created",
+          "reason": "Verifies that HTML bodies are ignored and JSON bodies still decode correctly.",
+          "notes": "Focused unit coverage for the parser helper."
+        }
+      ],
+      "createdAt": "2026-05-26T13:37:57.468Z",
+      "updatedAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "memoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "rootMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "parentMemoryIds": [
+        "15c16aca-623b-4cc4-a22a-b17955f25fe2"
+      ],
+      "relatedMemoryIds": [
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "192ad8a9-57e8-4624-886f-3f030a903aaf",
+        "3072d716-baed-42b4-ba1c-b3e770432b31",
+        "8eaca796-2b2e-4336-ae61-e22618e2497c",
+        "c3f52109-3153-41f1-a775-6e205782a2ba"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the interoperability sync error flow so HTML/non-JSON 503 responses no longer surface raw markup in the UI. The backend gateway client now logs full failure details, and the frontend interoperability client ignores non-JSON bodies and falls back to generic status-based errors. Added focused tests for both sides and moved the tracking card to done.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "modified",
+          "reason": "Added backend logging for failed gateway responses and kept thrown errors generic for the UI.",
+          "notes": "Now logs raw body, status, status text, and content type on non-OK responses."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.spec.ts",
+          "action": "created",
+          "reason": "Covers the new backend logging behavior for HTML 503 gateway responses and the existing connectivity failure path.",
+          "notes": "Uses mocked fetch and Logger spying."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "modified",
+          "reason": "Changed response decoding to ignore non-JSON bodies so raw HTML is not shown to users.",
+          "notes": "Now delegates to the shared response parser helper."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_response_parser.dart",
+          "action": "created",
+          "reason": "Provides a reusable helper for decoding interoperability responses while dropping HTML and other non-JSON bodies.",
+          "notes": "Keeps the parser logic small and testable."
+        },
+        {
+          "path": "frontend/test/features/interoperability/data/interoperability_response_parser_test.dart",
+          "action": "created",
+          "reason": "Verifies that HTML bodies are ignored and JSON bodies still decode correctly.",
+          "notes": "Focused unit coverage for the parser helper."
+        }
+      ],
+      "createdAt": "2026-05-26T13:37:57.600Z",
+      "updatedAt": "2026-05-26T13:37:57.600Z"
     }
   ],
   "edges": [
@@ -40735,7 +40896,140 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-25T15:48:11.789Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "toMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.331Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "toMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.468Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "192ad8a9-57e8-4624-886f-3f030a903aaf",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "8eaca796-2b2e-4336-ae61-e22618e2497c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "toMemoryId": "c3f52109-3153-41f1-a775-6e205782a2ba",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T13:37:57.600Z"
     }
   ],
-  "updatedAt": "2026-05-25T15:48:11.794Z"
+  "updatedAt": "2026-05-26T13:37:57.611Z"
 }
