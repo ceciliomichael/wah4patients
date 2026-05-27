@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
@@ -21,12 +21,16 @@ import { PersonalRecordsModule } from './personal-records/personal-records.modul
       cache: true,
       validationSchema: envValidationSchema,
     }),
-    ThrottlerModule.forRoot([
-      {
-        ttl: 60_000,
-        limit: 60,
-      },
-    ]),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => [
+        {
+          ttl: Number(configService.getOrThrow<number>('THROTTLER_TTL_MS')),
+          limit: Number(configService.getOrThrow<number>('THROTTLER_LIMIT')),
+        },
+      ],
+    }),
     HealthModule,
     AuthModule,
     AppointmentHistoryModule,

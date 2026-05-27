@@ -1,5 +1,4 @@
 import {
-  BadGatewayException,
   BadRequestException,
   Injectable,
   Logger,
@@ -13,6 +12,7 @@ import {
   PrepareSyncRequestPayload,
   PreparedSyncRequestResponse,
 } from './integration.types';
+import { GATEWAY_REQUEST_DELAY_MS } from '../common/config/runtime-env';
 import { GatewayResourceType } from '../fhir-sync/fhir-sync.types';
 import { FhirSyncRepository } from '../fhir-sync/fhir-sync.repository';
 import { GatewayClientService } from './gateway-client.service';
@@ -164,8 +164,10 @@ export class IntegrationService {
         this.logger.error(`Failed to request sync for ${resourceType}:`, error);
       }
 
-      // Add a 500ms delay between requests to avoid hitting gateway rate limits/throttling
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Add a configurable delay between requests to avoid hitting gateway rate limits/throttling.
+      await new Promise((resolve) =>
+        setTimeout(resolve, GATEWAY_REQUEST_DELAY_MS),
+      );
     }
   }
 
@@ -182,21 +184,31 @@ export class IntegrationService {
     const notes = input.notes?.trim();
     const transactionId = crypto.randomUUID();
 
-    const response = await this.postGatewayJson(`${GATEWAY_FHIR_REQUEST_PATH_PREFIX}${input.resourceType}`, {
-      transactionId,
-      requesterId: input.requesterId,
-      targetId: input.targetId,
-      patientIdentifiers: [
-        {
-          system: input.identifierSystem,
-          value: input.identifierValue,
-        },
-      ],
-      reason: reason && reason.length > 0 ? reason : 'Patient requested sync records',
-      notes: notes && notes.length > 0 ? notes : null,
-    });
+    const response = await this.postGatewayJson(
+      `${GATEWAY_FHIR_REQUEST_PATH_PREFIX}${input.resourceType}`,
+      {
+        transactionId,
+        requesterId: input.requesterId,
+        targetId: input.targetId,
+        patientIdentifiers: [
+          {
+            system: input.identifierSystem,
+            value: input.identifierValue,
+          },
+        ],
+        reason:
+          reason && reason.length > 0
+            ? reason
+            : 'Patient requested sync records',
+        notes: notes && notes.length > 0 ? notes : null,
+      },
+    );
 
-    return this.extractGatewayTransactionId(response, input.resourceType, transactionId);
+    return this.extractGatewayTransactionId(
+      response,
+      input.resourceType,
+      transactionId,
+    );
   }
 
   private extractGatewayTransactionId(
@@ -216,12 +228,18 @@ export class IntegrationService {
       }
 
       const nestedTransactionId = data['transactionId'];
-      if (typeof nestedTransactionId === 'string' && nestedTransactionId.trim().length > 0) {
+      if (
+        typeof nestedTransactionId === 'string' &&
+        nestedTransactionId.trim().length > 0
+      ) {
         return nestedTransactionId.trim();
       }
 
       const nestedTransactionIdSnake = data['transaction_id'];
-      if (typeof nestedTransactionIdSnake === 'string' && nestedTransactionIdSnake.trim().length > 0) {
+      if (
+        typeof nestedTransactionIdSnake === 'string' &&
+        nestedTransactionIdSnake.trim().length > 0
+      ) {
         return nestedTransactionIdSnake.trim();
       }
     }

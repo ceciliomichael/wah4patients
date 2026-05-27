@@ -24780,6 +24780,650 @@
       ],
       "createdAt": "2026-05-26T13:37:57.600Z",
       "updatedAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "memoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "rootMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+        "98c2846f-4977-439d-9f6c-fc2652c15feb",
+        "3072d716-baed-42b4-ba1c-b3e770432b31"
+      ],
+      "childMemoryIds": [
+        "fba172c3-48fa-490f-97b5-e2955707fce6"
+      ],
+      "sectionKind": "fact",
+      "summary": "Investigated the backend sync 503 issue for Docker-on-Proxmox versus local tunnel runs. The backend sync flow calls the WAH4PC gateway and also depends on an externally reachable callback URL; the observed 503 is most likely coming from upstream gateway/proxy connectivity rather than the local sync persistence logic. The Docker deployment uses port 3048 and production env vars, so misconfigured gateway URL, API key, provider ID, firewall/proxy forwarding, or an unreachable public callback URL are the main suspects.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Contains the sync processing and gateway callback logic that can surface upstream 503/service-unavailable failures.",
+          "notes": "Inspected sendGatewayCallback and request handling paths."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "inspected",
+          "reason": "Contains the outbound gateway HTTP client that turns non-2xx responses into upstream failures during sync preparation.",
+          "notes": "Inspected requestGatewayJson and base URL resolution."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Orchestrates sync preparation and the gateway request loop that triggers sync workflow failures.",
+          "notes": "Inspected requestResourceSyncFromGateway and prepareSyncRequest."
+        },
+        {
+          "path": "backend/docker-compose.yml",
+          "action": "inspected",
+          "reason": "Shows the production container port and env-file assumptions for the Proxmox Docker deployment.",
+          "notes": "Container exposes 3048 and loads .env."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Lists required gateway-related environment variables that must match the deployed environment.",
+          "notes": "Helpful for comparing local versus production config."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Shows required env vars and validates gateway config used by the Docker runtime.",
+          "notes": "Confirms deployment will depend on valid WAH4PC and backend secrets."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirms app listens on 0.0.0.0 and uses the configured PORT, relevant to reverse-proxy reachability.",
+          "notes": "Useful for verifying container exposure."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "inspected",
+          "reason": "Shows how the frontend surfaces backend status codes during sync preparation and simulation.",
+          "notes": "Helps distinguish frontend errors from upstream sync failures."
+        }
+      ],
+      "createdAt": "2026-05-26T16:12:52.863Z",
+      "updatedAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "memoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "rootMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "parentMemoryIds": [
+        "1daf2c29-966b-43c4-867c-93f8a1971a6b"
+      ],
+      "relatedMemoryIds": [
+        "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+        "98c2846f-4977-439d-9f6c-fc2652c15feb",
+        "3072d716-baed-42b4-ba1c-b3e770432b31"
+      ],
+      "childMemoryIds": [
+        "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0"
+      ],
+      "sectionKind": "decision",
+      "summary": "Investigated the backend sync 503 issue for Docker-on-Proxmox versus local tunnel runs. The backend sync flow calls the WAH4PC gateway and also depends on an externally reachable callback URL; the observed 503 is most likely coming from upstream gateway/proxy connectivity rather than the local sync persistence logic. The Docker deployment uses port 3048 and production env vars, so misconfigured gateway URL, API key, provider ID, firewall/proxy forwarding, or an unreachable public callback URL are the main suspects.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Contains the sync processing and gateway callback logic that can surface upstream 503/service-unavailable failures.",
+          "notes": "Inspected sendGatewayCallback and request handling paths."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "inspected",
+          "reason": "Contains the outbound gateway HTTP client that turns non-2xx responses into upstream failures during sync preparation.",
+          "notes": "Inspected requestGatewayJson and base URL resolution."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Orchestrates sync preparation and the gateway request loop that triggers sync workflow failures.",
+          "notes": "Inspected requestResourceSyncFromGateway and prepareSyncRequest."
+        },
+        {
+          "path": "backend/docker-compose.yml",
+          "action": "inspected",
+          "reason": "Shows the production container port and env-file assumptions for the Proxmox Docker deployment.",
+          "notes": "Container exposes 3048 and loads .env."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Lists required gateway-related environment variables that must match the deployed environment.",
+          "notes": "Helpful for comparing local versus production config."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Shows required env vars and validates gateway config used by the Docker runtime.",
+          "notes": "Confirms deployment will depend on valid WAH4PC and backend secrets."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirms app listens on 0.0.0.0 and uses the configured PORT, relevant to reverse-proxy reachability.",
+          "notes": "Useful for verifying container exposure."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "inspected",
+          "reason": "Shows how the frontend surfaces backend status codes during sync preparation and simulation.",
+          "notes": "Helps distinguish frontend errors from upstream sync failures."
+        }
+      ],
+      "createdAt": "2026-05-26T16:12:53.005Z",
+      "updatedAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "memoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "rootMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "parentMemoryIds": [
+        "fba172c3-48fa-490f-97b5-e2955707fce6"
+      ],
+      "relatedMemoryIds": [
+        "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+        "a62473f9-fc1f-413b-b304-61846a16edf5",
+        "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+        "98c2846f-4977-439d-9f6c-fc2652c15feb",
+        "3072d716-baed-42b4-ba1c-b3e770432b31"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Investigated the backend sync 503 issue for Docker-on-Proxmox versus local tunnel runs. The backend sync flow calls the WAH4PC gateway and also depends on an externally reachable callback URL; the observed 503 is most likely coming from upstream gateway/proxy connectivity rather than the local sync persistence logic. The Docker deployment uses port 3048 and production env vars, so misconfigured gateway URL, API key, provider ID, firewall/proxy forwarding, or an unreachable public callback URL are the main suspects.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.service.ts",
+          "action": "inspected",
+          "reason": "Contains the sync processing and gateway callback logic that can surface upstream 503/service-unavailable failures.",
+          "notes": "Inspected sendGatewayCallback and request handling paths."
+        },
+        {
+          "path": "backend/src/integration/gateway-client.service.ts",
+          "action": "inspected",
+          "reason": "Contains the outbound gateway HTTP client that turns non-2xx responses into upstream failures during sync preparation.",
+          "notes": "Inspected requestGatewayJson and base URL resolution."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Orchestrates sync preparation and the gateway request loop that triggers sync workflow failures.",
+          "notes": "Inspected requestResourceSyncFromGateway and prepareSyncRequest."
+        },
+        {
+          "path": "backend/docker-compose.yml",
+          "action": "inspected",
+          "reason": "Shows the production container port and env-file assumptions for the Proxmox Docker deployment.",
+          "notes": "Container exposes 3048 and loads .env."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Lists required gateway-related environment variables that must match the deployed environment.",
+          "notes": "Helpful for comparing local versus production config."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Shows required env vars and validates gateway config used by the Docker runtime.",
+          "notes": "Confirms deployment will depend on valid WAH4PC and backend secrets."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Confirms app listens on 0.0.0.0 and uses the configured PORT, relevant to reverse-proxy reachability.",
+          "notes": "Useful for verifying container exposure."
+        },
+        {
+          "path": "frontend/lib/features/interoperability/data/interoperability_api_client.dart",
+          "action": "inspected",
+          "reason": "Shows how the frontend surfaces backend status codes during sync preparation and simulation.",
+          "notes": "Helps distinguish frontend errors from upstream sync failures."
+        }
+      ],
+      "createdAt": "2026-05-26T16:12:53.187Z",
+      "updatedAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "memoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "rootMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+        "fba172c3-48fa-490f-97b5-e2955707fce6",
+        "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+        "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+        "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40"
+      ],
+      "childMemoryIds": [
+        "8ff5d7f5-f38d-484c-acef-16ff8e46178f"
+      ],
+      "sectionKind": "fact",
+      "summary": "Investigated a 502 audit log from the gateway and confirmed the backend is returning HTTP 429 Too Many Requests for POST /api/v1/fhir/receive-results. The likely fix is to make backend throttling and CORS configurable via environment variables, then update the backend env schema and example values accordingly.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Contains current CORS bootstrap logic that will need to become env-driven for multi-origin allowlists.",
+          "notes": "Parsed FRONTEND_ORIGIN into an array and passed it to app.enableCors()."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Contains the global ThrottlerModule configuration that currently hard-codes the base request limit.",
+          "notes": "Uses a 60 requests/minute default throttle today."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Defines which environment variables are accepted and must be extended for new CORS and throttling settings.",
+          "notes": "Currently validates FRONTEND_ORIGIN and no explicit throttle env variables."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Template for documenting new environment variables and examples for deployment.",
+          "notes": "Already documents frontend origin, gateway URL, and other backend secrets."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Contains the receive-results endpoint where hard-coded per-route throttling may need to be made configurable.",
+          "notes": "Currently uses @Throttle({ default: { ttl: 60_000, limit: 20 } }) on webhook routes."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains a built-in delay between gateway requests that may also need env tuning if the gateway rate limit is the real constraint.",
+          "notes": "Currently waits 500ms between sync requests to avoid throttling."
+        }
+      ],
+      "createdAt": "2026-05-27T04:20:57.369Z",
+      "updatedAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "memoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "rootMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "parentMemoryIds": [
+        "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f"
+      ],
+      "relatedMemoryIds": [
+        "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+        "fba172c3-48fa-490f-97b5-e2955707fce6",
+        "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+        "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+        "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40"
+      ],
+      "childMemoryIds": [
+        "68a30ae7-c6c2-44f4-bf6d-e941434f1066"
+      ],
+      "sectionKind": "decision",
+      "summary": "Investigated a 502 audit log from the gateway and confirmed the backend is returning HTTP 429 Too Many Requests for POST /api/v1/fhir/receive-results. The likely fix is to make backend throttling and CORS configurable via environment variables, then update the backend env schema and example values accordingly.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Contains current CORS bootstrap logic that will need to become env-driven for multi-origin allowlists.",
+          "notes": "Parsed FRONTEND_ORIGIN into an array and passed it to app.enableCors()."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Contains the global ThrottlerModule configuration that currently hard-codes the base request limit.",
+          "notes": "Uses a 60 requests/minute default throttle today."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Defines which environment variables are accepted and must be extended for new CORS and throttling settings.",
+          "notes": "Currently validates FRONTEND_ORIGIN and no explicit throttle env variables."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Template for documenting new environment variables and examples for deployment.",
+          "notes": "Already documents frontend origin, gateway URL, and other backend secrets."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Contains the receive-results endpoint where hard-coded per-route throttling may need to be made configurable.",
+          "notes": "Currently uses @Throttle({ default: { ttl: 60_000, limit: 20 } }) on webhook routes."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains a built-in delay between gateway requests that may also need env tuning if the gateway rate limit is the real constraint.",
+          "notes": "Currently waits 500ms between sync requests to avoid throttling."
+        }
+      ],
+      "createdAt": "2026-05-27T04:20:57.511Z",
+      "updatedAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "memoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "rootMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "parentMemoryIds": [
+        "8ff5d7f5-f38d-484c-acef-16ff8e46178f"
+      ],
+      "relatedMemoryIds": [
+        "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+        "fba172c3-48fa-490f-97b5-e2955707fce6",
+        "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+        "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+        "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Investigated a 502 audit log from the gateway and confirmed the backend is returning HTTP 429 Too Many Requests for POST /api/v1/fhir/receive-results. The likely fix is to make backend throttling and CORS configurable via environment variables, then update the backend env schema and example values accordingly.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/main.ts",
+          "action": "inspected",
+          "reason": "Contains current CORS bootstrap logic that will need to become env-driven for multi-origin allowlists.",
+          "notes": "Parsed FRONTEND_ORIGIN into an array and passed it to app.enableCors()."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "inspected",
+          "reason": "Contains the global ThrottlerModule configuration that currently hard-codes the base request limit.",
+          "notes": "Uses a 60 requests/minute default throttle today."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "inspected",
+          "reason": "Defines which environment variables are accepted and must be extended for new CORS and throttling settings.",
+          "notes": "Currently validates FRONTEND_ORIGIN and no explicit throttle env variables."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "inspected",
+          "reason": "Template for documenting new environment variables and examples for deployment.",
+          "notes": "Already documents frontend origin, gateway URL, and other backend secrets."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "inspected",
+          "reason": "Contains the receive-results endpoint where hard-coded per-route throttling may need to be made configurable.",
+          "notes": "Currently uses @Throttle({ default: { ttl: 60_000, limit: 20 } }) on webhook routes."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "inspected",
+          "reason": "Contains a built-in delay between gateway requests that may also need env tuning if the gateway rate limit is the real constraint.",
+          "notes": "Currently waits 500ms between sync requests to avoid throttling."
+        }
+      ],
+      "createdAt": "2026-05-27T04:20:57.651Z",
+      "updatedAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "memoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "rootMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "parentMemoryIds": [
+        "8ff5d7f5-f38d-484c-acef-16ff8e46178f"
+      ],
+      "relatedMemoryIds": [
+        "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+        "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+        "d63040dd-f558-4196-a262-ef4833098d7c",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "e2161a48-65fa-4324-9a18-4aa1f30ec29c"
+      ],
+      "sectionKind": "fact",
+      "summary": "Implemented env-driven backend throttling and CORS. Added a .env preload helper so route-level throttler decorators can read env values at module load, introduced reusable runtime env parsing helpers, switched global throttling to ConfigModule-driven async config, made FHIR webhook throttling and outbound gateway delay configurable, updated env validation/example values, and added a focused unit test for the new config parsing. Verified with build, lint on touched files, and the new config test; the full backend test suite still has unrelated pre-existing failures in other specs.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/common/config/preload-env.ts",
+          "action": "created",
+          "reason": "Loads .env values before module evaluation so env-backed throttle constants can be safely read at import time.",
+          "notes": "Simple idempotent .env loader that skips keys already present in process.env."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.ts",
+          "action": "created",
+          "reason": "Centralizes parsing of comma-separated origins, integer env values, throttle settings, and gateway delay configuration.",
+          "notes": "Exports reusable helpers plus computed throttle/delay settings."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.spec.ts",
+          "action": "created",
+          "reason": "Covers the new env parsing helpers to prevent regressions in CORS and throttling configuration behavior.",
+          "notes": "Includes list parsing, origin fallback, integer parsing, and throttle prefix resolution."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Switches global Nest throttling to ConfigService-driven values from env rather than hard-coded constants.",
+          "notes": "Uses THROTTLER_TTL_MS and THROTTLER_LIMIT via forRootAsync."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Uses the new CORS origin resolver so the allowlist can come from env and support multiple URLs.",
+          "notes": "Keeps request logging and validation flow unchanged."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Validates the new CORS and throttling env variables and keeps CORS backward-compatible with the legacy FRONTEND_ORIGIN name.",
+          "notes": "Adds defaults for throttling and gateway delay values."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Replaces fixed webhook throttle limits with env-backed settings so receive-results can be tuned without code changes.",
+          "notes": "Applies the same webhook throttle profile to process-query and receive-push."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Makes the inter-request delay between outbound gateway calls configurable so gateway throttling can be tuned from env.",
+          "notes": "Uses GATEWAY_REQUEST_DELAY_MS instead of a hard-coded 500ms."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documents the new env variables with copy-paste examples for CORS allowlists and throttling.",
+          "notes": "Adds CORS_ALLOWED_ORIGINS, throttler vars, and gateway delay examples."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Provides test env defaults for the new CORS and throttling variables so test bootstrap matches the new config contract.",
+          "notes": "Keeps the e2e setup aligned with production env names."
+        }
+      ],
+      "createdAt": "2026-05-27T05:16:55.488Z",
+      "updatedAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "memoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "rootMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "parentMemoryIds": [
+        "7bf7189f-9a65-4b7e-90bb-64c747b72a13"
+      ],
+      "relatedMemoryIds": [
+        "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+        "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+        "d63040dd-f558-4196-a262-ef4833098d7c",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [
+        "08b17905-5e00-4763-a37f-4b0a0c53ec91"
+      ],
+      "sectionKind": "decision",
+      "summary": "Implemented env-driven backend throttling and CORS. Added a .env preload helper so route-level throttler decorators can read env values at module load, introduced reusable runtime env parsing helpers, switched global throttling to ConfigModule-driven async config, made FHIR webhook throttling and outbound gateway delay configurable, updated env validation/example values, and added a focused unit test for the new config parsing. Verified with build, lint on touched files, and the new config test; the full backend test suite still has unrelated pre-existing failures in other specs.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/common/config/preload-env.ts",
+          "action": "created",
+          "reason": "Loads .env values before module evaluation so env-backed throttle constants can be safely read at import time.",
+          "notes": "Simple idempotent .env loader that skips keys already present in process.env."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.ts",
+          "action": "created",
+          "reason": "Centralizes parsing of comma-separated origins, integer env values, throttle settings, and gateway delay configuration.",
+          "notes": "Exports reusable helpers plus computed throttle/delay settings."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.spec.ts",
+          "action": "created",
+          "reason": "Covers the new env parsing helpers to prevent regressions in CORS and throttling configuration behavior.",
+          "notes": "Includes list parsing, origin fallback, integer parsing, and throttle prefix resolution."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Switches global Nest throttling to ConfigService-driven values from env rather than hard-coded constants.",
+          "notes": "Uses THROTTLER_TTL_MS and THROTTLER_LIMIT via forRootAsync."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Uses the new CORS origin resolver so the allowlist can come from env and support multiple URLs.",
+          "notes": "Keeps request logging and validation flow unchanged."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Validates the new CORS and throttling env variables and keeps CORS backward-compatible with the legacy FRONTEND_ORIGIN name.",
+          "notes": "Adds defaults for throttling and gateway delay values."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Replaces fixed webhook throttle limits with env-backed settings so receive-results can be tuned without code changes.",
+          "notes": "Applies the same webhook throttle profile to process-query and receive-push."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Makes the inter-request delay between outbound gateway calls configurable so gateway throttling can be tuned from env.",
+          "notes": "Uses GATEWAY_REQUEST_DELAY_MS instead of a hard-coded 500ms."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documents the new env variables with copy-paste examples for CORS allowlists and throttling.",
+          "notes": "Adds CORS_ALLOWED_ORIGINS, throttler vars, and gateway delay examples."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Provides test env defaults for the new CORS and throttling variables so test bootstrap matches the new config contract.",
+          "notes": "Keeps the e2e setup aligned with production env names."
+        }
+      ],
+      "createdAt": "2026-05-27T05:16:55.649Z",
+      "updatedAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "memoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "rootMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "parentMemoryIds": [
+        "e2161a48-65fa-4324-9a18-4aa1f30ec29c"
+      ],
+      "relatedMemoryIds": [
+        "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+        "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+        "d63040dd-f558-4196-a262-ef4833098d7c",
+        "ba59349f-823d-4bae-8eba-e82241b32387"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Implemented env-driven backend throttling and CORS. Added a .env preload helper so route-level throttler decorators can read env values at module load, introduced reusable runtime env parsing helpers, switched global throttling to ConfigModule-driven async config, made FHIR webhook throttling and outbound gateway delay configurable, updated env validation/example values, and added a focused unit test for the new config parsing. Verified with build, lint on touched files, and the new config test; the full backend test suite still has unrelated pre-existing failures in other specs.",
+      "affectedFiles": [
+        {
+          "path": "backend/src/common/config/preload-env.ts",
+          "action": "created",
+          "reason": "Loads .env values before module evaluation so env-backed throttle constants can be safely read at import time.",
+          "notes": "Simple idempotent .env loader that skips keys already present in process.env."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.ts",
+          "action": "created",
+          "reason": "Centralizes parsing of comma-separated origins, integer env values, throttle settings, and gateway delay configuration.",
+          "notes": "Exports reusable helpers plus computed throttle/delay settings."
+        },
+        {
+          "path": "backend/src/common/config/runtime-env.spec.ts",
+          "action": "created",
+          "reason": "Covers the new env parsing helpers to prevent regressions in CORS and throttling configuration behavior.",
+          "notes": "Includes list parsing, origin fallback, integer parsing, and throttle prefix resolution."
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "action": "modified",
+          "reason": "Switches global Nest throttling to ConfigService-driven values from env rather than hard-coded constants.",
+          "notes": "Uses THROTTLER_TTL_MS and THROTTLER_LIMIT via forRootAsync."
+        },
+        {
+          "path": "backend/src/main.ts",
+          "action": "modified",
+          "reason": "Uses the new CORS origin resolver so the allowlist can come from env and support multiple URLs.",
+          "notes": "Keeps request logging and validation flow unchanged."
+        },
+        {
+          "path": "backend/src/common/config/env.validation.ts",
+          "action": "modified",
+          "reason": "Validates the new CORS and throttling env variables and keeps CORS backward-compatible with the legacy FRONTEND_ORIGIN name.",
+          "notes": "Adds defaults for throttling and gateway delay values."
+        },
+        {
+          "path": "backend/src/fhir-sync/fhir-sync.controller.ts",
+          "action": "modified",
+          "reason": "Replaces fixed webhook throttle limits with env-backed settings so receive-results can be tuned without code changes.",
+          "notes": "Applies the same webhook throttle profile to process-query and receive-push."
+        },
+        {
+          "path": "backend/src/integration/integration.service.ts",
+          "action": "modified",
+          "reason": "Makes the inter-request delay between outbound gateway calls configurable so gateway throttling can be tuned from env.",
+          "notes": "Uses GATEWAY_REQUEST_DELAY_MS instead of a hard-coded 500ms."
+        },
+        {
+          "path": "backend/.env.example",
+          "action": "modified",
+          "reason": "Documents the new env variables with copy-paste examples for CORS allowlists and throttling.",
+          "notes": "Adds CORS_ALLOWED_ORIGINS, throttler vars, and gateway delay examples."
+        },
+        {
+          "path": "backend/test/setup-env.ts",
+          "action": "modified",
+          "reason": "Provides test env defaults for the new CORS and throttling variables so test bootstrap matches the new config contract.",
+          "notes": "Keeps the e2e setup aligned with production env names."
+        }
+      ],
+      "createdAt": "2026-05-27T05:16:55.807Z",
+      "updatedAt": "2026-05-27T05:16:55.807Z"
     }
   ],
   "edges": [
@@ -41029,7 +41673,392 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-26T13:37:57.600Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "toMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:52.863Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "toMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.005Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "3c7cad26-bd4d-4c84-aaae-205ad6e8baa9",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "a62473f9-fc1f-413b-b304-61846a16edf5",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "15c16aca-623b-4cc4-a22a-b17955f25fe2",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "98c2846f-4977-439d-9f6c-fc2652c15feb",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "toMemoryId": "3072d716-baed-42b4-ba1c-b3e770432b31",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-26T16:12:53.187Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "toMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.369Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "toMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.511Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "1daf2c29-966b-43c4-867c-93f8a1971a6b",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "fba172c3-48fa-490f-97b5-e2955707fce6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "d698e2c1-b4b5-47e4-8ce4-f091d60a76a0",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "d6a8cb9a-5065-42b9-bb64-f3917d5422af",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "toMemoryId": "eec2bad6-1ccc-4f8a-8c69-eace29e8bc40",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T04:20:57.651Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "8ff5d7f5-f38d-484c-acef-16ff8e46178f",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "toMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.488Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "7bf7189f-9a65-4b7e-90bb-64c747b72a13",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "toMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.649Z"
+    },
+    {
+      "fromMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "toMemoryId": "e2161a48-65fa-4324-9a18-4aa1f30ec29c",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "fromMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "toMemoryId": "17ccdebd-f7e8-450b-bfe1-f53d56eb9d6f",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "fromMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "toMemoryId": "68a30ae7-c6c2-44f4-bf6d-e941434f1066",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "fromMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "toMemoryId": "d63040dd-f558-4196-a262-ef4833098d7c",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "fromMemoryId": "08b17905-5e00-4763-a37f-4b0a0c53ec91",
+      "toMemoryId": "ba59349f-823d-4bae-8eba-e82241b32387",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-27T05:16:55.807Z"
     }
   ],
-  "updatedAt": "2026-05-26T13:37:57.611Z"
+  "updatedAt": "2026-05-27T05:16:55.816Z"
 }

@@ -1,11 +1,17 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT = '3000';
+process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3001';
 process.env.FRONTEND_ORIGIN = 'http://localhost:3001';
 process.env.BACKEND_API_KEY = 'test-api-key-12345678901234567890';
+process.env.THROTTLER_TTL_MS = '60000';
+process.env.THROTTLER_LIMIT = '120';
 process.env.WAH4PC_GATEWAY_URL = 'https://wah4pc.echosphere.cfd';
 process.env.WAH4PC_API_KEY = 'gateway-test-api-key-1234567890';
 process.env.WAH4PC_PROVIDER_ID = '550e8400-e29b-41d4-a716-446655440000';
 process.env.WAH4PC_GATEWAY_AUTH_KEY = 'gateway-auth-test-key-123456';
+process.env.FHIR_WEBHOOK_THROTTLER_TTL_MS = '60000';
+process.env.FHIR_WEBHOOK_THROTTLER_LIMIT = '120';
+process.env.GATEWAY_REQUEST_DELAY_MS = '500';
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_PUBLISHABLE_KEY = 'test-publishable-key-1234567890';
 process.env.SUPABASE_SECRET_KEY = 'test-secret-key-1234567890';

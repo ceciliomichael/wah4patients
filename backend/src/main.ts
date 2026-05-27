@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
+import { resolveCorsOrigins } from './common/config/runtime-env';
 import { AppModule } from './app.module';
 import { RequestLoggingService } from './common/logging/request-logging.service';
 
@@ -19,11 +20,7 @@ async function bootstrap() {
     }),
   );
 
-  const configuredOrigins = configService
-    .getOrThrow<string>('FRONTEND_ORIGIN')
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter((origin) => origin.length > 0);
+  const configuredOrigins = resolveCorsOrigins();
 
   app.enableCors({
     origin: configuredOrigins,
