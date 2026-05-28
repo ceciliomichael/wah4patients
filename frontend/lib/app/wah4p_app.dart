@@ -52,7 +52,7 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
 
   Future<void> _syncRouteWithSessionAndLockState() async {
     final currentRoute = _routeTrackerObserver.currentRoute;
-    if (currentRoute == AppRoutes.login || currentRoute == AppRoutes.mpinUnlock) {
+    if (_isPublicRoute(currentRoute) || currentRoute == AppRoutes.mpinUnlock) {
       return;
     }
 
@@ -101,6 +101,28 @@ class _WAH4PAppState extends State<WAH4PApp> with WidgetsBindingObserver {
     }
 
     navigator.pushNamedAndRemoveUntil(AppRoutes.mpinUnlock, (route) => false);
+  }
+
+  bool _isPublicRoute(String? routeName) {
+    switch (routeName) {
+      case AppRoutes.splash:
+      case AppRoutes.onboarding1:
+      case AppRoutes.onboarding2:
+      case AppRoutes.onboarding3:
+      case AppRoutes.onboarding4:
+      case AppRoutes.onboardingComplete:
+      case AppRoutes.registration:
+      case AppRoutes.registrationEmail:
+      case AppRoutes.registrationVerification:
+      case AppRoutes.registrationDetails:
+      case AppRoutes.registrationPassword:
+      case AppRoutes.login:
+      case AppRoutes.forgotPassword:
+      case AppRoutes.authPreview:
+        return true;
+      default:
+        return false;
+    }
   }
 
   @override

@@ -7,6 +7,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../data/auth_local_store.dart';
 import '../../data/auth_api_client.dart';
 import '../../domain/auth_validators.dart';
 import '../widgets/auth_surface_card.dart';
@@ -49,6 +50,7 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
 
     try {
       await AuthApiClient.instance.requestRegistrationOtp(email: email);
+      await AuthLocalStore.savePendingRegistrationOtpEmail(email);
 
       if (!mounted) {
         return;
@@ -142,7 +144,8 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                                   Icons.mark_email_unread_outlined,
                                   Icons.volunteer_activism_outlined,
                                 ],
-                                onClose: () => Navigator.of(dialogContext).pop(),
+                                onClose: () =>
+                                    Navigator.of(dialogContext).pop(),
                               );
                             },
                           );
@@ -211,8 +214,8 @@ class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
                                             'Email Address',
                                             style: AppTextStyles.titleLarge
                                                 .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
                                           const SizedBox(height: 16),
                                           TextFormField(

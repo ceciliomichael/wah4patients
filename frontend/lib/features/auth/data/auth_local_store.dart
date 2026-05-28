@@ -12,6 +12,8 @@ class AuthLocalStore {
   static const String _onboardingCompletedKey = 'app.onboarding.completed';
   static const String _profilePromptDismissedKey =
       'app.profile-completion-prompt.dismissed';
+  static const String _registrationOtpEmailKey =
+      'auth.registration.pending_otp_email';
 
   static Future<void> saveSession(LoginResult result) async {
     final payload = <String, dynamic>{
@@ -52,11 +54,7 @@ class AuthLocalStore {
       return;
     }
 
-    await saveRawSession(
-      currentSession.copyWith(
-        profile: profile,
-      ),
-    );
+    await saveRawSession(currentSession.copyWith(profile: profile));
   }
 
   static Future<void> saveRawSession(AuthSessionData session) async {
@@ -92,6 +90,30 @@ class AuthLocalStore {
 
   static Future<void> clearOnboardingCompleted() {
     return _storage.delete(key: _onboardingCompletedKey);
+  }
+
+  static Future<void> savePendingRegistrationOtpEmail(String email) async {
+    final normalizedEmail = email.trim();
+    if (normalizedEmail.isEmpty) {
+      await clearPendingRegistrationOtpEmail();
+      return;
+    }
+
+    await _storage.write(key: _registrationOtpEmailKey, value: normalizedEmail);
+  }
+
+  static Future<String?> readPendingRegistrationOtpEmail() async {
+    final rawValue = await _storage.read(key: _registrationOtpEmailKey);
+    final normalizedEmail = rawValue?.trim() ?? '';
+    if (normalizedEmail.isEmpty) {
+      return null;
+    }
+
+    return normalizedEmail;
+  }
+
+  static Future<void> clearPendingRegistrationOtpEmail() {
+    return _storage.delete(key: _registrationOtpEmailKey);
   }
 
   static Future<bool> isProfileCompletionPromptDismissed() async {

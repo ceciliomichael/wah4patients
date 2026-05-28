@@ -7,16 +7,26 @@ import 'app_lock_state_service.dart';
 import 'app_routes.dart';
 
 class AppStartupResult {
-  const AppStartupResult._(this.initialRoute);
+  const AppStartupResult._(this.initialRoute, {this.arguments});
 
   final String initialRoute;
+  final Object? arguments;
 
-  static const AppStartupResult onboarding = AppStartupResult._('/onboarding/1');
+  static const AppStartupResult onboarding = AppStartupResult._(
+    '/onboarding/1',
+  );
   static const AppStartupResult login = AppStartupResult._('/login');
   static const AppStartupResult dashboard = AppStartupResult._('/dashboard');
   static const AppStartupResult mpinUnlock = AppStartupResult._(
     AppRoutes.mpinUnlock,
   );
+
+  static AppStartupResult registrationVerification(String email) {
+    return AppStartupResult._(
+      AppRoutes.registrationVerification,
+      arguments: email.trim(),
+    );
+  }
 }
 
 class AppStartupService {
@@ -25,6 +35,7 @@ class AppStartupService {
   static Future<AppStartupResult> resolveInitialRoute() async {
     await AuthSession.restoreFromStorage();
     if (AuthSession.isAuthenticated) {
+      await AuthLocalStore.clearPendingRegistrationOtpEmail();
       try {
         final deviceId = await MpinLocalStore.readOrCreateDeviceId();
         final accessToken = AuthSession.accessToken?.trim() ?? '';
@@ -49,7 +60,17 @@ class AppStartupService {
       final isMpinEnabled = await MpinLocalStore.isMpinEnabled();
       final shouldUnlock =
           isMpinEnabled && AppLockStateService.shouldRequireUnlockOnResume();
-      return shouldUnlock ? AppStartupResult.mpinUnlock : AppStartupResult.dashboard;
+      return shouldUnlock
+          ? AppStartupResult.mpinUnlock
+          : AppStartupResult.dashboard;
+    }
+
+    final pendingRegistrationEmail =
+        await AuthLocalStore.readPendingRegistrationOtpEmail();
+    if (pendingRegistrationEmail != null) {
+      return AppStartupResult.registrationVerification(
+        pendingRegistrationEmail,
+      );
     }
 
     final onboardingCompleted = await AuthLocalStore.isOnboardingCompleted();

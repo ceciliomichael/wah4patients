@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,6 +7,7 @@ import '../../../../app/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
+import '../../data/auth_local_store.dart';
 import '../widgets/auth_brand_logo.dart';
 import '../widgets/auth_footer_link.dart';
 import '../widgets/auth_header.dart';
@@ -18,6 +21,7 @@ class RegistrationScreen extends StatelessWidget {
   }
 
   void _goToLogin(BuildContext context) {
+    unawaited(AuthLocalStore.clearPendingRegistrationOtpEmail());
     Navigator.of(context).pushReplacementNamed(AppRoutes.login);
   }
 

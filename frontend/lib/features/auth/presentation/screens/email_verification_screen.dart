@@ -10,6 +10,7 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
 import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
 import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
+import '../../data/auth_local_store.dart';
 import '../../data/auth_api_client.dart';
 import '../../domain/models/auth_api_models.dart';
 import '../../domain/auth_validators.dart';
@@ -108,6 +109,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void _goBack() {
+    unawaited(AuthLocalStore.clearPendingRegistrationOtpEmail());
     Navigator.of(context).pop();
   }
 
@@ -117,6 +119,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     }
 
     final otpCode = _otpFieldKey.currentState?.value?.trim() ?? '';
+    final navigator = Navigator.of(context);
 
     setState(() {
       _verifying = true;
@@ -130,7 +133,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         return;
       }
 
-      Navigator.of(context).pushNamed(
+      await AuthLocalStore.clearPendingRegistrationOtpEmail();
+      navigator.pushNamed(
         AppRoutes.registrationDetails,
         arguments: RegistrationPersonalDetailsArguments(
           email: widget.email,

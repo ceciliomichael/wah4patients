@@ -25424,6 +25424,221 @@
       ],
       "createdAt": "2026-05-27T05:16:55.807Z",
       "updatedAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "memoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "rootMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "parentMemoryIds": [],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "cfe6e575-f9d7-4641-b28c-42f6a43577f6"
+      ],
+      "childMemoryIds": [
+        "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1"
+      ],
+      "sectionKind": "fact",
+      "summary": "Fixed the registration OTP resume flow so the app no longer jumps back to login when the user leaves to check email/Gmail and returns. The solution persists the pending registration email in secure storage, restores the app to the OTP verification route on cold start, and prevents the app lifecycle auth-sync from redirecting public registration routes to login. The pending registration state is cleared when the OTP flow is abandoned or completed.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added secure-storage persistence helpers for the pending registration OTP email so the OTP step can be restored after app exit.",
+          "notes": "New keys and helper methods were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "modified",
+          "reason": "Updated startup route resolution to restore the OTP verification screen when pending registration exists before falling back to login.",
+          "notes": "AppStartupResult now carries optional arguments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Adjusted startup navigation to pass route arguments when restoring the registration verification screen.",
+          "notes": "Also updated status messaging for restored registration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Prevented the lifecycle/auth sync from redirecting public registration and onboarding routes to login on resume.",
+          "notes": "Added a public-route whitelist."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_registration_screen.dart",
+          "action": "modified",
+          "reason": "Saved the pending OTP email after the registration OTP request succeeds so the flow can be restored later.",
+          "notes": "Persistence happens before navigation to the OTP screen."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Cleared the pending OTP email when leaving the OTP step or completing verification to avoid stale startup redirects.",
+          "notes": "Also updated navigation to avoid async-context lint issues."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_screen.dart",
+          "action": "modified",
+          "reason": "Cleared any stale pending registration OTP state when the user explicitly switches from registration to sign-in.",
+          "notes": "Added async import for unawaited cleanup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test",
+          "action": "inspected",
+          "reason": "Existing test failures were reviewed during validation; they are unrelated to the registration OTP fix but explain why the full suite is not green.",
+          "notes": "Several unrelated widget tests currently fail in the repository."
+        }
+      ],
+      "createdAt": "2026-05-28T14:14:52.711Z",
+      "updatedAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "memoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "rootMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "parentMemoryIds": [
+        "9c466c16-7de5-4f60-b51d-a5af7ea306aa"
+      ],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "cfe6e575-f9d7-4641-b28c-42f6a43577f6"
+      ],
+      "childMemoryIds": [
+        "50d093be-04c1-4512-87ac-92fe14302ab4"
+      ],
+      "sectionKind": "decision",
+      "summary": "Fixed the registration OTP resume flow so the app no longer jumps back to login when the user leaves to check email/Gmail and returns. The solution persists the pending registration email in secure storage, restores the app to the OTP verification route on cold start, and prevents the app lifecycle auth-sync from redirecting public registration routes to login. The pending registration state is cleared when the OTP flow is abandoned or completed.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added secure-storage persistence helpers for the pending registration OTP email so the OTP step can be restored after app exit.",
+          "notes": "New keys and helper methods were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "modified",
+          "reason": "Updated startup route resolution to restore the OTP verification screen when pending registration exists before falling back to login.",
+          "notes": "AppStartupResult now carries optional arguments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Adjusted startup navigation to pass route arguments when restoring the registration verification screen.",
+          "notes": "Also updated status messaging for restored registration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Prevented the lifecycle/auth sync from redirecting public registration and onboarding routes to login on resume.",
+          "notes": "Added a public-route whitelist."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_registration_screen.dart",
+          "action": "modified",
+          "reason": "Saved the pending OTP email after the registration OTP request succeeds so the flow can be restored later.",
+          "notes": "Persistence happens before navigation to the OTP screen."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Cleared the pending OTP email when leaving the OTP step or completing verification to avoid stale startup redirects.",
+          "notes": "Also updated navigation to avoid async-context lint issues."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_screen.dart",
+          "action": "modified",
+          "reason": "Cleared any stale pending registration OTP state when the user explicitly switches from registration to sign-in.",
+          "notes": "Added async import for unawaited cleanup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test",
+          "action": "inspected",
+          "reason": "Existing test failures were reviewed during validation; they are unrelated to the registration OTP fix but explain why the full suite is not green.",
+          "notes": "Several unrelated widget tests currently fail in the repository."
+        }
+      ],
+      "createdAt": "2026-05-28T14:14:52.888Z",
+      "updatedAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "memoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "graphGroupId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "rootMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "parentMemoryIds": [
+        "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1"
+      ],
+      "relatedMemoryIds": [
+        "664404fd-d619-4161-a5a2-ad443aa3bc17",
+        "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+        "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+        "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+        "cfe6e575-f9d7-4641-b28c-42f6a43577f6"
+      ],
+      "childMemoryIds": [],
+      "sectionKind": "task",
+      "summary": "Fixed the registration OTP resume flow so the app no longer jumps back to login when the user leaves to check email/Gmail and returns. The solution persists the pending registration email in secure storage, restores the app to the OTP verification route on cold start, and prevents the app lifecycle auth-sync from redirecting public registration routes to login. The pending registration state is cleared when the OTP flow is abandoned or completed.",
+      "affectedFiles": [
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\data\\auth_local_store.dart",
+          "action": "modified",
+          "reason": "Added secure-storage persistence helpers for the pending registration OTP email so the OTP step can be restored after app exit.",
+          "notes": "New keys and helper methods were added."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\app_startup_service.dart",
+          "action": "modified",
+          "reason": "Updated startup route resolution to restore the OTP verification screen when pending registration exists before falling back to login.",
+          "notes": "AppStartupResult now carries optional arguments."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\startup_gate_screen.dart",
+          "action": "modified",
+          "reason": "Adjusted startup navigation to pass route arguments when restoring the registration verification screen.",
+          "notes": "Also updated status messaging for restored registration."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\app\\wah4p_app.dart",
+          "action": "modified",
+          "reason": "Prevented the lifecycle/auth sync from redirecting public registration and onboarding routes to login on resume.",
+          "notes": "Added a public-route whitelist."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_registration_screen.dart",
+          "action": "modified",
+          "reason": "Saved the pending OTP email after the registration OTP request succeeds so the flow can be restored later.",
+          "notes": "Persistence happens before navigation to the OTP screen."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\email_verification_screen.dart",
+          "action": "modified",
+          "reason": "Cleared the pending OTP email when leaving the OTP step or completing verification to avoid stale startup redirects.",
+          "notes": "Also updated navigation to avoid async-context lint issues."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\lib\\features\\auth\\presentation\\screens\\registration_screen.dart",
+          "action": "modified",
+          "reason": "Cleared any stale pending registration OTP state when the user explicitly switches from registration to sign-in.",
+          "notes": "Added async import for unawaited cleanup."
+        },
+        {
+          "path": "C:\\Users\\Administrator\\Desktop\\wah4patients\\frontend\\test",
+          "action": "inspected",
+          "reason": "Existing test failures were reviewed during validation; they are unrelated to the registration OTP fix but explain why the full suite is not green.",
+          "notes": "Several unrelated widget tests currently fail in the repository."
+        }
+      ],
+      "createdAt": "2026-05-28T14:14:53.057Z",
+      "updatedAt": "2026-05-28T14:14:53.057Z"
     }
   ],
   "edges": [
@@ -42058,7 +42273,140 @@
       "relation": "related",
       "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
       "createdAt": "2026-05-27T05:16:55.807Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "toMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.711Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "9c466c16-7de5-4f60-b51d-a5af7ea306aa",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "toMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "relation": "child",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:52.888Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "d9b3a18a-14e2-4035-a018-9bf4ab0e94b1",
+      "relation": "parent",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "664404fd-d619-4161-a5a2-ad443aa3bc17",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "4a988856-dbe3-4101-a2cf-93c6c6edd65a",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "50f886ad-40dd-4e49-bdcd-ea35c4a76add",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "d7cf39f2-3273-4fe4-9218-cf3a1766dcfe",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
+    },
+    {
+      "fromMemoryId": "50d093be-04c1-4512-87ac-92fe14302ab4",
+      "toMemoryId": "cfe6e575-f9d7-4641-b28c-42f6a43577f6",
+      "relation": "related",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\wah4patients",
+      "createdAt": "2026-05-28T14:14:53.057Z"
     }
   ],
-  "updatedAt": "2026-05-27T05:16:55.816Z"
+  "updatedAt": "2026-05-28T14:14:53.069Z"
 }

@@ -39,10 +39,13 @@ class _StartupGateScreenState extends State<StartupGateScreen> {
               }
 
               final startupResult = snapshot.data;
-              final initialRoute = startupResult?.initialRoute ??
+              final initialRoute =
+                  startupResult?.initialRoute ??
                   AppStartupResult.login.initialRoute;
-              final bool isUnlockRoute =
-                  initialRoute == AppRoutes.mpinUnlock;
+              final routeArguments = startupResult?.arguments;
+              final bool isUnlockRoute = initialRoute == AppRoutes.mpinUnlock;
+              final bool isRegistrationVerificationRoute =
+                  initialRoute == AppRoutes.registrationVerification;
 
               if (!_hasScheduledNavigation) {
                 _hasScheduledNavigation = true;
@@ -51,14 +54,23 @@ class _StartupGateScreenState extends State<StartupGateScreen> {
                     return;
                   }
 
-                  Navigator.of(context).pushReplacementNamed(initialRoute);
+                  Navigator.of(context).pushReplacementNamed(
+                    initialRoute,
+                    arguments: routeArguments,
+                  );
                 });
               }
 
               return _StartupStatusView(
-                title: isUnlockRoute ? 'Unlock with MPIN' : 'Welcome back',
+                title: isUnlockRoute
+                    ? 'Unlock with MPIN'
+                    : isRegistrationVerificationRoute
+                    ? 'Resuming registration'
+                    : 'Welcome back',
                 subtitle: isUnlockRoute
                     ? 'Please enter your MPIN to continue.'
+                    : isRegistrationVerificationRoute
+                    ? 'Taking you back to the OTP step.'
                     : 'Preparing your app now.',
               );
             },
@@ -70,10 +82,7 @@ class _StartupGateScreenState extends State<StartupGateScreen> {
 }
 
 class _StartupStatusView extends StatelessWidget {
-  const _StartupStatusView({
-    required this.title,
-    required this.subtitle,
-  });
+  const _StartupStatusView({required this.title, required this.subtitle});
 
   final String title;
   final String subtitle;
