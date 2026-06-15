@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -109,9 +111,13 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   void didUpdateWidget(covariant PatientProfileFormWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialProfile != widget.initialProfile) {
-      setState(() {
-        _hydrateFromProfile(widget.initialProfile);
-      });
+      final oldProfileStr = jsonEncode(oldWidget.initialProfile.toJson());
+      final newProfileStr = jsonEncode(widget.initialProfile.toJson());
+      if (oldProfileStr != newProfileStr) {
+        setState(() {
+          _hydrateFromProfile(widget.initialProfile);
+        });
+      }
     }
   }
 
