@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 import { CreateBmiRecordDto } from './dto/create-bmi-record.dto';
 import { CreateBloodPressureRecordDto } from './dto/create-blood-pressure-record.dto';
 import { CreateMedicationIntakeRecordDto } from './dto/create-medication-intake-record.dto';
@@ -23,7 +22,6 @@ export class PersonalRecordsController {
   ) {}
 
   @Get('bmi-records')
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getBmiRecords(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<BmiRecordsResponse> {
@@ -31,7 +29,6 @@ export class PersonalRecordsController {
   }
 
   @Post('bmi-records')
-  @Throttle({ default: { ttl: 60_000, limit: 15 } })
   createBmiRecord(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: CreateBmiRecordDto,
@@ -43,7 +40,6 @@ export class PersonalRecordsController {
   }
 
   @Get('blood-pressure-records')
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getBloodPressureRecords(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<BloodPressureRecordsResponse> {
@@ -53,7 +49,6 @@ export class PersonalRecordsController {
   }
 
   @Post('blood-pressure-records')
-  @Throttle({ default: { ttl: 60_000, limit: 15 } })
   createBloodPressureRecord(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: CreateBloodPressureRecordDto,
@@ -65,7 +60,6 @@ export class PersonalRecordsController {
   }
 
   @Get('temperature-records')
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getTemperatureRecords(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<TemperatureRecordsResponse> {
@@ -75,7 +69,6 @@ export class PersonalRecordsController {
   }
 
   @Post('temperature-records')
-  @Throttle({ default: { ttl: 60_000, limit: 15 } })
   createTemperatureRecord(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: CreateTemperatureRecordDto,
@@ -87,7 +80,6 @@ export class PersonalRecordsController {
   }
 
   @Get('medication-intake-records')
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getMedicationIntakeRecords(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<MedicationIntakeRecordsResponse> {
@@ -97,7 +89,6 @@ export class PersonalRecordsController {
   }
 
   @Post('medication-intake-records')
-  @Throttle({ default: { ttl: 60_000, limit: 15 } })
   createMedicationIntakeRecord(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: CreateMedicationIntakeRecordDto,

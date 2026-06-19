@@ -2,7 +2,6 @@ import {
   parseDelimitedList,
   resolveCorsOrigins,
   resolveIntegerEnv,
-  resolveThrottleSettings,
 } from './runtime-env';
 
 describe('runtime-env', () => {
@@ -34,16 +33,5 @@ describe('runtime-env', () => {
     expect(resolveIntegerEnv({}, 'LIMIT', 100, 0)).toBe(100);
   });
 
-  it('resolves throttling settings from env prefixes', () => {
-    expect(
-      resolveThrottleSettings(
-        {
-          THROTTLER_TTL_MS: '15000',
-          THROTTLER_LIMIT: '42',
-        },
-        'THROTTLER',
-        { ttl: 60000, limit: 120 },
-      ),
-    ).toEqual({ ttl: 15000, limit: 42 });
-  });
+
 });

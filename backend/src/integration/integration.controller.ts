@@ -8,7 +8,6 @@ import {
   Headers,
   Post,
 } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 import { AppointmentPushRequestDto } from './dto/appointment-push-request.dto';
 import { AppointmentPushResponse } from './appointment-push.types';
 import { PrepareSyncRequestDto } from './dto/prepare-sync-request.dto';
@@ -31,14 +30,12 @@ export class IntegrationController {
   ) {}
 
   @Get('providers')
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
   getProviders(): Promise<InteroperabilityProvidersResponse> {
     return this.integrationService.getProviders();
   }
 
   @Post('appointments/request')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
   requestAppointment(
     @Headers('x-user-id') userId: string | undefined,
     @Body() dto: AppointmentPushRequestDto,
@@ -52,7 +49,6 @@ export class IntegrationController {
 
   @Post('sync/prepare')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
   prepareSyncRequest(
     @Headers('x-user-id') userId: string | undefined,
     @Body() dto: PrepareSyncRequestDto,
@@ -66,7 +62,6 @@ export class IntegrationController {
 
   @Post('sync/simulate')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
   simulateSyncRequest(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Headers('x-user-id') userId: string | undefined,

@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Headers, Patch } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 import { AuthSupportService } from './auth-support.service';
 import { PatientProfileResponse } from './auth.types';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -13,7 +12,6 @@ export class ProfileController {
   ) {}
 
   @Get('me')
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
   async getMyProfile(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<{
@@ -39,7 +37,6 @@ export class ProfileController {
   }
 
   @Patch('me')
-  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   async updateMyProfile(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: UpdateProfileDto,

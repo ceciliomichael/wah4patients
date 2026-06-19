@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { CompletePasswordResetDto } from './dto/complete-password-reset.dto';
 import { CompleteRegistrationDto } from './dto/complete-registration.dto';
@@ -52,7 +51,6 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register/request-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   requestRegistrationOtp(
     @Body() dto: RequestRegistrationOtpDto,
   ): Promise<RequestOtpResponse> {
@@ -60,7 +58,6 @@ export class AuthController {
   }
 
   @Post('register/resend-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   resendRegistrationOtp(
     @Body() dto: RequestRegistrationOtpDto,
   ): Promise<RequestOtpResponse> {
@@ -68,7 +65,6 @@ export class AuthController {
   }
 
   @Post('register/verify-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 6 } })
   verifyRegistrationOtp(
     @Body() dto: VerifyRegistrationOtpDto,
   ): Promise<VerifyOtpResponse> {
@@ -76,7 +72,6 @@ export class AuthController {
   }
 
   @Post('register/complete')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   completeRegistration(
     @Body() dto: CompleteRegistrationDto,
   ): Promise<CompleteRegistrationResponse> {
@@ -84,7 +79,6 @@ export class AuthController {
   }
 
   @Post('password-reset/request-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   requestPasswordResetOtp(
     @Body() dto: RequestPasswordResetOtpDto,
   ): Promise<RequestPasswordResetOtpResponse> {
@@ -92,7 +86,6 @@ export class AuthController {
   }
 
   @Post('password-reset/resend-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   resendPasswordResetOtp(
     @Body() dto: RequestPasswordResetOtpDto,
   ): Promise<RequestPasswordResetOtpResponse> {
@@ -100,7 +93,6 @@ export class AuthController {
   }
 
   @Post('password-reset/verify-otp')
-  @Throttle({ default: { ttl: 60_000, limit: 6 } })
   verifyPasswordResetOtp(
     @Body() dto: VerifyPasswordResetOtpDto,
   ): Promise<VerifyPasswordResetOtpResponse> {
@@ -109,7 +101,6 @@ export class AuthController {
 
   @Post('password-reset/complete')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   completePasswordReset(
     @Body() dto: CompletePasswordResetDto,
   ): Promise<CompletePasswordResetResponse> {
@@ -118,21 +109,18 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   login(@Body() dto: LoginDto): Promise<LoginResultResponse> {
     return this.authService.login(dto);
   }
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   refreshSession(@Body() dto: RefreshSessionDto): Promise<LoginResponse> {
     return this.authService.refreshSession(dto);
   }
 
   @Post('2fa/setup/start')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   startTotpSetup(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<TotpSetupStartResponse> {
@@ -141,7 +129,6 @@ export class AuthController {
 
   @Post('2fa/setup/verify')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 8 } })
   verifyTotpSetup(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: VerifyTotpCodeDto,
@@ -151,7 +138,6 @@ export class AuthController {
 
   @Post('2fa/challenge/verify')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   verifyMfaChallenge(
     @Body() dto: VerifyMfaChallengeDto,
   ): Promise<LoginResponse> {
@@ -160,7 +146,6 @@ export class AuthController {
 
   @Post('2fa/challenge/verify-backup-code')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 8 } })
   verifyMfaBackupCode(
     @Body() dto: VerifyMfaBackupCodeDto,
   ): Promise<LoginResponse> {
@@ -169,7 +154,6 @@ export class AuthController {
 
   @Post('security/status')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getSecuritySettingsStatus(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: GetSecuritySettingsStatusDto,
@@ -179,7 +163,6 @@ export class AuthController {
 
   @Post('security/verify-totp')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 12 } })
   verifyTotpForSecurityAction(
     @Body() dto: VerifyTotpForSecurityActionDto,
   ): Promise<VerifySecurityActionResponse> {
@@ -188,7 +171,6 @@ export class AuthController {
 
   @Post('security/request-email-otp')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   requestSecurityEmailOtp(
     @Body() dto: RequestSecurityEmailOtpDto,
   ): Promise<RequestPasswordResetOtpResponse> {
@@ -197,7 +179,6 @@ export class AuthController {
 
   @Post('security/verify-email-otp')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 8 } })
   verifySecurityEmailOtp(
     @Body() dto: VerifySecurityEmailOtpDto,
   ): Promise<VerifySecurityActionResponse> {
@@ -206,7 +187,6 @@ export class AuthController {
 
   @Post('2fa/challenge/verify-mpin')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   verifyMpinChallenge(
     @Body() dto: VerifyMpinChallengeDto,
   ): Promise<LoginResponse> {
@@ -215,7 +195,6 @@ export class AuthController {
 
   @Post('2fa/disable')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   disableTotp(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: DisableTotpDto,
@@ -225,7 +204,6 @@ export class AuthController {
 
   @Post('mpin/set')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   setMpin(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: SetMpinDto,
@@ -235,7 +213,6 @@ export class AuthController {
 
   @Post('mpin/verify')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 12 } })
   verifyMpin(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: VerifyMpinDto,
@@ -245,7 +222,6 @@ export class AuthController {
 
   @Post('mpin/register-device')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   registerMpinDevice(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: RegisterMpinDeviceDto,
@@ -255,7 +231,6 @@ export class AuthController {
 
   @Post('mpin/unregister-device')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   unregisterMpinDevice(
     @Headers('authorization') authorizationHeader: string | undefined,
     @Body() dto: DisableTotpDto,

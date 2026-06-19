@@ -6,8 +6,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
-import { FHIR_WEBHOOK_THROTTLE_SETTINGS } from '../common/config/runtime-env';
+
 import { Public } from '../common/decorators/public.decorator';
 import { GatewayAuthGuard } from './gateway-auth.guard';
 import { FhirSyncService } from './fhir-sync.service';
@@ -21,7 +20,6 @@ export class GatewayWebhookController {
   @Public()
   @Post('process-query')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: FHIR_WEBHOOK_THROTTLE_SETTINGS })
   processQuery(@Body() body: unknown): Promise<FhirSyncAcknowledgement> {
     return this.fhirSyncService.processQuery(body);
   }
@@ -29,7 +27,6 @@ export class GatewayWebhookController {
   @Public()
   @Post('receive-results')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: FHIR_WEBHOOK_THROTTLE_SETTINGS })
   receiveResults(@Body() body: unknown): Promise<FhirSyncAcknowledgement> {
     return this.fhirSyncService.receiveResults(body);
   }
@@ -37,7 +34,6 @@ export class GatewayWebhookController {
   @Public()
   @Post('receive-push')
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: FHIR_WEBHOOK_THROTTLE_SETTINGS })
   receivePush(@Body() body: unknown): Promise<FhirSyncAcknowledgement> {
     return this.fhirSyncService.receivePush(body);
   }

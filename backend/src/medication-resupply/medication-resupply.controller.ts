@@ -1,5 +1,4 @@
 import { Controller, Get, Headers } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 import { MedicationResupplyService } from './medication-resupply.service';
 import { MedicationResupplyHistoryResponse } from './medication-resupply.types';
 
@@ -10,7 +9,6 @@ export class MedicationResupplyController {
   ) {}
 
   @Get('history')
-  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getHistoryRecords(
     @Headers('authorization') authorizationHeader: string | undefined,
   ): Promise<MedicationResupplyHistoryResponse> {

@@ -5,7 +5,7 @@ Secure NestJS API for WAH for Patients registration and login flow, backed by Su
 ## Features
 
 - Global API-key guard (`x-api-key`) for all non-public routes
-- Rate limiting with `@nestjs/throttler`
+
 - OTP registration flow via Resend email delivery
 - Account creation and login through Supabase Auth
 - WAH4PC interoperability proxy for provider discovery and sync-readiness checks

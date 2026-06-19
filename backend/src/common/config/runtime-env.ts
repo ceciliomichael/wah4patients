@@ -1,19 +1,6 @@
 import './preload-env';
 
-export type ThrottleSettings = {
-  ttl: number;
-  limit: number;
-};
 
-const DEFAULT_GLOBAL_THROTTLE: ThrottleSettings = {
-  ttl: 60_000,
-  limit: 120,
-};
-
-const DEFAULT_FHIR_WEBHOOK_THROTTLE: ThrottleSettings = {
-  ttl: 60_000,
-  limit: 120,
-};
 
 const DEFAULT_GATEWAY_REQUEST_DELAY_MS = 500;
 
@@ -58,28 +45,7 @@ export function resolveIntegerEnv(
   return parsedValue;
 }
 
-export function resolveThrottleSettings(
-  env: NodeJS.ProcessEnv,
-  prefix: string,
-  fallback: ThrottleSettings,
-): ThrottleSettings {
-  return {
-    ttl: resolveIntegerEnv(env, `${prefix}_TTL_MS`, fallback.ttl),
-    limit: resolveIntegerEnv(env, `${prefix}_LIMIT`, fallback.limit),
-  };
-}
 
-export const GLOBAL_THROTTLE_SETTINGS = resolveThrottleSettings(
-  process.env,
-  'THROTTLER',
-  DEFAULT_GLOBAL_THROTTLE,
-);
-
-export const FHIR_WEBHOOK_THROTTLE_SETTINGS = resolveThrottleSettings(
-  process.env,
-  'FHIR_WEBHOOK_THROTTLER',
-  DEFAULT_FHIR_WEBHOOK_THROTTLE,
-);
 
 export const GATEWAY_REQUEST_DELAY_MS = resolveIntegerEnv(
   process.env,

@@ -19,22 +19,7 @@ export const envValidationSchema = Joi.object({
     WAH4PC_API_KEY: Joi.string().trim().min(12).required(),
     WAH4PC_PROVIDER_ID: Joi.string().uuid().required(),
     WAH4PC_GATEWAY_AUTH_KEY: Joi.string().trim().min(12).required(),
-    THROTTLER_TTL_MS: Joi.number()
-      .integer()
-      .min(1000)
-      .max(600000)
-      .default(60000),
-    THROTTLER_LIMIT: Joi.number().integer().min(1).max(1000).default(120),
-    FHIR_WEBHOOK_THROTTLER_TTL_MS: Joi.number()
-      .integer()
-      .min(1000)
-      .max(600000)
-      .default(60000),
-    FHIR_WEBHOOK_THROTTLER_LIMIT: Joi.number()
-      .integer()
-      .min(1)
-      .max(1000)
-      .default(120),
+
     GATEWAY_REQUEST_DELAY_MS: Joi.number()
       .integer()
       .min(0)
