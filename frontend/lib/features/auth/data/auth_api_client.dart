@@ -570,9 +570,14 @@ class AuthApiClient {
       return <String, dynamic>{};
     }
 
-    final decoded = jsonDecode(body);
-    if (decoded is Map<String, dynamic>) {
-      return decoded;
+    try {
+      final decoded = jsonDecode(body);
+      if (decoded is Map<String, dynamic>) {
+        return decoded;
+      }
+    } catch (_) {
+      // Catch FormatException if the server returns non-JSON (e.g., HTML 502 page)
+      return <String, dynamic>{};
     }
 
     return <String, dynamic>{};

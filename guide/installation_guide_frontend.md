@@ -64,7 +64,17 @@ To run on an iOS simulator (macOS only):
 flutter run -d ios
 ```
 
-### 5. Running Tests
+### 5. Building the Application (APK)
+
+To build a release APK for Android deployment:
+
+```bash
+flutter build apk --release
+```
+
+The generated APK will be located at `build/app/outputs/flutter-apk/app-release.apk`.
+
+### 6. Running Tests
 
 To execute the widget and unit tests for the frontend application:
 
