@@ -46,7 +46,17 @@ Open `.env` in a text editor and configure the necessary variables. Pay special 
 - Gateway Configuration:
   - `WAH4PC_GATEWAY_URL`, `WAH4PC_API_KEY`, `WAH4PC_PROVIDER_ID` for interoperability.
 
-### 3. Running the Application
+### 3. Database Setup (Supabase)
+
+To make setting up the database easy, we have combined all the necessary SQL migration scripts from the `sqls/` directory into a single file.
+
+1. Navigate to your Supabase Project Dashboard.
+2. Go to the **SQL Editor** section on the left sidebar.
+3. Open the `sqls/setup_all.sql` file in this repository.
+4. Copy all of the contents from `setup_all.sql` and paste them into a new query in the Supabase SQL Editor.
+5. Click **Run** to execute the script. This will set up all the necessary tables, functions, and security policies for the backend.
+
+### 4. Running the Application
 
 To start the server in development mode with hot-reload enabled:
 
@@ -61,7 +71,7 @@ npm run build
 npm run start:prod
 ```
 
-### 4. Running Tests
+### 5. Running Tests
 
 The backend uses Jest for testing. You can run unit and end-to-end tests to verify functionality.
 
@@ -76,7 +86,7 @@ npm run test:cov
 npm run test:e2e
 ```
 
-### 5. Running via Docker
+### 6. Running via Docker
 
 Alternatively, you can run the backend using Docker Compose.
 
