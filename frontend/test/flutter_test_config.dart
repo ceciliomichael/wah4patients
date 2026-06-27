@@ -10,7 +10,8 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
     'plugins.it_nomads.com/flutter_secure_storage',
   );
 
-  secureStorageChannel.setMockMethodCallHandler((MethodCall call) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(secureStorageChannel, (MethodCall call) async {
     switch (call.method) {
       case 'read':
         return null;

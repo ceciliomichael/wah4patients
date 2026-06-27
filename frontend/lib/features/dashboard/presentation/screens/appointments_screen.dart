@@ -6,8 +6,6 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/widgets/feature/app_screen_header.dart';
 import '../../../../core/widgets/feature/help_modal_widget.dart';
-import '../../../../core/widgets/ui/buttons/primary_button_widget.dart';
-import '../../../../core/widgets/ui/buttons/secondary_button_widget.dart';
 import '../../../appointments/presentation/screens/appointment_booking_screen.dart';
 
 class AppointmentsScreen extends StatelessWidget {

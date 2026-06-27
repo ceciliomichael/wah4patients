@@ -60,17 +60,11 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
 
-  late final List<DateTime> _dateOptions;
   late final List<SyncIdentifierOption> _patientIdentifierOptions;
 
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
-    _dateOptions = List<DateTime>.generate(
-      6,
-      (index) => DateTime(now.year, now.month, now.day + index + 1),
-    );
     _selectedMode = widget.initialMode;
     _patientIdentifierOptions = buildSyncIdentifierOptions(AuthSession.profile);
     unawaited(_loadProviders());

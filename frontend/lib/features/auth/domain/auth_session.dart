@@ -18,7 +18,6 @@ class AuthSession {
   static String? _tokenType;
   static String? _userId;
   static String? _userEmail;
-  static DateTime? _savedAt;
   static UserProfileSummary _profile = UserProfileSummary.empty();
   static bool _requiresReauthentication = false;
 
@@ -107,7 +106,6 @@ class AuthSession {
     _tokenType = null;
     _userId = null;
     _userEmail = null;
-    _savedAt = null;
     _profile = UserProfileSummary.empty();
     _notifyChanged();
 
@@ -124,7 +122,6 @@ class AuthSession {
     _tokenType = storedSession.tokenType.trim();
     _userId = storedSession.userId.trim();
     _userEmail = storedSession.userEmail.trim();
-    _savedAt = storedSession.savedAt.toUtc();
     _profile = storedSession.profile;
     final nextUserId = _userId?.trim() ?? '';
     unawaited(_invalidateCachesForAccountTransition(previousUserId, nextUserId));
@@ -140,7 +137,6 @@ class AuthSession {
     _tokenType = result.tokenType.trim();
     _userId = result.userId.trim();
     _userEmail = result.userEmail.trim();
-    _savedAt = DateTime.now().toUtc();
     _profile = result.profile;
     final nextUserId = _userId?.trim() ?? '';
     unawaited(_invalidateCachesForAccountTransition(previousUserId, nextUserId));

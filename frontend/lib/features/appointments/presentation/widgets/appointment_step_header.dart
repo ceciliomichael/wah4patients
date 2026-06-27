@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../models/appointment_booking_models.dart';
 
 /// Minimal progress pill + step title/subtitle — no decorative card wrapper.
 class AppointmentStepHeader extends StatelessWidget {

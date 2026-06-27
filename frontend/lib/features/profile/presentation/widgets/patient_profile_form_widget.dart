@@ -1259,13 +1259,6 @@ class _PatientProfileFormWidgetState extends State<PatientProfileFormWidget> {
   }
 }
 
-class _LockedField {
-  const _LockedField(this.label, this.value);
-
-  final String label;
-  final String value;
-}
-
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({
     super.key,
@@ -1302,7 +1295,6 @@ class _SectionHeader extends StatelessWidget {
 
 class _ReadOnlyProfileField extends StatefulWidget {
   const _ReadOnlyProfileField({
-    super.key,
     required this.value,
     required this.label,
     required this.hintText,
@@ -1459,100 +1451,6 @@ class _ActionButton extends StatelessWidget {
       child: buttonChild,
     );
   }
-}
-
-String? _optionalTextValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return null;
-  }
-  if (text.length > 120) {
-    return 'Value is too long';
-  }
-  if (!_textOnlyPattern.hasMatch(text)) {
-    return 'Use letters and basic punctuation only';
-  }
-  return null;
-}
-
-String? _optionalPhoneValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return null;
-  }
-  if (!_phonePattern.hasMatch(text)) {
-    return 'Enter a valid phone number';
-  }
-  return null;
-}
-
-String? _optionalPostalCodeValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return null;
-  }
-  if (!_postalCodePattern.hasMatch(text)) {
-    return 'Use a 4-digit postal code';
-  }
-  return null;
-}
-
-String? _optionalBirthDateValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return null;
-  }
-
-  final parsedDate = _parseBirthDate(text);
-  if (parsedDate == null) {
-    return 'Use MM/DD/YYYY';
-  }
-
-  return null;
-}
-
-String? _optionalSelectValidator(String? value) {
-  return null;
-}
-
-String? _requiredTextValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return _optionalTextValidator(text);
-}
-
-String? _requiredPhoneValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return _optionalPhoneValidator(text);
-}
-
-String? _requiredPostalCodeValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return _optionalPostalCodeValidator(text);
-}
-
-String? _requiredBirthDateValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return _optionalBirthDateValidator(text);
-}
-
-String? _requiredSelectValidator(String? value) {
-  final text = value?.trim() ?? '';
-  if (text.isEmpty) {
-    return 'This field is required';
-  }
-  return null;
 }
 
 String? _optionalPhilHealthIdValidator(String? value) {
